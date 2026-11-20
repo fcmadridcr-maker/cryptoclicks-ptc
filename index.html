@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoClicks PTC — Panel de Anuncios</title>
+  <title>CryptoClicks PTC — Anuncios, Offerwalls, Faucet & Publicidad</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -15,6 +15,7 @@
       --accent: #10b981;
       --accent-hover: #059669;
       --cyan: #22d3ee;
+      --purple: #a78bfa;
       --warning: #f59e0b;
       --danger: #ef4444;
     }
@@ -42,25 +43,25 @@
       padding: 12px 20px;
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 25;
       backdrop-filter: blur(8px);
     }
 
     .header-inner {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.18rem;
+      gap: 8px;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--text);
     }
@@ -72,26 +73,39 @@
     .wallet-box {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .user-pill {
       background: rgba(34, 211, 238, 0.12);
       border: 1px solid rgba(34, 211, 238, 0.35);
-      padding: 7px 12px;
+      padding: 6px 11px;
       border-radius: 9px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lvl-tag {
+      background: rgba(167, 139, 250, 0.2);
+      color: var(--purple);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
     }
 
     .balance-pill {
       background: var(--card-2);
       border: 1px solid #28354d;
-      padding: 7px 13px;
+      padding: 6px 12px;
       border-radius: 9px;
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--cyan);
     }
@@ -99,8 +113,8 @@
     .btn {
       border: none;
       border-radius: 8px;
-      padding: 8px 13px;
-      font-size: 0.88rem;
+      padding: 8px 12px;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
       transition: 0.16s ease;
@@ -131,6 +145,28 @@
       border-color: var(--cyan);
     }
 
+    .btn-warning {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-warning:hover:not(:disabled) {
+      background: var(--warning);
+      color: #0b0f19;
+    }
+
+    .btn-purple {
+      background: rgba(167, 139, 250, 0.18);
+      color: #ddd6fe;
+      border: 1px solid rgba(167, 139, 250, 0.4);
+    }
+
+    .btn-purple:hover:not(:disabled) {
+      background: var(--purple);
+      color: #0b0f19;
+    }
+
     .btn-danger {
       background: rgba(239, 68, 68, 0.14);
       color: #fca5a5;
@@ -143,8 +179,8 @@
     }
 
     .btn-sm {
-      padding: 6px 11px;
-      font-size: 0.8rem;
+      padding: 6px 10px;
+      font-size: 0.79rem;
       border-radius: 7px;
     }
 
@@ -171,11 +207,11 @@
       border: 1px solid #28354d;
       border-radius: 16px;
       width: 100%;
-      max-width: 430px;
+      max-width: 440px;
       padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 15px;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
     }
 
@@ -192,7 +228,7 @@
     }
 
     .auth-head p {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       color: var(--muted);
     }
 
@@ -225,31 +261,31 @@
     .auth-form {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
     }
 
     .field-group {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
     }
 
     .field-group label {
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       font-weight: 600;
       color: var(--muted);
     }
 
     /* Main Container */
     main {
-      max-width: 1180px;
+      max-width: 1200px;
       width: 100%;
       margin: 0 auto;
-      padding: 18px 20px;
+      padding: 16px 20px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     /* Safety Alert Banner */
@@ -258,11 +294,13 @@
       border: 1px solid rgba(245, 158, 11, 0.35);
       color: #fcd34d;
       border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.84rem;
+      padding: 9px 14px;
+      font-size: 0.82rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
       line-height: 1.4;
     }
 
@@ -271,14 +309,14 @@
       background: var(--card);
       border: 1px dashed #334155;
       border-radius: 12px;
-      padding: 12px;
+      padding: 10px;
       text-align: center;
-      min-height: 106px;
+      min-height: 104px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       width: 100%;
       overflow: hidden;
     }
@@ -293,10 +331,103 @@
     }
 
     .ad-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
+    }
+
+    /* Hub Cards (2 columnas: Bono Diario + Faucet por Niveles) */
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 820px) {
+      .hub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hub-card {
+      background: var(--card);
+      border: 1px solid #263349;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .hub-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .hub-title {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hub-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.38;
+      margin-top: 3px;
+    }
+
+    .hub-badge {
+      background: rgba(16, 185, 129, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .hub-badge.purple {
+      background: rgba(167, 139, 250, 0.14);
+      color: var(--purple);
+      border-color: rgba(167, 139, 250, 0.32);
+    }
+
+    .mini-progress-wrap {
+      width: 100%;
+      height: 8px;
+      background: #1f2937;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--accent));
+      transition: width 0.25s ease;
+    }
+
+    .hub-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hub-stat {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--cyan);
     }
 
     /* Category Tabs */
@@ -313,7 +444,7 @@
       color: var(--muted);
       padding: 8px 12px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.83rem;
       font-weight: 700;
       cursor: pointer;
       transition: 0.15s ease;
@@ -335,12 +466,12 @@
 
     .cat-count {
       background: rgba(255, 255, 255, 0.08);
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 999px;
       font-size: 0.74rem;
     }
 
-    /* Toolbar: Search + Sort + Sound Toggle */
+    /* Toolbar */
     .toolbar-row {
       display: grid;
       grid-template-columns: 1fr 220px auto;
@@ -362,7 +493,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
@@ -439,6 +570,11 @@
       transform: translateY(-2px);
     }
 
+    .ad-card.sponsored-card {
+      border-color: rgba(167, 139, 250, 0.45);
+      background: linear-gradient(180deg, rgba(167, 139, 250, 0.06), var(--card));
+    }
+
     .ad-card-head {
       display: flex;
       align-items: flex-start;
@@ -467,7 +603,7 @@
     }
 
     .ad-card-title {
-      font-size: 0.96rem;
+      font-size: 0.94rem;
       font-weight: 700;
       color: var(--text);
       white-space: nowrap;
@@ -476,7 +612,7 @@
     }
 
     .ad-card-desc {
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       color: var(--muted);
       line-height: 1.4;
       margin-top: 6px;
@@ -491,7 +627,7 @@
     }
 
     .chip {
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 700;
       padding: 3px 8px;
       border-radius: 6px;
@@ -519,6 +655,12 @@
       text-transform: uppercase;
     }
 
+    .chip-purple {
+      background: rgba(167, 139, 250, 0.16);
+      color: var(--purple);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+    }
+
     .chip-cooldown {
       background: rgba(245, 158, 11, 0.14);
       color: #fcd34d;
@@ -538,7 +680,7 @@
       background: none;
       border: none;
       color: var(--muted);
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
@@ -561,7 +703,7 @@
       font-size: 0.92rem;
     }
 
-    /* Modal */
+    /* Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -583,10 +725,10 @@
       border-radius: 16px;
       max-width: 820px;
       width: 100%;
-      padding: 22px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       max-height: 92vh;
       overflow-y: auto;
     }
@@ -613,7 +755,7 @@
       background: #060911;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 14px;
       display: grid;
       grid-template-columns: 1fr 316px;
       gap: 14px;
@@ -626,7 +768,7 @@
         padding: 10px;
       }
       .ad-banner-top {
-        padding: 10px 6px;
+        padding: 8px 6px;
         min-height: auto;
       }
       .modal {
@@ -662,13 +804,20 @@
       text-align: center;
     }
 
-    .stage-media iframe,
-    .stage-media video {
+    .stage-media iframe {
       width: 100%;
       min-height: 195px;
       border: 0;
       border-radius: 6px;
       background: #000;
+    }
+
+    .offerwall-frame {
+      width: 100%;
+      height: 500px;
+      border: 1px solid #23324d;
+      border-radius: 10px;
+      background: #070b14;
     }
 
     .stage-controls {
@@ -743,13 +892,100 @@
       display: flex;
     }
 
+    /* Advertiser summary box */
+    .adv-summary {
+      background: var(--card-2);
+      border: 1px solid #2b3952;
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.84rem;
+    }
+
+    .adv-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 560px) {
+      .form-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Tables in History / Referrals */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .data-table th,
+    .data-table td {
+      text-align: left;
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table th {
+      color: var(--muted);
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .ref-link-box {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ref-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .ref-stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ref-stat-card {
+      background: var(--card-2);
+      border: 1px solid #28354d;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .ref-stat-label {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .ref-stat-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--cyan);
+      margin-top: 4px;
+    }
+
     input, select, textarea {
       background: #0b0f19;
       border: 1px solid #2b3952;
       color: var(--text);
       border-radius: 8px;
       padding: 9px 12px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       width: 100%;
     }
 
@@ -759,9 +995,9 @@
     }
 
     textarea {
-      min-height: 85px;
+      min-height: 72px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
 
     /* Footer */
@@ -773,14 +1009,14 @@
     }
 
     .footer-inner {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       color: var(--muted);
     }
 
@@ -794,7 +1030,7 @@
       padding: 12px 16px;
       border-radius: 10px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
       opacity: 0;
       transform: translateY(12px);
@@ -819,14 +1055,21 @@
 
       <!-- Barra de sesión activa -->
       <div class="wallet-box hidden" id="headerUserControls">
-        <div class="user-pill" id="userDisplay">👤 Invitado</div>
-        <div class="balance-pill" id="balanceDisplay">🪙 0 Coins (≈ $0.0000 USDT)</div>
-        <button class="btn btn-primary" onclick="openWithdrawModal()">💸 Retirar</button>
-        <button class="btn btn-danger" onclick="logoutUser()">Salir</button>
+        <div class="user-pill">
+          <span id="userDisplay">👤 Invitado</span>
+          <span class="lvl-tag" id="levelBadgeTop">Nv. 1</span>
+        </div>
+        <div class="balance-pill" id="balanceDisplay">🪙 0 Coins (≈ $0.00000 USDT)</div>
+        <button class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Anunciarse</button>
+        <button class="btn btn-secondary btn-sm" onclick="openReferralModal()">🤝 Referidos (10%)</button>
+        <button class="btn btn-secondary btn-sm" onclick="openHistoryModal()">📜 Historial</button>
+        <button class="btn btn-primary btn-sm" onclick="openWithdrawModal()">💸 Retirar</button>
+        <button class="btn btn-danger btn-sm" onclick="logoutUser()">Salir</button>
       </div>
 
       <!-- Barra de invitado -->
       <div class="wallet-box" id="headerGuestControls">
+        <button class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Anunciarse</button>
         <button class="btn btn-secondary" onclick="switchAuthTab('login')">Iniciar Sesión</button>
         <button class="btn btn-primary" onclick="switchAuthTab('register')">Registrarse</button>
       </div>
@@ -838,7 +1081,7 @@
     <div class="auth-card">
       <div class="auth-head">
         <h1>CryptoClicks PTC</h1>
-        <p>Inicia sesión o regístrate para ver anuncios, videos y enlaces.</p>
+        <p>Gana monedas con Offerwalls, anuncios, shortlinks y faucet por niveles, o promociona tu proyecto.</p>
       </div>
 
       <div class="auth-tabs">
@@ -867,7 +1110,7 @@
       <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
         <div class="field-group">
           <label for="regUsername">Nombre de Usuario</label>
-          <input type="text" id="regUsername" placeholder="Ej. CryptoMaster" minlength="3" required />
+          <input type="text" id="regUsername" placeholder="Ej. CryptoMaster" minlength="3" maxlength="24" required />
         </div>
         <div class="field-group">
           <label for="regEmail">Correo Electrónico</label>
@@ -881,8 +1124,12 @@
           <label for="regPasswordConfirm">Confirmar Contraseña</label>
           <input type="password" id="regPasswordConfirm" placeholder="••••••••" minlength="6" required />
         </div>
+        <div class="field-group">
+          <label for="regRefCode">Código de Referido (opcional)</label>
+          <input type="text" id="regRefCode" placeholder="Ej. REF-XXXX" />
+        </div>
         <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px;">
-          Crear Cuenta (+100 Coins)
+          Crear Cuenta (+200 Coins)
         </button>
       </form>
     </div>
@@ -890,19 +1137,68 @@
 
   <!-- Panel Principal -->
   <main class="hidden" id="dashboardSection">
-    <!-- Aviso de Seguridad -->
+    <!-- Aviso de Seguridad + Acceso rápido Anunciantes -->
     <div class="safety-banner">
-      <span>🛡️</span>
-      <span><strong>Seguridad primero:</strong> Nunca descargues archivos ejecutables desconocidos ni compartas claves privadas o contraseñas. Los anuncios se resetean cada 24 horas.</span>
+      <span>🛡️ <strong>Seguridad activa:</strong> Anti-multicuenta (máx. 2 cuentas/dispositivo) y validación de saldo. Tasa: 50 Coins = $0.0005 USDT.</span>
+      <button type="button" class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Publicar tu Anuncio Aquí</button>
     </div>
 
     <!-- Banner Superior 728x90 -->
     <section class="ad-banner-top" id="adSlotTop"></section>
 
-    <!-- Categorías -->
+    <!-- Hub Principal: Bono Diario (100 Coins) + Faucet por Niveles (35 Coins) -->
+    <section class="hub-grid">
+      <!-- 1. Bono Diario (100 Coins) -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <div>
+            <div class="hub-title">🎁 Bono Diario</div>
+            <div class="hub-sub">Reclama tu recompensa gratuita cada 24 horas y suma +20 XP para subir de nivel.</div>
+          </div>
+          <span class="hub-badge">+100 Coins</span>
+        </div>
+        <div class="hub-foot">
+          <span class="hub-stat" id="dailyBonusStatus">Disponible ahora</span>
+          <button type="button" class="btn btn-primary btn-sm" id="btnDailyBonus" onclick="claimDailyBonus()">
+            Reclamar +100 Coins
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Faucet por Niveles (35 Coins, baja hasta 10 min, 1,000 XP/nivel) -->
+      <div class="hub-card">
+        <div class="hub-top">
+          <div>
+            <div class="hub-title">🚰 Faucet por Niveles</div>
+            <div class="hub-sub" id="faucetDescText">Inicia en 60 min y baja 2 min por nivel (mín. 10 min).</div>
+          </div>
+          <span class="hub-badge purple" id="levelXpBadge">Nv. 1 • 0/1,000 XP</span>
+        </div>
+        <div>
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-bottom:4px;">
+            <span id="faucetCooldownInfo">Espera actual: 60 min</span>
+            <span id="faucetRewardInfo">Pago: +35 Coins</span>
+          </div>
+          <div class="mini-progress-wrap">
+            <div class="mini-progress-bar" id="xpProgressBar" style="background: linear-gradient(90deg, var(--purple), var(--cyan));"></div>
+          </div>
+        </div>
+        <div class="hub-foot">
+          <span class="hub-stat" id="faucetTimerStatus">Lista para reclamar</span>
+          <button type="button" class="btn btn-primary btn-sm" id="btnOpenFaucet" onclick="openFaucetModal()">
+            🚰 Reclamar +35
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categorías (Incluye Offerwalls) -->
     <nav class="category-bar" id="categoryBar">
       <button type="button" class="cat-btn active" data-cat="all" onclick="setCategory('all', this)">
         Todos <span class="cat-count" id="countAll">0</span>
+      </button>
+      <button type="button" class="cat-btn" data-cat="offerwalls" onclick="setCategory('offerwalls', this)">
+        🧱 Offerwalls <span class="cat-count" id="countOfferwalls">0</span>
       </button>
       <button type="button" class="cat-btn" data-cat="window_ads" onclick="setCategory('window_ads', this)">
         🪟 Window Ads <span class="cat-count" id="countWindowAds">0</span>
@@ -910,20 +1206,14 @@
       <button type="button" class="cat-btn" data-cat="frame_ads" onclick="setCategory('frame_ads', this)">
         🖼️ Frame Ads <span class="cat-count" id="countFrameAds">0</span>
       </button>
-      <button type="button" class="cat-btn" data-cat="video_ads" onclick="setCategory('video_ads', this)">
-        🎬 Video Ads <span class="cat-count" id="countVideoAds">0</span>
-      </button>
-      <button type="button" class="cat-btn" data-cat="external_youtube_ads" onclick="setCategory('external_youtube_ads', this)">
-        ▶️ External YouTube Ads <span class="cat-count" id="countYtAds">0</span>
-      </button>
-      <button type="button" class="cat-btn" data-cat="external_ads" onclick="setCategory('external_ads', this)">
-        🌐 External Ads <span class="cat-count" id="countExtAds">0</span>
+      <button type="button" class="cat-btn" data-cat="shortlinks" onclick="setCategory('shortlinks', this)">
+        🔗 Shortlinks <span class="cat-count" id="countShortlinks">0</span>
       </button>
     </nav>
 
     <!-- Barra de Búsqueda, Ordenamiento y Sonido -->
     <div class="toolbar-row">
-      <input type="search" id="searchInput" placeholder="🔍 Buscar Window Ads, Frame Ads, Video Ads, YouTube o External Ads..." oninput="renderGrid()" />
+      <input type="search" id="searchInput" placeholder="🔍 Buscar Offerwalls, Window Ads, Frame Ads o Shortlinks..." oninput="renderGrid()" />
       <select id="sortSelect" onchange="renderGrid()">
         <option value="default">Ordenar: Por defecto</option>
         <option value="reward_desc">Ordenar: Mayor recompensa</option>
@@ -943,12 +1233,15 @@
 
   <footer>
     <div class="footer-inner">
-      <div>CryptoClicks PTC © 2026 • Reinicio cada 24h • Pago mínimo: 1,000 Coins ($0.10 USDT)</div>
-      <button class="btn btn-secondary" onclick="openAdConfigModal()">⚙️ Configurar Adsterra</button>
+      <div>CryptoClicks PTC © 2026 • 50 Coins = $0.0005 USDT • Retiro mínimo: 10,000 Coins ($0.10 USDT) • 10% Referidos</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Publicar Anuncio</button>
+        <button class="btn btn-secondary btn-sm" onclick="openAdConfigModal()">⚙️ Configurar Enlaces, Offerwalls y Banners</button>
+      </div>
     </div>
   </footer>
 
-  <!-- Modal Visor de Anuncios -->
+  <!-- Modal Visor de Anuncios, Shortlinks y Faucet -->
   <div class="modal-backdrop" id="viewerModal">
     <div class="modal">
       <div class="modal-header">
@@ -963,10 +1256,10 @@
           <div class="stage-controls">
             <div class="timer-row">
               <div id="viewerBadge"></div>
-              <div id="viewerTimerText" style="font-size: 1.35rem; font-weight: 800; color: var(--cyan);">20s</div>
+              <div id="viewerTimerText" style="font-size: 1.35rem; font-weight: 800; color: var(--cyan);">15s</div>
             </div>
             <p id="viewerHint" style="font-size: 0.82rem; color: var(--muted);">
-              Mantén esta pestaña activa para que avance el temporizador.
+              Mantén esta pestaña activa y visualiza el anuncio lateral para que avance el temporizador.
             </p>
             <div class="progress-wrap">
               <div class="progress-bar" id="viewerProgress"></div>
@@ -989,55 +1282,288 @@
     </div>
   </div>
 
+  <!-- Modal Offerwall Integrado -->
+  <div class="modal-backdrop" id="offerwallModal">
+    <div class="modal" style="max-width: 920px;">
+      <div class="modal-header">
+        <h3 id="offerwallModalTitle">🧱 Offerwall</h3>
+        <button class="close-btn" onclick="closeOfferwallModal()">✕</button>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-size:0.82rem; color:var(--muted);">
+        <span id="offerwallSubInfo">Completa encuestas, tareas o registros. Las Coins se acreditan automáticamente al validar la conversión.</span>
+        <a id="offerwallExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">↗ Abrir en pestaña nueva</a>
+      </div>
+      <iframe id="offerwallIframe" class="offerwall-frame" src="about:blank" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <!-- Modal Contratar Publicidad (Anunciantes Externos) -->
+  <div class="modal-backdrop" id="advertiseModal">
+    <div class="modal" style="max-width: 660px;">
+      <div class="modal-header">
+        <h3>📢 Contratar Publicidad en CryptoClicks PTC</h3>
+        <button class="close-btn" onclick="closeAdvertiseModal()">✕</button>
+      </div>
+      <p style="font-size: 0.84rem; color: var(--muted);">
+        Promociona tu faucet, enlace de referido, canal de Telegram o web frente a usuarios reales. Tú cobras por adelantado y el anuncio entra al catálogo con el margen ya asegurado.
+      </p>
+
+      <form onsubmit="submitAdvertiserCampaign(event)" style="display:flex; flex-direction:column; gap:11px;">
+        <div class="form-2col">
+          <div class="field-group">
+            <label for="advTitle">Título del Anuncio (máx. 45 caracteres)</label>
+            <input type="text" id="advTitle" placeholder="Ej. Gana Solana gratis cada 5 min" maxlength="45" required />
+          </div>
+          <div class="field-group">
+            <label for="advFormat">Formato de Anuncio</label>
+            <select id="advFormat" onchange="recalcCampaignPrice()">
+              <option value="window_ads">🪟 Window Ad (Abre pestaña nueva — $0.0012 / clic)</option>
+              <option value="frame_ads">🖼️ Frame Ad (Visor integrado — $0.0009 / vista)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="advUrl">URL de Destino (https://...)</label>
+          <input type="url" id="advUrl" placeholder="https://tusitio.com/?ref=usuario" required />
+        </div>
+
+        <div class="field-group">
+          <label for="advDesc">Descripción corta del anuncio</label>
+          <input type="text" id="advDesc" placeholder="Breve descripción de tu oferta o plataforma..." maxlength="95" required />
+        </div>
+
+        <div class="form-2col">
+          <div class="field-group">
+            <label for="advClicks">Cantidad de Visitas / Clics</label>
+            <select id="advClicks" onchange="recalcCampaignPrice()">
+              <option value="100">100 visitas garantizadas</option>
+              <option value="500" selected>500 visitas garantizadas</option>
+              <option value="1000">1,000 visitas garantizadas</option>
+              <option value="2500">2,500 visitas garantizadas</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="advDuration">Duración por Visita</label>
+            <select id="advDuration" onchange="recalcCampaignPrice()">
+              <option value="15">15 segundos (Tarifa base)</option>
+              <option value="20">20 segundos (+20% tarifa)</option>
+              <option value="30">30 segundos (+40% tarifa)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-2col">
+          <div class="field-group">
+            <label for="advPayMethod">Método de Pago del Anunciante</label>
+            <select id="advPayMethod">
+              <option value="FaucetPay (USDT)">FaucetPay (USDT / TRX / LTC)</option>
+              <option value="Binance Pay (USDT)">Binance Pay (USDT)</option>
+              <option value="Saldo interno (Coins)">Saldo interno de mi cuenta (Coins)</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="advTxId">ID de Transacción / Correo FaucetPay</label>
+            <input type="text" id="advTxId" placeholder="Ej. TX-984321 o correo@faucetpay.io" required />
+          </div>
+        </div>
+
+        <div class="adv-summary">
+          <div class="adv-row">
+            <span style="color:var(--muted);">Pago al usuario por visita:</span>
+            <strong id="advUserRewardPreview" style="color:var(--accent);">40 Coins ($0.00040 USDT)</strong>
+          </div>
+          <div class="adv-row">
+            <span style="color:var(--muted);">Total a pagar por el anunciante:</span>
+            <strong id="advTotalUsdPreview" style="color:var(--cyan); font-size:1rem;">$0.6000 USDT (60,000 Coins)</strong>
+          </div>
+          <div style="font-size:0.75rem; color:var(--muted);">
+            Tu ganancia neta garantizada en esta campaña (margen 65%): <strong id="advNetProfitPreview" style="color:var(--accent);">$0.4000 USDT</strong>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding:10px;">
+          🚀 Enviar y Publicar Campaña en el Catálogo
+        </button>
+      </form>
+
+      <div>
+        <h4 style="font-size:0.9rem; margin-bottom:6px; color:var(--purple);">📋 Campañas de Anunciantes Activas</h4>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Campaña</th>
+                <th>Formato</th>
+                <th>Progreso</th>
+                <th>Pago</th>
+              </tr>
+            </thead>
+            <tbody id="advertiserCampaignsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal Retiro -->
   <div class="modal-backdrop" id="withdrawModal">
-    <div class="modal" style="max-width: 460px;">
+    <div class="modal" style="max-width: 470px;">
       <div class="modal-header">
         <h3>💸 Solicitar Retiro</h3>
         <button class="close-btn" onclick="closeWithdrawModal()">✕</button>
       </div>
-      <p style="font-size: 0.88rem; color: var(--muted);">
-        Tasa de referencia: 1,000 Coins = $0.1000 USDT (Mínimo: 1,000 Coins).
+      <p style="font-size: 0.86rem; color: var(--muted);">
+        Tasa: 50 Coins = $0.0005 USDT (Mínimo: 10,000 Coins = $0.1000 USDT).
       </p>
       <div>
-        <label style="font-size: 0.85rem; display: block; margin-bottom: 6px;">Método</label>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">Método de Pago</label>
         <select id="withdrawMethod">
           <option value="FaucetPay">FaucetPay (USDT / LTC / TRX)</option>
           <option value="Cwallet">Cwallet (USDT)</option>
         </select>
       </div>
       <div>
-        <label style="font-size: 0.85rem; display: block; margin-bottom: 6px;">Correo o Wallet</label>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">Correo de FaucetPay/Cwallet o Wallet</label>
         <input type="text" id="withdrawAddress" placeholder="usuario@correo.com o dirección" />
       </div>
       <div>
-        <label style="font-size: 0.85rem; display: block; margin-bottom: 6px;">Cantidad en Coins</label>
-        <input type="number" id="withdrawAmount" value="1000" min="1000" step="50" />
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">Cantidad en Coins</label>
+        <input type="number" id="withdrawAmount" value="10000" min="10000" step="100" />
       </div>
       <button class="btn btn-primary" onclick="submitWithdraw()">Confirmar Retiro</button>
     </div>
   </div>
 
-  <!-- Modal Configurar Adsterra -->
-  <div class="modal-backdrop" id="adConfigModal">
-    <div class="modal" style="max-width: 580px;">
+  <!-- Modal Historial (Últimos 10 movimientos + Retiros) -->
+  <div class="modal-backdrop" id="historyModal">
+    <div class="modal" style="max-width: 720px;">
       <div class="modal-header">
-        <h3>⚙️ Configurar Códigos y Direct Links de Adsterra</h3>
+        <h3>📜 Historial de Movimientos y Retiros</h3>
+        <button class="close-btn" onclick="closeHistoryModal()">✕</button>
+      </div>
+
+      <div>
+        <h4 style="font-size: 0.92rem; margin-bottom: 8px; color: var(--cyan);">⚡ Últimos 10 Movimientos</h4>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Actividad</th>
+                <th>Monto</th>
+                <th>Equivalente</th>
+              </tr>
+            </thead>
+            <tbody id="movementsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="font-size: 0.92rem; margin-bottom: 8px; color: var(--accent);">💸 Historial de Retiros</h4>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Método</th>
+                <th>Destino</th>
+                <th>Monto</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="withdrawalsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Referidos (10%) -->
+  <div class="modal-backdrop" id="referralModal">
+    <div class="modal" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3>🤝 Programa de Referidos (10 % de por vida)</h3>
+        <button class="close-btn" onclick="closeReferralModal()">✕</button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--muted);">
+        Comparte tu enlace de invitación. Ganas el <strong>10 %</strong> de todas las monedas que tus referidos generen en offerwalls, anuncios, shortlinks y faucet, sin descontarles nada a ellos.
+      </p>
+
+      <div>
+        <label style="font-size: 0.82rem; color: var(--muted); display: block; margin-bottom: 5px;">Tu Enlace de Invitación</label>
+        <div class="ref-link-box">
+          <input type="text" id="referralLinkInput" readonly />
+          <button type="button" class="btn btn-primary" onclick="copyReferralLink()">Copiar</button>
+        </div>
+      </div>
+
+      <div class="ref-stats-grid">
+        <div class="ref-stat-card">
+          <div class="ref-stat-label">Tu Código</div>
+          <div class="ref-stat-val" id="refCodeDisplay">—</div>
+        </div>
+        <div class="ref-stat-card">
+          <div class="ref-stat-label">Referidos Activos</div>
+          <div class="ref-stat-val" id="refCountDisplay">0</div>
+        </div>
+        <div class="ref-stat-card">
+          <div class="ref-stat-label">Comisiones Ganadas (10%)</div>
+          <div class="ref-stat-val" id="refEarnedDisplay">0 Coins</div>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="font-size: 0.9rem; margin-bottom: 8px; color: var(--text);">Lista de Referidos Registrados</h4>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Fecha Registro</th>
+                <th>Comisión Generada (10%)</th>
+              </tr>
+            </thead>
+            <tbody id="referralsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Configurar Enlaces, Offerwalls y Banners -->
+  <div class="modal-backdrop" id="adConfigModal">
+    <div class="modal" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3>⚙️ Configurar Offerwalls, Enlaces y Banners</h3>
         <button class="close-btn" onclick="closeAdConfigModal()">✕</button>
       </div>
       <p style="font-size: 0.84rem; color: var(--muted);">
-        Configura tus banners de Adsterra y pega tus <strong>Direct Links</strong> (uno por línea) para asignarlos a los 10 anuncios de <strong>Window Ads</strong>.
+        Usa <code>{user_id}</code> dentro de las URLs de Offerwalls para que el proveedor envíe el nombre del usuario en el postback automático.
       </p>
       <div>
-        <label style="font-size: 0.84rem; display: block; margin-bottom: 6px;">Direct Links de Adsterra para Window Ads (1 por línea o 1 general)</label>
-        <textarea id="directLinksInput" placeholder="https://www.profitablecpmrate.com/tu-direct-link-1&#10;https://www.profitablecpmrate.com/tu-direct-link-2"></textarea>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">🧱 URLs de Offerwalls (4 líneas: TimeWall, CPX Research, BitLabs, Monlix)</label>
+        <textarea id="offerwallLinksInput" placeholder="https://timewall.io/users/login?oid=TU_ID&uid={user_id}&#10;https://offers.cpx-research.com/index.php?app_id=TU_APP&ext_user_id={user_id}"></textarea>
       </div>
       <div>
-        <label style="font-size: 0.84rem; display: block; margin-bottom: 6px;">Banner Superior (728x90)</label>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">🪟 Window Ads — Smartlinks / Direct Links de Adsterra (hasta 10 líneas)</label>
+        <textarea id="windowLinksInput" placeholder="https://www.profitablecpmrate.com/tu-smartlink"></textarea>
+      </div>
+      <div>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">🖼️ Frame Ads — URLs incrustables en iframe / A-Ads (hasta 10 líneas)</label>
+        <textarea id="frameLinksInput" placeholder="https://ad.a-ads.com/tu-unidad"></textarea>
+      </div>
+      <div>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">🔗 Shortlinks — Enlaces acortados monetizados (130 Coins c/u, hasta 10 líneas)</label>
+        <textarea id="shortLinksInput" placeholder="https://exe.io/tu-enlace-1&#10;https://ouo.io/tu-enlace-2"></textarea>
+      </div>
+      <div>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">Banner Superior (728x90)</label>
         <textarea id="adTopInput" placeholder="<!-- Pega aquí tu script 728x90 de Adsterra -->"></textarea>
       </div>
       <div>
-        <label style="font-size: 0.84rem; display: block; margin-bottom: 6px;">Banner / Unidad en Visor (300x250)</label>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 5px;">Banner en Visor y Faucet (300x250)</label>
         <textarea id="adModalInput" placeholder="<!-- Pega aquí tu script 300x250 de Adsterra -->"></textarea>
       </div>
       <div style="display: flex; gap: 10px; justify-content: flex-end;">
@@ -1050,12 +1576,37 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const COIN_TO_USDT = 0.0001; // 1,000 coins = $0.10 USDT
+    // Tasa: 50 Coins = $0.0005 USDT => 1 Coin = $0.00001 USDT
+    const COIN_TO_USDT = 0.00001;
+    const MIN_WITHDRAW_COINS = 10000; // $0.10 USDT
     const RESET_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 horas
-    const USERS_STORAGE_KEY = "cc_users_db";
-    const CURRENT_USER_KEY = "cc_current_user_email";
+    const WELCOME_BONUS_COINS = 200; // $0.00200 USDT
+    const DAILY_BONUS_COINS = 100; // $0.00100 USDT (único bono diario)
+    const REFERRAL_PERCENT = 0.10; // 10% justo
+    const MAX_ACCOUNTS_PER_DEVICE = 2;
+
+    // Faucet y Niveles: 1,000 XP por nivel, inicia en 60 min y baja 2 min por nivel hasta mínimo 10 min, paga 35 Coins
+    const FAUCET_BASE_MINUTES = 60;
+    const FAUCET_REDUCTION_PER_LEVEL = 2;
+    const FAUCET_MIN_MINUTES = 10;
+    const FAUCET_REWARD_COINS = 35;
+    const FAUCET_AD_VIEW_SECONDS = 10;
+    const XP_PER_LEVEL = 1000;
+
+    const USERS_STORAGE_KEY = "cc_users_db_v5";
+    const CURRENT_USER_KEY = "cc_current_user_email_v5";
+    const DEVICE_ID_KEY = "cc_device_fingerprint_v1";
     const SOUND_PREF_KEY = "cc_sound_enabled";
-    const DIRECT_LINKS_STORAGE_KEY = "cc_adsterra_direct_links";
+    const CAMPAIGNS_STORAGE_KEY = "cc_advertiser_campaigns_v1";
+
+    const STORAGE_KEYS = {
+      offerwallLinks: "cc_links_offerwalls",
+      windowLinks: "cc_links_window",
+      frameLinks: "cc_links_frame",
+      shortLinks: "cc_links_short",
+      adTop: "cc_ad_top",
+      adModal: "cc_ad_modal"
+    };
 
     const DEFAULT_AD_728 = `<script>
   atOptions = {
@@ -1079,165 +1630,232 @@
 <\/script>
 <script src="https://bauval.org/22/4b4176a217a51ae6c13d5619520addd4"><\/script>`;
 
-    /*
-      Puedes pegar tus Direct Links de Adsterra aquí en DEFAULT_DIRECT_LINKS
-      (o desde el botón "Configurar Adsterra" en el pie de página).
-    */
-    const DEFAULT_DIRECT_LINKS = [
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/",
-      "https://example.com/"
+    const DEFAULT_OFFERWALL_LINKS = [
+      "https://timewall.io/",
+      "https://www.cpx-research.com/",
+      "https://bitlabs.ai/",
+      "https://monlix.com/"
     ];
+    const DEFAULT_WINDOW_LINKS = ["https://example.com/"];
+    const DEFAULT_FRAME_LINKS = ["https://example.com/"];
+    const DEFAULT_SHORTLINKS = ["https://example.com/"];
 
-    const WINDOW_ADS_CONFIG = [
-      { id: "wn1", icon: "🪟", title: "Window Ad #1 — Oferta Patrocinada", desc: "Abre el enlace patrocinado en ventana nueva y espera 15s.", duration: 15, reward: 40 },
-      { id: "wn2", icon: "🚀", title: "Window Ad #2 — Promo Cripto", desc: "Explora la oferta externa en nueva pestaña durante 15s.", duration: 15, reward: 40 },
-      { id: "wn3", icon: "💎", title: "Window Ad #3 — Portal Destacado", desc: "Mantén la sesión activa hasta completar el contador.", duration: 15, reward: 45 },
-      { id: "wn4", icon: "⚡", title: "Window Ad #4 — Enlace Directo", desc: "Visita patrocinada en ventana externa con reinicio cada 24h.", duration: 15, reward: 45 },
-      { id: "wn5", icon: "🌐", title: "Window Ad #5 — Campaña Global", desc: "Abre la ventana patrocinada y vuelve aquí al terminar.", duration: 20, reward: 50 },
-      { id: "wn6", icon: "🎯", title: "Window Ad #6 — Selección Diaria", desc: "Completa los 20 segundos para habilitar la verificación.", duration: 20, reward: 50 },
-      { id: "wn7", icon: "🔥", title: "Window Ad #7 — Oferta Express", desc: "Anuncio en pestaña nueva con recompensa al finalizar.", duration: 20, reward: 55 },
-      { id: "wn8", icon: "🛰️", title: "Window Ad #8 — Sitio Asociado", desc: "Abre el enlace externo y resuelve la suma rápida.", duration: 20, reward: 55 },
-      { id: "wn9", icon: "🏆", title: "Window Ad #9 — Bono Especial", desc: "Visita patrocinada de 25 segundos con mayor recompensa.", duration: 25, reward: 65 },
-      { id: "wn10", icon: "💰", title: "Window Ad #10 — Top Diario", desc: "Último enlace diario de Window Ads; se resetea en 24h.", duration: 25, reward: 70 }
-    ];
-
-    const OTHER_BASE_TASKS = [
+    // 4 Offerwalls principales
+    const OFFERWALLS_CONFIG = [
       {
-        id: "fr1",
-        cat: "frame_ads",
-        icon: "🖼️",
-        title: "Frame Ad: Cripto Mercado en Vivo",
-        desc: "Anuncio en marco integrado; se resetea automáticamente cada 24 horas.",
-        duration: 15,
-        reward: 45,
-        used: 0,
-        limit: 1,
-        url: "https://example.com/"
+        id: "ow1",
+        icon: "⏱️",
+        title: "TimeWall — Microtareas y Clics",
+        desc: "Gana Coins ilimitadas viendo anuncios, haciendo clics rápidos y tareas cortas con acreditación automática.",
+        duration: 0,
+        reward: 2500,
+        rewardLabel: "Hasta 2,500+ Coins",
+        xp: 50
       },
       {
-        id: "fr2",
-        cat: "frame_ads",
-        icon: "📊",
-        title: "Frame Ad: Calculadora DeFi",
-        desc: "Explora el contenido dentro del marco del visor para validar la recompensa.",
-        duration: 15,
-        reward: 35,
-        used: 0,
-        limit: 1,
-        url: "https://example.com/"
+        id: "ow2",
+        icon: "📋",
+        title: "CPX Research — Encuestas Pagadas",
+        desc: "Completa encuestas disponibles en tu país y recibe entre 500 y 15,000 Coins al instante.",
+        duration: 0,
+        reward: 15000,
+        rewardLabel: "500 – 15,000 Coins",
+        xp: 100
       },
       {
-        id: "vd1",
-        cat: "video_ads",
-        icon: "🎬",
-        title: "Video Ad: Lanzamiento Cripto 2026",
-        desc: "Reproduce el video patrocinado dentro del reproductor para ganar monedas.",
-        duration: 25,
-        reward: 85,
-        used: 0,
-        limit: 1,
-        videoUrl: "",
-        embedUrl: ""
-      },
-      {
-        id: "vd2",
-        cat: "video_ads",
+        id: "ow3",
         icon: "🎮",
-        title: "Video Ad: Tráiler Juego Web3",
-        desc: "Mira el video promocional completo hasta que active la verificación final.",
-        duration: 20,
-        reward: 65,
-        used: 0,
-        limit: 1,
-        videoUrl: "",
-        embedUrl: ""
+        title: "BitLabs — Encuestas y Juegos Móviles",
+        desc: "Prueba aplicaciones o responde encuestas cortas con alto pago en Coins y XP extra.",
+        duration: 0,
+        reward: 10000,
+        rewardLabel: "300 – 10,000 Coins",
+        xp: 80
       },
       {
-        id: "yt1",
-        cat: "external_youtube_ads",
-        icon: "▶️",
-        title: "YouTube Ad: Análisis Cripto Semanal",
-        desc: "Reproduce el video de YouTube asignado para completar la tarea.",
-        duration: 25,
-        reward: 80,
-        used: 0,
-        limit: 1,
-        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-      },
-      {
-        id: "yt2",
-        cat: "external_youtube_ads",
-        icon: "📺",
-        title: "YouTube Ad: Guía Rápida de Wallets",
-        desc: "Mira el video de YouTube y resuelve la suma al terminar el tiempo.",
-        duration: 20,
-        reward: 60,
-        used: 0,
-        limit: 1,
-        youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-      },
-      {
-        id: "ex1",
-        cat: "external_ads",
-        icon: "🌐",
-        title: "External Ad: Oferta Patrocinada Web",
-        desc: "Enlace externo patrocinado; se abre en nueva pestaña con validación por tiempo.",
-        duration: 18,
-        reward: 75,
-        used: 0,
-        limit: 1,
-        url: "https://example.com/"
-      },
-      {
-        id: "ex2",
-        cat: "external_ads",
-        icon: "🔗",
-        title: "External Ad: Portal de Herramientas",
-        desc: "Visita el enlace externo y completa el contador para reclamar tus Coins.",
-        duration: 15,
-        reward: 55,
-        used: 0,
-        limit: 1,
-        url: "https://example.com/"
+        id: "ow4",
+        icon: "🧱",
+        title: "Monlix — Muro de Ofertas y PTC",
+        desc: "Registros rápidos, ofertas web y encuestas diarias compatibles con dispositivos móviles.",
+        duration: 0,
+        reward: 8000,
+        rewardLabel: "200 – 8,000 Coins",
+        xp: 60
       }
     ];
 
-    function getDirectLinksList() {
-      const savedRaw = localStorage.getItem(DIRECT_LINKS_STORAGE_KEY);
+    // 10 Window Ads (35 a 50 Coins)
+    const WINDOW_ADS_CONFIG = [
+      { id: "wn1", icon: "🪟", title: "Window Ad #1 — Smartlink Diario", desc: "Abre el enlace patrocinado en pestaña nueva durante 15s.", duration: 15, reward: 35, xp: 10 },
+      { id: "wn2", icon: "🚀", title: "Window Ad #2 — Oferta Patrocinada", desc: "Mantén la ventana abierta 15s para habilitar el reclamo.", duration: 15, reward: 35, xp: 10 },
+      { id: "wn3", icon: "💎", title: "Window Ad #3 — Campaña Destacada", desc: "Anuncio externo en nueva pestaña con reinicio cada 24h.", duration: 15, reward: 35, xp: 10 },
+      { id: "wn4", icon: "⚡", title: "Window Ad #4 — Enlace Directo", desc: "Visita patrocinada de 15 segundos con verificación rápida.", duration: 15, reward: 40, xp: 10 },
+      { id: "wn5", icon: "🌐", title: "Window Ad #5 — Promo Global", desc: "Explora el anuncio externo durante 20s y vuelve aquí.", duration: 20, reward: 40, xp: 12 },
+      { id: "wn6", icon: "🎯", title: "Window Ad #6 — Selección Diaria", desc: "Completa los 20 segundos para acreditar tus Coins.", duration: 20, reward: 40, xp: 12 },
+      { id: "wn7", icon: "🔥", title: "Window Ad #7 — Oferta Express", desc: "Anuncio en pestaña nueva con recompensa al finalizar.", duration: 20, reward: 45, xp: 12 },
+      { id: "wn8", icon: "🛰️", title: "Window Ad #8 — Sitio Asociado", desc: "Abre la ventana patrocinada y resuelve la suma final.", duration: 20, reward: 45, xp: 15 },
+      { id: "wn9", icon: "🏆", title: "Window Ad #9 — Bono Especial", desc: "Visita patrocinada de 25 segundos ($0.00050 USDT).", duration: 25, reward: 50, xp: 15 },
+      { id: "wn10", icon: "💰", title: "Window Ad #10 — Top Diario", desc: "Último Window Ad del ciclo; se resetea en 24 horas.", duration: 25, reward: 50, xp: 15 }
+    ];
+
+    // 10 Frame Ads (30 a 45 Coins)
+    const FRAME_ADS_CONFIG = [
+      { id: "fr1", icon: "🖼️", title: "Frame Ad #1 — Espacio Patrocinado", desc: "Visualiza el anuncio dentro del marco durante 15s.", duration: 15, reward: 30, xp: 10 },
+      { id: "fr2", icon: "📊", title: "Frame Ad #2 — Unidad Display", desc: "Mantén activo el visor 15s para validar la impresión.", duration: 15, reward: 30, xp: 10 },
+      { id: "fr3", icon: "🧩", title: "Frame Ad #3 — Bloque Web", desc: "Anuncio en marco integrado con reinicio cada 24h.", duration: 15, reward: 30, xp: 10 },
+      { id: "fr4", icon: "📡", title: "Frame Ad #4 — Red Asociada", desc: "Espera 15 segundos en el visor para desbloquear el captcha.", duration: 15, reward: 35, xp: 10 },
+      { id: "fr5", icon: "💠", title: "Frame Ad #5 — Banner Interactivo", desc: "Visualización de 20s dentro del reproductor integrado.", duration: 20, reward: 35, xp: 12 },
+      { id: "fr6", icon: "🧭", title: "Frame Ad #6 — Portal Patrocinado", desc: "Permanece en la pestaña durante 20s para sumar Coins.", duration: 20, reward: 35, xp: 12 },
+      { id: "fr7", icon: "📌", title: "Frame Ad #7 — Campaña Marco", desc: "Anuncio integrado de 20 segundos con pago instantáneo.", duration: 20, reward: 40, xp: 12 },
+      { id: "fr8", icon: "🛡️", title: "Frame Ad #8 — Bloque Verificado", desc: "Completa el contador de 20s en el marco del visor.", duration: 20, reward: 40, xp: 15 },
+      { id: "fr9", icon: "🌟", title: "Frame Ad #9 — Destacado Marco", desc: "Anuncio integrado de 25 segundos con mayor recompensa.", duration: 25, reward: 45, xp: 15 },
+      { id: "fr10", icon: "🎁", title: "Frame Ad #10 — Cierre Frame", desc: "Décimo Frame Ad diario; disponible de nuevo en 24h.", duration: 25, reward: 45, xp: 15 }
+    ];
+
+    // 10 Shortlinks (130 Coins cada uno)
+    const SHORTLINKS_CONFIG = [
+      { id: "sl1", icon: "🔗", title: "Shortlink #1 — Enlace Acortado", desc: "Completa los pasos del acortador y espera el contador para ganar 130 Coins.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl2", icon: "🔗", title: "Shortlink #2 — Enlace Acortado", desc: "Abre el shortlink patrocinado, supera la verificación y reclama 130 Coins.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl3", icon: "🔗", title: "Shortlink #3 — Enlace Acortado", desc: "Visita el acortador monetizado y completa el tiempo requerido.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl4", icon: "🔗", title: "Shortlink #4 — Enlace Acortado", desc: "Recompensa fija de 130 Coins ($0.00130 USDT) al finalizar.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl5", icon: "🔗", title: "Shortlink #5 — Enlace Acortado", desc: "Completa los pasos del enlace corto y resuelve la suma final.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl6", icon: "🔗", title: "Shortlink #6 — Enlace Acortado", desc: "Acortador diario con reinicio automático cada 24 horas.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl7", icon: "🔗", title: "Shortlink #7 — Enlace Acortado", desc: "Abre el shortlink en nueva pestaña y mantén activo el visor.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl8", icon: "🔗", title: "Shortlink #8 — Enlace Acortado", desc: "Suma +130 Coins ($0.00130 USDT) completando este enlace.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl9", icon: "🔗", title: "Shortlink #9 — Enlace Acortado", desc: "Penúltimo shortlink del ciclo diario de 24 horas.", duration: 20, reward: 130, xp: 25 },
+      { id: "sl10", icon: "🔗", title: "Shortlink #10 — Enlace Acortado", desc: "Último shortlink diario (+130 Coins); se habilita de nuevo en 24h.", duration: 20, reward: 130, xp: 25 }
+    ];
+
+    /* Seguridad */
+    function getOrCreateDeviceId() {
+      let id = localStorage.getItem(DEVICE_ID_KEY);
+      if (!id) {
+        const raw = [
+          navigator.userAgent,
+          navigator.language,
+          screen.width + "x" + screen.height,
+          new Date().getTimezoneOffset(),
+          Math.random().toString(36).slice(2, 10)
+        ].join("|");
+        id = "DEV-" + computeIntegrityHash(raw);
+        localStorage.setItem(DEVICE_ID_KEY, id);
+      }
+      return id;
+    }
+
+    function computeIntegrityHash(str) {
+      let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+      for (let i = 0; i < str.length; i++) {
+        const ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+      }
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+      return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36).toUpperCase();
+    }
+
+    function signUserRecord(user) {
+      const payload = `${user.email}|${Math.floor(user.coins)}|${Math.floor(user.xp || 0)}|${user.refCode}|CC_SEC_2026`;
+      return computeIntegrityHash(payload);
+    }
+
+    function verifyUserIntegrity(user) {
+      if (!user._sig) return true;
+      return user._sig === signUserRecord(user);
+    }
+
+    let lastActionTimestamp = 0;
+    function passRateLimit(minMs = 900) {
+      const now = Date.now();
+      if (now - lastActionTimestamp < minMs) {
+        showToast("Espera un momento antes de realizar otra acción.");
+        return false;
+      }
+      lastActionTimestamp = now;
+      return true;
+    }
+
+    function getLinksList(storageKey, fallbackArray) {
+      const savedRaw = localStorage.getItem(storageKey);
       if (savedRaw && savedRaw.trim()) {
-        const lines = savedRaw
-          .split(/\r?\n/)
-          .map(l => l.trim())
-          .filter(Boolean);
+        const lines = savedRaw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
         if (lines.length) return lines;
       }
-      return DEFAULT_DIRECT_LINKS;
+      return fallbackArray;
+    }
+
+    /* Campañas de Anunciantes Externos */
+    function getAdvertiserCampaigns() {
+      try {
+        return JSON.parse(localStorage.getItem(CAMPAIGNS_STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveAdvertiserCampaigns(list) {
+      localStorage.setItem(CAMPAIGNS_STORAGE_KEY, JSON.stringify(list));
     }
 
     function buildBaseTasks() {
-      const links = getDirectLinksList();
-      const windowTasks = WINDOW_ADS_CONFIG.map((cfg, idx) => ({
-        id: cfg.id,
-        cat: "window_ads",
-        icon: cfg.icon,
-        title: cfg.title,
-        desc: cfg.desc,
-        duration: cfg.duration,
-        reward: cfg.reward,
+      const owLinks = getLinksList(STORAGE_KEYS.offerwallLinks, DEFAULT_OFFERWALL_LINKS);
+      const winLinks = getLinksList(STORAGE_KEYS.windowLinks, DEFAULT_WINDOW_LINKS);
+      const frmLinks = getLinksList(STORAGE_KEYS.frameLinks, DEFAULT_FRAME_LINKS);
+      const shrtLinks = getLinksList(STORAGE_KEYS.shortLinks, DEFAULT_SHORTLINKS);
+
+      const offerwallTasks = OFFERWALLS_CONFIG.map((cfg, idx) => ({
+        ...cfg,
+        cat: "offerwalls",
         used: 0,
-        limit: 1,
-        url: links[idx % links.length] || "https://example.com/"
+        limit: 999999,
+        url: owLinks[idx % owLinks.length] || "https://timewall.io/"
       }));
 
-      return [...windowTasks, ...JSON.parse(JSON.stringify(OTHER_BASE_TASKS))];
+      // Campañas activas contratadas por usuarios/anunciantes externos
+      const campaigns = getAdvertiserCampaigns().filter(c => c.deliveredClicks < c.totalClicks);
+      const sponsoredTasks = campaigns.map(c => ({
+        id: c.id,
+        icon: c.format === "window_ads" ? "📢" : "🖼️",
+        title: `${c.title} (Patrocinado)`,
+        desc: c.desc,
+        duration: c.duration,
+        reward: c.userRewardCoins,
+        xp: 12,
+        cat: c.format,
+        used: 0,
+        limit: 1,
+        url: c.url,
+        isSponsored: true,
+        advertiser: c.advertiser,
+        clicksInfo: `${c.deliveredClicks}/${c.totalClicks} vistas`
+      }));
+
+      const windowTasks = WINDOW_ADS_CONFIG.map((cfg, idx) => ({
+        ...cfg,
+        cat: "window_ads",
+        used: 0,
+        limit: 1,
+        url: winLinks[idx % winLinks.length] || "https://example.com/"
+      }));
+
+      const frameTasks = FRAME_ADS_CONFIG.map((cfg, idx) => ({
+        ...cfg,
+        cat: "frame_ads",
+        used: 0,
+        limit: 1,
+        url: frmLinks[idx % frmLinks.length] || "https://example.com/"
+      }));
+
+      const shortlinkTasks = SHORTLINKS_CONFIG.map((cfg, idx) => ({
+        ...cfg,
+        cat: "shortlinks",
+        used: 0,
+        limit: 1,
+        url: shrtLinks[idx % shrtLinks.length] || "https://example.com/"
+      }));
+
+      return [...offerwallTasks, ...sponsoredTasks, ...windowTasks, ...frameTasks, ...shortlinkTasks];
     }
 
     let tasks = buildBaseTasks();
@@ -1245,22 +1863,27 @@
     let state = {
       currentUser: null,
       coins: 0,
+      xp: 0,
       category: "all",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
-      adTopHtml: localStorage.getItem("cc_ad_top") ?? DEFAULT_AD_728,
-      adModalHtml: localStorage.getItem("cc_ad_modal") ?? DEFAULT_AD_300
+      adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
+      adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300
     };
 
     let activeSession = null;
     let timerInterval = null;
     let expectedCaptcha = null;
 
+    function formatUsdt(coins) {
+      return (coins * COIN_TO_USDT).toFixed(5);
+    }
+
     function showToast(msg) {
       const toast = document.getElementById("toast");
       toast.textContent = msg;
       toast.classList.add("show");
       clearTimeout(toast._t);
-      toast._t = setTimeout(() => toast.classList.remove("show"), 2800);
+      toast._t = setTimeout(() => toast.classList.remove("show"), 3200);
     }
 
     function playFinishChime() {
@@ -1288,7 +1911,30 @@
       showToast(state.soundEnabled ? "Sonido activado al terminar." : "Sonido desactivado.");
     }
 
-    /* Reinicio automático cada 24 horas */
+    /* Niveles y Faucet (35 Coins, 60 min -> baja 2 min/nivel hasta 10 min) */
+    function getLevelInfo(xp = 0) {
+      const safeXp = Math.max(0, Math.floor(xp));
+      const level = Math.floor(safeXp / XP_PER_LEVEL) + 1;
+      const currentLevelXp = safeXp % XP_PER_LEVEL;
+      const faucetMinutes = Math.max(
+        FAUCET_MIN_MINUTES,
+        FAUCET_BASE_MINUTES - (level - 1) * FAUCET_REDUCTION_PER_LEVEL
+      );
+      const faucetReward = FAUCET_REWARD_COINS;
+      return { level, currentLevelXp, faucetMinutes, faucetReward };
+    }
+
+    function formatCountdown(ms) {
+      const clamped = Math.max(0, ms);
+      const totalSec = Math.ceil(clamped / 1000);
+      const h = Math.floor(totalSec / 3600);
+      const m = Math.floor((totalSec % 3600) / 60);
+      const s = totalSec % 60;
+      if (h > 0) return `${h}h ${m}m`;
+      if (m > 0) return `${m}m ${String(s).padStart(2, "0")}s`;
+      return `${s}s`;
+    }
+
     function formatRemaining24h(ms) {
       const clamped = Math.max(0, ms);
       const totalMinutes = Math.ceil(clamped / 60000);
@@ -1301,7 +1947,7 @@
     function sync24hCooldowns(now = Date.now()) {
       let changed = false;
       tasks.forEach(t => {
-        if (t.completedAt && (now - t.completedAt >= RESET_INTERVAL_MS)) {
+        if (t.cat !== "offerwalls" && t.completedAt && (now - t.completedAt >= RESET_INTERVAL_MS)) {
           t.used = 0;
           t.completedAt = null;
           changed = true;
@@ -1313,7 +1959,7 @@
       return changed;
     }
 
-    /* Gestión de Usuarios en localStorage */
+    /* Base de datos local */
     function getUsersDB() {
       try {
         return JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
@@ -1326,26 +1972,72 @@
       localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
     }
 
+    function addMovement(user, label, amountCoins) {
+      if (!Array.isArray(user.movements)) user.movements = [];
+      user.movements.unshift({
+        date: new Date().toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+        label,
+        coins: amountCoins
+      });
+      if (user.movements.length > 10) {
+        user.movements = user.movements.slice(0, 10);
+      }
+    }
+
+    function creditReferralCommission(earnedCoins, sourceLabel) {
+      if (!state.currentUser || !state.currentUser.referredBy) return;
+      const commission = Math.floor(earnedCoins * REFERRAL_PERCENT);
+      if (commission <= 0) return;
+
+      const users = getUsersDB();
+      const sponsorIdx = users.findIndex(u => u.refCode === state.currentUser.referredBy);
+      if (sponsorIdx !== -1) {
+        users[sponsorIdx].coins = Number(users[sponsorIdx].coins || 0) + commission;
+        users[sponsorIdx].refEarned = Number(users[sponsorIdx].refEarned || 0) + commission;
+        if (!users[sponsorIdx].refBreakdown) users[sponsorIdx].refBreakdown = {};
+        const childUser = state.currentUser.username;
+        users[sponsorIdx].refBreakdown[childUser] =
+          Number(users[sponsorIdx].refBreakdown[childUser] || 0) + commission;
+
+        addMovement(
+          users[sponsorIdx],
+          `Comisión 10% referido (${childUser} • ${sourceLabel})`,
+          commission
+        );
+        users[sponsorIdx]._sig = signUserRecord(users[sponsorIdx]);
+        saveUsersDB(users);
+      }
+    }
+
     function persistCurrentUserData() {
       if (!state.currentUser) return;
       const users = getUsersDB();
       const idx = users.findIndex(u => u.email === state.currentUser.email);
       const taskStates = {};
       tasks.forEach(t => {
-        taskStates[t.id] = {
-          used: t.used,
-          completedAt: t.completedAt || null
-        };
+        if (t.cat !== "offerwalls") {
+          taskStates[t.id] = {
+            used: t.used,
+            completedAt: t.completedAt || null
+          };
+        }
       });
 
       if (idx !== -1) {
         users[idx].coins = state.coins;
+        users[idx].xp = state.xp;
         users[idx].taskStates = taskStates;
+        users[idx].lastDailyBonusAt = state.currentUser.lastDailyBonusAt || null;
+        users[idx].lastFaucetAt = state.currentUser.lastFaucetAt || null;
+        users[idx].movements = state.currentUser.movements || [];
+        users[idx].withdrawals = state.currentUser.withdrawals || [];
+        users[idx]._sig = signUserRecord(users[idx]);
         state.currentUser = users[idx];
         saveUsersDB(users);
       }
     }
 
+    /* Autenticación */
     function switchAuthTab(tab) {
       const isLogin = tab === "login";
       document.getElementById("authTabLogin").classList.toggle("active", isLogin);
@@ -1354,12 +2046,21 @@
       document.getElementById("registerForm").classList.toggle("hidden", isLogin);
     }
 
+    function generateRefCode(username) {
+      const prefix = username.replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 4).padEnd(4, "X");
+      const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
+      return `REF-${prefix}${rand}`;
+    }
+
     function handleRegister(e) {
       e.preventDefault();
+      if (!passRateLimit(1200)) return;
+
       const username = document.getElementById("regUsername").value.trim();
       const email = document.getElementById("regEmail").value.trim().toLowerCase();
       const password = document.getElementById("regPassword").value;
       const confirm = document.getElementById("regPasswordConfirm").value;
+      const refCodeInput = document.getElementById("regRefCode").value.trim().toUpperCase();
 
       if (username.length < 3) {
         showToast("El usuario debe tener al menos 3 caracteres.");
@@ -1371,6 +2072,13 @@
       }
 
       const users = getUsersDB();
+      const deviceId = getOrCreateDeviceId();
+      const deviceAccounts = users.filter(u => u.deviceId === deviceId);
+
+      if (deviceAccounts.length >= MAX_ACCOUNTS_PER_DEVICE) {
+        showToast("Seguridad: límite máximo de 2 cuentas por dispositivo alcanzado.");
+        return;
+      }
       if (users.some(u => u.email === email)) {
         showToast("Ese correo ya está registrado.");
         return;
@@ -1380,14 +2088,37 @@
         return;
       }
 
+      let validSponsorCode = null;
+      if (refCodeInput) {
+        const sponsor = users.find(u => u.refCode === refCodeInput);
+        if (sponsor) {
+          validSponsorCode = sponsor.refCode;
+        } else {
+          showToast("El código de referido no existe; se creará la cuenta sin patrocinador.");
+        }
+      }
+
       const newUser = {
         username,
         email,
         password,
-        coins: 100,
+        deviceId,
+        refCode: generateRefCode(username),
+        referredBy: validSponsorCode,
+        refEarned: 0,
+        refBreakdown: {},
+        coins: WELCOME_BONUS_COINS,
+        xp: 0,
+        lastDailyBonusAt: null,
+        lastFaucetAt: null,
         taskStates: {},
+        movements: [],
+        withdrawals: [],
         createdAt: new Date().toISOString()
       };
+
+      addMovement(newUser, "Bono de bienvenida por registro", WELCOME_BONUS_COINS);
+      newUser._sig = signUserRecord(newUser);
 
       users.push(newUser);
       saveUsersDB(users);
@@ -1395,11 +2126,13 @@
 
       document.getElementById("registerForm").reset();
       startUserSession(newUser);
-      showToast(`¡Cuenta creada! Bienvenido, ${newUser.username} (+100 Coins).`);
+      showToast(`¡Cuenta creada! Bienvenido, ${newUser.username} (+${WELCOME_BONUS_COINS} Coins).`);
     }
 
     function handleLogin(e) {
       e.preventDefault();
+      if (!passRateLimit(1000)) return;
+
       const identifier = document.getElementById("loginIdentifier").value.trim().toLowerCase();
       const password = document.getElementById("loginPassword").value;
 
@@ -1415,6 +2148,11 @@
         return;
       }
 
+      if (!verifyUserIntegrity(found)) {
+        showToast("Alerta de seguridad: se detectó alteración manual en los datos locales.");
+        return;
+      }
+
       localStorage.setItem(CURRENT_USER_KEY, found.email);
       document.getElementById("loginForm").reset();
       startUserSession(found);
@@ -1426,6 +2164,7 @@
       tasks = buildBaseTasks();
       if (user && user.taskStates) {
         tasks.forEach(t => {
+          if (t.cat === "offerwalls") return;
           const saved = user.taskStates[t.id];
           if (saved && typeof saved === "object") {
             const elapsed = saved.completedAt ? (now - saved.completedAt) : RESET_INTERVAL_MS;
@@ -1442,8 +2181,10 @@
     }
 
     function startUserSession(user) {
+      if (!user.refCode) user.refCode = generateRefCode(user.username);
       state.currentUser = user;
       state.coins = Number(user.coins ?? 0);
+      state.xp = Number(user.xp ?? 0);
 
       hydrateTasksForUser(user);
 
@@ -1454,16 +2195,25 @@
       document.getElementById("dashboardSection").classList.remove("hidden");
       document.getElementById("headerUserControls").classList.remove("hidden");
 
-      updateBalanceUI();
+      const initLvl = getLevelInfo(state.xp).level;
+      document.getElementById("levelBadgeTop").dataset.lvl = String(initLvl);
+
+      updateBalanceAndLevelUI();
+      updateHubCardsUI();
       applyAdSlots();
       renderGrid();
     }
 
     function logoutUser() {
       closeViewerModal();
+      closeOfferwallModal();
+      closeAdvertiseModal();
       closeWithdrawModal();
+      closeHistoryModal();
+      closeReferralModal();
       state.currentUser = null;
       state.coins = 0;
+      state.xp = 0;
       localStorage.removeItem(CURRENT_USER_KEY);
 
       document.getElementById("dashboardSection").classList.add("hidden");
@@ -1474,11 +2224,85 @@
       showToast("Sesión cerrada.");
     }
 
-    function updateBalanceUI() {
-      const usdt = (state.coins * COIN_TO_USDT).toFixed(4);
+    function updateBalanceAndLevelUI() {
+      const prevLevel = Number(document.getElementById("levelBadgeTop").dataset.lvl || 1);
+      const info = getLevelInfo(state.xp);
+
+      document.getElementById("levelBadgeTop").textContent = `Nv. ${info.level}`;
+      document.getElementById("levelBadgeTop").dataset.lvl = String(info.level);
       document.getElementById("balanceDisplay").textContent =
-        `🪙 ${state.coins.toLocaleString()} Coins (≈ $${usdt} USDT)`;
+        `🪙 ${state.coins.toLocaleString()} Coins (≈ $${formatUsdt(state.coins)} USDT)`;
+
+      if (info.level > prevLevel && state.currentUser) {
+        showToast(`🎉 ¡Subiste a Nivel ${info.level}! Tu Faucet ahora espera ${info.faucetMinutes} min.`);
+      }
+
       persistCurrentUserData();
+    }
+
+    /* Hub: Bono Diario (100 Coins) + Faucet por Niveles (35 Coins) */
+    function updateHubCardsUI() {
+      if (!state.currentUser) return;
+      const now = Date.now();
+
+      // 1. Bono Diario (100 Coins)
+      const lastDaily = state.currentUser.lastDailyBonusAt || 0;
+      const dailyRemaining = RESET_INTERVAL_MS - (now - lastDaily);
+      const btnDaily = document.getElementById("btnDailyBonus");
+      const dailyStatus = document.getElementById("dailyBonusStatus");
+
+      if (lastDaily && dailyRemaining > 0) {
+        btnDaily.disabled = true;
+        btnDaily.textContent = "Reclamado (24h)";
+        dailyStatus.textContent = `Próximo en ${formatRemaining24h(dailyRemaining)}`;
+      } else {
+        btnDaily.disabled = false;
+        btnDaily.textContent = `Reclamar +${DAILY_BONUS_COINS} Coins`;
+        dailyStatus.textContent = "Disponible ahora";
+      }
+
+      // 2. Faucet por Niveles (35 Coins)
+      const lvl = getLevelInfo(state.xp);
+      document.getElementById("levelXpBadge").textContent =
+        `Nv. ${lvl.level} • ${lvl.currentLevelXp.toLocaleString()}/${XP_PER_LEVEL.toLocaleString()} XP`;
+      document.getElementById("xpProgressBar").style.width = `${(lvl.currentLevelXp / XP_PER_LEVEL) * 100}%`;
+      document.getElementById("faucetCooldownInfo").textContent = `Espera actual: ${lvl.faucetMinutes} min`;
+      document.getElementById("faucetRewardInfo").textContent = `Pago: +${lvl.faucetReward} Coins`;
+
+      const faucetIntervalMs = lvl.faucetMinutes * 60 * 1000;
+      const lastFaucet = state.currentUser.lastFaucetAt || 0;
+      const faucetRemaining = faucetIntervalMs - (now - lastFaucet);
+      const btnFaucet = document.getElementById("btnOpenFaucet");
+      const faucetStatus = document.getElementById("faucetTimerStatus");
+
+      if (lastFaucet && faucetRemaining > 0) {
+        btnFaucet.disabled = true;
+        btnFaucet.textContent = `Espera ${formatCountdown(faucetRemaining)}`;
+        faucetStatus.textContent = `Espera actual: ${lvl.faucetMinutes} min`;
+      } else {
+        btnFaucet.disabled = false;
+        btnFaucet.textContent = `🚰 Reclamar +${lvl.faucetReward}`;
+        faucetStatus.textContent = "Lista para reclamar";
+      }
+    }
+
+    function claimDailyBonus() {
+      if (!state.currentUser || !passRateLimit()) return;
+      const now = Date.now();
+      const lastDaily = state.currentUser.lastDailyBonusAt || 0;
+      if (lastDaily && (now - lastDaily < RESET_INTERVAL_MS)) {
+        updateHubCardsUI();
+        return;
+      }
+
+      state.currentUser.lastDailyBonusAt = now;
+      state.coins += DAILY_BONUS_COINS;
+      state.xp += 20;
+      addMovement(state.currentUser, "Bono diario (24h)", DAILY_BONUS_COINS);
+
+      updateBalanceAndLevelUI();
+      updateHubCardsUI();
+      showToast(`🎁 ¡Reclamaste +${DAILY_BONUS_COINS} Coins y +20 XP del Bono Diario!`);
     }
 
     /* Banners Aislados + Escalado Responsive */
@@ -1538,7 +2362,7 @@
         728,
         90,
         "Espacio Publicitario — Adsterra 728x90",
-        'Pega aquí tu código de banner 728x90 desde "Configurar Adsterra"'
+        'Pega aquí tu código de banner 728x90 desde "Configurar"'
       );
 
       renderIsolatedAd(
@@ -1546,8 +2370,8 @@
         state.adModalHtml,
         300,
         250,
-        "Adsterra 300x250",
-        "Espacio para anuncio lateral / video"
+        "Anuncio Patrocinado — Adsterra 300x250",
+        "Espacio para anuncio lateral"
       );
     }
 
@@ -1556,6 +2380,7 @@
       window._adResizeT = setTimeout(applyAdSlots, 120);
     });
 
+    /* Catálogo de Tareas y Offerwalls */
     function setCategory(cat, btnEl) {
       state.category = cat;
       document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
@@ -1565,29 +2390,26 @@
 
     function updateCounts() {
       document.getElementById("countAll").textContent = tasks.length;
+      document.getElementById("countOfferwalls").textContent = tasks.filter(t => t.cat === "offerwalls").length;
       document.getElementById("countWindowAds").textContent = tasks.filter(t => t.cat === "window_ads").length;
       document.getElementById("countFrameAds").textContent = tasks.filter(t => t.cat === "frame_ads").length;
-      document.getElementById("countVideoAds").textContent = tasks.filter(t => t.cat === "video_ads").length;
-      document.getElementById("countYtAds").textContent = tasks.filter(t => t.cat === "external_youtube_ads").length;
-      document.getElementById("countExtAds").textContent = tasks.filter(t => t.cat === "external_ads").length;
+      document.getElementById("countShortlinks").textContent = tasks.filter(t => t.cat === "shortlinks").length;
     }
 
     function getCategoryLabel(cat) {
       const map = {
+        offerwalls: "OFFERWALL",
         window_ads: "WINDOW ADS",
         frame_ads: "FRAME ADS",
-        video_ads: "VIDEO ADS",
-        external_youtube_ads: "EXTERNAL YOUTUBE ADS",
-        external_ads: "EXTERNAL ADS"
+        shortlinks: "SHORTLINKS"
       };
       return map[cat] || cat.toUpperCase();
     }
 
     function getActionButtonLabel(cat) {
+      if (cat === "offerwalls") return "🧱 Abrir Offerwall";
       if (cat === "window_ads") return "🪟 Abrir Ventana";
-      if (cat === "video_ads") return "▶ Ver Video";
-      if (cat === "external_youtube_ads") return "▶️ Ver en YouTube";
-      if (cat === "external_ads") return "🌐 Abrir Enlace";
+      if (cat === "shortlinks") return "🔗 Visitar Shortlink";
       return "🖼️ Ver Frame";
     }
 
@@ -1619,38 +2441,46 @@
       }
 
       if (!list.length) {
-        grid.innerHTML = `<div class="empty-state">No se encontraron anuncios con ese filtro o búsqueda.</div>`;
+        grid.innerHTML = `<div class="empty-state">No se encontraron offerwalls, anuncios o shortlinks con ese filtro.</div>`;
         return;
       }
 
       grid.innerHTML = list.map(t => {
-        const isOnCooldown = t.used >= t.limit && t.completedAt && (now - t.completedAt < RESET_INTERVAL_MS);
+        const isOfferwall = t.cat === "offerwalls";
+        const isOnCooldown = !isOfferwall && t.used >= t.limit && t.completedAt && (now - t.completedAt < RESET_INTERVAL_MS);
         const remaining24h = isOnCooldown ? formatRemaining24h(RESET_INTERVAL_MS - (now - t.completedAt)) : "";
 
         return `
-          <article class="ad-card">
+          <article class="ad-card ${t.isSponsored ? "sponsored-card" : ""}">
             <div>
               <div class="ad-card-head">
                 <div class="ad-title-wrap">
                   <span class="ad-icon-box">${t.icon}</span>
                   <h4 class="ad-card-title" title="${t.title}">${t.title}</h4>
                 </div>
-                <span class="chip chip-kind">${getCategoryLabel(t.cat)}</span>
+                <span class="chip ${isOfferwall || t.isSponsored ? "chip-purple" : "chip-kind"}">${getCategoryLabel(t.cat)}</span>
               </div>
               <p class="ad-card-desc">${t.desc}</p>
               <div class="meta-chips">
-                <span class="chip chip-reward">🪙 +${t.reward} Coins</span>
-                <span class="chip chip-time">⏱️ ${t.duration}s</span>
+                <span class="chip chip-reward">🪙 ${isOfferwall ? t.rewardLabel : `+${t.reward} Coins ($${formatUsdt(t.reward)})`}</span>
                 ${
-                  isOnCooldown
-                    ? `<span class="chip chip-cooldown">🔄 Reset en ${remaining24h}</span>`
-                    : `<span class="chip chip-kind">24h</span>`
+                  isOfferwall
+                    ? `<span class="chip chip-purple">♾️ Ilimitado</span><span class="chip chip-kind">Postback Auto</span>`
+                    : `<span class="chip chip-time">⏱️ ${t.duration}s</span>
+                       <span class="chip chip-kind">+${t.xp} XP</span>
+                       ${
+                         t.isSponsored
+                           ? `<span class="chip chip-purple">${t.clicksInfo}</span>`
+                           : isOnCooldown
+                             ? `<span class="chip chip-cooldown">🔄 Reset en ${remaining24h}</span>`
+                             : `<span class="chip chip-kind">24h</span>`
+                       }`
                 }
               </div>
             </div>
             <div class="ad-card-foot">
               <button type="button" class="report-link" onclick="reportTask('${t.id}')">🚩 Report</button>
-              <button type="button" class="btn btn-primary btn-sm" ${isOnCooldown ? "disabled" : ""} onclick="startTask('${t.id}')">
+              <button type="button" class="btn ${isOfferwall ? "btn-purple" : "btn-primary"} btn-sm" ${isOnCooldown ? "disabled" : ""} onclick="startTask('${t.id}')">
                 ${isOnCooldown ? "Completado (24h)" : getActionButtonLabel(t.cat)}
               </button>
             </div>
@@ -1665,15 +2495,34 @@
       showToast(`Reporte enviado para "${task.title}".`);
     }
 
-    function extractYouTubeEmbed(url) {
-      if (!url) return "";
-      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{6,})/);
-      return match ? `https://www.youtube.com/embed/${match[1]}?rel=0` : url;
-    }
-
     function openExternalTarget(url) {
       if (!url) return;
       window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    /* Offerwall Modal */
+    function resolveOfferwallUrl(rawUrl) {
+      const uid = state.currentUser ? encodeURIComponent(state.currentUser.username) : "guest";
+      if (rawUrl.includes("{user_id}")) {
+        return rawUrl.replace(/\{user_id\}/g, uid);
+      }
+      const sep = rawUrl.includes("?") ? "&" : "?";
+      return `${rawUrl}${sep}uid=${uid}`;
+    }
+
+    function openOfferwall(task) {
+      const finalUrl = resolveOfferwallUrl(task.url);
+      document.getElementById("offerwallModalTitle").textContent = `${task.icon} ${task.title}`;
+      document.getElementById("offerwallSubInfo").textContent =
+        `Tu ID de rastreo activo: ${state.currentUser.username} • Las Coins se acreditan automáticamente al completar ofertas.`;
+      document.getElementById("offerwallExternalLink").href = finalUrl;
+      document.getElementById("offerwallIframe").src = finalUrl;
+      document.getElementById("offerwallModal").classList.add("open");
+    }
+
+    function closeOfferwallModal() {
+      document.getElementById("offerwallIframe").src = "about:blank";
+      document.getElementById("offerwallModal").classList.remove("open");
     }
 
     function renderTaskMedia(task) {
@@ -1687,80 +2536,60 @@
         return;
       }
 
-      if (task.cat === "window_ads") {
+      if (task.cat === "shortlinks") {
         mediaBox.innerHTML = `
-          <div style="font-size: 1.5rem;">🪟</div>
-          <div style="font-weight: 700; font-size: 0.95rem;">Direct Link abierto en ventana/pestaña nueva</div>
+          <div style="font-size: 1.6rem;">🔗</div>
+          <div style="font-weight: 700; font-size: 0.96rem;">Shortlink abierto en nueva pestaña (+130 Coins)</div>
           <p style="font-size: 0.82rem; color: var(--muted); max-width: 340px;">
-            Si el navegador bloqueó la ventana emergente, pulsa el botón para abrirla manualmente:
+            Completa los pasos del acortador en la pestaña abierta y vuelve aquí para terminar el contador y resolver la verificación.
           </p>
           <button type="button" class="btn btn-secondary btn-sm" onclick="openExternalTarget('${task.url}')">
-            ↗ Abrir Direct Link
+            ↗ Reabrir Shortlink
           </button>
         `;
         return;
       }
 
-      if (task.cat === "video_ads") {
-        if (task.videoUrl) {
-          mediaBox.innerHTML = `<video src="${task.videoUrl}" controls autoplay playsinline></video>`;
-        } else if (task.embedUrl) {
-          mediaBox.innerHTML = `<iframe src="${task.embedUrl}" allow="autoplay; encrypted-media" allowfullscreen title="${task.title}"></iframe>`;
-        } else {
-          mediaBox.innerHTML = `
-            <div style="font-size: 1.5rem;">🎬</div>
-            <div style="font-weight: 700; font-size: 0.95rem;">Reproductor de Video Ad listo</div>
-            <p style="font-size: 0.82rem; color: var(--muted); max-width: 340px;">
-              Asigna una URL de video (.mp4 / .webm) o embed en <code>videoUrl</code> / <code>embedUrl</code> para reproducirlo aquí. El temporizador sigue corriendo.
-            </p>
-          `;
-        }
-        return;
-      }
-
-      if (task.cat === "external_youtube_ads") {
-        const embedSrc = extractYouTubeEmbed(task.youtubeUrl);
-        mediaBox.innerHTML = `
-          <iframe src="${embedSrc}" title="${task.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          <a href="${task.youtubeUrl}" target="_blank" rel="noopener noreferrer" style="font-size: 0.78rem; color: var(--cyan);">
-            ↗ Ver directamente en YouTube
-          </a>
-        `;
-        return;
-      }
-
       mediaBox.innerHTML = `
-        <div style="font-size: 1.5rem;">🌐</div>
-        <div style="font-weight: 700; font-size: 0.95rem;">External Ad lanzado en pestaña externa</div>
+        <div style="font-size: 1.5rem;">🪟</div>
+        <div style="font-weight: 700; font-size: 0.95rem;">Window Ad abierto en ventana/pestaña nueva</div>
         <p style="font-size: 0.82rem; color: var(--muted); max-width: 340px;">
-          Mantén activa esta pestaña para completar el contador y reclamar tu recompensa.
+          Si el navegador bloqueó la ventana emergente, pulsa el botón para abrirla manualmente:
         </p>
         <button type="button" class="btn btn-secondary btn-sm" onclick="openExternalTarget('${task.url}')">
-          ↗ Abrir External Ad
+          ↗ Abrir Window Ad
         </button>
       `;
     }
 
     function startTask(taskId) {
-      if (!state.currentUser) return;
+      if (!state.currentUser || !passRateLimit()) return;
       sync24hCooldowns();
       clearInterval(timerInterval);
 
       const task = tasks.find(t => t.id === taskId);
-      const now = Date.now();
-      const isOnCooldown = task && task.used >= task.limit && task.completedAt && (now - task.completedAt < RESET_INTERVAL_MS);
+      if (!task) return;
 
-      if (!task || isOnCooldown) {
-        showToast("Este anuncio ya fue completado; se reseteará cada 24 horas.");
+      if (task.cat === "offerwalls") {
+        openOfferwall(task);
+        return;
+      }
+
+      const now = Date.now();
+      const isOnCooldown = task.used >= task.limit && task.completedAt && (now - task.completedAt < RESET_INTERVAL_MS);
+
+      if (isOnCooldown) {
+        showToast("Este ítem ya fue completado; se reseteará cada 24 horas.");
         renderGrid();
         return;
       }
 
-      if ((task.cat === "window_ads" || task.cat === "external_ads") && task.url) {
+      if ((task.cat === "window_ads" || task.cat === "shortlinks") && task.url) {
         openExternalTarget(task.url);
       }
 
       activeSession = {
+        mode: "task",
         task,
         remaining: task.duration,
         total: task.duration
@@ -1768,9 +2597,54 @@
 
       document.getElementById("viewerTitle").textContent = `${task.title} (+${task.reward} Coins)`;
       document.getElementById("viewerBadge").innerHTML =
-        `<span class="badge badge-video">${task.icon} ${getCategoryLabel(task.cat)}</span>`;
+        `<span class="chip chip-kind">${task.icon} ${getCategoryLabel(task.cat)}</span>`;
 
       renderTaskMedia(task);
+      document.getElementById("captchaBox").classList.remove("show");
+      document.getElementById("captchaAnswer").value = "";
+      document.getElementById("viewerStatus").textContent = "";
+      document.getElementById("viewerModal").classList.add("open");
+
+      applyAdSlots();
+      updateViewerUI();
+      runTimer();
+    }
+
+    /* Faucet con Anuncio Integrado (35 Coins) */
+    function openFaucetModal() {
+      if (!state.currentUser || !passRateLimit()) return;
+      const now = Date.now();
+      const lvl = getLevelInfo(state.xp);
+      const faucetIntervalMs = lvl.faucetMinutes * 60 * 1000;
+      const lastFaucet = state.currentUser.lastFaucetAt || 0;
+
+      if (lastFaucet && (now - lastFaucet < faucetIntervalMs)) {
+        updateHubCardsUI();
+        return;
+      }
+
+      clearInterval(timerInterval);
+      activeSession = {
+        mode: "faucet",
+        reward: lvl.faucetReward,
+        xp: 15,
+        faucetMinutes: lvl.faucetMinutes,
+        remaining: FAUCET_AD_VIEW_SECONDS,
+        total: FAUCET_AD_VIEW_SECONDS
+      };
+
+      document.getElementById("viewerTitle").textContent = `🚰 Faucet Nivel ${lvl.level} (+${lvl.faucetReward} Coins)`;
+      document.getElementById("viewerBadge").innerHTML =
+        `<span class="chip chip-kind">🚰 FAUCET • ESPERA ${lvl.faucetMinutes} MIN</span>`;
+
+      document.getElementById("stageMedia").innerHTML = `
+        <div style="font-size: 1.8rem;">🚰</div>
+        <div style="font-weight: 800; font-size: 0.98rem;">Reclamo de Faucet • Nivel ${lvl.level}</div>
+        <p style="font-size: 0.82rem; color: var(--muted); max-width: 340px;">
+          Visualiza el anuncio patrocinado de la derecha durante ${FAUCET_AD_VIEW_SECONDS} segundos para habilitar el captcha y reclamar <strong>+${lvl.faucetReward} Coins</strong> +15 XP.
+        </p>
+      `;
+
       document.getElementById("captchaBox").classList.remove("show");
       document.getElementById("captchaAnswer").value = "";
       document.getElementById("viewerStatus").textContent = "";
@@ -1819,15 +2693,40 @@
     }
 
     function claimViewerReward() {
-      if (!activeSession) return;
+      if (!activeSession || !passRateLimit(600)) return;
       const val = Number(document.getElementById("captchaAnswer").value);
       if (val !== expectedCaptcha) {
         document.getElementById("viewerStatus").textContent = "❌ Respuesta incorrecta. Intenta de nuevo.";
         return;
       }
 
-      const { task } = activeSession;
       const now = Date.now();
+
+      if (activeSession.mode === "faucet") {
+        const lvl = getLevelInfo(state.xp);
+        const faucetIntervalMs = lvl.faucetMinutes * 60 * 1000;
+        const lastFaucet = state.currentUser.lastFaucetAt || 0;
+        if (lastFaucet && (now - lastFaucet < faucetIntervalMs)) {
+          closeViewerModal();
+          updateHubCardsUI();
+          return;
+        }
+
+        const reward = activeSession.reward;
+        state.currentUser.lastFaucetAt = now;
+        state.coins += reward;
+        state.xp += activeSession.xp;
+        addMovement(state.currentUser, `Faucet reclamada (Nv.${lvl.level})`, reward);
+        creditReferralCommission(reward, "Faucet");
+
+        updateBalanceAndLevelUI();
+        updateHubCardsUI();
+        closeViewerModal();
+        showToast(`🚰 ¡Ganaste +${reward} Coins y +15 XP! Próxima faucet en ${getLevelInfo(state.xp).faucetMinutes} min.`);
+        return;
+      }
+
+      const { task } = activeSession;
       const isOnCooldown = task.used >= task.limit && task.completedAt && (now - task.completedAt < RESET_INTERVAL_MS);
 
       if (isOnCooldown) {
@@ -1838,12 +2737,28 @@
 
       task.used = task.limit;
       task.completedAt = now;
-      state.coins += task.reward;
 
-      updateBalanceUI();
+      // Si es campaña patrocinada de anunciante externo, descontar 1 clic disponible
+      if (task.isSponsored) {
+        const campaigns = getAdvertiserCampaigns();
+        const cIdx = campaigns.findIndex(c => c.id === task.id);
+        if (cIdx !== -1) {
+          campaigns[cIdx].deliveredClicks = Number(campaigns[cIdx].deliveredClicks || 0) + 1;
+          saveAdvertiserCampaigns(campaigns);
+          task.clicksInfo = `${campaigns[cIdx].deliveredClicks}/${campaigns[cIdx].totalClicks} vistas`;
+        }
+      }
+
+      state.coins += task.reward;
+      state.xp += task.xp || 10;
+      addMovement(state.currentUser, task.title, task.reward);
+      creditReferralCommission(task.reward, getCategoryLabel(task.cat));
+
+      updateBalanceAndLevelUI();
+      updateHubCardsUI();
       renderGrid();
       closeViewerModal();
-      showToast(`¡Ganaste +${task.reward} Coins! Se reseteará en 24 horas.`);
+      showToast(`¡Ganaste +${task.reward} Coins ($${formatUsdt(task.reward)} USDT) y +${task.xp || 10} XP!`);
     }
 
     function closeViewerModal() {
@@ -1862,12 +2777,132 @@
       }
     });
 
-    /* Actualización periódica de contadores de 24h en pantalla */
+    /* Actualización en tiempo real */
+    setInterval(() => {
+      if (state.currentUser) {
+        updateHubCardsUI();
+      }
+    }, 1000);
+
     setInterval(() => {
       if (state.currentUser && !document.getElementById("viewerModal").classList.contains("open")) {
         renderGrid();
       }
     }, 60000);
+
+    /* Contratar Publicidad (Anunciantes Externos) */
+    function computeCampaignPricing() {
+      const format = document.getElementById("advFormat").value;
+      const clicks = Number(document.getElementById("advClicks").value || 500);
+      const duration = Number(document.getElementById("advDuration").value || 15);
+
+      const basePricePerClickUsd = format === "window_ads" ? 0.0012 : 0.0009;
+      const durationMultiplier = duration === 30 ? 1.4 : duration === 20 ? 1.2 : 1.0;
+
+      const totalUsd = clicks * basePricePerClickUsd * durationMultiplier;
+      const totalCoins = Math.round(totalUsd / COIN_TO_USDT);
+
+      // Pago al usuario (~35% del ingreso de campaña => deja 65% margen limpio al dueño)
+      const userRewardCoins = Math.max(
+        25,
+        Math.round((basePricePerClickUsd * durationMultiplier * 0.35) / COIN_TO_USDT)
+      );
+      const netProfitUsd = totalUsd - clicks * userRewardCoins * COIN_TO_USDT;
+
+      return { format, clicks, duration, totalUsd, totalCoins, userRewardCoins, netProfitUsd };
+    }
+
+    function recalcCampaignPrice() {
+      const p = computeCampaignPricing();
+      document.getElementById("advUserRewardPreview").textContent =
+        `${p.userRewardCoins} Coins ($${formatUsdt(p.userRewardCoins)} USDT)`;
+      document.getElementById("advTotalUsdPreview").textContent =
+        `$${p.totalUsd.toFixed(4)} USDT (${p.totalCoins.toLocaleString()} Coins)`;
+      document.getElementById("advNetProfitPreview").textContent =
+        `$${p.netProfitUsd.toFixed(4)} USDT`;
+    }
+
+    function renderAdvertiserCampaignsTable() {
+      const body = document.getElementById("advertiserCampaignsBody");
+      const list = getAdvertiserCampaigns();
+      body.innerHTML = list.length
+        ? list.map(c => `
+            <tr>
+              <td style="font-weight:700;">${c.title}</td>
+              <td>${c.format === "window_ads" ? "🪟 Window" : "🖼️ Frame"}</td>
+              <td>${c.deliveredClicks}/${c.totalClicks}</td>
+              <td style="color:var(--cyan);">$${Number(c.totalUsd).toFixed(2)} (${c.payMethod})</td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Aún no hay campañas externas publicadas.</td></tr>`;
+    }
+
+    function openAdvertiseModal() {
+      recalcCampaignPrice();
+      renderAdvertiserCampaignsTable();
+      document.getElementById("advertiseModal").classList.add("open");
+    }
+
+    function closeAdvertiseModal() {
+      document.getElementById("advertiseModal").classList.remove("open");
+    }
+
+    function submitAdvertiserCampaign(e) {
+      e.preventDefault();
+      if (!passRateLimit(1200)) return;
+
+      const title = document.getElementById("advTitle").value.trim();
+      const url = document.getElementById("advUrl").value.trim();
+      const desc = document.getElementById("advDesc").value.trim();
+      const payMethod = document.getElementById("advPayMethod").value;
+      const txId = document.getElementById("advTxId").value.trim();
+      const p = computeCampaignPricing();
+
+      if (payMethod === "Saldo interno (Coins)") {
+        if (!state.currentUser) {
+          showToast("Inicia sesión para pagar con tu saldo interno en Coins.");
+          return;
+        }
+        if (state.coins < p.totalCoins) {
+          showToast(`Necesitas ${p.totalCoins.toLocaleString()} Coins para pagar esta campaña con saldo interno.`);
+          return;
+        }
+        state.coins -= p.totalCoins;
+        addMovement(state.currentUser, `Campaña publicitaria: ${title} (${p.clicks} vistas)`, -p.totalCoins);
+        updateBalanceAndLevelUI();
+      }
+
+      const campaigns = getAdvertiserCampaigns();
+      campaigns.unshift({
+        id: "adv_" + Date.now(),
+        title,
+        desc,
+        url,
+        format: p.format,
+        duration: p.duration,
+        totalClicks: p.clicks,
+        deliveredClicks: 0,
+        userRewardCoins: p.userRewardCoins,
+        totalUsd: p.totalUsd,
+        payMethod,
+        txId,
+        advertiser: state.currentUser ? state.currentUser.username : txId,
+        createdAt: new Date().toISOString()
+      });
+      saveAdvertiserCampaigns(campaigns);
+
+      if (state.currentUser) {
+        hydrateTasksForUser(state.currentUser);
+        renderGrid();
+      } else {
+        tasks = buildBaseTasks();
+      }
+
+      e.target.reset();
+      recalcCampaignPrice();
+      renderAdvertiserCampaignsTable();
+      showToast(`📢 ¡Campaña "${title}" publicada con ${p.clicks} vistas en el catálogo!`);
+    }
 
     /* Retiro */
     function openWithdrawModal() {
@@ -1881,16 +2916,17 @@
     }
 
     function submitWithdraw() {
+      if (!state.currentUser || !passRateLimit(1500)) return;
       const addr = document.getElementById("withdrawAddress").value.trim();
-      const amount = Number(document.getElementById("withdrawAmount").value);
+      const amount = Math.floor(Number(document.getElementById("withdrawAmount").value));
       const method = document.getElementById("withdrawMethod").value;
 
-      if (!addr) {
-        showToast("Ingresa tu correo o dirección de wallet.");
+      if (!addr || addr.length < 5) {
+        showToast("Ingresa un correo o dirección de wallet válido.");
         return;
       }
-      if (isNaN(amount) || amount < 1000) {
-        showToast("El retiro mínimo es de 1,000 Coins.");
+      if (isNaN(amount) || amount < MIN_WITHDRAW_COINS) {
+        showToast(`El retiro mínimo es de ${MIN_WITHDRAW_COINS.toLocaleString()} Coins ($0.10 USDT).`);
         return;
       }
       if (amount > state.coins) {
@@ -1899,14 +2935,110 @@
       }
 
       state.coins -= amount;
-      updateBalanceUI();
+      if (!Array.isArray(state.currentUser.withdrawals)) state.currentUser.withdrawals = [];
+      state.currentUser.withdrawals.unshift({
+        date: new Date().toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+        method,
+        address: addr,
+        coins: amount,
+        usdt: formatUsdt(amount),
+        status: "Pendiente"
+      });
+      addMovement(state.currentUser, `Solicitud de retiro (${method})`, -amount);
+
+      updateBalanceAndLevelUI();
       closeWithdrawModal();
-      showToast(`Solicitud de ${amount} Coins por ${method} registrada.`);
+      showToast(`Retiro de ${amount.toLocaleString()} Coins ($${formatUsdt(amount)} USDT) registrado.`);
     }
 
-    /* Configurar Adsterra */
+    /* Historial */
+    function openHistoryModal() {
+      if (!state.currentUser) return;
+      const movBody = document.getElementById("movementsTableBody");
+      const withBody = document.getElementById("withdrawalsTableBody");
+
+      const movs = state.currentUser.movements || [];
+      movBody.innerHTML = movs.length
+        ? movs.slice(0, 10).map(m => `
+            <tr>
+              <td>${m.date}</td>
+              <td>${m.label}</td>
+              <td style="font-weight:700; color:${m.coins >= 0 ? 'var(--accent)' : '#fca5a5'};">
+                ${m.coins >= 0 ? '+' : ''}${m.coins.toLocaleString()} Coins
+              </td>
+              <td>$${formatUsdt(Math.abs(m.coins))} USDT</td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Aún no tienes movimientos registrados.</td></tr>`;
+
+      const withs = state.currentUser.withdrawals || [];
+      withBody.innerHTML = withs.length
+        ? withs.map(w => `
+            <tr>
+              <td>${w.date}</td>
+              <td>${w.method}</td>
+              <td>${w.address}</td>
+              <td style="font-weight:700; color:var(--cyan);">${w.coins.toLocaleString()} Coins ($${w.usdt})</td>
+              <td><span class="chip chip-cooldown">${w.status}</span></td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="5" style="color:var(--muted); text-align:center;">Aún no has solicitado ningún retiro.</td></tr>`;
+
+      document.getElementById("historyModal").classList.add("open");
+    }
+
+    function closeHistoryModal() {
+      document.getElementById("historyModal").classList.remove("open");
+    }
+
+    /* Referidos (10%) */
+    function openReferralModal() {
+      if (!state.currentUser) return;
+      const baseUrl = window.location.origin + window.location.pathname;
+      const refUrl = `${baseUrl}?ref=${encodeURIComponent(state.currentUser.refCode)}`;
+
+      document.getElementById("referralLinkInput").value = refUrl;
+      document.getElementById("refCodeDisplay").textContent = state.currentUser.refCode;
+
+      const users = getUsersDB();
+      const myReferrals = users.filter(u => u.referredBy === state.currentUser.refCode);
+      const breakdown = state.currentUser.refBreakdown || {};
+
+      document.getElementById("refCountDisplay").textContent = String(myReferrals.length);
+      document.getElementById("refEarnedDisplay").textContent =
+        `${Number(state.currentUser.refEarned || 0).toLocaleString()} Coins`;
+
+      const refBody = document.getElementById("referralsTableBody");
+      refBody.innerHTML = myReferrals.length
+        ? myReferrals.map(r => `
+            <tr>
+              <td style="font-weight:700;">👤 ${r.username}</td>
+              <td>${new Date(r.createdAt).toLocaleDateString("es-VE")}</td>
+              <td style="color:var(--accent); font-weight:700;">+${Number(breakdown[r.username] || 0).toLocaleString()} Coins</td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="3" style="color:var(--muted); text-align:center;">Aún no tienes referidos registrados. Comparte tu enlace para ganar el 10%.</td></tr>`;
+
+      document.getElementById("referralModal").classList.add("open");
+    }
+
+    function closeReferralModal() {
+      document.getElementById("referralModal").classList.remove("open");
+    }
+
+    function copyReferralLink() {
+      const input = document.getElementById("referralLinkInput");
+      input.select();
+      navigator.clipboard?.writeText(input.value);
+      showToast("Enlace de referido copiado al portapapeles.");
+    }
+
+    /* Configurar Enlaces, Offerwalls y Banners */
     function openAdConfigModal() {
-      document.getElementById("directLinksInput").value = getDirectLinksList().join("\n");
+      document.getElementById("offerwallLinksInput").value = getLinksList(STORAGE_KEYS.offerwallLinks, DEFAULT_OFFERWALL_LINKS).join("\n");
+      document.getElementById("windowLinksInput").value = getLinksList(STORAGE_KEYS.windowLinks, DEFAULT_WINDOW_LINKS).join("\n");
+      document.getElementById("frameLinksInput").value = getLinksList(STORAGE_KEYS.frameLinks, DEFAULT_FRAME_LINKS).join("\n");
+      document.getElementById("shortLinksInput").value = getLinksList(STORAGE_KEYS.shortLinks, DEFAULT_SHORTLINKS).join("\n");
       document.getElementById("adTopInput").value = state.adTopHtml;
       document.getElementById("adModalInput").value = state.adModalHtml;
       document.getElementById("adConfigModal").classList.add("open");
@@ -1917,13 +3049,15 @@
     }
 
     function saveAdConfig() {
-      const rawLinks = document.getElementById("directLinksInput").value.trim();
-      localStorage.setItem(DIRECT_LINKS_STORAGE_KEY, rawLinks);
+      localStorage.setItem(STORAGE_KEYS.offerwallLinks, document.getElementById("offerwallLinksInput").value.trim());
+      localStorage.setItem(STORAGE_KEYS.windowLinks, document.getElementById("windowLinksInput").value.trim());
+      localStorage.setItem(STORAGE_KEYS.frameLinks, document.getElementById("frameLinksInput").value.trim());
+      localStorage.setItem(STORAGE_KEYS.shortLinks, document.getElementById("shortLinksInput").value.trim());
 
       state.adTopHtml = document.getElementById("adTopInput").value;
       state.adModalHtml = document.getElementById("adModalInput").value;
-      localStorage.setItem("cc_ad_top", state.adTopHtml);
-      localStorage.setItem("cc_ad_modal", state.adModalHtml);
+      localStorage.setItem(STORAGE_KEYS.adTop, state.adTopHtml);
+      localStorage.setItem(STORAGE_KEYS.adModal, state.adModalHtml);
 
       if (state.currentUser) {
         hydrateTasksForUser(state.currentUser);
@@ -1931,17 +3065,20 @@
       }
       applyAdSlots();
       closeAdConfigModal();
-      showToast("Configuración y Direct Links de Adsterra guardados.");
+      showToast("Offerwalls, enlaces y banners guardados correctamente.");
     }
 
     function resetAdConfig() {
-      localStorage.removeItem(DIRECT_LINKS_STORAGE_KEY);
+      Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
       state.adTopHtml = DEFAULT_AD_728;
       state.adModalHtml = DEFAULT_AD_300;
-      localStorage.setItem("cc_ad_top", DEFAULT_AD_728);
-      localStorage.setItem("cc_ad_modal", DEFAULT_AD_300);
+      localStorage.setItem(STORAGE_KEYS.adTop, DEFAULT_AD_728);
+      localStorage.setItem(STORAGE_KEYS.adModal, DEFAULT_AD_300);
 
-      document.getElementById("directLinksInput").value = DEFAULT_DIRECT_LINKS.join("\n");
+      document.getElementById("offerwallLinksInput").value = DEFAULT_OFFERWALL_LINKS.join("\n");
+      document.getElementById("windowLinksInput").value = DEFAULT_WINDOW_LINKS.join("\n");
+      document.getElementById("frameLinksInput").value = DEFAULT_FRAME_LINKS.join("\n");
+      document.getElementById("shortLinksInput").value = DEFAULT_SHORTLINKS.join("\n");
       document.getElementById("adTopInput").value = DEFAULT_AD_728;
       document.getElementById("adModalInput").value = DEFAULT_AD_300;
 
@@ -1950,20 +3087,26 @@
         renderGrid();
       }
       applyAdSlots();
-      showToast("Configuración de Adsterra restaurada.");
+      showToast("Configuración restaurada.");
     }
 
     (function initApp() {
+      const params = new URLSearchParams(window.location.search);
+      const refParam = params.get("ref");
+      if (refParam) {
+        document.getElementById("regRefCode").value = refParam.trim().toUpperCase();
+      }
+
       const savedEmail = localStorage.getItem(CURRENT_USER_KEY);
       if (savedEmail) {
         const users = getUsersDB();
         const existingUser = users.find(u => u.email === savedEmail);
-        if (existingUser) {
+        if (existingUser && verifyUserIntegrity(existingUser)) {
           startUserSession(existingUser);
           return;
         }
       }
-      switchAuthTab("login");
+      switchAuthTab(refParam ? "register" : "login");
     })();
   </script>
 </body>
