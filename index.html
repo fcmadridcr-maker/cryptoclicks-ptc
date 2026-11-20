@@ -76,6 +76,16 @@
       flex-wrap: wrap;
     }
 
+    .user-pill {
+      background: rgba(34, 211, 238, 0.12);
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
     .balance-pill {
       background: var(--card-2);
       border: 1px solid #28354d;
@@ -96,6 +106,7 @@
       transition: 0.18s ease;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
     }
 
@@ -119,9 +130,116 @@
       border-color: var(--cyan);
     }
 
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.14);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: var(--danger);
+      color: #ffffff;
+    }
+
     .btn:disabled {
       opacity: 0.55;
       cursor: not-allowed;
+    }
+
+    /* Auth View */
+    .auth-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 16px;
+    }
+
+    .auth-card {
+      background: var(--card);
+      border: 1px solid #28354d;
+      border-radius: 18px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .auth-head {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .auth-head h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .auth-head p {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #0b0f19;
+      padding: 4px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      gap: 4px;
+    }
+
+    .auth-tab {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .auth-tab.active {
+      background: var(--card-2);
+      color: var(--cyan);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.25);
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-group label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .auth-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .hidden {
+      display: none !important;
     }
 
     /* Main Container */
@@ -464,9 +582,14 @@
       border: 1px solid #2b3952;
       color: var(--text);
       border-radius: 8px;
-      padding: 9px 12px;
+      padding: 10px 12px;
       font-size: 0.92rem;
       width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--cyan);
     }
 
     textarea {
@@ -527,14 +650,86 @@
         <span class="bolt">⚡</span>
         <span>CryptoClicks PTC</span>
       </div>
-      <div class="wallet-box">
-        <div class="balance-pill" id="balanceDisplay">🪙 1,250 Coins (≈ $0.1250 USDT)</div>
+
+      <!-- Barra para usuarios con sesión iniciada -->
+      <div class="wallet-box hidden" id="headerUserControls">
+        <div class="user-pill" id="userDisplay">👤 Invitado</div>
+        <div class="balance-pill" id="balanceDisplay">🪙 0 Coins (≈ $0.0000 USDT)</div>
         <button class="btn btn-primary" onclick="openWithdrawModal()">💸 Retirar</button>
+        <button class="btn btn-danger" onclick="logoutUser()">Salir</button>
+      </div>
+
+      <!-- Barra cuando no hay sesión iniciada -->
+      <div class="wallet-box" id="headerGuestControls">
+        <button class="btn btn-secondary" onclick="switchAuthTab('login')">Iniciar Sesión</button>
+        <button class="btn btn-primary" onclick="switchAuthTab('register')">Registrarse</button>
       </div>
     </div>
   </header>
 
-  <main>
+  <!-- Vista de Inicio de Sesión y Registro -->
+  <section class="auth-wrapper" id="authSection">
+    <div class="auth-card">
+      <div class="auth-head">
+        <h1>Bienvenido a CryptoClicks</h1>
+        <p>Inicia sesión o crea una cuenta gratuita para ganar Coins viendo anuncios y shortlinks.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">
+          🔐 Iniciar Sesión
+        </button>
+        <button type="button" class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')">
+          📝 Registro
+        </button>
+      </div>
+
+      <!-- Formulario Iniciar Sesión -->
+      <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+        <div class="field-group">
+          <label for="loginIdentifier">Usuario o Correo Electrónico</label>
+          <input type="text" id="loginIdentifier" placeholder="usuario@correo.com" required />
+        </div>
+        <div class="field-group">
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 11px;">
+          Entrar al Panel
+        </button>
+      </form>
+
+      <!-- Formulario Registro -->
+      <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+        <div class="field-group">
+          <label for="regUsername">Nombre de Usuario</label>
+          <input type="text" id="regUsername" placeholder="Ej. CryptoMaster" minlength="3" required />
+        </div>
+        <div class="field-group">
+          <label for="regEmail">Correo Electrónico</label>
+          <input type="email" id="regEmail" placeholder="tu@correo.com" required />
+        </div>
+        <div class="field-group">
+          <label for="regPassword">Contraseña (mín. 6 caracteres)</label>
+          <input type="password" id="regPassword" placeholder="••••••••" minlength="6" required />
+        </div>
+        <div class="field-group">
+          <label for="regPasswordConfirm">Confirmar Contraseña</label>
+          <input type="password" id="regPasswordConfirm" placeholder="••••••••" minlength="6" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 11px;">
+          Crear Cuenta (+100 Coins de Bono)
+        </button>
+      </form>
+
+      <p class="auth-note">
+        Al registrarte obtienes un bono inicial de <strong>100 Coins</strong>. Mínimo de retiro: <strong>1,000 Coins ($0.10 USDT)</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Panel Principal (visible al iniciar sesión) -->
+  <main class="hidden" id="dashboardSection">
     <!-- Banner Superior 728x90 -->
     <section class="ad-banner-top" id="adSlotTop"></section>
 
@@ -659,6 +854,8 @@
 
   <script>
     const COIN_TO_USDT = 0.0001; // 1,000 coins = $0.10 USDT
+    const USERS_STORAGE_KEY = "cc_users_db";
+    const CURRENT_USER_KEY = "cc_current_user_email";
 
     const DEFAULT_AD_728 = `<script>
   atOptions = {
@@ -691,15 +888,18 @@
       { id: "ptc6", type: "web", title: "Encuestas Pagadas USA", desc: "Explora el sitio patrocinado por 15 segundos y responde el captcha.", duration: 15, reward: 30 }
     ];
 
-    const shortlinkItems = [
-      { id: "sl1", title: "Exe.io Fast Link", desc: "Completa el enlace acortado en 2 pasos rápidos.", duration: 12, reward: 120, used: 1, limit: 1 },
-      { id: "sl2", title: "ShrinkMe Cripto", desc: "Avanza por el acortador hasta la validación final.", duration: 12, reward: 95, used: 2, limit: 3 },
+    const BASE_SHORTLINKS = [
+      { id: "sl1", title: "Exe.io Fast Link", desc: "Completa el enlace acortado en 2 pasos rápidos.", duration: 12, reward: 120, used: 0, limit: 1 },
+      { id: "sl2", title: "ShrinkMe Cripto", desc: "Avanza por el acortador hasta la validación final.", duration: 12, reward: 95, used: 0, limit: 3 },
       { id: "sl3", title: "Fc.lc Direct", desc: "Enlace corto con recompensa instantánea al terminar.", duration: 10, reward: 85, used: 0, limit: 3 },
       { id: "sl4", title: "Ouo.io Reward", desc: "Completa el contador del shortlink para obtener tus coins.", duration: 10, reward: 75, used: 0, limit: 2 }
     ];
 
+    let shortlinkItems = JSON.parse(JSON.stringify(BASE_SHORTLINKS));
+
     let state = {
-      coins: Number(localStorage.getItem("cc_coins") ?? 1250),
+      currentUser: null,
+      coins: 0,
       section: "ptc",
       ptcFilter: "all",
       adTopHtml: localStorage.getItem("cc_ad_top") ?? DEFAULT_AD_728,
@@ -718,11 +918,155 @@
       toast._t = setTimeout(() => toast.classList.remove("show"), 2800);
     }
 
+    /* Gestión de Usuarios en localStorage */
+    function getUsersDB() {
+      try {
+        return JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveUsersDB(users) {
+      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+    }
+
+    function persistCurrentUserData() {
+      if (!state.currentUser) return;
+      const users = getUsersDB();
+      const idx = users.findIndex(u => u.email === state.currentUser.email);
+      const slProgress = {};
+      shortlinkItems.forEach(sl => {
+        slProgress[sl.id] = sl.used;
+      });
+
+      if (idx !== -1) {
+        users[idx].coins = state.coins;
+        users[idx].slProgress = slProgress;
+        state.currentUser = users[idx];
+        saveUsersDB(users);
+      }
+    }
+
+    function switchAuthTab(tab) {
+      const isLogin = tab === "login";
+      document.getElementById("authTabLogin").classList.toggle("active", isLogin);
+      document.getElementById("authTabRegister").classList.toggle("active", !isLogin);
+      document.getElementById("loginForm").classList.toggle("hidden", !isLogin);
+      document.getElementById("registerForm").classList.toggle("hidden", isLogin);
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const username = document.getElementById("regUsername").value.trim();
+      const email = document.getElementById("regEmail").value.trim().toLowerCase();
+      const password = document.getElementById("regPassword").value;
+      const confirm = document.getElementById("regPasswordConfirm").value;
+
+      if (username.length < 3) {
+        showToast("El usuario debe tener al menos 3 caracteres.");
+        return;
+      }
+      if (password !== confirm) {
+        showToast("Las contraseñas no coinciden.");
+        return;
+      }
+
+      const users = getUsersDB();
+      if (users.some(u => u.email === email)) {
+        showToast("Ese correo ya está registrado.");
+        return;
+      }
+      if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+        showToast("Ese nombre de usuario ya está en uso.");
+        return;
+      }
+
+      const newUser = {
+        username,
+        email,
+        password,
+        coins: 100,
+        slProgress: {},
+        createdAt: new Date().toISOString()
+      };
+
+      users.push(newUser);
+      saveUsersDB(users);
+      localStorage.setItem(CURRENT_USER_KEY, newUser.email);
+
+      document.getElementById("registerForm").reset();
+      startUserSession(newUser);
+      showToast(`¡Cuenta creada! Bienvenido, ${newUser.username} (+100 Coins).`);
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const identifier = document.getElementById("loginIdentifier").value.trim().toLowerCase();
+      const password = document.getElementById("loginPassword").value;
+
+      const users = getUsersDB();
+      const found = users.find(
+        u =>
+          (u.email === identifier || u.username.toLowerCase() === identifier) &&
+          u.password === password
+      );
+
+      if (!found) {
+        showToast("Usuario/correo o contraseña incorrectos.");
+        return;
+      }
+
+      localStorage.setItem(CURRENT_USER_KEY, found.email);
+      document.getElementById("loginForm").reset();
+      startUserSession(found);
+      showToast(`Bienvenido de nuevo, ${found.username}.`);
+    }
+
+    function startUserSession(user) {
+      state.currentUser = user;
+      state.coins = Number(user.coins ?? 0);
+
+      shortlinkItems = JSON.parse(JSON.stringify(BASE_SHORTLINKS));
+      if (user.slProgress) {
+        shortlinkItems.forEach(sl => {
+          if (typeof user.slProgress[sl.id] === "number") {
+            sl.used = user.slProgress[sl.id];
+          }
+        });
+      }
+
+      document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
+      document.getElementById("authSection").classList.add("hidden");
+      document.getElementById("headerGuestControls").classList.add("hidden");
+      document.getElementById("dashboardSection").classList.remove("hidden");
+      document.getElementById("headerUserControls").classList.remove("hidden");
+
+      updateBalanceUI();
+      applyAdSlots();
+      renderGrid();
+    }
+
+    function logoutUser() {
+      closeViewerModal();
+      closeWithdrawModal();
+      state.currentUser = null;
+      state.coins = 0;
+      localStorage.removeItem(CURRENT_USER_KEY);
+
+      document.getElementById("dashboardSection").classList.add("hidden");
+      document.getElementById("headerUserControls").classList.add("hidden");
+      document.getElementById("authSection").classList.remove("hidden");
+      document.getElementById("headerGuestControls").classList.remove("hidden");
+      switchAuthTab("login");
+      showToast("Sesión cerrada.");
+    }
+
     function updateBalanceUI() {
-      localStorage.setItem("cc_coins", state.coins);
       const usdt = (state.coins * COIN_TO_USDT).toFixed(4);
       document.getElementById("balanceDisplay").textContent =
         `🪙 ${state.coins.toLocaleString()} Coins (≈ $${usdt} USDT)`;
+      persistCurrentUserData();
     }
 
     function renderIsolatedAd(container, htmlCode, width, height, labelText, fallbackText) {
@@ -774,6 +1118,7 @@
     }
 
     function applyAdSlots() {
+      if (!state.currentUser) return;
       const topSlot = document.getElementById("adSlotTop");
       const modalSlot = document.getElementById("adSlotModal");
 
@@ -875,6 +1220,7 @@
     }
 
     function startTask(kind, id) {
+      if (!state.currentUser) return;
       clearInterval(timerInterval);
       const item = kind === "ptc"
         ? ptcItems.find(x => x.id === id)
@@ -977,6 +1323,8 @@
 
     /* Retiro */
     function openWithdrawModal() {
+      if (!state.currentUser) return;
+      document.getElementById("withdrawAddress").value = state.currentUser.email || "";
       document.getElementById("withdrawModal").classList.add("open");
     }
 
@@ -1040,9 +1388,19 @@
       showToast("Códigos de Adsterra restaurados.");
     }
 
-    updateBalanceUI();
-    applyAdSlots();
-    renderGrid();
+    /* Restaurar sesión activa al cargar la página */
+    (function initApp() {
+      const savedEmail = localStorage.getItem(CURRENT_USER_KEY);
+      if (savedEmail) {
+        const users = getUsersDB();
+        const existingUser = users.find(u => u.email === savedEmail);
+        if (existingUser) {
+          startUserSession(existingUser);
+          return;
+        }
+      }
+      switchAuthTab("login");
+    })();
   </script>
 </body>
 </html>
