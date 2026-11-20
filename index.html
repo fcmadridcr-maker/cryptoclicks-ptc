@@ -519,6 +519,12 @@
       text-transform: uppercase;
     }
 
+    .chip-cooldown {
+      background: rgba(245, 158, 11, 0.14);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
     .ad-card-foot {
       display: flex;
       align-items: center;
@@ -753,7 +759,7 @@
     }
 
     textarea {
-      min-height: 90px;
+      min-height: 85px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.82rem;
     }
@@ -887,22 +893,22 @@
     <!-- Aviso de Seguridad -->
     <div class="safety-banner">
       <span>🛡️</span>
-      <span><strong>Seguridad primero:</strong> Nunca descargues archivos ejecutables desconocidos ni compartas claves privadas o contraseñas.</span>
+      <span><strong>Seguridad primero:</strong> Nunca descargues archivos ejecutables desconocidos ni compartas claves privadas o contraseñas. Los anuncios se resetean cada 24 horas.</span>
     </div>
 
     <!-- Banner Superior 728x90 -->
     <section class="ad-banner-top" id="adSlotTop"></section>
 
-    <!-- Categorías Solicitadas -->
+    <!-- Categorías -->
     <nav class="category-bar" id="categoryBar">
       <button type="button" class="cat-btn active" data-cat="all" onclick="setCategory('all', this)">
         Todos <span class="cat-count" id="countAll">0</span>
       </button>
-      <button type="button" class="cat-btn" data-cat="frame_ads" onclick="setCategory('frame_ads', this)">
-        🖼️ Frame Ads <span class="cat-count" id="countFrameAds">0</span>
-      </button>
       <button type="button" class="cat-btn" data-cat="window_ads" onclick="setCategory('window_ads', this)">
         🪟 Window Ads <span class="cat-count" id="countWindowAds">0</span>
+      </button>
+      <button type="button" class="cat-btn" data-cat="frame_ads" onclick="setCategory('frame_ads', this)">
+        🖼️ Frame Ads <span class="cat-count" id="countFrameAds">0</span>
       </button>
       <button type="button" class="cat-btn" data-cat="video_ads" onclick="setCategory('video_ads', this)">
         🎬 Video Ads <span class="cat-count" id="countVideoAds">0</span>
@@ -917,8 +923,9 @@
 
     <!-- Barra de Búsqueda, Ordenamiento y Sonido -->
     <div class="toolbar-row">
-      <input type="search" id="searchInput" placeholder="🔍 Buscar Frame Ads, Window Ads, Video Ads, YouTube o External Ads..." oninput="renderGrid()" />
+      <input type="search" id="searchInput" placeholder="🔍 Buscar Window Ads, Frame Ads, Video Ads, YouTube o External Ads..." oninput="renderGrid()" />
       <select id="sortSelect" onchange="renderGrid()">
+        <option value="default">Ordenar: Por defecto</option>
         <option value="reward_desc">Ordenar: Mayor recompensa</option>
         <option value="reward_asc">Ordenar: Menor recompensa</option>
         <option value="duration_asc">Ordenar: Menor duración</option>
@@ -936,7 +943,7 @@
 
   <footer>
     <div class="footer-inner">
-      <div>CryptoClicks PTC © 2026 • Pago mínimo: 1,000 Coins ($0.10 USDT)</div>
+      <div>CryptoClicks PTC © 2026 • Reinicio cada 24h • Pago mínimo: 1,000 Coins ($0.10 USDT)</div>
       <button class="btn btn-secondary" onclick="openAdConfigModal()">⚙️ Configurar Adsterra</button>
     </div>
   </footer>
@@ -1013,21 +1020,25 @@
 
   <!-- Modal Configurar Adsterra -->
   <div class="modal-backdrop" id="adConfigModal">
-    <div class="modal" style="max-width: 560px;">
+    <div class="modal" style="max-width: 580px;">
       <div class="modal-header">
-        <h3>⚙️ Configurar Códigos de Adsterra</h3>
+        <h3>⚙️ Configurar Códigos y Direct Links de Adsterra</h3>
         <button class="close-btn" onclick="closeAdConfigModal()">✕</button>
       </div>
-      <p style="font-size: 0.86rem; color: var(--muted);">
-        Puedes modificar aquí tus códigos en el navegador o restaurar los scripts de Adsterra integrados en el código.
+      <p style="font-size: 0.84rem; color: var(--muted);">
+        Configura tus banners de Adsterra y pega tus <strong>Direct Links</strong> (uno por línea) para asignarlos a los 10 anuncios de <strong>Window Ads</strong>.
       </p>
       <div>
-        <label style="font-size: 0.85rem; display: block; margin-bottom: 6px;">Banner Superior (728x90)</label>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 6px;">Direct Links de Adsterra para Window Ads (1 por línea o 1 general)</label>
+        <textarea id="directLinksInput" placeholder="https://www.profitablecpmrate.com/tu-direct-link-1&#10;https://www.profitablecpmrate.com/tu-direct-link-2"></textarea>
+      </div>
+      <div>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 6px;">Banner Superior (728x90)</label>
         <textarea id="adTopInput" placeholder="<!-- Pega aquí tu script 728x90 de Adsterra -->"></textarea>
       </div>
       <div>
-        <label style="font-size: 0.85rem; display: block; margin-bottom: 6px;">Banner / Unidad en Visor (300x250)</label>
-        <textarea id="adModalInput" placeholder="<!-- Pega aquí tu script 300x250 o Direct Link de Adsterra -->"></textarea>
+        <label style="font-size: 0.84rem; display: block; margin-bottom: 6px;">Banner / Unidad en Visor (300x250)</label>
+        <textarea id="adModalInput" placeholder="<!-- Pega aquí tu script 300x250 de Adsterra -->"></textarea>
       </div>
       <div style="display: flex; gap: 10px; justify-content: flex-end;">
         <button class="btn btn-secondary" onclick="resetAdConfig()">Restaurar</button>
@@ -1040,9 +1051,11 @@
 
   <script>
     const COIN_TO_USDT = 0.0001; // 1,000 coins = $0.10 USDT
+    const RESET_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 horas
     const USERS_STORAGE_KEY = "cc_users_db";
     const CURRENT_USER_KEY = "cc_current_user_email";
     const SOUND_PREF_KEY = "cc_sound_enabled";
+    const DIRECT_LINKS_STORAGE_KEY = "cc_adsterra_direct_links";
 
     const DEFAULT_AD_728 = `<script>
   atOptions = {
@@ -1067,24 +1080,46 @@
 <script src="https://bauval.org/22/4b4176a217a51ae6c13d5619520addd4"><\/script>`;
 
     /*
-      Formatos soportados en BASE_TASKS:
-      - frame_ads: carga `url` dentro de un <iframe> integrado en el visor.
-      - window_ads: abre `url` en una ventana/pestaña nueva y lleva el contador en el modal.
-      - video_ads: reproduce un archivo de video (.mp4 / .webm) o `embedUrl` en el visor.
-      - external_youtube_ads: reproduce un video de YouTube (`youtubeUrl` / `embedUrl`) en el visor.
-      - external_ads: abre un anuncio/enlace externo (`url`) en nueva pestaña/ventana con temporizador.
+      Puedes pegar tus Direct Links de Adsterra aquí en DEFAULT_DIRECT_LINKS
+      (o desde el botón "Configurar Adsterra" en el pie de página).
     */
-    const BASE_TASKS = [
+    const DEFAULT_DIRECT_LINKS = [
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/",
+      "https://example.com/"
+    ];
+
+    const WINDOW_ADS_CONFIG = [
+      { id: "wn1", icon: "🪟", title: "Window Ad #1 — Oferta Patrocinada", desc: "Abre el enlace patrocinado en ventana nueva y espera 15s.", duration: 15, reward: 40 },
+      { id: "wn2", icon: "🚀", title: "Window Ad #2 — Promo Cripto", desc: "Explora la oferta externa en nueva pestaña durante 15s.", duration: 15, reward: 40 },
+      { id: "wn3", icon: "💎", title: "Window Ad #3 — Portal Destacado", desc: "Mantén la sesión activa hasta completar el contador.", duration: 15, reward: 45 },
+      { id: "wn4", icon: "⚡", title: "Window Ad #4 — Enlace Directo", desc: "Visita patrocinada en ventana externa con reinicio cada 24h.", duration: 15, reward: 45 },
+      { id: "wn5", icon: "🌐", title: "Window Ad #5 — Campaña Global", desc: "Abre la ventana patrocinada y vuelve aquí al terminar.", duration: 20, reward: 50 },
+      { id: "wn6", icon: "🎯", title: "Window Ad #6 — Selección Diaria", desc: "Completa los 20 segundos para habilitar la verificación.", duration: 20, reward: 50 },
+      { id: "wn7", icon: "🔥", title: "Window Ad #7 — Oferta Express", desc: "Anuncio en pestaña nueva con recompensa al finalizar.", duration: 20, reward: 55 },
+      { id: "wn8", icon: "🛰️", title: "Window Ad #8 — Sitio Asociado", desc: "Abre el enlace externo y resuelve la suma rápida.", duration: 20, reward: 55 },
+      { id: "wn9", icon: "🏆", title: "Window Ad #9 — Bono Especial", desc: "Visita patrocinada de 25 segundos con mayor recompensa.", duration: 25, reward: 65 },
+      { id: "wn10", icon: "💰", title: "Window Ad #10 — Top Diario", desc: "Último enlace diario de Window Ads; se resetea en 24h.", duration: 25, reward: 70 }
+    ];
+
+    const OTHER_BASE_TASKS = [
       {
         id: "fr1",
         cat: "frame_ads",
         icon: "🖼️",
         title: "Frame Ad: Cripto Mercado en Vivo",
-        desc: "Anuncio en marco integrado; mantén la vista abierta hasta completar el contador.",
+        desc: "Anuncio en marco integrado; se resetea automáticamente cada 24 horas.",
         duration: 15,
         reward: 45,
         used: 0,
-        limit: 5,
+        limit: 1,
         url: "https://example.com/"
       },
       {
@@ -1096,31 +1131,7 @@
         duration: 15,
         reward: 35,
         used: 0,
-        limit: 5,
-        url: "https://example.com/"
-      },
-      {
-        id: "wn1",
-        cat: "window_ads",
-        icon: "🪟",
-        title: "Window Ad: LTC Pool & Faucet",
-        desc: "Se abre en ventana/pestaña nueva al iniciar; vuelve aquí cuando termine el reloj.",
-        duration: 20,
-        reward: 70,
-        used: 0,
-        limit: 5,
-        url: "https://example.com/"
-      },
-      {
-        id: "wn2",
-        cat: "window_ads",
-        icon: "🚀",
-        title: "Window Ad: Exchange Sin KYC",
-        desc: "Abre el sitio patrocinado en otra pestaña y espera el temporizador.",
-        duration: 15,
-        reward: 50,
-        used: 0,
-        limit: 5,
+        limit: 1,
         url: "https://example.com/"
       },
       {
@@ -1132,7 +1143,7 @@
         duration: 25,
         reward: 85,
         used: 0,
-        limit: 4,
+        limit: 1,
         videoUrl: "",
         embedUrl: ""
       },
@@ -1145,7 +1156,7 @@
         duration: 20,
         reward: 65,
         used: 0,
-        limit: 4,
+        limit: 1,
         videoUrl: "",
         embedUrl: ""
       },
@@ -1158,7 +1169,7 @@
         duration: 25,
         reward: 80,
         used: 0,
-        limit: 4,
+        limit: 1,
         youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       },
       {
@@ -1170,7 +1181,7 @@
         duration: 20,
         reward: 60,
         used: 0,
-        limit: 4,
+        limit: 1,
         youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       },
       {
@@ -1182,7 +1193,7 @@
         duration: 18,
         reward: 75,
         used: 0,
-        limit: 5,
+        limit: 1,
         url: "https://example.com/"
       },
       {
@@ -1194,12 +1205,42 @@
         duration: 15,
         reward: 55,
         used: 0,
-        limit: 5,
+        limit: 1,
         url: "https://example.com/"
       }
     ];
 
-    let tasks = JSON.parse(JSON.stringify(BASE_TASKS));
+    function getDirectLinksList() {
+      const savedRaw = localStorage.getItem(DIRECT_LINKS_STORAGE_KEY);
+      if (savedRaw && savedRaw.trim()) {
+        const lines = savedRaw
+          .split(/\r?\n/)
+          .map(l => l.trim())
+          .filter(Boolean);
+        if (lines.length) return lines;
+      }
+      return DEFAULT_DIRECT_LINKS;
+    }
+
+    function buildBaseTasks() {
+      const links = getDirectLinksList();
+      const windowTasks = WINDOW_ADS_CONFIG.map((cfg, idx) => ({
+        id: cfg.id,
+        cat: "window_ads",
+        icon: cfg.icon,
+        title: cfg.title,
+        desc: cfg.desc,
+        duration: cfg.duration,
+        reward: cfg.reward,
+        used: 0,
+        limit: 1,
+        url: links[idx % links.length] || "https://example.com/"
+      }));
+
+      return [...windowTasks, ...JSON.parse(JSON.stringify(OTHER_BASE_TASKS))];
+    }
+
+    let tasks = buildBaseTasks();
 
     let state = {
       currentUser: null,
@@ -1247,6 +1288,31 @@
       showToast(state.soundEnabled ? "Sonido activado al terminar." : "Sonido desactivado.");
     }
 
+    /* Reinicio automático cada 24 horas */
+    function formatRemaining24h(ms) {
+      const clamped = Math.max(0, ms);
+      const totalMinutes = Math.ceil(clamped / 60000);
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      if (hours <= 0) return `${minutes}m`;
+      return `${hours}h ${minutes}m`;
+    }
+
+    function sync24hCooldowns(now = Date.now()) {
+      let changed = false;
+      tasks.forEach(t => {
+        if (t.completedAt && (now - t.completedAt >= RESET_INTERVAL_MS)) {
+          t.used = 0;
+          t.completedAt = null;
+          changed = true;
+        }
+      });
+      if (changed && state.currentUser) {
+        persistCurrentUserData();
+      }
+      return changed;
+    }
+
     /* Gestión de Usuarios en localStorage */
     function getUsersDB() {
       try {
@@ -1264,14 +1330,17 @@
       if (!state.currentUser) return;
       const users = getUsersDB();
       const idx = users.findIndex(u => u.email === state.currentUser.email);
-      const taskProgress = {};
+      const taskStates = {};
       tasks.forEach(t => {
-        taskProgress[t.id] = t.used;
+        taskStates[t.id] = {
+          used: t.used,
+          completedAt: t.completedAt || null
+        };
       });
 
       if (idx !== -1) {
         users[idx].coins = state.coins;
-        users[idx].taskProgress = taskProgress;
+        users[idx].taskStates = taskStates;
         state.currentUser = users[idx];
         saveUsersDB(users);
       }
@@ -1316,7 +1385,7 @@
         email,
         password,
         coins: 100,
-        taskProgress: {},
+        taskStates: {},
         createdAt: new Date().toISOString()
       };
 
@@ -1352,18 +1421,31 @@
       showToast(`Bienvenido de nuevo, ${found.username}.`);
     }
 
+    function hydrateTasksForUser(user) {
+      const now = Date.now();
+      tasks = buildBaseTasks();
+      if (user && user.taskStates) {
+        tasks.forEach(t => {
+          const saved = user.taskStates[t.id];
+          if (saved && typeof saved === "object") {
+            const elapsed = saved.completedAt ? (now - saved.completedAt) : RESET_INTERVAL_MS;
+            if (saved.completedAt && elapsed < RESET_INTERVAL_MS) {
+              t.used = Math.min(t.limit, Number(saved.used || 0));
+              t.completedAt = saved.completedAt;
+            } else {
+              t.used = 0;
+              t.completedAt = null;
+            }
+          }
+        });
+      }
+    }
+
     function startUserSession(user) {
       state.currentUser = user;
       state.coins = Number(user.coins ?? 0);
 
-      tasks = JSON.parse(JSON.stringify(BASE_TASKS));
-      if (user.taskProgress) {
-        tasks.forEach(t => {
-          if (typeof user.taskProgress[t.id] === "number") {
-            t.used = user.taskProgress[t.id];
-          }
-        });
-      }
+      hydrateTasksForUser(user);
 
       document.getElementById("soundToggle").checked = state.soundEnabled;
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
@@ -1483,8 +1565,8 @@
 
     function updateCounts() {
       document.getElementById("countAll").textContent = tasks.length;
-      document.getElementById("countFrameAds").textContent = tasks.filter(t => t.cat === "frame_ads").length;
       document.getElementById("countWindowAds").textContent = tasks.filter(t => t.cat === "window_ads").length;
+      document.getElementById("countFrameAds").textContent = tasks.filter(t => t.cat === "frame_ads").length;
       document.getElementById("countVideoAds").textContent = tasks.filter(t => t.cat === "video_ads").length;
       document.getElementById("countYtAds").textContent = tasks.filter(t => t.cat === "external_youtube_ads").length;
       document.getElementById("countExtAds").textContent = tasks.filter(t => t.cat === "external_ads").length;
@@ -1492,8 +1574,8 @@
 
     function getCategoryLabel(cat) {
       const map = {
-        frame_ads: "FRAME ADS",
         window_ads: "WINDOW ADS",
+        frame_ads: "FRAME ADS",
         video_ads: "VIDEO ADS",
         external_youtube_ads: "EXTERNAL YOUTUBE ADS",
         external_ads: "EXTERNAL ADS"
@@ -1510,7 +1592,10 @@
     }
 
     function renderGrid() {
+      sync24hCooldowns();
       updateCounts();
+
+      const now = Date.now();
       const grid = document.getElementById("itemsGrid");
       const query = (document.getElementById("searchInput").value || "").trim().toLowerCase();
       const sortBy = document.getElementById("sortSelect").value;
@@ -1539,7 +1624,9 @@
       }
 
       grid.innerHTML = list.map(t => {
-        const exhausted = t.used >= t.limit;
+        const isOnCooldown = t.used >= t.limit && t.completedAt && (now - t.completedAt < RESET_INTERVAL_MS);
+        const remaining24h = isOnCooldown ? formatRemaining24h(RESET_INTERVAL_MS - (now - t.completedAt)) : "";
+
         return `
           <article class="ad-card">
             <div>
@@ -1554,13 +1641,17 @@
               <div class="meta-chips">
                 <span class="chip chip-reward">🪙 +${t.reward} Coins</span>
                 <span class="chip chip-time">⏱️ ${t.duration}s</span>
-                <span class="chip chip-kind">${t.used}/${t.limit}</span>
+                ${
+                  isOnCooldown
+                    ? `<span class="chip chip-cooldown">🔄 Reset en ${remaining24h}</span>`
+                    : `<span class="chip chip-kind">24h</span>`
+                }
               </div>
             </div>
             <div class="ad-card-foot">
               <button type="button" class="report-link" onclick="reportTask('${t.id}')">🚩 Report</button>
-              <button type="button" class="btn btn-primary btn-sm" ${exhausted ? "disabled" : ""} onclick="startTask('${t.id}')">
-                ${exhausted ? "Completado" : getActionButtonLabel(t.cat)}
+              <button type="button" class="btn btn-primary btn-sm" ${isOnCooldown ? "disabled" : ""} onclick="startTask('${t.id}')">
+                ${isOnCooldown ? "Completado (24h)" : getActionButtonLabel(t.cat)}
               </button>
             </div>
           </article>
@@ -1599,12 +1690,12 @@
       if (task.cat === "window_ads") {
         mediaBox.innerHTML = `
           <div style="font-size: 1.5rem;">🪟</div>
-          <div style="font-weight: 700; font-size: 0.95rem;">Window Ad abierto en ventana/pestaña nueva</div>
+          <div style="font-weight: 700; font-size: 0.95rem;">Direct Link abierto en ventana/pestaña nueva</div>
           <p style="font-size: 0.82rem; color: var(--muted); max-width: 340px;">
             Si el navegador bloqueó la ventana emergente, pulsa el botón para abrirla manualmente:
           </p>
           <button type="button" class="btn btn-secondary btn-sm" onclick="openExternalTarget('${task.url}')">
-            ↗ Abrir Window Ad
+            ↗ Abrir Direct Link
           </button>
         `;
         return;
@@ -1638,7 +1729,6 @@
         return;
       }
 
-      /* external_ads */
       mediaBox.innerHTML = `
         <div style="font-size: 1.5rem;">🌐</div>
         <div style="font-weight: 700; font-size: 0.95rem;">External Ad lanzado en pestaña externa</div>
@@ -1653,9 +1743,18 @@
 
     function startTask(taskId) {
       if (!state.currentUser) return;
+      sync24hCooldowns();
       clearInterval(timerInterval);
+
       const task = tasks.find(t => t.id === taskId);
-      if (!task || task.used >= task.limit) return;
+      const now = Date.now();
+      const isOnCooldown = task && task.used >= task.limit && task.completedAt && (now - task.completedAt < RESET_INTERVAL_MS);
+
+      if (!task || isOnCooldown) {
+        showToast("Este anuncio ya fue completado; se reseteará cada 24 horas.");
+        renderGrid();
+        return;
+      }
 
       if ((task.cat === "window_ads" || task.cat === "external_ads") && task.url) {
         openExternalTarget(task.url);
@@ -1728,15 +1827,23 @@
       }
 
       const { task } = activeSession;
-      state.coins += task.reward;
-      if (task.used < task.limit) {
-        task.used += 1;
+      const now = Date.now();
+      const isOnCooldown = task.used >= task.limit && task.completedAt && (now - task.completedAt < RESET_INTERVAL_MS);
+
+      if (isOnCooldown) {
+        closeViewerModal();
+        renderGrid();
+        return;
       }
+
+      task.used = task.limit;
+      task.completedAt = now;
+      state.coins += task.reward;
 
       updateBalanceUI();
       renderGrid();
       closeViewerModal();
-      showToast(`¡Ganaste +${task.reward} Coins!`);
+      showToast(`¡Ganaste +${task.reward} Coins! Se reseteará en 24 horas.`);
     }
 
     function closeViewerModal() {
@@ -1754,6 +1861,13 @@
         document.getElementById("viewerStatus").textContent = "▶️ Pestaña activa: continuando cuenta regresiva.";
       }
     });
+
+    /* Actualización periódica de contadores de 24h en pantalla */
+    setInterval(() => {
+      if (state.currentUser && !document.getElementById("viewerModal").classList.contains("open")) {
+        renderGrid();
+      }
+    }, 60000);
 
     /* Retiro */
     function openWithdrawModal() {
@@ -1792,6 +1906,7 @@
 
     /* Configurar Adsterra */
     function openAdConfigModal() {
+      document.getElementById("directLinksInput").value = getDirectLinksList().join("\n");
       document.getElementById("adTopInput").value = state.adTopHtml;
       document.getElementById("adModalInput").value = state.adModalHtml;
       document.getElementById("adConfigModal").classList.add("open");
@@ -1802,24 +1917,40 @@
     }
 
     function saveAdConfig() {
+      const rawLinks = document.getElementById("directLinksInput").value.trim();
+      localStorage.setItem(DIRECT_LINKS_STORAGE_KEY, rawLinks);
+
       state.adTopHtml = document.getElementById("adTopInput").value;
       state.adModalHtml = document.getElementById("adModalInput").value;
       localStorage.setItem("cc_ad_top", state.adTopHtml);
       localStorage.setItem("cc_ad_modal", state.adModalHtml);
+
+      if (state.currentUser) {
+        hydrateTasksForUser(state.currentUser);
+        renderGrid();
+      }
       applyAdSlots();
       closeAdConfigModal();
-      showToast("Códigos de Adsterra guardados.");
+      showToast("Configuración y Direct Links de Adsterra guardados.");
     }
 
     function resetAdConfig() {
+      localStorage.removeItem(DIRECT_LINKS_STORAGE_KEY);
       state.adTopHtml = DEFAULT_AD_728;
       state.adModalHtml = DEFAULT_AD_300;
       localStorage.setItem("cc_ad_top", DEFAULT_AD_728);
       localStorage.setItem("cc_ad_modal", DEFAULT_AD_300);
+
+      document.getElementById("directLinksInput").value = DEFAULT_DIRECT_LINKS.join("\n");
       document.getElementById("adTopInput").value = DEFAULT_AD_728;
       document.getElementById("adModalInput").value = DEFAULT_AD_300;
+
+      if (state.currentUser) {
+        hydrateTasksForUser(state.currentUser);
+        renderGrid();
+      }
       applyAdSlots();
-      showToast("Códigos de Adsterra restaurados.");
+      showToast("Configuración de Adsterra restaurada.");
     }
 
     (function initApp() {
