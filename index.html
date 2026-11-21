@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoClicks PTC — Anuncios, Offerwalls, Faucet & Publicidad</title>
+  <title>CryptoClicks PTC — Dashboard, Anuncios, Offerwalls, Faucet &amp; Minijuego</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -18,6 +18,9 @@
       --purple: #a78bfa;
       --warning: #f59e0b;
       --danger: #ef4444;
+      --vz-yellow: #ffcc00;
+      --vz-blue: #0038a8;
+      --vz-red: #cf142b;
     }
 
     * {
@@ -36,19 +39,25 @@
       overflow-x: hidden;
     }
 
+    .tricolor-bar {
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--vz-yellow) 0%, var(--vz-yellow) 33.3%, var(--vz-blue) 33.3%, var(--vz-blue) 66.6%, var(--vz-red) 66.6%, var(--vz-red) 100%);
+    }
+
     /* Header */
     header {
-      background: rgba(17, 24, 39, 0.95);
+      background: rgba(17, 24, 39, 0.96);
       border-bottom: 1px solid var(--border);
-      padding: 12px 20px;
+      padding: 11px 18px;
       position: sticky;
       top: 0;
-      z-index: 25;
+      z-index: 30;
       backdrop-filter: blur(8px);
     }
 
     .header-inner {
-      max-width: 1200px;
+      max-width: 1260px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -61,7 +70,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 800;
       color: var(--text);
     }
@@ -70,19 +79,31 @@
       color: var(--cyan);
     }
 
+    .vz-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(255, 204, 0, 0.14);
+      color: var(--vz-yellow);
+      border: 1px solid rgba(255, 204, 0, 0.35);
+    }
+
     .wallet-box {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
     }
 
     .user-pill {
       background: rgba(34, 211, 238, 0.12);
       border: 1px solid rgba(34, 211, 238, 0.35);
-      padding: 6px 11px;
+      padding: 6px 10px;
       border-radius: 9px;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--text);
       display: inline-flex;
@@ -96,7 +117,7 @@
       border: 1px solid rgba(167, 139, 250, 0.4);
       padding: 2px 7px;
       border-radius: 6px;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 800;
     }
 
@@ -105,7 +126,7 @@
       border: 1px solid #28354d;
       padding: 6px 12px;
       border-radius: 9px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--cyan);
     }
@@ -114,7 +135,7 @@
       border: none;
       border-radius: 8px;
       padding: 8px 12px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
       transition: 0.16s ease;
@@ -180,7 +201,7 @@
 
     .btn-sm {
       padding: 6px 10px;
-      font-size: 0.79rem;
+      font-size: 0.78rem;
       border-radius: 7px;
     }
 
@@ -276,13 +297,99 @@
       color: var(--muted);
     }
 
-    /* Main Container */
-    main {
-      max-width: 1200px;
+    /* App Layout with Sidebar + Dedicated Views */
+    .app-shell {
+      max-width: 1260px;
       width: 100%;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 16px 18px;
       flex: 1;
+      display: grid;
+      grid-template-columns: 225px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 920px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+        padding: 12px 14px;
+      }
+    }
+
+    .side-nav {
+      background: var(--card);
+      border: 1px solid #263349;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: sticky;
+      top: 72px;
+    }
+
+    @media (max-width: 920px) {
+      .side-nav {
+        position: static;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 8px;
+        gap: 6px;
+      }
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 9px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      text-align: left;
+      transition: 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      background: var(--card-2);
+      color: var(--text);
+    }
+
+    .nav-btn.active {
+      background: rgba(34, 211, 238, 0.12);
+      border-color: rgba(34, 211, 238, 0.35);
+      color: var(--cyan);
+    }
+
+    .nav-badge {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .nav-badge.gold {
+      background: rgba(255, 204, 0, 0.16);
+      color: var(--vz-yellow);
+    }
+
+    .view-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .view-panel {
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -335,6 +442,135 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
+    }
+
+    /* Dashboard KPIs & Sections */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 1050px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid #263349;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kpi-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .kpi-sub {
+      font-size: 0.76rem;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .dash-actions-card {
+      background: var(--card);
+      border: 1px solid #263349;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dash-actions-title {
+      font-size: 0.94rem;
+      font-weight: 800;
+    }
+
+    .dash-actions-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .dash-actions-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .shortcut-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 1050px) {
+      .shortcut-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shortcut-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .shortcut-card {
+      background: var(--card);
+      border: 1px solid #263349;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: 0.15s ease;
+    }
+
+    .shortcut-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    .shortcut-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 0.94rem;
+    }
+
+    .shortcut-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.38;
     }
 
     /* Hub Cards (2 columnas: Bono Diario + Faucet por Niveles) */
@@ -430,45 +666,73 @@
       color: var(--cyan);
     }
 
-    /* Category Tabs */
-    .category-bar {
+    .recent-box {
+      background: var(--card);
+      border: 1px solid #263349;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .recent-head {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
+    }
+
+    .recent-head h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    /* Section Header & Sub-tabs */
+    .section-banner {
+      background: var(--card);
+      border: 1px solid #263349;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .cat-btn {
-      background: var(--card);
+    .section-banner h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .section-banner p {
+      font-size: 0.81rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .sub-filter-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .sub-btn {
+      background: var(--card-2);
       border: 1px solid var(--border);
       color: var(--muted);
-      padding: 8px 12px;
+      padding: 6px 11px;
       border-radius: 8px;
-      font-size: 0.83rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
-      transition: 0.15s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
     }
 
-    .cat-btn:hover {
-      border-color: #334155;
-      color: var(--text);
-    }
-
-    .cat-btn.active {
-      background: var(--card-2);
-      color: var(--cyan);
+    .sub-btn.active {
+      background: rgba(34, 211, 238, 0.14);
       border-color: var(--cyan);
-    }
-
-    .cat-count {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 2px 7px;
-      border-radius: 999px;
-      font-size: 0.74rem;
+      color: var(--cyan);
     }
 
     /* Toolbar */
@@ -541,7 +805,7 @@
       gap: 14px;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1050px) {
       .ads-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -701,6 +965,111 @@
       text-align: center;
       color: var(--muted);
       font-size: 0.92rem;
+    }
+
+    /* Minijuego 2D Hámster Cripto */
+    .minigame-shell {
+      background: var(--card);
+      border: 1px solid #28354d;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mg-hud {
+      background: var(--card-2);
+      border-bottom: 1px solid #263349;
+      padding: 10px 14px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .mg-hud {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .mg-stat {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      border-radius: 9px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .mg-stat-lbl {
+      font-size: 0.69rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .mg-stat-val {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--vz-yellow);
+    }
+
+    .mg-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 410px;
+      background: #070c16;
+    }
+
+    @media (max-width: 600px) {
+      .mg-canvas-wrap {
+        height: 360px;
+      }
+    }
+
+    #hamsterCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .mg-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 12, 22, 0.86);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      z-index: 5;
+    }
+
+    .mg-overlay-box {
+      background: var(--card);
+      border: 1px solid rgba(255, 204, 0, 0.45);
+      border-radius: 14px;
+      padding: 20px;
+      max-width: 440px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mg-controls-bar {
+      background: var(--card-2);
+      border-top: 1px solid #263349;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
     }
 
     /* Modals */
@@ -1009,7 +1378,7 @@
     }
 
     .footer-inner {
-      max-width: 1200px;
+      max-width: 1260px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -1046,11 +1415,13 @@
   </style>
 </head>
 <body>
+  <div class="tricolor-bar"></div>
   <header>
     <div class="header-inner">
       <div class="brand">
         <span class="bolt">⚡</span>
         <span>CryptoClicks PTC</span>
+        <span class="vz-tag">Venezuela</span>
       </div>
 
       <!-- Barra de sesión activa -->
@@ -1060,7 +1431,7 @@
           <span class="lvl-tag" id="levelBadgeTop">Nv. 1</span>
         </div>
         <div class="balance-pill" id="balanceDisplay">🪙 0 Coins (≈ $0.00000 USDT)</div>
-        <button class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Anunciarse</button>
+        <button class="btn btn-purple btn-sm" onclick="switchView('anunciantes')">📢 Anunciantes</button>
         <button class="btn btn-secondary btn-sm" onclick="openReferralModal()">🤝 Referidos (10%)</button>
         <button class="btn btn-secondary btn-sm" onclick="openHistoryModal()">📜 Historial</button>
         <button class="btn btn-primary btn-sm" onclick="openWithdrawModal()">💸 Retirar</button>
@@ -1080,8 +1451,8 @@
   <section class="auth-wrapper" id="authSection">
     <div class="auth-card">
       <div class="auth-head">
-        <h1>CryptoClicks PTC</h1>
-        <p>Gana monedas con Offerwalls, anuncios, shortlinks y faucet por niveles, o promociona tu proyecto.</p>
+        <h1>CryptoClicks PTC Venezuela</h1>
+        <p>Gana monedas con Offerwalls, PTCs, Shortlinks, Faucet por niveles y Minijuego Hámster, o promociona tu proyecto.</p>
       </div>
 
       <div class="auth-tabs">
@@ -1135,105 +1506,419 @@
     </div>
   </section>
 
-  <!-- Panel Principal -->
-  <main class="hidden" id="dashboardSection">
-    <!-- Aviso de Seguridad + Acceso rápido Anunciantes -->
-    <div class="safety-banner">
-      <span>🛡️ <strong>Seguridad activa:</strong> Anti-multicuenta (máx. 2 cuentas/dispositivo) y validación de saldo. Tasa: 50 Coins = $0.0005 USDT.</span>
-      <button type="button" class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Publicar tu Anuncio Aquí</button>
-    </div>
+  <!-- Panel Principal con Navegación Separada -->
+  <div class="app-shell hidden" id="dashboardSection">
+    <!-- Navegación Lateral / Superior Separada -->
+    <aside class="side-nav" aria-label="Secciones de CryptoClicks">
+      <button type="button" class="nav-btn active" data-view="dashboard" onclick="switchView('dashboard')">
+        <span>📊 Dashboard</span>
+      </button>
+      <button type="button" class="nav-btn" data-view="ptcs" onclick="switchView('ptcs')">
+        <span>🖥️ PTCs</span>
+        <span class="nav-badge" id="navCountPtcs">0</span>
+      </button>
+      <button type="button" class="nav-btn" data-view="shortlinks" onclick="switchView('shortlinks')">
+        <span>🔗 Shortlinks</span>
+        <span class="nav-badge" id="navCountShortlinks">0</span>
+      </button>
+      <button type="button" class="nav-btn" data-view="offerwalls" onclick="switchView('offerwalls')">
+        <span>🧱 Offerwalls</span>
+        <span class="nav-badge" id="navCountOfferwalls">4</span>
+      </button>
+      <button type="button" class="nav-btn" data-view="minijuego" onclick="switchView('minijuego')">
+        <span>🐹 Minijuego</span>
+        <span class="nav-badge gold">$1 Sem</span>
+      </button>
+      <button type="button" class="nav-btn" data-view="anunciantes" onclick="switchView('anunciantes')">
+        <span>📢 Anunciantes</span>
+      </button>
+      <button type="button" class="nav-btn" data-view="retiros" onclick="switchView('retiros')">
+        <span>💸 Retiros</span>
+      </button>
+      <button type="button" class="nav-btn" data-view="historial" onclick="switchView('historial')">
+        <span>📜 Historial</span>
+      </button>
+    </aside>
 
-    <!-- Banner Superior 728x90 -->
-    <section class="ad-banner-top" id="adSlotTop"></section>
-
-    <!-- Hub Principal: Bono Diario (100 Coins) + Faucet por Niveles (35 Coins) -->
-    <section class="hub-grid">
-      <!-- 1. Bono Diario (100 Coins) -->
-      <div class="hub-card">
-        <div class="hub-top">
-          <div>
-            <div class="hub-title">🎁 Bono Diario</div>
-            <div class="hub-sub">Reclama tu recompensa gratuita cada 24 horas y suma +20 XP para subir de nivel.</div>
-          </div>
-          <span class="hub-badge">+100 Coins</span>
-        </div>
-        <div class="hub-foot">
-          <span class="hub-stat" id="dailyBonusStatus">Disponible ahora</span>
-          <button type="button" class="btn btn-primary btn-sm" id="btnDailyBonus" onclick="claimDailyBonus()">
-            Reclamar +100 Coins
-          </button>
-        </div>
+    <!-- Contenedor de Vistas -->
+    <div class="view-stack">
+      <!-- Aviso de Seguridad + Banner Superior 728x90 -->
+      <div class="safety-banner">
+        <span>🛡️ <strong>Seguridad activa:</strong> Anti-multicuenta (máx. 2 cuentas/dispositivo) • Tasa: 50 Coins = $0.0005 USDT • Soporte: <strong>@J3susV3</strong>.</span>
+        <button type="button" class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Publicar tu Anuncio Aquí</button>
       </div>
 
-      <!-- 2. Faucet por Niveles (35 Coins, baja hasta 10 min, 1,000 XP/nivel) -->
-      <div class="hub-card">
-        <div class="hub-top">
+      <section class="ad-banner-top" id="adSlotTop"></section>
+
+      <!-- =============================================================== -->
+      <!-- VISTA 1: DASHBOARD (ESCRITORIO LIMPIO AL INICIAR SESIÓN)         -->
+      <!-- =============================================================== -->
+      <section class="view-panel" id="view-dashboard">
+        <!-- 4 Tarjetas KPI -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label"><span>Balance Disponible</span><span>🪙</span></div>
+            <div class="kpi-value" id="kpiBalanceCoins">0 Coins</div>
+            <div class="kpi-sub" id="kpiBalanceUsdt">≈ $0.00000 USDT</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label"><span>Ganado Hoy &amp; Nivel</span><span>⚡</span></div>
+            <div class="kpi-value" id="kpiEarnedToday">0 Coins</div>
+            <div class="kpi-sub" id="kpiLevelDetail">Nivel 1 • 0 / 1,000 XP</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label"><span>Bono Diario &amp; Faucet</span><span>🚰</span></div>
+            <div class="kpi-value" id="kpiFaucetState">Lista ahora</div>
+            <div class="kpi-sub" id="kpiDailyState">Bono 24h: Disponible</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-label"><span>Premio Semanal Hámster</span><span>🏆</span></div>
+            <div class="kpi-value" style="color: var(--vz-yellow);">$1.00 USD</div>
+            <div class="kpi-sub" id="kpiWeeklyInfo">Prob. 0.5%–1% • USDT/SOL/LTC/Bs</div>
+          </div>
+        </div>
+
+        <!-- Acciones Rápidas -->
+        <div class="dash-actions-card">
           <div>
-            <div class="hub-title">🚰 Faucet por Niveles</div>
-            <div class="hub-sub" id="faucetDescText">Inicia en 60 min y baja 2 min por nivel (mín. 10 min).</div>
+            <div class="dash-actions-title">Escritorio de Control — CryptoClicks Venezuela</div>
+            <div class="dash-actions-sub">Elige una sección separada para ganar o gestiona tus retiros, referidos y campañas.</div>
           </div>
-          <span class="hub-badge purple" id="levelXpBadge">Nv. 1 • 0/1,000 XP</span>
-        </div>
-        <div>
-          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-bottom:4px;">
-            <span id="faucetCooldownInfo">Espera actual: 60 min</span>
-            <span id="faucetRewardInfo">Pago: +35 Coins</span>
-          </div>
-          <div class="mini-progress-wrap">
-            <div class="mini-progress-bar" id="xpProgressBar" style="background: linear-gradient(90deg, var(--purple), var(--cyan));"></div>
+          <div class="dash-actions-btns">
+            <button type="button" class="btn btn-primary btn-sm" onclick="openWithdrawModal()">💸 Retirar Fondos</button>
+            <button type="button" class="btn btn-warning btn-sm" onclick="switchView('minijuego')">🐹 Jugar Hámster</button>
+            <button type="button" class="btn btn-purple btn-sm" onclick="switchView('anunciantes')">📢 Anunciarse</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="openReferralModal()">🤝 Referidos (10%)</button>
           </div>
         </div>
-        <div class="hub-foot">
-          <span class="hub-stat" id="faucetTimerStatus">Lista para reclamar</span>
-          <button type="button" class="btn btn-primary btn-sm" id="btnOpenFaucet" onclick="openFaucetModal()">
-            🚰 Reclamar +35
-          </button>
+
+        <!-- Hub Principal: Bono Diario (100 Coins) + Faucet por Niveles (35 Coins) -->
+        <div class="hub-grid">
+          <div class="hub-card">
+            <div class="hub-top">
+              <div>
+                <div class="hub-title">🎁 Bono Diario</div>
+                <div class="hub-sub">Reclama tu recompensa gratuita cada 24 horas y suma +20 XP para subir de nivel.</div>
+              </div>
+              <span class="hub-badge">+100 Coins</span>
+            </div>
+            <div class="hub-foot">
+              <span class="hub-stat" id="dailyBonusStatus">Disponible ahora</span>
+              <button type="button" class="btn btn-primary btn-sm" id="btnDailyBonus" onclick="claimDailyBonus()">
+                Reclamar +100 Coins
+              </button>
+            </div>
+          </div>
+
+          <div class="hub-card">
+            <div class="hub-top">
+              <div>
+                <div class="hub-title">🚰 Faucet por Niveles</div>
+                <div class="hub-sub" id="faucetDescText">Inicia en 60 min y baja 2 min por nivel (mín. 10 min).</div>
+              </div>
+              <span class="hub-badge purple" id="levelXpBadge">Nv. 1 • 0/1,000 XP</span>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-bottom:4px;">
+                <span id="faucetCooldownInfo">Espera actual: 60 min</span>
+                <span id="faucetRewardInfo">Pago: +35 Coins</span>
+              </div>
+              <div class="mini-progress-wrap">
+                <div class="mini-progress-bar" id="xpProgressBar" style="background: linear-gradient(90deg, var(--purple), var(--cyan));"></div>
+              </div>
+            </div>
+            <div class="hub-foot">
+              <span class="hub-stat" id="faucetTimerStatus">Lista para reclamar</span>
+              <button type="button" class="btn btn-primary btn-sm" id="btnOpenFaucet" onclick="openFaucetModal()">
+                🚰 Reclamar +35
+              </button>
+            </div>
+          </div>
         </div>
+
+        <!-- Accesos Directos a Módulos Separados -->
+        <div class="shortcut-grid">
+          <div class="shortcut-card">
+            <div>
+              <div class="shortcut-head"><span>🖥️ PTCs</span><span class="chip chip-time" id="dashPtcCount">0</span></div>
+              <p class="shortcut-desc" style="margin-top:6px;">Window Ads y Frame Ads verificados con contador y captcha rápido.</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="switchView('ptcs')">Abrir PTCs →</button>
+          </div>
+
+          <div class="shortcut-card">
+            <div>
+              <div class="shortcut-head"><span>🔗 Shortlinks</span><span class="chip chip-reward">+130 Coins</span></div>
+              <p class="shortcut-desc" style="margin-top:6px;">Enlaces acortados diarios con reinicio automático cada 24 horas.</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="switchView('shortlinks')">Abrir Shortlinks →</button>
+          </div>
+
+          <div class="shortcut-card">
+            <div>
+              <div class="shortcut-head"><span>🧱 Offerwalls</span><span class="chip chip-purple">4 Muros</span></div>
+              <p class="shortcut-desc" style="margin-top:6px;">TimeWall, CPX Research, BitLabs y Monlix con rastreo por usuario.</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="switchView('offerwalls')">Abrir Offerwalls →</button>
+          </div>
+
+          <div class="shortcut-card">
+            <div>
+              <div class="shortcut-head"><span>🐹 Minijuego</span><span class="chip chip-cooldown">$1.00 Sem</span></div>
+              <p class="shortcut-desc" style="margin-top:6px;">Atrapa 40 monedas en 60s esquivando bombas en 10 niveles × 3 subniveles.</p>
+            </div>
+            <button type="button" class="btn btn-warning btn-sm" onclick="switchView('minijuego')">Jugar Ahora →</button>
+          </div>
+        </div>
+
+        <!-- Actividad Reciente Resumida -->
+        <div class="recent-box">
+          <div class="recent-head">
+            <h3>🕒 Actividad Reciente</h3>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="switchView('historial')">Ver historial completo</button>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Actividad</th>
+                  <th>Monto</th>
+                  <th>Equivalente</th>
+                </tr>
+              </thead>
+              <tbody id="dashRecentTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VISTA 2: PTCs (WINDOW ADS + FRAME ADS + PATROCINADOS)            -->
+      <!-- =============================================================== -->
+      <section class="view-panel hidden" id="view-ptcs">
+        <div class="section-banner">
+          <div>
+            <h2>🖥️ Anuncios PTC (Window Ads &amp; Frame Ads)</h2>
+            <p>Visualiza anuncios patrocinados con reinicio cada 24 horas y suma Coins + XP.</p>
+          </div>
+          <div class="sub-filter-bar" id="ptcSubFilterBar">
+            <button type="button" class="sub-btn active" data-ptc-sub="all" onclick="setPtcSubFilter('all', this)">Todos PTC</button>
+            <button type="button" class="sub-btn" data-ptc-sub="window_ads" onclick="setPtcSubFilter('window_ads', this)">🪟 Window Ads</button>
+            <button type="button" class="sub-btn" data-ptc-sub="frame_ads" onclick="setPtcSubFilter('frame_ads', this)">🖼️ Frame Ads</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VISTA 3: SHORTLINKS                                             -->
+      <!-- =============================================================== -->
+      <section class="view-panel hidden" id="view-shortlinks">
+        <div class="section-banner">
+          <div>
+            <h2>🔗 Shortlinks Diarios (+130 Coins c/u)</h2>
+            <p>Completa los acortadores y resuelve la verificación final para acreditar tus Coins.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VISTA 4: OFFERWALLS                                             -->
+      <!-- =============================================================== -->
+      <section class="view-panel hidden" id="view-offerwalls">
+        <div class="section-banner">
+          <div>
+            <h2>🧱 Offerwalls &amp; Encuestas</h2>
+            <p>Explora muros de ofertas aliados con tu ID de usuario activo.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Barra de búsqueda/ordenamiento compartida para PTCs, Shortlinks y Offerwalls -->
+      <div class="toolbar-row hidden" id="sharedCatalogToolbar">
+        <input type="search" id="searchInput" placeholder="🔍 Buscar por título o descripción..." oninput="renderActiveViewCatalog()" />
+        <select id="sortSelect" onchange="renderActiveViewCatalog()">
+          <option value="default">Ordenar: Por defecto</option>
+          <option value="reward_desc">Ordenar: Mayor recompensa</option>
+          <option value="reward_asc">Ordenar: Menor recompensa</option>
+          <option value="duration_asc">Ordenar: Menor duración</option>
+        </select>
+        <label class="sound-toggle" for="soundToggle">
+          <input type="checkbox" id="soundToggle" class="sr-switch" checked onchange="toggleSoundPref()" />
+          <span class="switch-ui"></span>
+          <span>🔔 Sonido al terminar</span>
+        </label>
       </div>
-    </section>
 
-    <!-- Categorías (Incluye Offerwalls) -->
-    <nav class="category-bar" id="categoryBar">
-      <button type="button" class="cat-btn active" data-cat="all" onclick="setCategory('all', this)">
-        Todos <span class="cat-count" id="countAll">0</span>
-      </button>
-      <button type="button" class="cat-btn" data-cat="offerwalls" onclick="setCategory('offerwalls', this)">
-        🧱 Offerwalls <span class="cat-count" id="countOfferwalls">0</span>
-      </button>
-      <button type="button" class="cat-btn" data-cat="window_ads" onclick="setCategory('window_ads', this)">
-        🪟 Window Ads <span class="cat-count" id="countWindowAds">0</span>
-      </button>
-      <button type="button" class="cat-btn" data-cat="frame_ads" onclick="setCategory('frame_ads', this)">
-        🖼️ Frame Ads <span class="cat-count" id="countFrameAds">0</span>
-      </button>
-      <button type="button" class="cat-btn" data-cat="shortlinks" onclick="setCategory('shortlinks', this)">
-        🔗 Shortlinks <span class="cat-count" id="countShortlinks">0</span>
-      </button>
-    </nav>
+      <!-- Grid dinámico usado por PTCs, Shortlinks y Offerwalls -->
+      <section class="ads-grid hidden" id="itemsGrid"></section>
 
-    <!-- Barra de Búsqueda, Ordenamiento y Sonido -->
-    <div class="toolbar-row">
-      <input type="search" id="searchInput" placeholder="🔍 Buscar Offerwalls, Window Ads, Frame Ads o Shortlinks..." oninput="renderGrid()" />
-      <select id="sortSelect" onchange="renderGrid()">
-        <option value="default">Ordenar: Por defecto</option>
-        <option value="reward_desc">Ordenar: Mayor recompensa</option>
-        <option value="reward_asc">Ordenar: Menor recompensa</option>
-        <option value="duration_asc">Ordenar: Menor duración</option>
-      </select>
-      <label class="sound-toggle" for="soundToggle">
-        <input type="checkbox" id="soundToggle" class="sr-switch" checked onchange="toggleSoundPref()" />
-        <span class="switch-ui"></span>
-        <span>🔔 Sonido al terminar</span>
-      </label>
+      <!-- =============================================================== -->
+      <!-- VISTA 5: MINIJUEGO 2D HÁMSTER CRIPTO VENEZUELA                  -->
+      <!-- =============================================================== -->
+      <section class="view-panel hidden" id="view-minijuego">
+        <div class="section-banner">
+          <div>
+            <h2>🐹 Hámster Cripto — Minijuego 2D Arcade</h2>
+            <p>Atrapa <strong>40 monedas</strong> (BTC, LTC, SOL, ADA, SUI) en <strong>60s</strong>. Si se escapa una moneda o tocas una <strong>💣 bomba</strong>, pierdes. Anuncio cada 2 victorias • Premio Semanal $1 USD (0.5%–1%).</p>
+          </div>
+          <span class="hub-badge" id="mgCoinBonusBadge">Victoria: +25 Coins</span>
+        </div>
+
+        <div class="minigame-shell">
+          <div class="mg-hud">
+            <div class="mg-stat">
+              <span class="mg-stat-lbl">Monedas</span>
+              <span class="mg-stat-val" id="mgHudCoins">0 / 40</span>
+            </div>
+            <div class="mg-stat">
+              <span class="mg-stat-lbl">Tiempo</span>
+              <span class="mg-stat-val" id="mgHudTimer" style="color: var(--cyan);">60s</span>
+            </div>
+            <div class="mg-stat">
+              <span class="mg-stat-lbl">Nivel / Subnivel</span>
+              <span class="mg-stat-val" id="mgHudStage" style="color: var(--purple);">Nv. 1 • Sub 1/3</span>
+            </div>
+            <div class="mg-stat">
+              <span class="mg-stat-lbl">Victorias / Ads</span>
+              <span class="mg-stat-val" id="mgHudWins" style="color: var(--accent);">0 (Ad: 0/2)</span>
+            </div>
+          </div>
+
+          <div class="mg-canvas-wrap" id="mgCanvasWrap">
+            <canvas id="hamsterCanvas"></canvas>
+
+            <div class="mg-overlay" id="mgOverlay">
+              <div class="mg-overlay-box">
+                <div style="font-size: 1.8rem;">🐹🪙💣</div>
+                <h3 id="mgOverlayTitle" style="font-size: 1.15rem; font-weight: 800;">Hámster Cripto Venezuela</h3>
+                <p id="mgOverlayDesc" style="font-size: 0.83rem; color: var(--muted); line-height: 1.45;">
+                  El hámster con gorra tricolor corre por la cornisa soltando monedas BTC, LTC, SOL, ADA y SUI y bombas. Atrapa 40 monedas en 60 segundos sin que caiga ninguna y sin tocar bombas.
+                </p>
+                <button type="button" class="btn btn-primary" onclick="startHamsterGame()">▶ Iniciar Partida</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mg-controls-bar">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span style="color:var(--muted); font-weight:700;">Etapa:</span>
+              <select id="mgSelectLevel" style="width:auto; padding:5px 8px; font-size:0.78rem;"></select>
+              <select id="mgSelectSublevel" style="width:auto; padding:5px 8px; font-size:0.78rem;">
+                <option value="1">Subnivel 1/3</option>
+                <option value="2">Subnivel 2/3</option>
+                <option value="3">Subnivel 3/3</option>
+              </select>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="applyHamsterStage()">Ir</button>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-warning btn-sm" onclick="triggerHamsterWin(true)">🎰 Simular Ganar Premio Semanal ($1)</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VISTA 6: ANUNCIANTES                                            -->
+      <!-- =============================================================== -->
+      <section class="view-panel hidden" id="view-anunciantes">
+        <div class="section-banner">
+          <div>
+            <h2>📢 Panel de Anunciantes</h2>
+            <p>Crea campañas de Window Ads o Frame Ads con pago por FaucetPay, Binance Pay o saldo en Coins.</p>
+          </div>
+          <button type="button" class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">+ Abrir Formulario Modal</button>
+        </div>
+
+        <div class="recent-box">
+          <div class="recent-head">
+            <h3>📋 Campañas Activas Registradas</h3>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Campaña</th>
+                  <th>Formato</th>
+                  <th>Progreso</th>
+                  <th>Pago</th>
+                </tr>
+              </thead>
+              <tbody id="viewAdvertiserCampaignsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VISTA 7: RETIROS                                                -->
+      <!-- =============================================================== -->
+      <section class="view-panel hidden" id="view-retiros">
+        <div class="section-banner">
+          <div>
+            <h2>💸 Billetera y Retiros</h2>
+            <p>Mínimo de retiro: <strong>10,000 Coins ($0.1000 USDT)</strong> • Tasa: 50 Coins = $0.0005 USDT.</p>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openWithdrawModal()">Solicitar Nuevo Retiro</button>
+        </div>
+
+        <div class="recent-box">
+          <div class="recent-head">
+            <h3>Historial de Retiros</h3>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Método</th>
+                  <th>Destino</th>
+                  <th>Monto</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="viewWithdrawalsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== -->
+      <!-- VISTA 8: HISTORIAL COMPLETO                                     -->
+      <!-- =============================================================== -->
+      <section class="view-panel hidden" id="view-historial">
+        <div class="section-banner">
+          <div>
+            <h2>📜 Historial de Movimientos</h2>
+            <p>Últimos 10 movimientos acreditados o descontados en tu cuenta.</p>
+          </div>
+        </div>
+
+        <div class="recent-box">
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Actividad</th>
+                  <th>Monto</th>
+                  <th>Equivalente</th>
+                </tr>
+              </thead>
+              <tbody id="viewMovementsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </div>
-
-    <!-- Cuadrícula de Tarjetas -->
-    <section class="ads-grid" id="itemsGrid"></section>
-  </main>
+  </div>
 
   <footer>
     <div class="footer-inner">
-      <div>CryptoClicks PTC © 2026 • 50 Coins = $0.0005 USDT • Retiro mínimo: 10,000 Coins ($0.10 USDT) • 10% Referidos</div>
+      <div>CryptoClicks PTC Venezuela © 2026 • 50 Coins = $0.0005 USDT • Retiro mínimo: 10,000 Coins ($0.10 USDT) • 10% Referidos • @J3susV3</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
         <button class="btn btn-purple btn-sm" onclick="openAdvertiseModal()">📢 Publicar Anuncio</button>
         <button class="btn btn-secondary btn-sm" onclick="openAdConfigModal()">⚙️ Configurar Enlaces, Offerwalls y Banners</button>
@@ -1279,6 +1964,52 @@
           <button class="btn btn-primary" onclick="claimViewerReward()">Reclamar</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal Anuncio cada 2 victorias del Minijuego -->
+  <div class="modal-backdrop" id="mgAdModal">
+    <div class="modal" style="max-width: 480px;">
+      <div class="tricolor-bar"></div>
+      <div class="modal-header">
+        <h3>📺 Anuncio Patrocinador (Cada 2 Victorias)</h3>
+        <button class="close-btn" id="mgAdCloseX" disabled onclick="closeMgAdModal()">✕</button>
+      </div>
+      <div class="ad-box-300" id="mgAdSlotBox"></div>
+      <p style="font-size: 0.82rem; color: var(--muted); text-align: center;">
+        Los anuncios de patrocinadores ayudan a sostener el pozo del Premio Semanal de $1.00 USD.
+      </p>
+      <button type="button" class="btn btn-primary" id="mgAdContinueBtn" disabled onclick="closeMgAdModal()">
+        Espera <span id="mgAdSecLeft">5</span>s para continuar...
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Reclamo Premio Semanal ($1.00 USD) -->
+  <div class="modal-backdrop" id="weeklyPrizeModal">
+    <div class="modal" style="max-width: 500px;">
+      <div class="tricolor-bar"></div>
+      <div class="modal-header">
+        <h3>🏆 ¡Ganaste el Premio Semanal ($1.00 USD)!</h3>
+        <button class="close-btn" onclick="closeWeeklyPrizeModal()">✕</button>
+      </div>
+      <p style="font-size: 0.84rem; color: var(--muted);">
+        Ticket ganador verificado (probabilidad 0.5%–1%). Elige en qué moneda deseas recibir tu premio tras validación de <strong>@J3susV3</strong>:
+      </p>
+      <div class="field-group">
+        <label for="weeklyCurrency">Moneda de Pago</label>
+        <select id="weeklyCurrency">
+          <option value="USDT (Binance Pay / BEP20)">💵 USDT</option>
+          <option value="Solana (SOL)">🟣 Solana (SOL)</option>
+          <option value="Litecoin (LTC)">⚪ Litecoin (LTC)</option>
+          <option value="Bolívares (Pago Móvil)">🇻🇪 Bolívares (Bs. Pago Móvil)</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="weeklyWallet">Wallet / ID Binance / Datos Pago Móvil</label>
+        <input type="text" id="weeklyWallet" placeholder="Ej. ID Binance, dirección SOL/LTC o teléfono + CI + banco" required />
+      </div>
+      <button type="button" class="btn btn-primary" onclick="confirmWeeklyPrizeClaim()">✅ Registrar Premio Semanal</button>
     </div>
   </div>
 
@@ -1421,6 +2152,8 @@
         <select id="withdrawMethod">
           <option value="FaucetPay">FaucetPay (USDT / LTC / TRX)</option>
           <option value="Cwallet">Cwallet (USDT)</option>
+          <option value="Binance Pay">Binance Pay (USDT)</option>
+          <option value="Pago Móvil">Pago Móvil (Bs.)</option>
         </select>
       </div>
       <div>
@@ -1488,7 +2221,7 @@
         <button class="close-btn" onclick="closeReferralModal()">✕</button>
       </div>
       <p style="font-size: 0.85rem; color: var(--muted);">
-        Comparte tu enlace de invitación. Ganas el <strong>10 %</strong> de todas las monedas que tus referidos generen en offerwalls, anuncios, shortlinks y faucet, sin descontarles nada a ellos.
+        Comparte tu enlace de invitación. Ganas el <strong>10 %</strong> de todas las monedas que tus referidos generen en offerwalls, anuncios, shortlinks, faucet y minijuego, sin descontarles nada a ellos.
       </p>
 
       <div>
@@ -1576,22 +2309,31 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    // Tasa: 50 Coins = $0.0005 USDT => 1 Coin = $0.00001 USDT
+    // =========================================================================
+    // CONSTANTES Y CONFIGURACIÓN DE CRYPTOCLICKS PTC VENEZUELA
+    // =========================================================================
     const COIN_TO_USDT = 0.00001;
     const MIN_WITHDRAW_COINS = 10000; // $0.10 USDT
     const RESET_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 horas
     const WELCOME_BONUS_COINS = 200; // $0.00200 USDT
-    const DAILY_BONUS_COINS = 100; // $0.00100 USDT (único bono diario)
-    const REFERRAL_PERCENT = 0.10; // 10% justo
+    const DAILY_BONUS_COINS = 100; // $0.00100 USDT
+    const REFERRAL_PERCENT = 0.10; // 10%
     const MAX_ACCOUNTS_PER_DEVICE = 2;
 
-    // Faucet y Niveles: 1,000 XP por nivel, inicia en 60 min y baja 2 min por nivel hasta mínimo 10 min, paga 35 Coins
+    // Faucet y Niveles
     const FAUCET_BASE_MINUTES = 60;
     const FAUCET_REDUCTION_PER_LEVEL = 2;
     const FAUCET_MIN_MINUTES = 10;
     const FAUCET_REWARD_COINS = 35;
     const FAUCET_AD_VIEW_SECONDS = 10;
     const XP_PER_LEVEL = 1000;
+
+    // Minijuego Hámster
+    const MG_TARGET_COINS = 40;
+    const MG_ROUND_SECONDS = 60;
+    const MG_WIN_COINS = 25;
+    const MG_WIN_XP = 20;
+    const MG_WEEKLY_PROBABILITY = 0.0075; // 0.75% dentro del rango 0.5% - 1%
 
     const USERS_STORAGE_KEY = "cc_users_db_v5";
     const CURRENT_USER_KEY = "cc_current_user_email_v5";
@@ -1640,51 +2382,13 @@
     const DEFAULT_FRAME_LINKS = ["https://example.com/"];
     const DEFAULT_SHORTLINKS = ["https://example.com/"];
 
-    // 4 Offerwalls principales
     const OFFERWALLS_CONFIG = [
-      {
-        id: "ow1",
-        icon: "⏱️",
-        title: "TimeWall — Microtareas y Clics",
-        desc: "Gana Coins ilimitadas viendo anuncios, haciendo clics rápidos y tareas cortas con acreditación automática.",
-        duration: 0,
-        reward: 2500,
-        rewardLabel: "Hasta 2,500+ Coins",
-        xp: 50
-      },
-      {
-        id: "ow2",
-        icon: "📋",
-        title: "CPX Research — Encuestas Pagadas",
-        desc: "Completa encuestas disponibles en tu país y recibe entre 500 y 15,000 Coins al instante.",
-        duration: 0,
-        reward: 15000,
-        rewardLabel: "500 – 15,000 Coins",
-        xp: 100
-      },
-      {
-        id: "ow3",
-        icon: "🎮",
-        title: "BitLabs — Encuestas y Juegos Móviles",
-        desc: "Prueba aplicaciones o responde encuestas cortas con alto pago en Coins y XP extra.",
-        duration: 0,
-        reward: 10000,
-        rewardLabel: "300 – 10,000 Coins",
-        xp: 80
-      },
-      {
-        id: "ow4",
-        icon: "🧱",
-        title: "Monlix — Muro de Ofertas y PTC",
-        desc: "Registros rápidos, ofertas web y encuestas diarias compatibles con dispositivos móviles.",
-        duration: 0,
-        reward: 8000,
-        rewardLabel: "200 – 8,000 Coins",
-        xp: 60
-      }
+      { id: "ow1", icon: "⏱️", title: "TimeWall — Microtareas y Clics", desc: "Gana Coins ilimitadas viendo anuncios, haciendo clics rápidos y tareas cortas con acreditación automática.", duration: 0, reward: 2500, rewardLabel: "Hasta 2,500+ Coins", xp: 50 },
+      { id: "ow2", icon: "📋", title: "CPX Research — Encuestas Pagadas", desc: "Completa encuestas disponibles en tu país y recibe entre 500 y 15,000 Coins al instante.", duration: 0, reward: 15000, rewardLabel: "500 – 15,000 Coins", xp: 100 },
+      { id: "ow3", icon: "🎮", title: "BitLabs — Encuestas y Juegos Móviles", desc: "Prueba aplicaciones o responde encuestas cortas con alto pago en Coins y XP extra.", duration: 0, reward: 10000, rewardLabel: "300 – 10,000 Coins", xp: 80 },
+      { id: "ow4", icon: "🧱", title: "Monlix — Muro de Ofertas y PTC", desc: "Registros rápidos, ofertas web y encuestas diarias compatibles con dispositivos móviles.", duration: 0, reward: 8000, rewardLabel: "200 – 8,000 Coins", xp: 60 }
     ];
 
-    // 10 Window Ads (35 a 50 Coins)
     const WINDOW_ADS_CONFIG = [
       { id: "wn1", icon: "🪟", title: "Window Ad #1 — Smartlink Diario", desc: "Abre el enlace patrocinado en pestaña nueva durante 15s.", duration: 15, reward: 35, xp: 10 },
       { id: "wn2", icon: "🚀", title: "Window Ad #2 — Oferta Patrocinada", desc: "Mantén la ventana abierta 15s para habilitar el reclamo.", duration: 15, reward: 35, xp: 10 },
@@ -1698,7 +2402,6 @@
       { id: "wn10", icon: "💰", title: "Window Ad #10 — Top Diario", desc: "Último Window Ad del ciclo; se resetea en 24 horas.", duration: 25, reward: 50, xp: 15 }
     ];
 
-    // 10 Frame Ads (30 a 45 Coins)
     const FRAME_ADS_CONFIG = [
       { id: "fr1", icon: "🖼️", title: "Frame Ad #1 — Espacio Patrocinado", desc: "Visualiza el anuncio dentro del marco durante 15s.", duration: 15, reward: 30, xp: 10 },
       { id: "fr2", icon: "📊", title: "Frame Ad #2 — Unidad Display", desc: "Mantén activo el visor 15s para validar la impresión.", duration: 15, reward: 30, xp: 10 },
@@ -1712,7 +2415,6 @@
       { id: "fr10", icon: "🎁", title: "Frame Ad #10 — Cierre Frame", desc: "Décimo Frame Ad diario; disponible de nuevo en 24h.", duration: 25, reward: 45, xp: 15 }
     ];
 
-    // 10 Shortlinks (130 Coins cada uno)
     const SHORTLINKS_CONFIG = [
       { id: "sl1", icon: "🔗", title: "Shortlink #1 — Enlace Acortado", desc: "Completa los pasos del acortador y espera el contador para ganar 130 Coins.", duration: 20, reward: 130, xp: 25 },
       { id: "sl2", icon: "🔗", title: "Shortlink #2 — Enlace Acortado", desc: "Abre el shortlink patrocinado, supera la verificación y reclama 130 Coins.", duration: 20, reward: 130, xp: 25 },
@@ -1726,7 +2428,9 @@
       { id: "sl10", icon: "🔗", title: "Shortlink #10 — Enlace Acortado", desc: "Último shortlink diario (+130 Coins); se habilita de nuevo en 24h.", duration: 20, reward: 130, xp: 25 }
     ];
 
-    /* Seguridad */
+    // =========================================================================
+    // SEGURIDAD, INTEGRIDAD Y ALMACENAMIENTO
+    // =========================================================================
     function getOrCreateDeviceId() {
       let id = localStorage.getItem(DEVICE_ID_KEY);
       if (!id) {
@@ -1766,7 +2470,7 @@
     }
 
     let lastActionTimestamp = 0;
-    function passRateLimit(minMs = 900) {
+    function passRateLimit(minMs = 700) {
       const now = Date.now();
       if (now - lastActionTimestamp < minMs) {
         showToast("Espera un momento antes de realizar otra acción.");
@@ -1785,7 +2489,6 @@
       return fallbackArray;
     }
 
-    /* Campañas de Anunciantes Externos */
     function getAdvertiserCampaigns() {
       try {
         return JSON.parse(localStorage.getItem(CAMPAIGNS_STORAGE_KEY)) || [];
@@ -1812,7 +2515,6 @@
         url: owLinks[idx % owLinks.length] || "https://timewall.io/"
       }));
 
-      // Campañas activas contratadas por usuarios/anunciantes externos
       const campaigns = getAdvertiserCampaigns().filter(c => c.deliveredClicks < c.totalClicks);
       const sponsoredTasks = campaigns.map(c => ({
         id: c.id,
@@ -1864,7 +2566,8 @@
       currentUser: null,
       coins: 0,
       xp: 0,
-      category: "all",
+      activeView: "dashboard",
+      ptcSubFilter: "all",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
       adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
       adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300
@@ -1911,7 +2614,6 @@
       showToast(state.soundEnabled ? "Sonido activado al terminar." : "Sonido desactivado.");
     }
 
-    /* Niveles y Faucet (35 Coins, 60 min -> baja 2 min/nivel hasta 10 min) */
     function getLevelInfo(xp = 0) {
       const safeXp = Math.max(0, Math.floor(xp));
       const level = Math.floor(safeXp / XP_PER_LEVEL) + 1;
@@ -1920,8 +2622,7 @@
         FAUCET_MIN_MINUTES,
         FAUCET_BASE_MINUTES - (level - 1) * FAUCET_REDUCTION_PER_LEVEL
       );
-      const faucetReward = FAUCET_REWARD_COINS;
-      return { level, currentLevelXp, faucetMinutes, faucetReward };
+      return { level, currentLevelXp, faucetMinutes, faucetReward: FAUCET_REWARD_COINS };
     }
 
     function formatCountdown(ms) {
@@ -1959,7 +2660,6 @@
       return changed;
     }
 
-    /* Base de datos local */
     function getUsersDB() {
       try {
         return JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
@@ -1972,8 +2672,21 @@
       localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
     }
 
+    function getTodayDateKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
     function addMovement(user, label, amountCoins) {
       if (!Array.isArray(user.movements)) user.movements = [];
+      const todayKey = getTodayDateKey();
+      if (user.earnedTodayDate !== todayKey) {
+        user.earnedTodayDate = todayKey;
+        user.earnedTodayCoins = 0;
+      }
+      if (amountCoins > 0) {
+        user.earnedTodayCoins = Number(user.earnedTodayCoins || 0) + amountCoins;
+      }
+
       user.movements.unshift({
         date: new Date().toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
         label,
@@ -2029,6 +2742,9 @@
         users[idx].taskStates = taskStates;
         users[idx].lastDailyBonusAt = state.currentUser.lastDailyBonusAt || null;
         users[idx].lastFaucetAt = state.currentUser.lastFaucetAt || null;
+        users[idx].earnedTodayDate = state.currentUser.earnedTodayDate || getTodayDateKey();
+        users[idx].earnedTodayCoins = Number(state.currentUser.earnedTodayCoins || 0);
+        users[idx].mgState = state.currentUser.mgState || { level: 1, sublevel: 1, wins: 0, winsSinceAd: 0 };
         users[idx].movements = state.currentUser.movements || [];
         users[idx].withdrawals = state.currentUser.withdrawals || [];
         users[idx]._sig = signUserRecord(users[idx]);
@@ -2037,7 +2753,54 @@
       }
     }
 
-    /* Autenticación */
+    // =========================================================================
+    // NAVEGACIÓN POR VISTAS SEPARADAS
+    // =========================================================================
+    function switchView(viewName) {
+      state.activeView = viewName;
+
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.view === viewName);
+      });
+
+      document.querySelectorAll(".view-panel").forEach(panel => {
+        panel.classList.add("hidden");
+      });
+      const targetPanel = document.getElementById(`view-${viewName}`);
+      if (targetPanel) targetPanel.classList.remove("hidden");
+
+      const isCatalogView = ["ptcs", "shortlinks", "offerwalls"].includes(viewName);
+      document.getElementById("sharedCatalogToolbar").classList.toggle("hidden", !isCatalogView);
+      document.getElementById("itemsGrid").classList.toggle("hidden", !isCatalogView);
+
+      if (viewName === "dashboard") {
+        renderDashboardOverview();
+        updateHubCardsUI();
+      } else if (isCatalogView) {
+        renderActiveViewCatalog();
+      } else if (viewName === "minijuego") {
+        syncHamsterControls();
+        resizeHamsterCanvas();
+        updateHamsterHud();
+      } else if (viewName === "anunciantes") {
+        renderAdvertiserCampaignsTable();
+      } else if (viewName === "retiros") {
+        renderWithdrawalsTables();
+      } else if (viewName === "historial") {
+        renderMovementsTables();
+      }
+    }
+
+    function setPtcSubFilter(sub, btnEl) {
+      state.ptcSubFilter = sub;
+      document.querySelectorAll("#ptcSubFilterBar .sub-btn").forEach(b => b.classList.remove("active"));
+      btnEl.classList.add("active");
+      renderActiveViewCatalog();
+    }
+
+    // =========================================================================
+    // AUTENTICACIÓN
+    // =========================================================================
     function switchAuthTab(tab) {
       const isLogin = tab === "login";
       document.getElementById("authTabLogin").classList.toggle("active", isLogin);
@@ -2109,8 +2872,11 @@
         refBreakdown: {},
         coins: WELCOME_BONUS_COINS,
         xp: 0,
+        earnedTodayDate: getTodayDateKey(),
+        earnedTodayCoins: WELCOME_BONUS_COINS,
         lastDailyBonusAt: null,
         lastFaucetAt: null,
+        mgState: { level: 1, sublevel: 1, wins: 0, winsSinceAd: 0 },
         taskStates: {},
         movements: [],
         withdrawals: [],
@@ -2182,9 +2948,19 @@
 
     function startUserSession(user) {
       if (!user.refCode) user.refCode = generateRefCode(user.username);
+      if (!user.mgState) user.mgState = { level: 1, sublevel: 1, wins: 0, winsSinceAd: 0 };
+      if (user.earnedTodayDate !== getTodayDateKey()) {
+        user.earnedTodayDate = getTodayDateKey();
+        user.earnedTodayCoins = 0;
+      }
+
       state.currentUser = user;
       state.coins = Number(user.coins ?? 0);
       state.xp = Number(user.xp ?? 0);
+      mgGame.level = Math.min(10, Math.max(1, Number(user.mgState.level || 1)));
+      mgGame.sublevel = Math.min(3, Math.max(1, Number(user.mgState.sublevel || 1)));
+      mgGame.wins = Number(user.mgState.wins || 0);
+      mgGame.winsSinceAd = Number(user.mgState.winsSinceAd || 0);
 
       hydrateTasksForUser(user);
 
@@ -2192,16 +2968,18 @@
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
       document.getElementById("authSection").classList.add("hidden");
       document.getElementById("headerGuestControls").classList.add("hidden");
+      document.getElementById("dashboardSection").classList.remove("grid");
       document.getElementById("dashboardSection").classList.remove("hidden");
+      document.getElementById("dashboardSection").style.display = "grid";
       document.getElementById("headerUserControls").classList.remove("hidden");
 
       const initLvl = getLevelInfo(state.xp).level;
       document.getElementById("levelBadgeTop").dataset.lvl = String(initLvl);
 
       updateBalanceAndLevelUI();
-      updateHubCardsUI();
+      updateCounts();
+      switchView("dashboard");
       applyAdSlots();
-      renderGrid();
     }
 
     function logoutUser() {
@@ -2211,11 +2989,16 @@
       closeWithdrawModal();
       closeHistoryModal();
       closeReferralModal();
+      closeMgAdModal();
+      closeWeeklyPrizeModal();
+      mgGame.running = false;
+
       state.currentUser = null;
       state.coins = 0;
       state.xp = 0;
       localStorage.removeItem(CURRENT_USER_KEY);
 
+      document.getElementById("dashboardSection").style.display = "none";
       document.getElementById("dashboardSection").classList.add("hidden");
       document.getElementById("headerUserControls").classList.add("hidden");
       document.getElementById("authSection").classList.remove("hidden");
@@ -2237,31 +3020,63 @@
         showToast(`🎉 ¡Subiste a Nivel ${info.level}! Tu Faucet ahora espera ${info.faucetMinutes} min.`);
       }
 
+      renderDashboardOverview();
       persistCurrentUserData();
     }
 
-    /* Hub: Bono Diario (100 Coins) + Faucet por Niveles (35 Coins) */
+    // =========================================================================
+    // DASHBOARD OVERVIEW & HUB (BONO DIARIO + FAUCET POR NIVELES)
+    // =========================================================================
+    function renderDashboardOverview() {
+      if (!state.currentUser) return;
+      const lvl = getLevelInfo(state.xp);
+      const earnedToday = Number(state.currentUser.earnedTodayCoins || 0);
+      const ptcCount = tasks.filter(t => t.cat === "window_ads" || t.cat === "frame_ads").length;
+
+      document.getElementById("kpiBalanceCoins").textContent = `${state.coins.toLocaleString()} Coins`;
+      document.getElementById("kpiBalanceUsdt").textContent = `≈ $${formatUsdt(state.coins)} USDT`;
+      document.getElementById("kpiEarnedToday").textContent = `+${earnedToday.toLocaleString()} Coins`;
+      document.getElementById("kpiLevelDetail").textContent = `Nivel ${lvl.level} • ${lvl.currentLevelXp.toLocaleString()} / ${XP_PER_LEVEL.toLocaleString()} XP`;
+      document.getElementById("dashPtcCount").textContent = `${ptcCount} anuncios`;
+
+      const movBody = document.getElementById("dashRecentTableBody");
+      const recent = (state.currentUser.movements || []).slice(0, 5);
+      movBody.innerHTML = recent.length
+        ? recent.map(m => `
+            <tr>
+              <td>${m.date}</td>
+              <td>${m.label}</td>
+              <td style="font-weight:700; color:${m.coins >= 0 ? 'var(--accent)' : '#fca5a5'};">
+                ${m.coins >= 0 ? '+' : ''}${m.coins.toLocaleString()} Coins
+              </td>
+              <td>$${formatUsdt(Math.abs(m.coins))} USDT</td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Sin movimientos recientes todavía.</td></tr>`;
+    }
+
     function updateHubCardsUI() {
       if (!state.currentUser) return;
       const now = Date.now();
 
-      // 1. Bono Diario (100 Coins)
       const lastDaily = state.currentUser.lastDailyBonusAt || 0;
       const dailyRemaining = RESET_INTERVAL_MS - (now - lastDaily);
       const btnDaily = document.getElementById("btnDailyBonus");
       const dailyStatus = document.getElementById("dailyBonusStatus");
+      const kpiDaily = document.getElementById("kpiDailyState");
 
       if (lastDaily && dailyRemaining > 0) {
         btnDaily.disabled = true;
         btnDaily.textContent = "Reclamado (24h)";
         dailyStatus.textContent = `Próximo en ${formatRemaining24h(dailyRemaining)}`;
+        kpiDaily.textContent = `Bono 24h: ${formatRemaining24h(dailyRemaining)}`;
       } else {
         btnDaily.disabled = false;
         btnDaily.textContent = `Reclamar +${DAILY_BONUS_COINS} Coins`;
         dailyStatus.textContent = "Disponible ahora";
+        kpiDaily.textContent = "Bono 24h: Disponible";
       }
 
-      // 2. Faucet por Niveles (35 Coins)
       const lvl = getLevelInfo(state.xp);
       document.getElementById("levelXpBadge").textContent =
         `Nv. ${lvl.level} • ${lvl.currentLevelXp.toLocaleString()}/${XP_PER_LEVEL.toLocaleString()} XP`;
@@ -2274,15 +3089,18 @@
       const faucetRemaining = faucetIntervalMs - (now - lastFaucet);
       const btnFaucet = document.getElementById("btnOpenFaucet");
       const faucetStatus = document.getElementById("faucetTimerStatus");
+      const kpiFaucet = document.getElementById("kpiFaucetState");
 
       if (lastFaucet && faucetRemaining > 0) {
         btnFaucet.disabled = true;
         btnFaucet.textContent = `Espera ${formatCountdown(faucetRemaining)}`;
         faucetStatus.textContent = `Espera actual: ${lvl.faucetMinutes} min`;
+        kpiFaucet.textContent = `Faucet: ${formatCountdown(faucetRemaining)}`;
       } else {
         btnFaucet.disabled = false;
         btnFaucet.textContent = `🚰 Reclamar +${lvl.faucetReward}`;
         faucetStatus.textContent = "Lista para reclamar";
+        kpiFaucet.textContent = "Faucet lista";
       }
     }
 
@@ -2305,8 +3123,11 @@
       showToast(`🎁 ¡Reclamaste +${DAILY_BONUS_COINS} Coins y +20 XP del Bono Diario!`);
     }
 
-    /* Banners Aislados + Escalado Responsive */
+    // =========================================================================
+    // BANNERS AISLADOS + ESCALADO RESPONSIVE
+    // =========================================================================
     function renderIsolatedAd(container, htmlCode, width, height, labelText, fallbackText) {
+      if (!container) return;
       container.innerHTML = "";
 
       const label = document.createElement("span");
@@ -2377,23 +3198,22 @@
 
     window.addEventListener("resize", () => {
       clearTimeout(window._adResizeT);
-      window._adResizeT = setTimeout(applyAdSlots, 120);
+      window._adResizeT = setTimeout(() => {
+        applyAdSlots();
+        if (state.activeView === "minijuego") resizeHamsterCanvas();
+      }, 120);
     });
 
-    /* Catálogo de Tareas y Offerwalls */
-    function setCategory(cat, btnEl) {
-      state.category = cat;
-      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-      btnEl.classList.add("active");
-      renderGrid();
-    }
-
+    // =========================================================================
+    // CATÁLOGO SEPARADO POR VISTA (PTCS, SHORTLINKS, OFFERWALLS)
+    // =========================================================================
     function updateCounts() {
-      document.getElementById("countAll").textContent = tasks.length;
-      document.getElementById("countOfferwalls").textContent = tasks.filter(t => t.cat === "offerwalls").length;
-      document.getElementById("countWindowAds").textContent = tasks.filter(t => t.cat === "window_ads").length;
-      document.getElementById("countFrameAds").textContent = tasks.filter(t => t.cat === "frame_ads").length;
-      document.getElementById("countShortlinks").textContent = tasks.filter(t => t.cat === "shortlinks").length;
+      const ptcCount = tasks.filter(t => t.cat === "window_ads" || t.cat === "frame_ads").length;
+      const slCount = tasks.filter(t => t.cat === "shortlinks").length;
+      const owCount = tasks.filter(t => t.cat === "offerwalls").length;
+      document.getElementById("navCountPtcs").textContent = ptcCount;
+      document.getElementById("navCountShortlinks").textContent = slCount;
+      document.getElementById("navCountOfferwalls").textContent = owCount;
     }
 
     function getCategoryLabel(cat) {
@@ -2413,9 +3233,12 @@
       return "🖼️ Ver Frame";
     }
 
-    function renderGrid() {
+    function renderActiveViewCatalog() {
       sync24hCooldowns();
       updateCounts();
+
+      const view = state.activeView;
+      if (!["ptcs", "shortlinks", "offerwalls"].includes(view)) return;
 
       const now = Date.now();
       const grid = document.getElementById("itemsGrid");
@@ -2423,25 +3246,30 @@
       const sortBy = document.getElementById("sortSelect").value;
 
       let list = tasks.filter(t => {
-        const matchesCat = state.category === "all" || t.cat === state.category;
-        const matchesQuery =
+        if (view === "ptcs") {
+          if (state.ptcSubFilter === "window_ads" && t.cat !== "window_ads") return false;
+          if (state.ptcSubFilter === "frame_ads" && t.cat !== "frame_ads") return false;
+          if (state.ptcSubFilter === "all" && t.cat !== "window_ads" && t.cat !== "frame_ads") return false;
+        } else if (view === "shortlinks") {
+          if (t.cat !== "shortlinks") return false;
+        } else if (view === "offerwalls") {
+          if (t.cat !== "offerwalls") return false;
+        }
+
+        return (
           !query ||
           t.title.toLowerCase().includes(query) ||
           t.desc.toLowerCase().includes(query) ||
-          getCategoryLabel(t.cat).toLowerCase().includes(query);
-        return matchesCat && matchesQuery;
+          getCategoryLabel(t.cat).toLowerCase().includes(query)
+        );
       });
 
-      if (sortBy === "reward_desc") {
-        list.sort((a, b) => b.reward - a.reward);
-      } else if (sortBy === "reward_asc") {
-        list.sort((a, b) => a.reward - b.reward);
-      } else if (sortBy === "duration_asc") {
-        list.sort((a, b) => a.duration - b.duration);
-      }
+      if (sortBy === "reward_desc") list.sort((a, b) => b.reward - a.reward);
+      else if (sortBy === "reward_asc") list.sort((a, b) => a.reward - b.reward);
+      else if (sortBy === "duration_asc") list.sort((a, b) => a.duration - b.duration);
 
       if (!list.length) {
-        grid.innerHTML = `<div class="empty-state">No se encontraron offerwalls, anuncios o shortlinks con ese filtro.</div>`;
+        grid.innerHTML = `<div class="empty-state">No hay elementos disponibles con ese filtro en esta sección.</div>`;
         return;
       }
 
@@ -2500,7 +3328,9 @@
       window.open(url, "_blank", "noopener,noreferrer");
     }
 
-    /* Offerwall Modal */
+    // =========================================================================
+    // VISOR DE TAREAS, FAUCET Y OFFERWALLS
+    // =========================================================================
     function resolveOfferwallUrl(rawUrl) {
       const uid = state.currentUser ? encodeURIComponent(state.currentUser.username) : "guest";
       if (rawUrl.includes("{user_id}")) {
@@ -2580,7 +3410,7 @@
 
       if (isOnCooldown) {
         showToast("Este ítem ya fue completado; se reseteará cada 24 horas.");
-        renderGrid();
+        renderActiveViewCatalog();
         return;
       }
 
@@ -2610,7 +3440,6 @@
       runTimer();
     }
 
-    /* Faucet con Anuncio Integrado (35 Coins) */
     function openFaucetModal() {
       if (!state.currentUser || !passRateLimit()) return;
       const now = Date.now();
@@ -2731,14 +3560,13 @@
 
       if (isOnCooldown) {
         closeViewerModal();
-        renderGrid();
+        renderActiveViewCatalog();
         return;
       }
 
       task.used = task.limit;
       task.completedAt = now;
 
-      // Si es campaña patrocinada de anunciante externo, descontar 1 clic disponible
       if (task.isSponsored) {
         const campaigns = getAdvertiserCampaigns();
         const cIdx = campaigns.findIndex(c => c.id === task.id);
@@ -2756,7 +3584,7 @@
 
       updateBalanceAndLevelUI();
       updateHubCardsUI();
-      renderGrid();
+      renderActiveViewCatalog();
       closeViewerModal();
       showToast(`¡Ganaste +${task.reward} Coins ($${formatUsdt(task.reward)} USDT) y +${task.xp || 10} XP!`);
     }
@@ -2777,7 +3605,6 @@
       }
     });
 
-    /* Actualización en tiempo real */
     setInterval(() => {
       if (state.currentUser) {
         updateHubCardsUI();
@@ -2786,11 +3613,614 @@
 
     setInterval(() => {
       if (state.currentUser && !document.getElementById("viewerModal").classList.contains("open")) {
-        renderGrid();
+        renderActiveViewCatalog();
       }
     }, 60000);
 
-    /* Contratar Publicidad (Anunciantes Externos) */
+    // =========================================================================
+    // MINIJUEGO 2D HÁMSTER CRIPTO (10 NIVELES x 3 SUBNIVELES)
+    // =========================================================================
+    const HAMSTER_COINS = [
+      { id: "BTC", sym: "₿", c1: "#ffb703", c2: "#e36414", txt: "#ffffff" },
+      { id: "LTC", sym: "Ł", c1: "#e2e8f0", c2: "#94a3b8", txt: "#0f172a" },
+      { id: "SOL", sym: "S", c1: "#9945FF", c2: "#14F195", txt: "#ffffff" },
+      { id: "ADA", sym: "₳", c1: "#3b82f6", c2: "#1d4ed8", txt: "#ffffff" },
+      { id: "SUI", sym: "💧", c1: "#38bdf8", c2: "#0284c7", txt: "#082f49" }
+    ];
+
+    const mgGame = {
+      running: false,
+      level: 1,
+      sublevel: 1,
+      wins: 0,
+      winsSinceAd: 0,
+      coinsCaught: 0,
+      timeLeft: MG_ROUND_SECONDS,
+      spawnTimer: 0.2,
+      shake: 0,
+      flashRed: 0,
+      items: [],
+      particles: [],
+      texts: [],
+      hamster: { x: 140, y: 48, dir: 1, leg: 0, turnTimer: 1.5 }
+    };
+
+    const hamsterCanvas = document.getElementById("hamsterCanvas");
+    const hCtx = hamsterCanvas.getContext("2d");
+
+    for (let l = 1; l <= 10; l++) {
+      const opt = document.createElement("option");
+      opt.value = l;
+      opt.textContent = `Nivel ${l}`;
+      document.getElementById("mgSelectLevel").appendChild(opt);
+    }
+
+    function syncHamsterControls() {
+      document.getElementById("mgSelectLevel").value = mgGame.level;
+      document.getElementById("mgSelectSublevel").value = mgGame.sublevel;
+    }
+
+    function applyHamsterStage() {
+      mgGame.level = parseInt(document.getElementById("mgSelectLevel").value, 10) || 1;
+      mgGame.sublevel = parseInt(document.getElementById("mgSelectSublevel").value, 10) || 1;
+      if (state.currentUser) {
+        state.currentUser.mgState = {
+          level: mgGame.level,
+          sublevel: mgGame.sublevel,
+          wins: mgGame.wins,
+          winsSinceAd: mgGame.winsSinceAd
+        };
+        persistCurrentUserData();
+      }
+      startHamsterGame();
+    }
+
+    function getHamsterDifficulty(lvl, sub) {
+      const idx = (lvl - 1) * 3 + (sub - 1); // 0..29
+      const ratio = idx / 29;
+      return {
+        hamsterSpeed: 120 + ratio * 350,
+        spawnInterval: Math.max(0.36, 0.94 - ratio * 0.56),
+        fallSpeedMin: 66 + ratio * 115,
+        fallSpeedMax: 92 + ratio * 145,
+        bombChance: Math.min(0.42, 0.14 + ratio * 0.28),
+        doubleDropChance: Math.min(0.45, 0.05 + ratio * 0.40),
+        turnIntervalMin: Math.max(0.4, 1.5 - ratio * 1.0)
+      };
+    }
+
+    function resizeHamsterCanvas() {
+      const wrap = document.getElementById("mgCanvasWrap");
+      if (!wrap) return;
+      const dpr = window.devicePixelRatio || 1;
+      const w = wrap.clientWidth || 640;
+      const h = wrap.clientHeight || 400;
+      hamsterCanvas.width = Math.floor(w * dpr);
+      hamsterCanvas.height = Math.floor(h * dpr);
+      hCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function updateHamsterHud() {
+      document.getElementById("mgHudCoins").textContent = `${mgGame.coinsCaught} / ${MG_TARGET_COINS}`;
+      document.getElementById("mgHudTimer").textContent = `${Math.max(0, Math.ceil(mgGame.timeLeft))}s`;
+      document.getElementById("mgHudStage").textContent = `Nv. ${mgGame.level} • Sub ${mgGame.sublevel}/3`;
+      document.getElementById("mgHudWins").textContent = `${mgGame.wins} (Ad: ${mgGame.winsSinceAd}/2)`;
+    }
+
+    function startHamsterGame() {
+      if (!state.currentUser) return;
+      resizeHamsterCanvas();
+      const w = document.getElementById("mgCanvasWrap").clientWidth || 640;
+      mgGame.running = true;
+      mgGame.coinsCaught = 0;
+      mgGame.timeLeft = MG_ROUND_SECONDS;
+      mgGame.spawnTimer = 0.15;
+      mgGame.shake = 0;
+      mgGame.flashRed = 0;
+      mgGame.items = [];
+      mgGame.particles = [];
+      mgGame.texts = [];
+      mgGame.hamster.x = Math.max(45, Math.min(w - 45, w * 0.25));
+      mgGame.hamster.dir = 1;
+      mgGame.hamster.turnTimer = 1.4;
+      document.getElementById("mgOverlay").classList.add("hidden");
+      updateHamsterHud();
+    }
+
+    function spawnHamsterItem(customX = null, forceCoin = false) {
+      const w = document.getElementById("mgCanvasWrap").clientWidth || 640;
+      const diff = getHamsterDifficulty(mgGame.level, mgGame.sublevel);
+      const radius = w < 480 ? 21 : 23;
+      const isBomb = !forceCoin && (Math.random() < diff.bombChance);
+
+      let x = customX !== null ? customX : mgGame.hamster.x;
+      x = Math.max(radius + 10, Math.min(w - radius - 10, x));
+
+      // Evitar superposición directa en zona superior con bombas
+      if (isBomb) {
+        const tooClose = mgGame.items.some(it => it.y < 165 && Math.abs(it.x - x) < radius * 2.5);
+        if (tooClose) {
+          x = x + (x < w / 2 ? 64 : -64);
+          x = Math.max(radius + 10, Math.min(w - radius - 10, x));
+        }
+      }
+
+      const vy = diff.fallSpeedMin + Math.random() * (diff.fallSpeedMax - diff.fallSpeedMin);
+      const vx = (Math.random() - 0.5) * (32 + mgGame.level * 3);
+
+      if (isBomb) {
+        mgGame.items.push({
+          kind: "BOMB",
+          x,
+          y: 78,
+          vx,
+          vy,
+          r: radius,
+          rot: (Math.random() - 0.5) * 0.4,
+          vRot: (Math.random() - 0.5) * 2.5,
+          spark: Math.random() * Math.PI * 2
+        });
+      } else {
+        const coinMeta = HAMSTER_COINS[Math.floor(Math.random() * HAMSTER_COINS.length)];
+        mgGame.items.push({
+          kind: "COIN",
+          coin: coinMeta,
+          x,
+          y: 78,
+          vx,
+          vy,
+          r: radius,
+          wobble: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function addMgParticles(x, y, colors, count = 12) {
+      for (let i = 0; i < count; i++) {
+        const ang = (Math.PI * 2 * i) / count + Math.random() * 0.4;
+        const spd = 65 + Math.random() * 130;
+        mgGame.particles.push({
+          x,
+          y,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd,
+          size: 3 + Math.random() * 3.5,
+          color: colors[i % colors.length],
+          life: 0.45
+        });
+      }
+    }
+
+    function addMgText(x, y, txt, color) {
+      mgGame.texts.push({ x, y, txt, color, vy: -50, life: 0.75 });
+    }
+
+    function onHamsterPointerDown(e) {
+      if (!mgGame.running) return;
+      e.preventDefault();
+      const rect = hamsterCanvas.getBoundingClientRect();
+      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const cy = e.touches ? e.touches[0].clientY : e.clientY;
+      const px = cx - rect.left;
+      const py = cy - rect.top;
+
+      for (let i = mgGame.items.length - 1; i >= 0; i--) {
+        const it = mgGame.items[i];
+        const dx = px - it.x;
+        const dy = py - it.y;
+        const hitR = it.r + 8;
+        if (dx * dx + dy * dy <= hitR * hitR) {
+          if (it.kind === "BOMB") {
+            mgGame.running = false;
+            mgGame.shake = 0.4;
+            mgGame.flashRed = 0.5;
+            addMgParticles(it.x, it.y, ["#ff3b30", "#ffcc00", "#ff9500"], 26);
+            addMgText(it.x, it.y - 10, "💥 ¡BOOM!", "#ff4d4d");
+            setTimeout(() => {
+              document.getElementById("mgOverlayTitle").textContent = "💥 ¡Tocaste una Bomba!";
+              document.getElementById("mgOverlayDesc").textContent =
+                `Explotó con ${mgGame.coinsCaught}/40 monedas en Nivel ${mgGame.level} - Subnivel ${mgGame.sublevel}. ¡Inténtalo de nuevo!`;
+              document.getElementById("mgOverlay").classList.remove("hidden");
+            }, 450);
+            return;
+          } else {
+            mgGame.items.splice(i, 1);
+            mgGame.coinsCaught++;
+            playFinishChime();
+            addMgParticles(it.x, it.y, [it.coin.c1, "#ffcc00", "#ffffff"], 10);
+            addMgText(it.x, it.y - 8, `+1 ${it.coin.id}`, it.coin.c1);
+            updateHamsterHud();
+            if (mgGame.coinsCaught >= MG_TARGET_COINS) {
+              triggerHamsterWin(false);
+            }
+            return;
+          }
+        }
+      }
+    }
+
+    hamsterCanvas.addEventListener("mousedown", onHamsterPointerDown);
+    hamsterCanvas.addEventListener("touchstart", onHamsterPointerDown, { passive: false });
+
+    function triggerHamsterLoss(msg) {
+      mgGame.running = false;
+      mgGame.shake = 0.35;
+      mgGame.flashRed = 0.45;
+      document.getElementById("mgOverlayTitle").textContent = "❌ Partida Perdida";
+      document.getElementById("mgOverlayDesc").textContent = msg;
+      document.getElementById("mgOverlay").classList.remove("hidden");
+    }
+
+    function triggerHamsterWin(forceWeekly = false) {
+      mgGame.running = false;
+      mgGame.coinsCaught = MG_TARGET_COINS;
+      mgGame.wins++;
+      mgGame.winsSinceAd++;
+      updateHamsterHud();
+
+      if (state.currentUser) {
+        state.coins += MG_WIN_COINS;
+        state.xp += MG_WIN_XP;
+        addMovement(
+          state.currentUser,
+          `Minijuego Hámster Nv.${mgGame.level}-${mgGame.sublevel}`,
+          MG_WIN_COINS
+        );
+        creditReferralCommission(MG_WIN_COINS, "Minijuego");
+
+        if (mgGame.sublevel < 3) {
+          mgGame.sublevel++;
+        } else if (mgGame.level < 10) {
+          mgGame.level++;
+          mgGame.sublevel = 1;
+        } else {
+          mgGame.level = 1;
+          mgGame.sublevel = 1;
+        }
+
+        state.currentUser.mgState = {
+          level: mgGame.level,
+          sublevel: mgGame.sublevel,
+          wins: mgGame.wins,
+          winsSinceAd: mgGame.winsSinceAd
+        };
+        updateBalanceAndLevelUI();
+        updateHubCardsUI();
+      }
+
+      const wonWeekly = forceWeekly || (Math.random() < MG_WEEKLY_PROBABILITY);
+      if (wonWeekly) {
+        document.getElementById("weeklyPrizeModal").classList.add("open");
+        return;
+      }
+
+      if (mgGame.winsSinceAd >= 2) {
+        mgGame.winsSinceAd = 0;
+        persistCurrentUserData();
+        openMgAdModal();
+        return;
+      }
+
+      document.getElementById("mgOverlayTitle").textContent = `🎉 ¡Victoria! +${MG_WIN_COINS} Coins`;
+      document.getElementById("mgOverlayDesc").textContent =
+        `Completaste las 40 monedas. Siguiente etapa: Nivel ${mgGame.level} - Subnivel ${mgGame.sublevel}.`;
+      document.getElementById("mgOverlay").classList.remove("hidden");
+    }
+
+    let mgAdTimer = null;
+    function openMgAdModal() {
+      clearInterval(mgAdTimer);
+      renderIsolatedAd(
+        document.getElementById("mgAdSlotBox"),
+        state.adModalHtml,
+        300,
+        250,
+        "Patrocinador CryptoClicks VE",
+        "Anuncio cada 2 victorias del minijuego"
+      );
+      let left = 5;
+      const btn = document.getElementById("mgAdContinueBtn");
+      const closeX = document.getElementById("mgAdCloseX");
+      btn.disabled = true;
+      closeX.disabled = true;
+      btn.innerHTML = `Espera <span id="mgAdSecLeft">${left}</span>s para continuar...`;
+      document.getElementById("mgAdModal").classList.add("open");
+
+      mgAdTimer = setInterval(() => {
+        left--;
+        if (left > 0) {
+          const sp = document.getElementById("mgAdSecLeft");
+          if (sp) sp.textContent = left;
+        } else {
+          clearInterval(mgAdTimer);
+          btn.disabled = false;
+          closeX.disabled = false;
+          btn.textContent = "▶ Continuar en Minijuego";
+        }
+      }, 1000);
+    }
+
+    function closeMgAdModal() {
+      clearInterval(mgAdTimer);
+      document.getElementById("mgAdModal").classList.remove("open");
+      document.getElementById("mgOverlayTitle").textContent = `🎉 ¡Victoria! +${MG_WIN_COINS} Coins`;
+      document.getElementById("mgOverlayDesc").textContent =
+        `Anuncio completado. Siguiente etapa: Nivel ${mgGame.level} - Subnivel ${mgGame.sublevel}.`;
+      document.getElementById("mgOverlay").classList.remove("hidden");
+    }
+
+    function closeWeeklyPrizeModal() {
+      document.getElementById("weeklyPrizeModal").classList.remove("open");
+      document.getElementById("mgOverlay").classList.remove("hidden");
+    }
+
+    function confirmWeeklyPrizeClaim() {
+      const curr = document.getElementById("weeklyCurrency").value;
+      const wallet = document.getElementById("weeklyWallet").value.trim();
+      if (!wallet || wallet.length < 4) {
+        showToast("Ingresa tu wallet, ID Binance o datos de Pago Móvil.");
+        return;
+      }
+      if (state.currentUser) {
+        addMovement(state.currentUser, `Premio Semanal $1 (${curr})`, 0);
+        persistCurrentUserData();
+        renderDashboardOverview();
+      }
+      closeWeeklyPrizeModal();
+      showToast(`🏆 Premio Semanal de $1.00 USD registrado en ${curr}. Validación por @J3susV3.`);
+    }
+
+    let lastMgTs = 0;
+    function stepHamsterLoop(ts) {
+      if (!lastMgTs) lastMgTs = ts;
+      const dt = Math.min(0.05, (ts - lastMgTs) / 1000);
+      lastMgTs = ts;
+
+      if (state.activeView === "minijuego") {
+        updateHamster(dt);
+        drawHamsterScene();
+      }
+      requestAnimationFrame(stepHamsterLoop);
+    }
+
+    function updateHamster(dt) {
+      if (mgGame.shake > 0) mgGame.shake = Math.max(0, mgGame.shake - dt);
+      if (mgGame.flashRed > 0) mgGame.flashRed = Math.max(0, mgGame.flashRed - dt);
+
+      for (let i = mgGame.particles.length - 1; i >= 0; i--) {
+        const p = mgGame.particles[i];
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.vy += 240 * dt;
+        p.life -= dt;
+        if (p.life <= 0) mgGame.particles.splice(i, 1);
+      }
+
+      for (let i = mgGame.texts.length - 1; i >= 0; i--) {
+        const t = mgGame.texts[i];
+        t.y += t.vy * dt;
+        t.life -= dt;
+        if (t.life <= 0) mgGame.texts.splice(i, 1);
+      }
+
+      if (!mgGame.running) return;
+
+      const w = document.getElementById("mgCanvasWrap").clientWidth || 640;
+      const h = document.getElementById("mgCanvasWrap").clientHeight || 400;
+      const diff = getHamsterDifficulty(mgGame.level, mgGame.sublevel);
+
+      mgGame.timeLeft -= dt;
+      if (mgGame.timeLeft <= 0) {
+        mgGame.timeLeft = 0;
+        updateHamsterHud();
+        triggerHamsterLoss(`Se acabó el tiempo con ${mgGame.coinsCaught}/40 monedas.`);
+        return;
+      }
+      updateHamsterHud();
+
+      const margin = 38;
+      mgGame.hamster.x += mgGame.hamster.dir * diff.hamsterSpeed * dt;
+      mgGame.hamster.leg += dt * (diff.hamsterSpeed * 0.08);
+      if (mgGame.hamster.x >= w - margin) {
+        mgGame.hamster.x = w - margin;
+        mgGame.hamster.dir = -1;
+      } else if (mgGame.hamster.x <= margin) {
+        mgGame.hamster.x = margin;
+        mgGame.hamster.dir = 1;
+      }
+
+      mgGame.hamster.turnTimer -= dt;
+      if (mgGame.hamster.turnTimer <= 0) {
+        if (Math.random() < 0.55) mgGame.hamster.dir *= -1;
+        mgGame.hamster.turnTimer = diff.turnIntervalMin + Math.random() * 0.9;
+      }
+
+      mgGame.spawnTimer -= dt;
+      if (mgGame.spawnTimer <= 0) {
+        mgGame.spawnTimer = diff.spawnInterval * (0.8 + Math.random() * 0.4);
+        spawnHamsterItem(mgGame.hamster.x, false);
+        if (Math.random() < diff.doubleDropChance) {
+          spawnHamsterItem(mgGame.hamster.x + (Math.random() > 0.5 ? 75 : -75), false);
+        }
+      }
+
+      const floorY = h - 10;
+      for (let i = mgGame.items.length - 1; i >= 0; i--) {
+        const it = mgGame.items[i];
+        it.x += it.vx * dt;
+        it.y += it.vy * dt;
+
+        if (it.x < it.r + 8) { it.x = it.r + 8; it.vx *= -0.7; }
+        else if (it.x > w - it.r - 8) { it.x = w - it.r - 8; it.vx *= -0.7; }
+
+        if (it.kind === "BOMB") {
+          it.rot += it.vRot * dt;
+          it.spark += dt * 16;
+          if (it.y - it.r > h + 14) mgGame.items.splice(i, 1);
+        } else {
+          it.wobble += dt * 5;
+          if (it.y + it.r >= floorY) {
+            triggerHamsterLoss(`¡Se escapó una moneda de ${it.coin.id}! Llevabas ${mgGame.coinsCaught}/40.`);
+            return;
+          }
+        }
+      }
+    }
+
+    function drawHamsterScene() {
+      const w = document.getElementById("mgCanvasWrap").clientWidth || 640;
+      const h = document.getElementById("mgCanvasWrap").clientHeight || 400;
+
+      hCtx.save();
+      if (mgGame.shake > 0) {
+        const m = mgGame.shake * 16;
+        hCtx.translate((Math.random() - 0.5) * m, (Math.random() - 0.5) * m);
+      }
+
+      hCtx.fillStyle = "#070c16";
+      hCtx.fillRect(0, 0, w, h);
+
+      // Cornisa superior 2D estilo RollerCoin con tricolor venezolano
+      const topY = 58;
+      const barH = 16;
+      hCtx.fillStyle = "#9c663b";
+      hCtx.fillRect(0, topY, w, barH);
+      hCtx.fillStyle = "#ffcc00";
+      hCtx.fillRect(0, topY - 2, w, 2.5);
+      const third = w / 3;
+      hCtx.fillStyle = "#ffcc00";
+      hCtx.fillRect(0, topY + barH, third, 3.5);
+      hCtx.fillStyle = "#0038a8";
+      hCtx.fillRect(third, topY + barH, third, 3.5);
+      hCtx.fillStyle = "#cf142b";
+      hCtx.fillRect(third * 2, topY + barH, third + 2, 3.5);
+
+      // Línea límite inferior roja
+      const floorY = h - 10;
+      hCtx.strokeStyle = "rgba(248, 113, 113, 0.7)";
+      hCtx.setLineDash([7, 5]);
+      hCtx.beginPath();
+      hCtx.moveTo(0, floorY);
+      hCtx.lineTo(w, floorY);
+      hCtx.stroke();
+      hCtx.setLineDash([]);
+
+      // Hámster con gorrita tricolor
+      const hm = mgGame.hamster;
+      const bob = Math.abs(Math.sin(hm.leg)) * 2.5;
+      hCtx.save();
+      hCtx.translate(hm.x, hm.y - bob);
+      hCtx.scale(hm.dir, 1);
+
+      hCtx.fillStyle = "#f4a261";
+      hCtx.strokeStyle = "#2b170a";
+      hCtx.lineWidth = 2;
+      hCtx.beginPath();
+      hCtx.ellipse(0, 2, 17, 12, 0, 0, Math.PI * 2);
+      hCtx.fill();
+      hCtx.stroke();
+
+      hCtx.beginPath();
+      hCtx.arc(10, -5, 10.5, 0, Math.PI * 2);
+      hCtx.fill();
+      hCtx.stroke();
+
+      // Gorra tricolor
+      hCtx.beginPath();
+      hCtx.arc(9, -13, 7.5, Math.PI, 0);
+      hCtx.fillStyle = "#ffcc00";
+      hCtx.fill();
+      hCtx.stroke();
+      hCtx.fillStyle = "#0038a8";
+      hCtx.fillRect(2, -16, 14, 2);
+      hCtx.fillStyle = "#cf142b";
+      hCtx.fillRect(1.5, -14, 15, 2);
+
+      // Ojo
+      hCtx.fillStyle = "#111827";
+      hCtx.beginPath();
+      hCtx.arc(14, -6.5, 2.2, 0, Math.PI * 2);
+      hCtx.fill();
+      hCtx.restore();
+
+      // Monedas y Bombas
+      for (const it of mgGame.items) {
+        hCtx.save();
+        hCtx.translate(it.x, it.y);
+        if (it.kind === "COIN") {
+          const grad = hCtx.createLinearGradient(-it.r, -it.r, it.r, it.r);
+          grad.addColorStop(0, it.coin.c1);
+          grad.addColorStop(1, it.coin.c2);
+          hCtx.fillStyle = grad;
+          hCtx.beginPath();
+          hCtx.arc(0, 0, it.r, 0, Math.PI * 2);
+          hCtx.fill();
+          hCtx.strokeStyle = "rgba(255,255,255,0.6)";
+          hCtx.lineWidth = 2;
+          hCtx.stroke();
+
+          hCtx.fillStyle = it.coin.txt;
+          hCtx.font = "bold 15px system-ui, sans-serif";
+          hCtx.textAlign = "center";
+          hCtx.textBaseline = "middle";
+          hCtx.fillText(it.coin.sym, 0, 1);
+        } else {
+          hCtx.rotate(it.rot);
+          hCtx.fillStyle = "#1f2937";
+          hCtx.strokeStyle = "#ef4444";
+          hCtx.lineWidth = 2;
+          hCtx.beginPath();
+          hCtx.arc(0, 2, it.r - 1, 0, Math.PI * 2);
+          hCtx.fill();
+          hCtx.stroke();
+
+          hCtx.strokeStyle = "#f59e0b";
+          hCtx.lineWidth = 2.5;
+          hCtx.beginPath();
+          hCtx.moveTo(0, -it.r);
+          hCtx.lineTo(8, -it.r - 7);
+          hCtx.stroke();
+
+          hCtx.fillStyle = "#ffcc00";
+          hCtx.beginPath();
+          hCtx.arc(8, -it.r - 7, 3.5 + Math.sin(it.spark) * 1.5, 0, Math.PI * 2);
+          hCtx.fill();
+        }
+        hCtx.restore();
+      }
+
+      // Partículas y textos flotantes
+      for (const p of mgGame.particles) {
+        hCtx.globalAlpha = Math.max(0, p.life * 2.2);
+        hCtx.fillStyle = p.color;
+        hCtx.beginPath();
+        hCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        hCtx.fill();
+      }
+      hCtx.globalAlpha = 1;
+
+      for (const t of mgGame.texts) {
+        hCtx.globalAlpha = Math.max(0, t.life / 0.75);
+        hCtx.font = "bold 14px system-ui, sans-serif";
+        hCtx.textAlign = "center";
+        hCtx.fillStyle = t.color;
+        hCtx.fillText(t.txt, t.x, t.y);
+      }
+      hCtx.globalAlpha = 1;
+
+      if (mgGame.flashRed > 0) {
+        hCtx.fillStyle = `rgba(220, 38, 38, ${mgGame.flashRed * 0.45})`;
+        hCtx.fillRect(0, 0, w, h);
+      }
+
+      hCtx.restore();
+    }
+
+    requestAnimationFrame(stepHamsterLoop);
+
+    // =========================================================================
+    // ANUNCIANTES, RETIROS, HISTORIAL, REFERIDOS Y CONFIGURACIÓN
+    // =========================================================================
     function computeCampaignPricing() {
       const format = document.getElementById("advFormat").value;
       const clicks = Number(document.getElementById("advClicks").value || 500);
@@ -2801,8 +4231,6 @@
 
       const totalUsd = clicks * basePricePerClickUsd * durationMultiplier;
       const totalCoins = Math.round(totalUsd / COIN_TO_USDT);
-
-      // Pago al usuario (~35% del ingreso de campaña => deja 65% margen limpio al dueño)
       const userRewardCoins = Math.max(
         25,
         Math.round((basePricePerClickUsd * durationMultiplier * 0.35) / COIN_TO_USDT)
@@ -2823,9 +4251,8 @@
     }
 
     function renderAdvertiserCampaignsTable() {
-      const body = document.getElementById("advertiserCampaignsBody");
       const list = getAdvertiserCampaigns();
-      body.innerHTML = list.length
+      const rowsHtml = list.length
         ? list.map(c => `
             <tr>
               <td style="font-weight:700;">${c.title}</td>
@@ -2835,6 +4262,9 @@
             </tr>
           `).join("")
         : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Aún no hay campañas externas publicadas.</td></tr>`;
+
+      document.getElementById("advertiserCampaignsBody").innerHTML = rowsHtml;
+      document.getElementById("viewAdvertiserCampaignsBody").innerHTML = rowsHtml;
     }
 
     function openAdvertiseModal() {
@@ -2893,7 +4323,7 @@
 
       if (state.currentUser) {
         hydrateTasksForUser(state.currentUser);
-        renderGrid();
+        renderActiveViewCatalog();
       } else {
         tasks = buildBaseTasks();
       }
@@ -2904,7 +4334,6 @@
       showToast(`📢 ¡Campaña "${title}" publicada con ${p.clicks} vistas en el catálogo!`);
     }
 
-    /* Retiro */
     function openWithdrawModal() {
       if (!state.currentUser) return;
       document.getElementById("withdrawAddress").value = state.currentUser.email || "";
@@ -2915,14 +4344,51 @@
       document.getElementById("withdrawModal").classList.remove("open");
     }
 
+    function renderWithdrawalsTables() {
+      const withs = (state.currentUser && state.currentUser.withdrawals) || [];
+      const html = withs.length
+        ? withs.map(w => `
+            <tr>
+              <td>${w.date}</td>
+              <td>${w.method}</td>
+              <td>${w.address}</td>
+              <td style="font-weight:700; color:var(--cyan);">${w.coins.toLocaleString()} Coins ($${w.usdt})</td>
+              <td><span class="chip chip-cooldown">${w.status}</span></td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="5" style="color:var(--muted); text-align:center;">Aún no has solicitado ningún retiro.</td></tr>`;
+
+      document.getElementById("withdrawalsTableBody").innerHTML = html;
+      document.getElementById("viewWithdrawalsTableBody").innerHTML = html;
+    }
+
+    function renderMovementsTables() {
+      const movs = (state.currentUser && state.currentUser.movements) || [];
+      const html = movs.length
+        ? movs.slice(0, 10).map(m => `
+            <tr>
+              <td>${m.date}</td>
+              <td>${m.label}</td>
+              <td style="font-weight:700; color:${m.coins >= 0 ? 'var(--accent)' : '#fca5a5'};">
+                ${m.coins >= 0 ? '+' : ''}${m.coins.toLocaleString()} Coins
+              </td>
+              <td>$${formatUsdt(Math.abs(m.coins))} USDT</td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Aún no tienes movimientos registrados.</td></tr>`;
+
+      document.getElementById("movementsTableBody").innerHTML = html;
+      document.getElementById("viewMovementsTableBody").innerHTML = html;
+    }
+
     function submitWithdraw() {
       if (!state.currentUser || !passRateLimit(1500)) return;
       const addr = document.getElementById("withdrawAddress").value.trim();
       const amount = Math.floor(Number(document.getElementById("withdrawAmount").value));
       const method = document.getElementById("withdrawMethod").value;
 
-      if (!addr || addr.length < 5) {
-        showToast("Ingresa un correo o dirección de wallet válido.");
+      if (!addr || addr.length < 4) {
+        showToast("Ingresa un correo, wallet o datos de pago válidos.");
         return;
       }
       if (isNaN(amount) || amount < MIN_WITHDRAW_COINS) {
@@ -2947,43 +4413,16 @@
       addMovement(state.currentUser, `Solicitud de retiro (${method})`, -amount);
 
       updateBalanceAndLevelUI();
+      renderWithdrawalsTables();
+      renderMovementsTables();
       closeWithdrawModal();
       showToast(`Retiro de ${amount.toLocaleString()} Coins ($${formatUsdt(amount)} USDT) registrado.`);
     }
 
-    /* Historial */
     function openHistoryModal() {
       if (!state.currentUser) return;
-      const movBody = document.getElementById("movementsTableBody");
-      const withBody = document.getElementById("withdrawalsTableBody");
-
-      const movs = state.currentUser.movements || [];
-      movBody.innerHTML = movs.length
-        ? movs.slice(0, 10).map(m => `
-            <tr>
-              <td>${m.date}</td>
-              <td>${m.label}</td>
-              <td style="font-weight:700; color:${m.coins >= 0 ? 'var(--accent)' : '#fca5a5'};">
-                ${m.coins >= 0 ? '+' : ''}${m.coins.toLocaleString()} Coins
-              </td>
-              <td>$${formatUsdt(Math.abs(m.coins))} USDT</td>
-            </tr>
-          `).join("")
-        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Aún no tienes movimientos registrados.</td></tr>`;
-
-      const withs = state.currentUser.withdrawals || [];
-      withBody.innerHTML = withs.length
-        ? withs.map(w => `
-            <tr>
-              <td>${w.date}</td>
-              <td>${w.method}</td>
-              <td>${w.address}</td>
-              <td style="font-weight:700; color:var(--cyan);">${w.coins.toLocaleString()} Coins ($${w.usdt})</td>
-              <td><span class="chip chip-cooldown">${w.status}</span></td>
-            </tr>
-          `).join("")
-        : `<tr><td colspan="5" style="color:var(--muted); text-align:center;">Aún no has solicitado ningún retiro.</td></tr>`;
-
+      renderMovementsTables();
+      renderWithdrawalsTables();
       document.getElementById("historyModal").classList.add("open");
     }
 
@@ -2991,7 +4430,6 @@
       document.getElementById("historyModal").classList.remove("open");
     }
 
-    /* Referidos (10%) */
     function openReferralModal() {
       if (!state.currentUser) return;
       const baseUrl = window.location.origin + window.location.pathname;
@@ -3033,7 +4471,6 @@
       showToast("Enlace de referido copiado al portapapeles.");
     }
 
-    /* Configurar Enlaces, Offerwalls y Banners */
     function openAdConfigModal() {
       document.getElementById("offerwallLinksInput").value = getLinksList(STORAGE_KEYS.offerwallLinks, DEFAULT_OFFERWALL_LINKS).join("\n");
       document.getElementById("windowLinksInput").value = getLinksList(STORAGE_KEYS.windowLinks, DEFAULT_WINDOW_LINKS).join("\n");
@@ -3061,7 +4498,7 @@
 
       if (state.currentUser) {
         hydrateTasksForUser(state.currentUser);
-        renderGrid();
+        renderActiveViewCatalog();
       }
       applyAdSlots();
       closeAdConfigModal();
@@ -3084,7 +4521,7 @@
 
       if (state.currentUser) {
         hydrateTasksForUser(state.currentUser);
-        renderGrid();
+        renderActiveViewCatalog();
       }
       applyAdSlots();
       showToast("Configuración restaurada.");
