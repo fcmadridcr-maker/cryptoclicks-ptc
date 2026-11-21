@@ -35,6 +35,9 @@
       --canvas-bg: #ffffff;
       --cornice-bg: #475569;
       --coin-text: #0f172a;
+      --flag-opacity: 0.14;
+      --flag-saturate: 1.05;
+      --veil-bg: rgba(255, 255, 255, 0.58);
     }
 
     body[data-theme="dark"] {
@@ -60,6 +63,9 @@
       --canvas-bg: #071124;
       --cornice-bg: #3b2818;
       --coin-text: #070d19;
+      --flag-opacity: 0.16;
+      --flag-saturate: 0.9;
+      --veil-bg: rgba(7, 13, 25, 0.72);
     }
 
     *, *::before, *::after {
@@ -83,7 +89,39 @@
       flex-direction: column;
       max-width: 100%;
       overflow-x: clip;
+      position: relative;
       transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .vz-bg-flag {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: var(--flag-opacity);
+      filter: saturate(var(--flag-saturate)) blur(0.4px);
+      transition: opacity 0.25s ease, filter 0.25s ease;
+    }
+
+    .vz-bg-flag svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .vz-bg-veil {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: var(--veil-bg);
+      transition: background 0.25s ease;
+    }
+
+    .vz-bar, header, .auth-wrapper, main, footer {
+      position: relative;
+      z-index: 2;
     }
 
     .vz-bar {
@@ -752,7 +790,6 @@
       transform: translateX(17px);
     }
 
-    /* PTCs acopladas sin desbordamiento */
     .ads-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1314,6 +1351,27 @@
   </style>
 </head>
 <body>
+  <!-- Bandera de Venezuela de fondo -->
+  <div class="vz-bg-flag" aria-hidden="true">
+    <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect width="900" height="200" y="0" fill="#ffd000" />
+      <rect width="900" height="200" y="200" fill="#0038a8" />
+      <rect width="900" height="200" y="400" fill="#ef1c27" />
+      <g fill="#ffffff">
+        <polygon points="450,242 454,253 466,253 456,260 460,271 450,264 440,271 444,260 434,253 446,253" />
+        <polygon points="392,250 395,259 405,259 397,265 400,274 392,268 384,274 387,265 379,259 389,259" />
+        <polygon points="508,250 511,259 521,259 513,265 516,274 508,268 500,274 503,265 495,259 505,259" />
+        <polygon points="342,272 345,281 355,281 347,287 350,296 342,290 334,296 337,287 329,281 339,281" />
+        <polygon points="558,272 561,281 571,281 563,287 566,296 558,290 550,296 553,287 545,281 555,281" />
+        <polygon points="304,306 307,315 317,315 309,321 312,330 304,324 296,330 299,321 291,315 301,315" />
+        <polygon points="596,306 599,315 609,315 601,321 604,330 596,324 588,330 591,321 583,315 593,315" />
+        <polygon points="278,348 281,357 291,357 283,363 286,372 278,366 270,372 273,363 265,357 275,357" />
+        <polygon points="622,348 625,357 635,357 627,363 630,372 622,366 614,372 617,363 609,357 619,357" />
+      </g>
+    </svg>
+  </div>
+  <div class="vz-bg-veil" aria-hidden="true"></div>
+
   <div class="vz-bar"></div>
   <header>
     <div class="header-inner">
@@ -2741,7 +2799,6 @@
       showToast("Configuración restaurada.");
     }
 
-    /* Minijuego del Hámster en la Cornisa (40 monedas, 10 niveles x 3 subniveles, bombas, monedas caídas) */
     const gCanvas = document.getElementById("gameCanvas");
     const gCtx = gCanvas.getContext("2d");
     const COINS_META = [
