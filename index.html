@@ -267,15 +267,15 @@
       color: #22d3ee;
     }
 
-    /* Botones suaves con textura y relieve 3D */
+    /* Botones planos sin efecto 3D */
     .btn {
       border: 1px solid transparent;
-      border-radius: 12px;
-      padding: 9px 14px;
+      border-radius: 10px;
+      padding: 8px 14px;
       font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.16s ease, filter 0.16s ease, background 0.16s ease;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -283,100 +283,72 @@
       text-decoration: none;
       max-width: 100%;
       user-select: none;
-      position: relative;
-      letter-spacing: 0.01em;
+      box-shadow: none;
+      transform: none;
     }
 
     .btn:active:not(:disabled) {
-      transform: translateY(2px) scale(0.99);
+      transform: none;
     }
 
     .btn-primary {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 48%, rgba(0, 0, 0, 0.2) 100%), var(--primary-btn);
+      background: var(--primary-btn);
       color: var(--primary-btn-text);
-      border-color: rgba(255, 255, 255, 0.28);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.35),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.28),
-        0 4px 0 rgba(0, 28, 88, 0.55),
-        0 7px 14px rgba(0, 85, 255, 0.24);
-    }
-
-    body[data-theme="dark"] .btn-primary {
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.35),
-        0 4px 0 #045e41,
-        0 7px 14px rgba(16, 185, 129, 0.25);
+      border-color: var(--primary-btn);
+      box-shadow: none;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 48%, rgba(0, 0, 0, 0.18) 100%), var(--primary-btn-hover);
-      transform: translateY(-1px);
-      filter: brightness(1.04);
+      background: var(--primary-btn-hover);
+      border-color: var(--primary-btn-hover);
+      transform: none;
+      filter: none;
     }
 
     .btn-secondary {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.28) 55%, rgba(15, 23, 42, 0.08) 100%), var(--card);
+      background: var(--card);
       color: var(--text);
       border-color: var(--border);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.65),
-        inset 0 -2px 0 rgba(15, 23, 42, 0.08),
-        0 3px 0 rgba(100, 116, 139, 0.28),
-        0 5px 10px rgba(15, 23, 42, 0.08);
-    }
-
-    body[data-theme="dark"] .btn-secondary {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.02) 55%, rgba(0, 0, 0, 0.28) 100%), var(--card);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.14),
-        inset 0 -2px 0 rgba(0, 0, 0, 0.35),
-        0 3px 0 #070d19,
-        0 5px 10px rgba(0, 0, 0, 0.35);
+      box-shadow: none;
     }
 
     .btn-secondary:hover:not(:disabled) {
       border-color: var(--vz-blue);
-      transform: translateY(-1px);
+      background: var(--card-2);
+      transform: none;
     }
 
     .btn-neon-gold {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.08) 52%, rgba(180, 83, 9, 0.18) 100%), var(--vz-yellow);
+      background: var(--vz-yellow);
       color: #0f172a;
-      border-color: rgba(255, 255, 255, 0.65);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.75),
-        inset 0 -2px 0 rgba(180, 83, 9, 0.28),
-        0 4px 0 #b45309,
-        0 7px 14px rgba(255, 208, 0, 0.35);
+      border-color: var(--vz-yellow);
+      box-shadow: none;
     }
 
     .btn-neon-gold:hover:not(:disabled) {
-      filter: brightness(1.04);
-      transform: translateY(-1px);
+      background: #eab308;
+      border-color: #eab308;
+      transform: none;
+      filter: none;
     }
 
     .btn-danger {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(239, 28, 39, 0.15) 100%), rgba(239, 28, 39, 0.22);
+      background: rgba(239, 28, 39, 0.16);
       color: var(--vz-red);
-      border-color: rgba(239, 28, 39, 0.7);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.45),
-        0 3px 0 rgba(185, 28, 28, 0.38),
-        0 6px 12px rgba(239, 28, 39, 0.18);
+      border-color: rgba(239, 28, 39, 0.65);
+      box-shadow: none;
     }
 
     .btn-danger:hover:not(:disabled) {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(0, 0, 0, 0.15) 100%), var(--vz-red);
+      background: var(--vz-red);
       color: #ffffff;
-      transform: translateY(-1px);
+      transform: none;
     }
 
     .btn-sm {
       padding: 6px 11px;
       font-size: 0.78rem;
-      border-radius: 10px;
+      border-radius: 9px;
     }
 
     .btn:disabled {
@@ -457,7 +429,6 @@
     .auth-tab.active {
       background: var(--card);
       color: var(--vz-blue);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 2px 6px rgba(0, 85, 255, 0.18);
     }
 
     body[data-theme="dark"] .auth-tab.active {
@@ -501,23 +472,68 @@
       }
     }
 
+    /* Panel de navegación con luz de neón tricolor recorriendo todo su contorno */
     .nav-bar {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 6px;
       flex-wrap: wrap;
       background: var(--card);
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 16px rgba(0, 85, 255, 0.06);
+      border: 2px solid transparent;
       border-radius: 14px;
       padding: 7px;
       width: 100%;
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
+      isolation: isolate;
+    }
+
+    .nav-bar::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 15px;
+      padding: 2px;
+      background: linear-gradient(
+        90deg,
+        var(--vz-yellow),
+        var(--vz-blue),
+        var(--vz-red),
+        var(--vz-blue),
+        var(--vz-yellow)
+      );
+      background-size: 300% 300%;
+      animation: tricolorPerimeterScan 4.5s linear infinite;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: -1;
+      filter: drop-shadow(0 0 6px rgba(255, 208, 0, 0.55))
+              drop-shadow(0 0 10px rgba(0, 56, 168, 0.5))
+              drop-shadow(0 0 12px rgba(239, 28, 39, 0.45));
+    }
+
+    @keyframes tricolorPerimeterScan {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     .nav-btn {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.08) 100%), transparent;
+      background: transparent;
       border: 1px solid transparent;
       color: var(--muted);
       padding: 7px 12px;
@@ -528,29 +544,27 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: transform 0.12s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
       max-width: 100%;
+      box-shadow: none;
+      transform: none;
     }
 
     .nav-btn:hover {
       color: var(--text);
       background: var(--card-2);
-      transform: translateY(-1px);
+      transform: none;
     }
 
     .nav-btn:active {
-      transform: translateY(1px);
+      transform: none;
     }
 
     .nav-btn.active {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.25) 100%), var(--card);
+      background: var(--card);
       color: var(--vz-blue);
       border-color: var(--vz-yellow);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        0 2px 0 rgba(180, 83, 9, 0.25),
-        var(--neon-yellow),
-        var(--neon-blue);
+      box-shadow: none;
     }
 
     body[data-theme="dark"] .nav-btn.active {
@@ -652,9 +666,9 @@
     }
 
     .quick-tile {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.25) 55%, rgba(15, 23, 42, 0.06) 100%), var(--card);
+      background: var(--card);
       border: 1.5px solid var(--border);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 13px;
       text-align: left;
       color: var(--text);
@@ -662,19 +676,21 @@
       display: flex;
       flex-direction: column;
       gap: 5px;
-      transition: transform 0.14s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
       min-width: 0;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 3px 0 rgba(100, 116, 139, 0.22), 0 5px 12px rgba(15, 23, 42, 0.08);
+      box-shadow: none;
+      transform: none;
     }
 
     .quick-tile:hover {
       border-color: var(--vz-blue);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 4px 0 rgba(0, 85, 255, 0.25), var(--neon-blue), var(--neon-yellow);
-      transform: translateY(-2px);
+      background: var(--card-2);
+      transform: none;
+      box-shadow: none;
     }
 
     .quick-tile:active {
-      transform: translateY(1px);
+      transform: none;
     }
 
     .safety-banner {
@@ -848,10 +864,10 @@
     }
 
     .sound-toggle {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.22) 100%), var(--card);
+      background: var(--card);
       border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 7px 12px;
+      border-radius: 10px;
+      padding: 6px 12px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -861,7 +877,7 @@
       cursor: pointer;
       user-select: none;
       white-space: nowrap;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 0 rgba(100, 116, 139, 0.22);
+      box-shadow: none;
     }
 
     .switch-ui {
@@ -872,7 +888,6 @@
       position: relative;
       transition: 0.2s ease;
       flex-shrink: 0;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
     }
 
     .switch-ui::after {
@@ -885,7 +900,6 @@
       top: 3px;
       left: 3px;
       transition: 0.2s ease;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
 
     input[type="checkbox"].sr-switch {
@@ -894,7 +908,6 @@
 
     input[type="checkbox"].sr-switch:checked + .switch-ui {
       background: var(--vz-blue);
-      box-shadow: var(--neon-blue);
     }
 
     input[type="checkbox"].sr-switch:checked + .switch-ui::after {
@@ -1159,9 +1172,8 @@
     }
 
     .close-btn {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(239, 28, 39, 0.14) 100%), var(--card);
+      background: var(--card);
       border: 1.5px solid var(--vz-red);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 0 rgba(185, 28, 28, 0.4), var(--neon-red);
       color: var(--vz-red);
       width: 34px;
       height: 34px;
@@ -1169,11 +1181,12 @@
       cursor: pointer;
       font-weight: 800;
       flex-shrink: 0;
-      transition: transform 0.12s ease;
+      box-shadow: none;
+      transform: none;
     }
 
     .close-btn:active {
-      transform: translateY(2px);
+      transform: none;
     }
 
     .player-box {
@@ -1481,7 +1494,7 @@
   </style>
 </head>
 <body>
-  <!-- Bandera de Venezuela ondeada en el fondo -->
+  <!-- Bandera de Venezuela ondeada en el fondo (8 estrellas) -->
   <div class="vz-bg-flag" aria-hidden="true">
     <svg viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <g class="wave-band">
@@ -1494,7 +1507,6 @@
         <path d="M-40,464 Q280,436 600,470 T1240,466 L1240,740 L-40,740 Z" fill="#ef1c27" />
       </g>
       <g class="wave-band wave-band-delay-1" fill="#ffffff">
-        <polygon points="600,294 605,307 619,307 608,315 612,328 600,320 588,328 592,315 581,307 595,307" />
         <polygon points="530,303 534,314 546,314 536,321 540,332 530,325 520,332 524,321 514,314 526,314" />
         <polygon points="670,303 674,314 686,314 676,321 680,332 670,325 660,332 664,321 654,314 666,314" />
         <polygon points="470,328 474,339 486,339 476,346 480,357 470,350 460,357 464,346 454,339 466,339" />
