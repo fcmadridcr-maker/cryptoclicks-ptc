@@ -7,7 +7,12 @@
   <style>
     :root {
       --bg: #ffffff;
-      --bg-soft: #f8fafc;
+      --bg-grad:
+        radial-gradient(circle at 12% 8%, rgba(255, 208, 0, 0.16), transparent 34%),
+        radial-gradient(circle at 50% 4%, rgba(0, 85, 255, 0.13), transparent 38%),
+        radial-gradient(circle at 88% 10%, rgba(239, 28, 39, 0.14), transparent 36%),
+        #ffffff;
+      --header-bg: rgba(255, 255, 255, 0.94);
       --card: #ffffff;
       --card-2: #f4f7fb;
       --border: #cbd5e1;
@@ -17,6 +22,9 @@
       --accent-hover: #047857;
       --warning: #d97706;
       --danger: #dc2626;
+      --primary-btn: #0038a8;
+      --primary-btn-hover: #002878;
+      --primary-btn-text: #ffffff;
       --vz-yellow: #ffd000;
       --vz-blue: #0038a8;
       --vz-red: #ef1c27;
@@ -24,6 +32,34 @@
       --neon-blue: 0 0 8px rgba(0, 85, 255, 0.75), 0 0 18px rgba(0, 85, 255, 0.38);
       --neon-red: 0 0 8px rgba(239, 28, 39, 0.75), 0 0 18px rgba(239, 28, 39, 0.38);
       --neon-tri: 0 0 10px rgba(255, 208, 0, 0.45), 0 0 14px rgba(0, 85, 255, 0.35), 0 0 18px rgba(239, 28, 39, 0.35);
+      --canvas-bg: #ffffff;
+      --cornice-bg: #475569;
+      --coin-text: #0f172a;
+    }
+
+    body[data-theme="dark"] {
+      --bg: #070d19;
+      --bg-grad: radial-gradient(circle at top, #10203d 0%, #070d19 55%);
+      --header-bg: rgba(10, 18, 34, 0.95);
+      --card: #0e1729;
+      --card-2: #15223b;
+      --border: #223454;
+      --text: #f3f6fc;
+      --muted: #9fb0cc;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --primary-btn: #10b981;
+      --primary-btn-hover: #059669;
+      --primary-btn-text: #04130d;
+      --neon-yellow: 0 0 8px rgba(255, 208, 0, 0.35);
+      --neon-blue: 0 0 8px rgba(34, 211, 238, 0.35);
+      --neon-red: 0 0 8px rgba(239, 68, 68, 0.35);
+      --neon-tri: 0 12px 28px rgba(0, 0, 0, 0.45);
+      --canvas-bg: #071124;
+      --cornice-bg: #3b2818;
+      --coin-text: #070d19;
     }
 
     *, *::before, *::after {
@@ -39,17 +75,15 @@
     }
 
     body {
-      background:
-        radial-gradient(circle at 12% 8%, rgba(255, 208, 0, 0.16), transparent 34%),
-        radial-gradient(circle at 50% 4%, rgba(0, 85, 255, 0.13), transparent 38%),
-        radial-gradient(circle at 88% 10%, rgba(239, 28, 39, 0.14), transparent 36%),
-        #ffffff;
+      background: var(--bg-grad);
+      background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       max-width: 100%;
       overflow-x: clip;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     .vz-bar {
@@ -60,8 +94,8 @@
     }
 
     header {
-      background: rgba(255, 255, 255, 0.94);
-      border-bottom: 1px solid #cbd5e1;
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border);
       box-shadow: 0 4px 18px rgba(0, 85, 255, 0.08);
       padding: 10px 14px;
       position: sticky;
@@ -90,12 +124,15 @@
       font-weight: 800;
       color: var(--text);
       min-width: 0;
-      text-shadow: 0 0 10px rgba(255, 208, 0, 0.35);
     }
 
     .brand span.bolt {
       color: var(--vz-blue);
       text-shadow: var(--neon-blue);
+    }
+
+    body[data-theme="dark"] .brand span.bolt {
+      color: #22d3ee;
     }
 
     .wallet-box {
@@ -108,7 +145,7 @@
     }
 
     .user-pill {
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px solid var(--vz-blue);
       box-shadow: var(--neon-blue);
       padding: 5px 10px;
@@ -127,7 +164,7 @@
 
     .lvl-tag {
       background: rgba(255, 208, 0, 0.25);
-      color: #78350f;
+      color: var(--vz-yellow);
       border: 1px solid var(--vz-yellow);
       box-shadow: var(--neon-yellow);
       padding: 2px 6px;
@@ -137,8 +174,12 @@
       flex-shrink: 0;
     }
 
+    body:not([data-theme="dark"]) .lvl-tag {
+      color: #78350f;
+    }
+
     .balance-pill {
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px solid var(--vz-yellow);
       box-shadow: var(--neon-yellow);
       padding: 5px 10px;
@@ -148,6 +189,10 @@
       color: var(--vz-blue);
       max-width: 100%;
       white-space: nowrap;
+    }
+
+    body[data-theme="dark"] .balance-pill {
+      color: #22d3ee;
     }
 
     .btn {
@@ -167,21 +212,20 @@
     }
 
     .btn-primary {
-      background: var(--vz-blue);
-      color: #ffffff;
+      background: var(--primary-btn);
+      color: var(--primary-btn-text);
       box-shadow: var(--neon-blue);
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: #002878;
+      background: var(--primary-btn-hover);
       transform: translateY(-1px);
     }
 
     .btn-secondary {
-      background: #ffffff;
+      background: var(--card);
       color: var(--text);
-      border: 1.5px solid #cbd5e1;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      border: 1.5px solid var(--border);
     }
 
     .btn-secondary:hover:not(:disabled) {
@@ -202,7 +246,7 @@
     }
 
     .btn-danger {
-      background: #fff5f5;
+      background: rgba(239, 28, 39, 0.12);
       color: var(--vz-red);
       border: 1.5px solid var(--vz-red);
       box-shadow: var(--neon-red);
@@ -239,9 +283,9 @@
     }
 
     .auth-card {
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      box-shadow: var(--neon-tri), 0 14px 34px rgba(15, 23, 42, 0.09);
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--neon-tri);
       border-radius: 16px;
       width: 100%;
       max-width: 440px;
@@ -272,10 +316,10 @@
     .auth-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      background: #f8fafc;
+      background: var(--card-2);
       padding: 4px;
       border-radius: 10px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid var(--border);
       gap: 4px;
     }
 
@@ -291,9 +335,13 @@
     }
 
     .auth-tab.active {
-      background: #ffffff;
+      background: var(--card);
       color: var(--vz-blue);
       box-shadow: var(--neon-blue);
+    }
+
+    body[data-theme="dark"] .auth-tab.active {
+      color: #22d3ee;
     }
 
     .auth-form {
@@ -338,8 +386,8 @@
       align-items: center;
       gap: 6px;
       flex-wrap: wrap;
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
+      background: var(--card);
+      border: 1px solid var(--border);
       box-shadow: 0 4px 16px rgba(0, 85, 255, 0.06);
       border-radius: 12px;
       padding: 7px;
@@ -364,14 +412,18 @@
 
     .nav-btn:hover {
       color: var(--text);
-      background: #f1f5f9;
+      background: var(--card-2);
     }
 
     .nav-btn.active {
-      background: #ffffff;
+      background: var(--card);
       color: var(--vz-blue);
       border-color: var(--vz-yellow);
       box-shadow: var(--neon-yellow), var(--neon-blue);
+    }
+
+    body[data-theme="dark"] .nav-btn.active {
+      color: #22d3ee;
     }
 
     .kpi-grid {
@@ -394,15 +446,14 @@
     }
 
     .kpi-card {
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 13px;
       display: flex;
       flex-direction: column;
       gap: 5px;
       min-width: 0;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
     }
 
     .kpi-card:nth-child(1) { border-top: 3px solid var(--vz-yellow); box-shadow: var(--neon-yellow); }
@@ -423,6 +474,10 @@
       overflow-wrap: anywhere;
     }
 
+    body[data-theme="dark"] .kpi-val {
+      color: #22d3ee;
+    }
+
     .kpi-sub {
       font-size: 0.75rem;
       color: var(--muted);
@@ -430,9 +485,9 @@
     }
 
     .panel-card {
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      box-shadow: var(--neon-tri), 0 6px 18px rgba(15, 23, 42, 0.05);
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--neon-tri);
       border-radius: 12px;
       padding: 14px;
       display: flex;
@@ -462,8 +517,8 @@
     }
 
     .quick-tile {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 13px;
       text-align: left;
@@ -483,10 +538,10 @@
     }
 
     .safety-banner {
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px solid var(--vz-yellow);
       box-shadow: var(--neon-yellow);
-      color: #1e293b;
+      color: var(--text);
       border-radius: 10px;
       padding: 9px 12px;
       font-size: 0.8rem;
@@ -500,13 +555,13 @@
     }
 
     .ad-banner-top {
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px dashed var(--vz-blue);
       box-shadow: var(--neon-blue);
       border-radius: 12px;
       padding: 8px;
       text-align: center;
-      min-height: 88px;
+      min-height: 104px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -548,8 +603,8 @@
     }
 
     .hub-card {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 13px;
       display: flex;
@@ -587,7 +642,7 @@
 
     .hub-badge {
       background: rgba(255, 208, 0, 0.25);
-      color: #78350f;
+      color: var(--vz-yellow);
       border: 1px solid var(--vz-yellow);
       box-shadow: var(--neon-yellow);
       padding: 3px 8px;
@@ -598,6 +653,10 @@
       flex-shrink: 0;
     }
 
+    body:not([data-theme="dark"]) .hub-badge {
+      color: #78350f;
+    }
+
     .hub-badge.blue {
       background: rgba(0, 85, 255, 0.12);
       color: var(--vz-blue);
@@ -605,10 +664,14 @@
       box-shadow: var(--neon-blue);
     }
 
+    body[data-theme="dark"] .hub-badge.blue {
+      color: #60a5fa;
+    }
+
     .mini-progress-wrap {
       width: 100%;
       height: 8px;
-      background: #e2e8f0;
+      background: var(--card-2);
       border-radius: 999px;
       overflow: hidden;
     }
@@ -634,9 +697,13 @@
       color: var(--vz-blue);
     }
 
+    body[data-theme="dark"] .hub-stat {
+      color: #22d3ee;
+    }
+
     .sound-toggle {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: 9px;
       padding: 7px 11px;
       display: inline-flex;
@@ -653,7 +720,7 @@
     .switch-ui {
       width: 36px;
       height: 19px;
-      background: #cbd5e1;
+      background: #94a3b8;
       border-radius: 999px;
       position: relative;
       transition: 0.2s ease;
@@ -706,8 +773,8 @@
     }
 
     .ad-card {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 13px;
       display: flex;
@@ -716,7 +783,6 @@
       gap: 10px;
       min-width: 0;
       width: 100%;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
     }
 
     .ad-card:nth-child(3n+1) { box-shadow: var(--neon-yellow); }
@@ -743,8 +809,8 @@
       width: 28px;
       height: 28px;
       border-radius: 8px;
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card-2);
+      border: 1.5px solid var(--border);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -790,8 +856,12 @@
 
     .chip-reward {
       background: rgba(255, 208, 0, 0.22);
-      color: #78350f;
+      color: var(--vz-yellow);
       border: 1px solid var(--vz-yellow);
+    }
+
+    body:not([data-theme="dark"]) .chip-reward {
+      color: #78350f;
     }
 
     .chip-time {
@@ -800,10 +870,14 @@
       border: 1px solid rgba(0, 85, 255, 0.35);
     }
 
+    body[data-theme="dark"] .chip-time {
+      color: #60a5fa;
+    }
+
     .chip-kind {
-      background: #f1f5f9;
-      color: #334155;
-      border: 1px solid #cbd5e1;
+      background: var(--card-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
       text-transform: uppercase;
     }
 
@@ -819,14 +893,14 @@
       justify-content: space-between;
       gap: 8px;
       padding-top: 9px;
-      border-top: 1px solid #e2e8f0;
+      border-top: 1px solid var(--border);
       flex-wrap: wrap;
     }
 
     .empty-state {
       grid-column: 1 / -1;
-      background: #ffffff;
-      border: 1.5px dashed #cbd5e1;
+      background: var(--card);
+      border: 1.5px dashed var(--border);
       border-radius: 12px;
       padding: 24px;
       text-align: center;
@@ -857,8 +931,8 @@
     }
 
     .game-stat {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       box-shadow: var(--neon-blue);
       border-radius: 10px;
       padding: 8px 10px;
@@ -873,11 +947,15 @@
       margin-top: 2px;
     }
 
+    body[data-theme="dark"] .game-stat strong {
+      color: #22d3ee;
+    }
+
     canvas.game-canvas {
       width: 100%;
       max-width: 760px;
       aspect-ratio: 4 / 3;
-      background: #ffffff;
+      background: var(--canvas-bg);
       border: 2px solid var(--vz-blue);
       box-shadow: var(--neon-tri);
       border-radius: 14px;
@@ -889,7 +967,7 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.55);
+      background: rgba(15, 23, 42, 0.65);
       display: none;
       align-items: center;
       justify-content: center;
@@ -903,9 +981,9 @@
     }
 
     .modal {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
-      box-shadow: var(--neon-tri), 0 20px 44px rgba(15, 23, 42, 0.22);
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--neon-tri);
       border-radius: 16px;
       max-width: 820px;
       width: 100%;
@@ -926,7 +1004,7 @@
     }
 
     .close-btn {
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px solid var(--vz-red);
       box-shadow: var(--neon-red);
       color: var(--vz-red);
@@ -939,8 +1017,8 @@
     }
 
     .player-box {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card-2);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 12px;
       display: grid;
@@ -957,7 +1035,7 @@
     }
 
     .stage-panel {
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px solid var(--vz-blue);
       box-shadow: var(--neon-blue);
       border-radius: 10px;
@@ -973,8 +1051,8 @@
     .stage-media {
       width: 100%;
       min-height: 155px;
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
+      background: var(--card-2);
+      border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
       display: flex;
@@ -996,17 +1074,17 @@
     .offerwall-frame {
       width: 100%;
       height: 440px;
-      border: 1.5px solid #cbd5e1;
+      border: 1.5px solid var(--border);
       border-radius: 10px;
-      background: #ffffff;
+      background: var(--card);
     }
 
     .ad-box-300 {
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px dashed var(--vz-yellow);
       box-shadow: var(--neon-yellow);
       border-radius: 10px;
-      min-height: 220px;
+      min-height: 266px;
       padding: 8px;
       display: flex;
       flex-direction: column;
@@ -1022,7 +1100,7 @@
     .progress-wrap {
       width: 100%;
       height: 10px;
-      background: #e2e8f0;
+      background: var(--card-2);
       border-radius: 999px;
       overflow: hidden;
     }
@@ -1042,7 +1120,7 @@
     }
 
     .captcha-box {
-      background: #fffbeb;
+      background: rgba(255, 208, 0, 0.14);
       border: 1.5px solid var(--vz-yellow);
       box-shadow: var(--neon-yellow);
       border-radius: 10px;
@@ -1069,8 +1147,8 @@
     }
 
     .adv-summary {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card-2);
+      border: 1.5px solid var(--border);
       border-radius: 10px;
       padding: 12px;
       display: flex;
@@ -1104,13 +1182,13 @@
     .data-table td {
       text-align: left;
       padding: 8px 9px;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--border);
     }
 
     .data-table th {
       color: var(--text);
       font-weight: 700;
-      background: #f8fafc;
+      background: var(--card-2);
     }
 
     .ref-link-box {
@@ -1138,8 +1216,8 @@
     }
 
     .ref-stat-card {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       box-shadow: var(--neon-blue);
       border-radius: 10px;
       padding: 12px;
@@ -1158,9 +1236,13 @@
       margin-top: 4px;
     }
 
+    body[data-theme="dark"] .ref-stat-val {
+      color: #22d3ee;
+    }
+
     input, select, textarea {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       color: var(--text);
       border-radius: 8px;
       padding: 9px 11px;
@@ -1185,7 +1267,7 @@
     footer {
       border-top: 2px solid var(--vz-yellow);
       box-shadow: var(--neon-tri);
-      background: #ffffff;
+      background: var(--card);
       padding: 14px;
       margin-top: 20px;
       width: 100%;
@@ -1210,9 +1292,9 @@
       left: 16px;
       max-width: 420px;
       margin-left: auto;
-      background: #ffffff;
+      background: var(--card);
       border: 1.5px solid var(--vz-blue);
-      box-shadow: var(--neon-tri), 0 12px 26px rgba(15, 23, 42, 0.16);
+      box-shadow: var(--neon-tri);
       color: var(--text);
       padding: 11px 14px;
       border-radius: 10px;
@@ -1238,6 +1320,11 @@
       <div class="brand">
         <span class="bolt">⚡</span>
         <span>CryptoClicks Venezuela</span>
+      </div>
+
+      <div class="wallet-box" id="themeControls">
+        <button type="button" class="btn btn-neon-gold btn-sm" id="btnThemeLight" onclick="setThemeMode('light')">☀️ Blanco Neón</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnThemeDark" onclick="setThemeMode('dark')">🌙 Noche Oscura</button>
       </div>
 
       <div class="wallet-box hidden" id="headerUserControls">
@@ -1719,11 +1806,11 @@
         <textarea id="shortLinksInput"></textarea>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">Banner Superior (728x90)</label>
+        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">Banner Superior (728x90 — HTML o script)</label>
         <textarea id="adTopInput"></textarea>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">Banner Lateral (300x250)</label>
+        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">Banner Lateral (300x250 — HTML o script)</label>
         <textarea id="adModalInput"></textarea>
       </div>
       <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
@@ -1755,6 +1842,7 @@
     const CURRENT_USER_KEY = "cc_vz_current_user_v1";
     const DEVICE_ID_KEY = "cc_vz_device_id_v1";
     const SOUND_PREF_KEY = "cc_vz_sound_v1";
+    const THEME_PREF_KEY = "cc_vz_theme_mode_v1";
     const CAMPAIGNS_STORAGE_KEY = "cc_vz_campaigns_v1";
 
     const STORAGE_KEYS = {
@@ -1766,8 +1854,28 @@
       adModal: "cc_vz_ad_modal"
     };
 
-    const DEFAULT_AD_728 = "";
-    const DEFAULT_AD_300 = "";
+    const DEFAULT_AD_728 = `
+      <div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:linear-gradient(90deg,#fffbeb 0%,#eff6ff 50%,#fef2f2 100%);border:2px solid #0038a8;border-radius:10px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#0f172a;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="background:#ffd000;color:#0f172a;font-weight:800;padding:6px 10px;border-radius:7px;font-size:13px;">ESPACIO 728×90</span>
+          <div>
+            <div style="font-weight:800;font-size:15px;color:#0038a8;">Anúnciate en CryptoClicks Venezuela</div>
+            <div style="font-size:12px;color:#475569;">Reemplaza este banner demo con tu código de red publicitaria o campaña propia.</div>
+          </div>
+        </div>
+        <span style="background:#ef1c27;color:#ffffff;font-weight:800;padding:8px 14px;border-radius:8px;font-size:12px;white-space:nowrap;">VER PLANES</span>
+      </div>
+    `.trim();
+
+    const DEFAULT_AD_300 = `
+      <div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;background:linear-gradient(180deg,#fffbeb 0%,#eff6ff 55%,#fef2f2 100%);border:2px solid #ffd000;border-radius:10px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#0f172a;text-align:center;">
+        <span style="background:#0038a8;color:#ffffff;font-weight:800;padding:4px 10px;border-radius:6px;font-size:11px;">BANNER 300×250</span>
+        <div style="font-weight:800;font-size:16px;line-height:1.25;">Impulsa tu Enlace, Canal o Proyecto Cripto</div>
+        <div style="font-size:12px;color:#475569;">Configura tu código HTML/script en el botón inferior de configuración.</div>
+        <span style="background:#ffd000;color:#0f172a;font-weight:800;padding:7px 14px;border-radius:8px;font-size:12px;">PROMOCIONAR</span>
+      </div>
+    `.trim();
+
     const DEFAULT_OFFERWALL_LINKS = ["https://timewall.io/", "https://www.cpx-research.com/", "https://bitlabs.ai/", "https://monlix.com/"];
     const DEFAULT_WINDOW_LINKS = ["https://example.com/"];
     const DEFAULT_FRAME_LINKS = ["https://example.com/"];
@@ -1884,6 +1992,7 @@
       coins: 0,
       xp: 0,
       section: "dashboard",
+      themeMode: localStorage.getItem(THEME_PREF_KEY) === "dark" ? "dark" : "light",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
       adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
       adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300
@@ -1892,6 +2001,34 @@
     let activeSession = null;
     let timerInterval = null;
     let expectedCaptcha = null;
+
+    function applyThemeMode(mode) {
+      state.themeMode = mode === "dark" ? "dark" : "light";
+      localStorage.setItem(THEME_PREF_KEY, state.themeMode);
+      if (state.themeMode === "dark") {
+        document.body.setAttribute("data-theme", "dark");
+      } else {
+        document.body.removeAttribute("data-theme");
+      }
+
+      const btnLight = document.getElementById("btnThemeLight");
+      const btnDark = document.getElementById("btnThemeDark");
+      if (btnLight && btnDark) {
+        if (state.themeMode === "dark") {
+          btnDark.className = "btn btn-neon-gold btn-sm";
+          btnLight.className = "btn btn-secondary btn-sm";
+        } else {
+          btnLight.className = "btn btn-neon-gold btn-sm";
+          btnDark.className = "btn btn-secondary btn-sm";
+        }
+      }
+      if (typeof drawMiniGame === "function") drawMiniGame();
+    }
+
+    function setThemeMode(mode) {
+      applyThemeMode(mode);
+      showToast(mode === "dark" ? "🌙 Tema Noche Oscura activado." : "☀️ Tema Blanco con Neón Tricolor activado.");
+    }
 
     function formatUsdt(coins) {
       return (Math.abs(coins) * COIN_TO_USDT).toFixed(5);
@@ -2712,12 +2849,16 @@
     }
 
     function drawMiniGame() {
+      const styles = getComputedStyle(document.body);
+      const canvasBg = styles.getPropertyValue("--canvas-bg").trim() || "#ffffff";
+      const corniceBg = styles.getPropertyValue("--cornice-bg").trim() || "#475569";
+      const coinText = styles.getPropertyValue("--coin-text").trim() || "#0f172a";
+
       gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-      gCtx.fillStyle = "#ffffff";
+      gCtx.fillStyle = canvasBg;
       gCtx.fillRect(0, 0, gCanvas.width, gCanvas.height);
 
-      // Cornisa y franjas de neón amarillo, azul y rojo
-      gCtx.fillStyle = "#475569";
+      gCtx.fillStyle = corniceBg;
       gCtx.fillRect(0, 68, gCanvas.width, 28);
 
       gCtx.save();
@@ -2737,7 +2878,6 @@
       gCtx.fillRect(0, 104, gCanvas.width, 4);
       gCtx.restore();
 
-      // Hámster con cinta de la bandera
       gCtx.save();
       gCtx.translate(gState.hamsterX, 50);
       gCtx.shadowColor = "rgba(0, 56, 168, 0.35)";
@@ -2754,7 +2894,6 @@
       gCtx.fillRect(-10, -14, 20, 4);
       gCtx.restore();
 
-      // Monedas y bombas con resplandor neón sobre fondo blanco
       gState.items.forEach(it => {
         gCtx.save();
         if (it.isBomb) {
@@ -2784,7 +2923,7 @@
           gCtx.lineWidth = 2;
           gCtx.stroke();
           gCtx.shadowBlur = 0;
-          gCtx.fillStyle = "#0f172a";
+          gCtx.fillStyle = coinText;
           gCtx.font = "bold 11px sans-serif";
           gCtx.textAlign = "center";
           gCtx.textBaseline = "middle";
@@ -2842,6 +2981,7 @@
       showToast(hit ? "🏆 ¡Cayó dentro del 0.5%–1% (Ganador Semanal)!" : "Sin premio en este intento de prueba (probabilidad 0.5%–1%).");
     }
 
+    applyThemeMode(state.themeMode);
     drawMiniGame();
 
     (function initApp() {
@@ -2856,6 +2996,7 @@
         if (existing) { startUserSession(existing); return; }
       }
       switchAuthTab(refParam ? "register" : "login");
+      applyAdSlots();
     })();
   </script>
 </body>
