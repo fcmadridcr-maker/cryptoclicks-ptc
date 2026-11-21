@@ -6,11 +6,11 @@
   <title>CryptoClicks Venezuela — Dashboard, PTCs, Shortlinks, Offerwalls & Minijuego</title>
   <style>
     :root {
-      --bg: #f1f5f9;
-      --bg-grad: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.72) 0%, rgba(226, 232, 240, 0.92) 100%);
-      --header-bg: rgba(255, 255, 255, 0.76);
-      --card: rgba(255, 255, 255, 0.72);
-      --card-2: rgba(241, 245, 249, 0.68);
+      --bg: #ffffff;
+      --bg-grad: #ffffff;
+      --header-bg: rgba(255, 255, 255, 0.86);
+      --card: rgba(255, 255, 255, 0.82);
+      --card-2: rgba(241, 245, 249, 0.78);
       --border: rgba(15, 23, 42, 0.2);
       --text: #0f172a;
       --muted: #1e293b;
@@ -28,10 +28,11 @@
       --neon-blue: 0 0 8px rgba(0, 68, 255, 0.55), 0 0 16px rgba(0, 68, 255, 0.24);
       --neon-red: 0 0 8px rgba(255, 23, 38, 0.55), 0 0 16px rgba(255, 23, 38, 0.24);
       --neon-tri: 0 8px 24px rgba(15, 23, 42, 0.14);
-      --canvas-bg: rgba(255, 255, 255, 0.84);
+      --canvas-bg: rgba(255, 255, 255, 0.88);
       --cornice-bg: #475569;
       --coin-text: #0f172a;
-      --flag-opacity: 0.78;
+      --flag-opacity: 0.92;
+      --flag-blend: normal;
     }
 
     body[data-theme="dark"] {
@@ -57,7 +58,8 @@
       --canvas-bg: rgba(7, 17, 36, 0.86);
       --cornice-bg: #3b2818;
       --coin-text: #070d19;
-      --flag-opacity: 0.72;
+      --flag-opacity: 0.76;
+      --flag-blend: lighten;
     }
 
     *, *::before, *::after {
@@ -85,7 +87,7 @@
       transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    /* Bandera de Venezuela central, compacta y llamativa con efecto tela ondeada */
+    /* Mapa ondeante de Venezuela central, compacto y llamativo */
     .vz-center-stage {
       position: fixed;
       inset: 0;
@@ -99,54 +101,31 @@
 
     .vz-flag-emblem {
       width: min(760px, 86vw);
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 9;
       max-height: 54vh;
-      border-radius: 22px;
       overflow: hidden;
       opacity: var(--flag-opacity);
+      mix-blend-mode: var(--flag-blend);
       position: relative;
-      box-shadow:
-        0 18px 45px rgba(0, 0, 0, 0.28),
-        0 0 24px rgba(255, 208, 0, 0.25),
-        0 0 34px rgba(0, 68, 255, 0.22),
-        0 0 38px rgba(255, 23, 38, 0.2);
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      animation: emblemGentleFloat 6.5s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: mapGentleWave 5.2s ease-in-out infinite;
     }
 
-    .vz-flag-emblem svg {
+    .vz-flag-emblem img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
       display: block;
     }
 
-    .wave-layer {
-      animation: clothWaveShift 4.2s ease-in-out infinite;
-    }
-
-    .wave-layer-d1 {
-      animation-delay: -1.05s;
-    }
-
-    .wave-layer-d2 {
-      animation-delay: -2.1s;
-    }
-
-    @keyframes emblemGentleFloat {
+    @keyframes mapGentleWave {
       0%, 100% {
-        transform: translateY(0px) rotate(-0.8deg);
+        transform: translateY(0px) scale(1) rotate(-0.6deg);
       }
       50% {
-        transform: translateY(-7px) rotate(0.8deg);
-      }
-    }
-
-    @keyframes clothWaveShift {
-      0%, 100% {
-        transform: translateX(-10px);
-      }
-      50% {
-        transform: translateX(10px);
+        transform: translateY(-7px) scale(1.02) rotate(0.6deg);
       }
     }
 
@@ -1126,7 +1105,7 @@
     }
 
     .modal {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       border: 1.5px solid var(--border);
       border-radius: 18px;
       max-width: 820px;
@@ -1443,7 +1422,7 @@
       left: 16px;
       max-width: 420px;
       margin-left: auto;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.96);
       border: 1.5px solid var(--vz-blue);
       color: var(--text);
       padding: 11px 14px;
@@ -1468,66 +1447,10 @@
   </style>
 </head>
 <body>
-  <!-- Bandera de Venezuela central, compacta y llamativa con 8 estrellas -->
+  <!-- Mapa ondeante de Venezuela con bandera tricolor y 8 estrellas sobre blanco puro -->
   <div class="vz-center-stage" aria-hidden="true">
     <div class="vz-flag-emblem">
-      <svg viewBox="0 0 900 560" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="vzYellowGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#ffe135" />
-            <stop offset="50%" stop-color="#ffd000" />
-            <stop offset="100%" stop-color="#e5b200" />
-          </linearGradient>
-          <linearGradient id="vzBlueGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#1d63ff" />
-            <stop offset="50%" stop-color="#0038a8" />
-            <stop offset="100%" stop-color="#002270" />
-          </linearGradient>
-          <linearGradient id="vzRedGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#ff3b47" />
-            <stop offset="50%" stop-color="#ef1c27" />
-            <stop offset="100%" stop-color="#b80d16" />
-          </linearGradient>
-          <linearGradient id="clothFoldShade" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#000000" stop-opacity="0.18" />
-            <stop offset="18%" stop-color="#ffffff" stop-opacity="0.22" />
-            <stop offset="38%" stop-color="#000000" stop-opacity="0.16" />
-            <stop offset="60%" stop-color="#ffffff" stop-opacity="0.24" />
-            <stop offset="82%" stop-color="#000000" stop-opacity="0.18" />
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.14" />
-          </linearGradient>
-        </defs>
-
-        <!-- Franja Amarilla -->
-        <g class="wave-layer">
-          <path d="M-20,0 L920,0 L920,174 Q675,148 450,178 Q225,208 -20,172 Z" fill="url(#vzYellowGrad)" />
-        </g>
-
-        <!-- Franja Azul -->
-        <g class="wave-layer wave-layer-d1">
-          <path d="M-20,170 Q225,204 450,174 Q675,144 920,172 L920,376 Q675,350 450,380 Q225,410 -20,374 Z" fill="url(#vzBlueGrad)" />
-        </g>
-
-        <!-- Franja Roja -->
-        <g class="wave-layer wave-layer-d2">
-          <path d="M-20,372 Q225,406 450,376 Q675,346 920,374 L920,570 L-20,570 Z" fill="url(#vzRedGrad)" />
-        </g>
-
-        <!-- Arco de 8 estrellas blancas -->
-        <g class="wave-layer wave-layer-d1" fill="#ffffff" stroke="rgba(0, 20, 75, 0.28)" stroke-width="1">
-          <polygon points="392,226 396,238 409,238 398,246 402,258 392,250 382,258 386,246 375,238 388,238" />
-          <polygon points="508,226 512,238 525,238 514,246 518,258 508,250 498,258 502,246 491,238 504,238" />
-          <polygon points="342,247 346,259 359,259 348,267 352,279 342,271 332,279 336,267 325,259 338,259" />
-          <polygon points="558,247 562,259 575,259 564,267 568,279 558,271 548,279 552,267 541,259 554,259" />
-          <polygon points="303,279 307,291 320,291 309,299 313,311 303,303 293,311 297,299 286,291 299,291" />
-          <polygon points="597,279 601,291 614,291 603,299 607,311 597,303 587,311 591,299 580,291 593,291" />
-          <polygon points="276,318 280,330 293,330 282,338 286,350 276,342 266,350 270,338 259,330 272,330" />
-          <polygon points="624,318 628,330 641,330 630,338 634,350 624,342 614,350 618,338 607,330 620,330" />
-        </g>
-
-        <!-- Pliegues de tela y brillo -->
-        <rect x="0" y="0" width="900" height="560" fill="url(#clothFoldShade)" />
-      </svg>
+      <img src="image_generation_content/12833519192522674408" alt="Mapa ondeante de Venezuela con bandera tricolor" />
     </div>
   </div>
 
@@ -3066,7 +2989,7 @@
 
     function drawMiniGame() {
       const styles = getComputedStyle(document.body);
-      const canvasBg = styles.getPropertyValue("--canvas-bg").trim() || "rgba(255, 255, 255, 0.84)";
+      const canvasBg = styles.getPropertyValue("--canvas-bg").trim() || "rgba(255, 255, 255, 0.88)";
       const corniceBg = styles.getPropertyValue("--cornice-bg").trim() || "#475569";
       const coinText = styles.getPropertyValue("--coin-text").trim() || "#0f172a";
 
