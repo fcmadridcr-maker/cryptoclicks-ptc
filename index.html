@@ -90,7 +90,6 @@
       transition: background-color 0.22s ease, color 0.22s ease;
     }
 
-    /* Silueta de Venezuela suavizada integrada con SVG (sin depender de archivos externos rotos) */
     .vz-bg-map {
       position: fixed;
       inset: 0;
@@ -416,18 +415,68 @@
       }
     }
 
-    /* Barra de navegación suave tipo píldora/panel */
+    /* Luz de neón tricolor fina (1.5px) y sutil en el panel de navegación */
     .nav-bar {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 6px;
       flex-wrap: wrap;
       background: var(--card);
-      border: 1px solid var(--border);
+      border: 1.5px solid transparent;
       border-radius: 14px;
       padding: 6px;
       width: 100%;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      isolation: isolate;
+    }
+
+    .nav-bar::before {
+      content: "";
+      position: absolute;
+      inset: -1.5px;
+      border-radius: 14.5px;
+      padding: 1.5px;
+      background: linear-gradient(
+        90deg,
+        #facc15 0%,
+        #facc15 20%,
+        #3b82f6 33%,
+        #3b82f6 53%,
+        #f43f5e 66%,
+        #f43f5e 86%,
+        #3b82f6 94%,
+        #facc15 100%
+      );
+      background-size: 240% 240%;
+      animation: fineTricolorFlow 5.5s linear infinite;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: -1;
+      filter:
+        drop-shadow(0 0 3px rgba(250, 204, 21, 0.55))
+        drop-shadow(0 0 5px rgba(59, 130, 246, 0.45))
+        drop-shadow(0 0 6px rgba(244, 63, 94, 0.45));
+    }
+
+    @keyframes fineTricolorFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     .nav-btn {
@@ -452,13 +501,13 @@
     }
 
     .nav-btn.active {
-      background: rgba(250, 204, 21, 0.16);
+      background: rgba(250, 204, 21, 0.15);
       color: var(--vz-yellow);
-      border-color: rgba(250, 204, 21, 0.34);
+      border-color: rgba(250, 204, 21, 0.32);
     }
 
     body[data-theme="light"] .nav-btn.active {
-      background: rgba(37, 99, 235, 0.12);
+      background: rgba(37, 99, 235, 0.11);
       color: var(--vz-blue);
       border-color: rgba(37, 99, 235, 0.28);
     }
@@ -1348,7 +1397,6 @@
   </style>
 </head>
 <body data-theme="dark">
-  <!-- Fondo sutil con silueta de Venezuela -->
   <div class="vz-bg-map" aria-hidden="true">
     <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
