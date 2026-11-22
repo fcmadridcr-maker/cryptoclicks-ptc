@@ -6,60 +6,63 @@
   <title>CryptoClicks Venezuela — Dashboard, PTCs, Shortlinks, Offerwalls & Minijuego</title>
   <style>
     :root {
-      --bg: #ffffff;
-      --bg-grad: #ffffff;
+      --bg: #070d1a;
+      --bg-grad:
+        radial-gradient(circle at 18% 12%, rgba(37, 99, 235, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 82% 85%, rgba(234, 179, 8, 0.09) 0%, transparent 48%),
+        linear-gradient(180deg, #070d1a 0%, #091122 100%);
+      --header-bg: rgba(9, 16, 32, 0.82);
+      --card: rgba(15, 25, 46, 0.76);
+      --card-2: rgba(21, 35, 62, 0.72);
+      --border: rgba(148, 163, 184, 0.16);
+      --border-soft: rgba(250, 204, 21, 0.28);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --warning: #eab308;
+      --danger: #f43f5e;
+      --primary-btn: #eab308;
+      --primary-btn-hover: #facc15;
+      --primary-btn-text: #090e1a;
+      --vz-yellow: #facc15;
+      --vz-blue: #3b82f6;
+      --vz-red: #f43f5e;
+      --soft-glow: 0 10px 28px rgba(2, 6, 23, 0.45);
+      --canvas-bg: rgba(8, 15, 30, 0.88);
+      --cornice-bg: #334155;
+      --coin-text: #090e1a;
+      --map-opacity: 0.14;
+    }
+
+    body[data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-grad:
+        radial-gradient(circle at 18% 12%, rgba(37, 99, 235, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 82% 85%, rgba(234, 179, 8, 0.1) 0%, transparent 48%),
+        linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
       --header-bg: rgba(255, 255, 255, 0.86);
-      --card: rgba(255, 255, 255, 0.82);
-      --card-2: rgba(241, 245, 249, 0.78);
-      --border: rgba(15, 23, 42, 0.2);
+      --card: rgba(255, 255, 255, 0.88);
+      --card-2: rgba(241, 245, 249, 0.85);
+      --border: rgba(15, 23, 42, 0.12);
+      --border-soft: rgba(37, 99, 235, 0.25);
       --text: #0f172a;
-      --muted: #1e293b;
+      --muted: #475569;
       --accent: #059669;
       --accent-hover: #047857;
       --warning: #d97706;
-      --danger: #dc2626;
-      --primary-btn: #0038a8;
-      --primary-btn-hover: #002878;
+      --danger: #e11d48;
+      --primary-btn: #1d4ed8;
+      --primary-btn-hover: #1e40af;
       --primary-btn-text: #ffffff;
-      --vz-yellow: #ffd000;
-      --vz-blue: #0044ff;
-      --vz-red: #ff1726;
-      --neon-yellow: 0 0 8px rgba(255, 208, 0, 0.7), 0 0 16px rgba(255, 208, 0, 0.32);
-      --neon-blue: 0 0 8px rgba(0, 68, 255, 0.55), 0 0 16px rgba(0, 68, 255, 0.24);
-      --neon-red: 0 0 8px rgba(255, 23, 38, 0.55), 0 0 16px rgba(255, 23, 38, 0.24);
-      --neon-tri: 0 8px 24px rgba(15, 23, 42, 0.14);
-      --canvas-bg: rgba(255, 255, 255, 0.88);
-      --cornice-bg: #475569;
+      --vz-yellow: #eab308;
+      --vz-blue: #2563eb;
+      --vz-red: #e11d48;
+      --soft-glow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --canvas-bg: rgba(255, 255, 255, 0.92);
+      --cornice-bg: #cbd5e1;
       --coin-text: #0f172a;
-      --flag-opacity: 0.92;
-      --flag-blend: normal;
-    }
-
-    body[data-theme="dark"] {
-      --bg: #060b16;
-      --bg-grad: radial-gradient(circle at 50% 35%, rgba(15, 28, 56, 0.75) 0%, rgba(6, 11, 22, 0.96) 100%);
-      --header-bg: rgba(10, 18, 34, 0.78);
-      --card: rgba(14, 23, 41, 0.72);
-      --card-2: rgba(21, 34, 59, 0.66);
-      --border: rgba(226, 232, 240, 0.22);
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --accent: #10b981;
-      --accent-hover: #059669;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --primary-btn: #10b981;
-      --primary-btn-hover: #059669;
-      --primary-btn-text: #04130d;
-      --neon-yellow: 0 0 8px rgba(255, 208, 0, 0.45);
-      --neon-blue: 0 0 8px rgba(34, 211, 238, 0.45);
-      --neon-red: 0 0 8px rgba(255, 45, 85, 0.45);
-      --neon-tri: 0 10px 26px rgba(0, 0, 0, 0.5);
-      --canvas-bg: rgba(7, 17, 36, 0.86);
-      --cornice-bg: #3b2818;
-      --coin-text: #070d19;
-      --flag-opacity: 0.76;
-      --flag-blend: lighten;
+      --map-opacity: 0.12;
     }
 
     *, *::before, *::after {
@@ -84,10 +87,11 @@
       max-width: 100%;
       overflow-x: clip;
       position: relative;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: background-color 0.22s ease, color 0.22s ease;
     }
 
-    .vz-center-stage {
+    /* Silueta de Venezuela suavizada integrada con SVG (sin depender de archivos externos rotos) */
+    .vz-bg-map {
       position: fixed;
       inset: 0;
       z-index: 0;
@@ -95,37 +99,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 84px 20px 44px;
+      padding: 80px 24px 40px;
+      opacity: var(--map-opacity);
     }
 
-    .vz-flag-emblem {
-      width: min(760px, 86vw);
-      aspect-ratio: 16 / 9;
+    .vz-bg-map svg {
+      width: min(740px, 84vw);
+      height: auto;
       max-height: 54vh;
-      overflow: hidden;
-      opacity: var(--flag-opacity);
-      mix-blend-mode: var(--flag-blend);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: mapGentleWave 5.2s ease-in-out infinite;
-    }
-
-    .vz-flag-emblem img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    @keyframes mapGentleWave {
-      0%, 100% {
-        transform: translateY(0px) scale(1) rotate(-0.6deg);
-      }
-      50% {
-        transform: translateY(-7px) scale(1.02) rotate(0.6deg);
-      }
+      filter: blur(0.4px);
     }
 
     .vz-bar, header, .auth-wrapper, main, footer {
@@ -134,20 +116,20 @@
     }
 
     .vz-bar {
-      height: 5px;
+      height: 3px;
       width: 100%;
-      background: linear-gradient(90deg, var(--vz-yellow) 33.3%, var(--vz-blue) 33.3%, var(--vz-blue) 66.6%, var(--vz-red) 66.6%);
+      background: linear-gradient(90deg, rgba(250, 204, 21, 0.75) 33.3%, rgba(59, 130, 246, 0.75) 33.3%, rgba(59, 130, 246, 0.75) 66.6%, rgba(244, 63, 94, 0.75) 66.6%);
     }
 
     header {
       background: var(--header-bg);
       border-bottom: 1px solid var(--border);
-      padding: 10px 14px;
+      padding: 10px 16px;
       position: sticky;
       top: 0;
       z-index: 30;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       width: 100%;
     }
 
@@ -157,7 +139,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
       min-width: 0;
     }
@@ -165,25 +147,31 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 1.08rem;
+      gap: 9px;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--text);
       min-width: 0;
+      letter-spacing: -0.01em;
     }
 
-    .brand span.bolt {
-      color: var(--vz-blue);
-    }
-
-    body[data-theme="dark"] .brand span.bolt {
-      color: #22d3ee;
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: rgba(250, 204, 21, 0.14);
+      border: 1px solid rgba(250, 204, 21, 0.35);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--vz-yellow);
+      font-size: 0.95rem;
     }
 
     .wallet-box {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       flex-wrap: wrap;
       min-width: 0;
       max-width: 100%;
@@ -191,62 +179,63 @@
 
     .user-pill {
       background: var(--card);
-      border: 1.5px solid var(--vz-blue);
+      border: 1px solid var(--border);
       padding: 5px 11px;
-      border-radius: 12px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
       color: var(--text);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      backdrop-filter: blur(5px);
     }
 
     .lvl-tag {
-      background: rgba(255, 208, 0, 0.35);
+      background: rgba(250, 204, 21, 0.16);
       color: var(--vz-yellow);
-      border: 1px solid var(--vz-yellow);
+      border: 1px solid rgba(250, 204, 21, 0.32);
       padding: 2px 7px;
-      border-radius: 8px;
-      font-size: 0.72rem;
-      font-weight: 800;
+      border-radius: 7px;
+      font-size: 0.7rem;
+      font-weight: 700;
       flex-shrink: 0;
     }
 
-    body:not([data-theme="dark"]) .lvl-tag {
-      color: #78350f;
+    body[data-theme="light"] .lvl-tag {
+      color: #92400e;
+      background: rgba(245, 158, 11, 0.14);
+      border-color: rgba(217, 119, 6, 0.3);
     }
 
     .balance-pill {
       background: var(--card);
-      border: 1.5px solid var(--vz-yellow);
-      padding: 5px 11px;
-      border-radius: 12px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--vz-blue);
+      border: 1px solid rgba(250, 204, 21, 0.32);
+      padding: 5px 12px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--vz-yellow);
       max-width: 100%;
       white-space: nowrap;
-      backdrop-filter: blur(5px);
     }
 
-    body[data-theme="dark"] .balance-pill {
-      color: #22d3ee;
+    body[data-theme="light"] .balance-pill {
+      color: #1d4ed8;
+      border-color: rgba(37, 99, 235, 0.3);
     }
 
     .btn {
       border: 1px solid transparent;
       border-radius: 10px;
-      padding: 8px 14px;
-      font-size: 0.84rem;
-      font-weight: 700;
+      padding: 8px 13px;
+      font-size: 0.82rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -254,79 +243,64 @@
       text-decoration: none;
       max-width: 100%;
       user-select: none;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .btn:active:not(:disabled) {
-      transform: none;
     }
 
     .btn-primary {
       background: var(--primary-btn);
       color: var(--primary-btn-text);
-      border-color: var(--primary-btn);
-      box-shadow: none;
+      border-color: transparent;
     }
 
     .btn-primary:hover:not(:disabled) {
       background: var(--primary-btn-hover);
-      border-color: var(--primary-btn-hover);
-      transform: none;
-      filter: none;
     }
 
     .btn-secondary {
       background: var(--card);
       color: var(--text);
       border-color: var(--border);
-      box-shadow: none;
     }
 
     .btn-secondary:hover:not(:disabled) {
-      border-color: var(--vz-blue);
+      border-color: rgba(148, 163, 184, 0.35);
       background: var(--card-2);
-      transform: none;
     }
 
-    .btn-neon-gold {
-      background: var(--vz-yellow);
-      color: #0f172a;
-      border-color: var(--vz-yellow);
-      box-shadow: none;
+    .btn-soft-gold {
+      background: rgba(250, 204, 21, 0.14);
+      color: var(--vz-yellow);
+      border-color: rgba(250, 204, 21, 0.32);
     }
 
-    .btn-neon-gold:hover:not(:disabled) {
-      background: #eab308;
-      border-color: #eab308;
-      transform: none;
-      filter: none;
+    .btn-soft-gold:hover:not(:disabled) {
+      background: rgba(250, 204, 21, 0.22);
+    }
+
+    body[data-theme="light"] .btn-soft-gold {
+      color: #92400e;
+      background: rgba(245, 158, 11, 0.14);
+      border-color: rgba(217, 119, 6, 0.3);
     }
 
     .btn-danger {
-      background: rgba(255, 23, 38, 0.16);
+      background: rgba(244, 63, 94, 0.12);
       color: var(--vz-red);
-      border-color: rgba(255, 23, 38, 0.65);
-      box-shadow: none;
+      border-color: rgba(244, 63, 94, 0.3);
     }
 
     .btn-danger:hover:not(:disabled) {
-      background: var(--vz-red);
-      color: #ffffff;
-      transform: none;
+      background: rgba(244, 63, 94, 0.22);
     }
 
     .btn-sm {
       padding: 6px 11px;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       border-radius: 9px;
     }
 
     .btn:disabled {
-      opacity: 0.55;
+      opacity: 0.5;
       cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
     }
 
     .hidden {
@@ -344,17 +318,16 @@
 
     .auth-card {
       background: var(--card);
-      border: 1.5px solid var(--border);
-      box-shadow: var(--neon-tri);
+      border: 1px solid var(--border);
+      box-shadow: var(--soft-glow);
       border-radius: 18px;
       width: 100%;
-      max-width: 440px;
-      padding: 22px;
+      max-width: 430px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(10px);
     }
 
     .auth-head {
@@ -365,14 +338,15 @@
     }
 
     .auth-head h1 {
-      font-size: 1.3rem;
+      font-size: 1.28rem;
       font-weight: 800;
       color: var(--text);
     }
 
     .auth-head p {
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       color: var(--muted);
+      line-height: 1.4;
     }
 
     .auth-tabs {
@@ -391,19 +365,18 @@
       color: var(--muted);
       padding: 8px 10px;
       border-radius: 9px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
-      transition: 0.15s ease;
     }
 
     .auth-tab.active {
       background: var(--card);
-      color: var(--vz-blue);
+      color: var(--vz-yellow);
     }
 
-    body[data-theme="dark"] .auth-tab.active {
-      color: #22d3ee;
+    body[data-theme="light"] .auth-tab.active {
+      color: var(--vz-blue);
     }
 
     .auth-form {
@@ -415,12 +388,12 @@
     .field-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
       min-width: 0;
     }
 
     .field-group label {
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       font-weight: 600;
       color: var(--muted);
     }
@@ -429,7 +402,7 @@
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;
-      padding: 14px;
+      padding: 16px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -439,71 +412,22 @@
 
     @media (min-width: 768px) {
       main {
-        padding: 16px 20px;
+        padding: 18px 22px;
       }
     }
 
+    /* Barra de navegación suave tipo píldora/panel */
     .nav-bar {
-      position: relative;
       display: flex;
       align-items: center;
       gap: 6px;
       flex-wrap: wrap;
       background: var(--card);
-      border: 3px solid transparent;
-      border-radius: 15px;
-      padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 6px;
       width: 100%;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      isolation: isolate;
-    }
-
-    .nav-bar::before {
-      content: "";
-      position: absolute;
-      inset: -3px;
-      border-radius: 16px;
-      padding: 3px;
-      background: linear-gradient(
-        90deg,
-        #ffd000 0%,
-        #ffd000 18%,
-        #0044ff 28%,
-        #0044ff 48%,
-        #ff1726 58%,
-        #ff1726 78%,
-        #0044ff 88%,
-        #ffd000 100%
-      );
-      background-size: 260% 260%;
-      animation: tricolorPerimeterScan 3.4s linear infinite;
-      -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: -1;
-      filter:
-        drop-shadow(0 0 6px #ffd000)
-        drop-shadow(0 0 11px #0044ff)
-        drop-shadow(0 0 14px #ff1726);
-    }
-
-    @keyframes tricolorPerimeterScan {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      backdrop-filter: blur(10px);
     }
 
     .nav-btn {
@@ -512,43 +436,37 @@
       color: var(--muted);
       padding: 7px 12px;
       border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 5px;
       transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
       max-width: 100%;
-      box-shadow: none;
-      transform: none;
     }
 
     .nav-btn:hover {
       color: var(--text);
       background: var(--card-2);
-      transform: none;
-    }
-
-    .nav-btn:active {
-      transform: none;
     }
 
     .nav-btn.active {
-      background: var(--card);
-      color: var(--vz-blue);
-      border-color: var(--vz-yellow);
-      box-shadow: none;
+      background: rgba(250, 204, 21, 0.16);
+      color: var(--vz-yellow);
+      border-color: rgba(250, 204, 21, 0.34);
     }
 
-    body[data-theme="dark"] .nav-btn.active {
-      color: #22d3ee;
+    body[data-theme="light"] .nav-btn.active {
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--vz-blue);
+      border-color: rgba(37, 99, 235, 0.28);
     }
 
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      gap: 11px;
       width: 100%;
     }
 
@@ -566,57 +484,51 @@
 
     .kpi-card {
       background: var(--card);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 13px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 5px;
       min-width: 0;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
     }
 
-    .kpi-card:nth-child(1) { border-top: 3px solid var(--vz-yellow); }
-    .kpi-card:nth-child(2) { border-top: 3px solid var(--vz-blue); }
-    .kpi-card:nth-child(3) { border-top: 3px solid var(--vz-red); }
-    .kpi-card:nth-child(4) { border-top: 3px solid var(--vz-blue); }
+    .kpi-card:nth-child(1) { border-top: 2px solid rgba(250, 204, 21, 0.75); }
+    .kpi-card:nth-child(2) { border-top: 2px solid rgba(59, 130, 246, 0.75); }
+    .kpi-card:nth-child(3) { border-top: 2px solid rgba(16, 185, 129, 0.75); }
+    .kpi-card:nth-child(4) { border-top: 2px solid rgba(244, 63, 94, 0.65); }
 
     .kpi-label {
-      font-size: 0.77rem;
+      font-size: 0.76rem;
       color: var(--muted);
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .kpi-val {
-      font-size: 1.2rem;
+      font-size: 1.18rem;
       font-weight: 800;
-      color: var(--vz-blue);
+      color: var(--text);
       overflow-wrap: anywhere;
     }
 
-    body[data-theme="dark"] .kpi-val {
-      color: #22d3ee;
-    }
-
     .kpi-sub {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--muted);
       overflow-wrap: anywhere;
     }
 
     .panel-card {
       background: var(--card);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 14px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       gap: 10px;
       width: 100%;
       min-width: 0;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
     }
 
     .quick-grid {
@@ -639,8 +551,8 @@
     }
 
     .quick-tile {
-      background: var(--card);
-      border: 1.5px solid var(--border);
+      background: var(--card-2);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 13px;
       text-align: left;
@@ -648,31 +560,23 @@
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
       transition: border-color 0.15s ease, background-color 0.15s ease;
       min-width: 0;
-      box-shadow: none;
-      transform: none;
     }
 
     .quick-tile:hover {
-      border-color: var(--vz-blue);
-      background: var(--card-2);
-      transform: none;
-      box-shadow: none;
-    }
-
-    .quick-tile:active {
-      transform: none;
+      border-color: var(--border-soft);
+      background: var(--card);
     }
 
     .safety-banner {
       background: var(--card);
-      border: 1.5px solid var(--vz-yellow);
-      color: var(--text);
+      border: 1px solid var(--border);
+      color: var(--muted);
       border-radius: 12px;
-      padding: 9px 12px;
-      font-size: 0.8rem;
+      padding: 9px 13px;
+      font-size: 0.79rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -680,13 +584,15 @@
       flex-wrap: wrap;
       width: 100%;
       min-width: 0;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .safety-banner strong {
+      color: var(--text);
     }
 
     .ad-banner-top {
       background: var(--card);
-      border: 1.5px dashed var(--vz-blue);
+      border: 1px dashed var(--border);
       border-radius: 14px;
       padding: 8px;
       text-align: center;
@@ -699,8 +605,6 @@
       width: 100%;
       max-width: 100%;
       overflow: hidden;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
     }
 
     .ad-frame-wrap {
@@ -713,7 +617,7 @@
     }
 
     .ad-label {
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
@@ -723,7 +627,7 @@
     .hub-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 11px;
       width: 100%;
     }
 
@@ -735,16 +639,15 @@
 
     .hub-card {
       background: var(--card);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 13px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 10px;
       min-width: 0;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
     }
 
     .hub-top {
@@ -757,7 +660,7 @@
 
     .hub-title {
       font-size: 0.92rem;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--text);
     }
 
@@ -769,34 +672,36 @@
     }
 
     .hub-badge {
-      background: rgba(255, 208, 0, 0.35);
+      background: rgba(250, 204, 21, 0.14);
       color: var(--vz-yellow);
-      border: 1px solid var(--vz-yellow);
+      border: 1px solid rgba(250, 204, 21, 0.3);
       padding: 3px 8px;
       border-radius: 8px;
-      font-size: 0.72rem;
-      font-weight: 800;
+      font-size: 0.71rem;
+      font-weight: 700;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
-    body:not([data-theme="dark"]) .hub-badge {
-      color: #78350f;
+    body[data-theme="light"] .hub-badge {
+      color: #92400e;
+      background: rgba(245, 158, 11, 0.14);
+      border-color: rgba(217, 119, 6, 0.3);
     }
 
     .hub-badge.blue {
-      background: rgba(0, 68, 255, 0.16);
-      color: var(--vz-blue);
-      border-color: var(--vz-blue);
+      background: rgba(59, 130, 246, 0.14);
+      color: #93c5fd;
+      border-color: rgba(59, 130, 246, 0.32);
     }
 
-    body[data-theme="dark"] .hub-badge.blue {
-      color: #60a5fa;
+    body[data-theme="light"] .hub-badge.blue {
+      color: var(--vz-blue);
     }
 
     .mini-progress-wrap {
       width: 100%;
-      height: 8px;
+      height: 7px;
       background: var(--card-2);
       border-radius: 999px;
       overflow: hidden;
@@ -805,7 +710,7 @@
     .mini-progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--vz-yellow), var(--vz-blue), var(--vz-red));
+      background: linear-gradient(90deg, var(--vz-yellow), var(--vz-blue));
       transition: width 0.25s ease;
     }
 
@@ -819,35 +724,30 @@
 
     .hub-stat {
       font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--vz-blue);
-    }
-
-    body[data-theme="dark"] .hub-stat {
-      color: #22d3ee;
+      font-weight: 600;
+      color: var(--muted);
     }
 
     .sound-toggle {
       background: var(--card);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: 6px 12px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
       user-select: none;
       white-space: nowrap;
-      box-shadow: none;
     }
 
     .switch-ui {
-      width: 36px;
-      height: 19px;
-      background: #94a3b8;
+      width: 34px;
+      height: 18px;
+      background: #475569;
       border-radius: 999px;
       position: relative;
       transition: 0.2s ease;
@@ -856,8 +756,8 @@
 
     .switch-ui::after {
       content: "";
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       background: #ffffff;
       border-radius: 50%;
       position: absolute;
@@ -875,7 +775,7 @@
     }
 
     input[type="checkbox"].sr-switch:checked + .switch-ui::after {
-      transform: translateX(17px);
+      transform: translateX(16px);
     }
 
     .ads-grid {
@@ -899,7 +799,7 @@
 
     .ad-card {
       background: var(--card);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 14px;
       padding: 13px;
       display: flex;
@@ -908,8 +808,7 @@
       gap: 10px;
       min-width: 0;
       width: 100%;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
     }
 
     .ad-card-head {
@@ -933,7 +832,7 @@
       height: 28px;
       border-radius: 9px;
       background: var(--card-2);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -942,7 +841,7 @@
     }
 
     .ad-card-title {
-      font-size: 0.9rem;
+      font-size: 0.89rem;
       font-weight: 700;
       color: var(--text);
       overflow: hidden;
@@ -951,7 +850,7 @@
     }
 
     .ad-card-desc {
-      font-size: 0.79rem;
+      font-size: 0.78rem;
       color: var(--muted);
       line-height: 1.38;
       margin-top: 6px;
@@ -968,7 +867,7 @@
 
     .chip {
       font-size: 0.7rem;
-      font-weight: 700;
+      font-weight: 600;
       padding: 3px 8px;
       border-radius: 8px;
       display: inline-flex;
@@ -978,23 +877,25 @@
     }
 
     .chip-reward {
-      background: rgba(255, 208, 0, 0.3);
+      background: rgba(250, 204, 21, 0.14);
       color: var(--vz-yellow);
-      border: 1px solid var(--vz-yellow);
+      border: 1px solid rgba(250, 204, 21, 0.28);
     }
 
-    body:not([data-theme="dark"]) .chip-reward {
-      color: #78350f;
+    body[data-theme="light"] .chip-reward {
+      color: #92400e;
+      background: rgba(245, 158, 11, 0.14);
+      border-color: rgba(217, 119, 6, 0.3);
     }
 
     .chip-time {
-      background: rgba(0, 68, 255, 0.14);
-      color: var(--vz-blue);
-      border: 1px solid rgba(0, 68, 255, 0.35);
+      background: rgba(59, 130, 246, 0.14);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.3);
     }
 
-    body[data-theme="dark"] .chip-time {
-      color: #60a5fa;
+    body[data-theme="light"] .chip-time {
+      color: var(--vz-blue);
     }
 
     .chip-kind {
@@ -1005,9 +906,13 @@
     }
 
     .chip-red {
-      background: rgba(255, 23, 38, 0.14);
+      background: rgba(244, 63, 94, 0.14);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    body[data-theme="light"] .chip-red {
       color: var(--vz-red);
-      border: 1px solid rgba(255, 23, 38, 0.35);
     }
 
     .ad-card-foot {
@@ -1023,7 +928,7 @@
     .empty-state {
       grid-column: 1 / -1;
       background: var(--card);
-      border: 1.5px dashed var(--border);
+      border: 1px dashed var(--border);
       border-radius: 14px;
       padding: 24px;
       text-align: center;
@@ -1054,23 +959,24 @@
     }
 
     .game-stat {
-      background: var(--card);
-      border: 1.5px solid var(--border);
+      background: var(--card-2);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 8px 10px;
-      font-size: 0.78rem;
+      font-size: 0.77rem;
+      color: var(--muted);
       min-width: 0;
     }
 
     .game-stat strong {
       display: block;
-      font-size: 0.98rem;
-      color: var(--vz-blue);
+      font-size: 0.96rem;
+      color: var(--vz-yellow);
       margin-top: 2px;
     }
 
-    body[data-theme="dark"] .game-stat strong {
-      color: #22d3ee;
+    body[data-theme="light"] .game-stat strong {
+      color: var(--vz-blue);
     }
 
     canvas.game-canvas {
@@ -1078,7 +984,7 @@
       max-width: 760px;
       aspect-ratio: 4 / 3;
       background: var(--canvas-bg);
-      border: 2px solid var(--vz-blue);
+      border: 1px solid var(--border);
       border-radius: 16px;
       touch-action: none;
       cursor: pointer;
@@ -1088,13 +994,13 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.58);
+      background: rgba(2, 6, 23, 0.68);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 12px;
       z-index: 50;
-      backdrop-filter: blur(3px);
+      backdrop-filter: blur(4px);
     }
 
     .modal-backdrop.open {
@@ -1102,8 +1008,8 @@
     }
 
     .modal {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1.5px solid var(--border);
+      background: #0f192e;
+      border: 1px solid var(--border);
       border-radius: 18px;
       max-width: 820px;
       width: 100%;
@@ -1114,11 +1020,11 @@
       max-height: 92vh;
       overflow-y: auto;
       overflow-x: hidden;
-      backdrop-filter: blur(8px);
+      box-shadow: var(--soft-glow);
     }
 
-    body[data-theme="dark"] .modal {
-      background: rgba(14, 23, 41, 0.92);
+    body[data-theme="light"] .modal {
+      background: #ffffff;
     }
 
     .modal-header {
@@ -1129,26 +1035,24 @@
     }
 
     .close-btn {
-      background: var(--card);
-      border: 1.5px solid var(--vz-red);
-      color: var(--vz-red);
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
       width: 34px;
       height: 34px;
       border-radius: 10px;
       cursor: pointer;
-      font-weight: 800;
+      font-weight: 700;
       flex-shrink: 0;
-      box-shadow: none;
-      transform: none;
     }
 
-    .close-btn:active {
-      transform: none;
+    .close-btn:hover {
+      color: var(--text);
     }
 
     .player-box {
       background: var(--card-2);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 14px;
       padding: 12px;
       display: grid;
@@ -1166,7 +1070,7 @@
 
     .stage-panel {
       background: var(--card);
-      border: 1.5px solid var(--vz-blue);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
       display: flex;
@@ -1203,14 +1107,14 @@
     .offerwall-frame {
       width: 100%;
       height: 440px;
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 12px;
       background: var(--card);
     }
 
     .ad-box-300 {
       background: var(--card);
-      border: 1.5px dashed var(--vz-yellow);
+      border: 1px dashed var(--border);
       border-radius: 12px;
       min-height: 266px;
       padding: 8px;
@@ -1227,7 +1131,7 @@
 
     .progress-wrap {
       width: 100%;
-      height: 10px;
+      height: 8px;
       background: var(--card-2);
       border-radius: 999px;
       overflow: hidden;
@@ -1236,20 +1140,20 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--vz-yellow), var(--vz-blue), var(--vz-red));
+      background: linear-gradient(90deg, var(--vz-yellow), var(--vz-blue));
       transition: width 0.25s linear;
     }
 
     .status-note {
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       color: var(--vz-red);
       font-weight: 600;
       min-height: 18px;
     }
 
     .captcha-box {
-      background: rgba(255, 208, 0, 0.22);
-      border: 1.5px solid var(--vz-yellow);
+      background: rgba(250, 204, 21, 0.1);
+      border: 1px solid rgba(250, 204, 21, 0.3);
       border-radius: 12px;
       padding: 12px;
       display: none;
@@ -1275,13 +1179,13 @@
 
     .adv-summary {
       background: var(--card-2);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      font-size: 0.84rem;
+      font-size: 0.83rem;
     }
 
     .adv-row {
@@ -1308,12 +1212,12 @@
     .data-table th,
     .data-table td {
       text-align: left;
-      padding: 8px 9px;
+      padding: 9px 10px;
       border-bottom: 1px solid var(--border);
     }
 
     .data-table th {
-      color: var(--text);
+      color: var(--muted);
       font-weight: 700;
       background: var(--card-2);
     }
@@ -1343,8 +1247,8 @@
     }
 
     .ref-stat-card {
-      background: var(--card);
-      border: 1.5px solid var(--border);
+      background: var(--card-2);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
       min-width: 0;
@@ -1356,32 +1260,31 @@
     }
 
     .ref-stat-val {
-      font-size: 1.02rem;
+      font-size: 1rem;
       font-weight: 800;
-      color: var(--vz-blue);
+      color: var(--vz-yellow);
       margin-top: 4px;
     }
 
-    body[data-theme="dark"] .ref-stat-val {
-      color: #22d3ee;
+    body[data-theme="light"] .ref-stat-val {
+      color: var(--vz-blue);
     }
 
     input, select, textarea {
-      background: var(--card);
-      border: 1.5px solid var(--border);
+      background: var(--card-2);
+      border: 1px solid var(--border);
       color: var(--text);
       border-radius: 10px;
       padding: 9px 11px;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       width: 100%;
       max-width: 100%;
       min-width: 0;
-      backdrop-filter: blur(4px);
     }
 
     input:focus, select:focus, textarea:focus {
       outline: none;
-      border-color: var(--vz-blue);
+      border-color: rgba(250, 204, 21, 0.5);
     }
 
     textarea {
@@ -1391,13 +1294,12 @@
     }
 
     footer {
-      border-top: 2px solid var(--vz-yellow);
+      border-top: 1px solid var(--border);
       background: var(--header-bg);
-      padding: 14px;
-      margin-top: 20px;
+      padding: 14px 16px;
+      margin-top: 22px;
       width: 100%;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(10px);
     }
 
     .footer-inner {
@@ -1408,7 +1310,7 @@
       justify-content: space-between;
       gap: 10px;
       flex-wrap: wrap;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--muted);
     }
 
@@ -1419,22 +1321,24 @@
       left: 16px;
       max-width: 420px;
       margin-left: auto;
-      background: rgba(255, 255, 255, 0.96);
-      border: 1.5px solid var(--vz-blue);
+      background: #0f192e;
+      border: 1px solid rgba(250, 204, 21, 0.35);
       color: var(--text);
       padding: 11px 14px;
       border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.85rem;
+      font-weight: 600;
+      font-size: 0.84rem;
       opacity: 0;
       transform: translateY(12px);
       pointer-events: none;
       transition: 0.2s ease;
       z-index: 80;
+      box-shadow: var(--soft-glow);
     }
 
-    body[data-theme="dark"] .toast {
-      background: rgba(14, 23, 41, 0.94);
+    body[data-theme="light"] .toast {
+      background: #ffffff;
+      border-color: rgba(37, 99, 235, 0.35);
     }
 
     .toast.show {
@@ -1443,25 +1347,38 @@
     }
   </style>
 </head>
-<body>
-  <!-- Guarda la imagen generada como "mapa-venezuela.jpg" junto a este index.html, o pega tu data:image/jpeg;base64,... en src -->
-  <div class="vz-center-stage" aria-hidden="true">
-    <div class="vz-flag-emblem">
-      <img src="mapa-venezuela.jpg" alt="Mapa ondeante de Venezuela con bandera tricolor" />
-    </div>
+<body data-theme="dark">
+  <!-- Fondo sutil con silueta de Venezuela -->
+  <div class="vz-bg-map" aria-hidden="true">
+    <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="vzSoftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#facc15" stop-opacity="0.45" />
+          <stop offset="52%" stop-color="#3b82f6" stop-opacity="0.4" />
+          <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.35" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M118 112 L162 84 L218 76 L278 68 L345 78 L412 66 L478 82 L542 96 L598 118 L636 146 L615 178 L665 215 L692 252 L642 292 L584 328 L528 368 L476 418 L438 432 L404 388 L352 368 L295 344 L236 322 L182 288 L142 245 L112 205 L96 156 Z"
+        fill="url(#vzSoftGrad)"
+        stroke="url(#vzSoftGrad)"
+        stroke-width="3"
+        stroke-linejoin="round"
+      />
+    </svg>
   </div>
 
   <div class="vz-bar"></div>
   <header>
     <div class="header-inner">
       <div class="brand">
-        <span class="bolt">⚡</span>
+        <span class="brand-mark">⚡</span>
         <span>CryptoClicks Venezuela</span>
       </div>
 
       <div class="wallet-box" id="themeControls">
-        <button type="button" class="btn btn-neon-gold btn-sm" id="btnThemeLight" onclick="setThemeMode('light')">☀️ Blanco Neón</button>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnThemeDark" onclick="setThemeMode('dark')">🌙 Noche Oscura</button>
+        <button type="button" class="btn btn-soft-gold btn-sm" id="btnThemeDark" onclick="setThemeMode('dark')">🌙 Noche Suave</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnThemeLight" onclick="setThemeMode('light')">☀️ Día Claro</button>
       </div>
 
       <div class="wallet-box hidden" id="headerUserControls">
@@ -1485,7 +1402,7 @@
     <div class="auth-card">
       <div class="auth-head">
         <h1>CryptoClicks Venezuela</h1>
-        <p>Escritorio limpio con PTCs, Shortlinks, Offerwalls, Minijuego, Anunciantes y Retiros por separado.</p>
+        <p>Panel suavizado con PTCs, Shortlinks, Offerwalls, Minijuego, Anunciantes y Retiros.</p>
       </div>
 
       <div class="auth-tabs">
@@ -1546,7 +1463,7 @@
 
     <div class="safety-banner">
       <span>🛡️ <strong>CryptoClicks Venezuela:</strong> 50 Coins = $0.0005 USDT • Referidos: bono único de 1,000 Coins.</span>
-      <button type="button" class="btn btn-neon-gold btn-sm" onclick="switchSection('anunciantes')">📢 Anunciarse</button>
+      <button type="button" class="btn btn-soft-gold btn-sm" onclick="switchSection('anunciantes')">📢 Anunciarse</button>
     </div>
 
     <section class="ad-banner-top" id="adSlotTop"></section>
@@ -1600,7 +1517,7 @@
             <span class="hub-badge blue" id="levelXpBadge">Nv. 1 • 0/1,000 XP</span>
           </div>
           <div>
-            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--muted); margin-bottom:4px; gap:8px; flex-wrap:wrap;">
+            <div style="display:flex; justify-content:space-between; font-size:0.74rem; color:var(--muted); margin-bottom:5px; gap:8px; flex-wrap:wrap;">
               <span id="faucetCooldownInfo">Espera actual: 60 min</span>
               <span id="faucetRewardInfo">Pago: +35 Coins</span>
             </div>
@@ -1616,30 +1533,30 @@
       </section>
 
       <div class="panel-card">
-        <h3 style="font-size:0.96rem;">Accesos Rápidos por Sección</h3>
+        <h3 style="font-size:0.94rem;">Accesos Rápidos por Sección</h3>
         <div class="quick-grid">
           <button type="button" class="quick-tile" onclick="switchSection('ptcs')">
-            <strong style="color:var(--vz-blue);">🖱️ PTCs</strong>
-            <span style="font-size:0.77rem; color:var(--muted);">Window Ads y Frame Ads</span>
+            <strong style="color:var(--vz-yellow);">🖱️ PTCs</strong>
+            <span style="font-size:0.76rem; color:var(--muted);">Window Ads y Frame Ads</span>
           </button>
           <button type="button" class="quick-tile" onclick="switchSection('shortlinks')">
-            <strong style="color:var(--vz-red);">🔗 Shortlinks</strong>
-            <span style="font-size:0.77rem; color:var(--muted);">Enlaces acortados (+130 Coins)</span>
+            <strong style="color:#93c5fd;">🔗 Shortlinks</strong>
+            <span style="font-size:0.76rem; color:var(--muted);">Enlaces acortados (+130 Coins)</span>
           </button>
           <button type="button" class="quick-tile" onclick="switchSection('offerwalls')">
-            <strong style="color:#b45309;">🧱 Offerwalls</strong>
-            <span style="font-size:0.77rem; color:var(--muted);">Encuestas y tareas externas</span>
+            <strong style="color:#34d399;">🧱 Offerwalls</strong>
+            <span style="font-size:0.76rem; color:var(--muted);">Encuestas y tareas externas</span>
           </button>
           <button type="button" class="quick-tile" onclick="switchSection('minijuego')">
-            <strong style="color:var(--vz-blue);">🐹 Minijuego</strong>
-            <span style="font-size:0.77rem; color:var(--muted);">40 monedas • 10 niveles • Premio semanal</span>
+            <strong style="color:#fda4af;">🐹 Minijuego</strong>
+            <span style="font-size:0.76rem; color:var(--muted);">40 monedas • 10 niveles • Premio semanal</span>
           </button>
         </div>
       </div>
 
       <div class="panel-card">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-          <h3 style="font-size:0.96rem;">Últimos Movimientos</h3>
+          <h3 style="font-size:0.94rem;">Últimos Movimientos</h3>
           <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('historial')">Ver todo</button>
         </div>
         <div class="table-wrap">
@@ -1661,8 +1578,8 @@
     <!-- 2. SECCIÓN PTCs -->
     <section id="sec-ptcs" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
-        <h2 style="font-size:1.02rem;">🖱️ Anuncios PTC (Window Ads & Frame Ads)</h2>
-        <p style="font-size:0.8rem; color:var(--muted);">Acoplados al ancho de tu pantalla. Reinicio cada 24 horas.</p>
+        <h2 style="font-size:1rem;">🖱️ Anuncios PTC (Window Ads & Frame Ads)</h2>
+        <p style="font-size:0.79rem; color:var(--muted);">Acoplados al ancho de tu pantalla. Reinicio cada 24 horas.</p>
       </div>
       <section class="ads-grid" id="ptcsGrid"></section>
     </section>
@@ -1670,8 +1587,8 @@
     <!-- 3. SECCIÓN SHORTLINKS -->
     <section id="sec-shortlinks" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
-        <h2 style="font-size:1.02rem;">🔗 Shortlinks</h2>
-        <p style="font-size:0.8rem; color:var(--muted);">Completa enlaces acortados y gana +130 Coins por cada uno.</p>
+        <h2 style="font-size:1rem;">🔗 Shortlinks</h2>
+        <p style="font-size:0.79rem; color:var(--muted);">Completa enlaces acortados y gana +130 Coins por cada uno.</p>
       </div>
       <section class="ads-grid" id="shortlinksGrid"></section>
     </section>
@@ -1679,8 +1596,8 @@
     <!-- 4. SECCIÓN OFFERWALLS -->
     <section id="sec-offerwalls" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
-        <h2 style="font-size:1.02rem;">🧱 Offerwalls</h2>
-        <p style="font-size:0.8rem; color:var(--muted);">Muros de encuestas y tareas en su propia sección.</p>
+        <h2 style="font-size:1rem;">🧱 Offerwalls</h2>
+        <p style="font-size:0.79rem; color:var(--muted);">Muros de encuestas y tareas en su propia sección.</p>
       </div>
       <section class="ads-grid" id="offerwallsGrid"></section>
     </section>
@@ -1689,8 +1606,8 @@
     <section id="sec-minijuego" class="hidden" style="width:100%;">
       <div class="panel-card game-wrap">
         <div style="text-align:center;">
-          <h2 style="font-size:1.05rem;">🐹 Hámster de la Cornisa — 40 Monedas</h2>
-          <p style="font-size:0.8rem; color:var(--muted);">Recoge 40 monedas antes de que caigan o se acaben los 60s. Si se escapa una moneda o tocas una bomba, pierdes.</p>
+          <h2 style="font-size:1.04rem;">🐹 Hámster de la Cornisa — 40 Monedas</h2>
+          <p style="font-size:0.79rem; color:var(--muted);">Recoge 40 monedas antes de que caigan o se acaben los 60s. Si se escapa una moneda o tocas una bomba, pierdes.</p>
         </div>
 
         <div class="game-hud">
@@ -1704,7 +1621,7 @@
 
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
           <button type="button" class="btn btn-primary" onclick="startMiniGame()">▶ Iniciar / Reiniciar Partida</button>
-          <button type="button" class="btn btn-neon-gold" onclick="rollWeeklyPrizeDemo()">🎲 Probar Probabilidad Semanal (0.5%–1%)</button>
+          <button type="button" class="btn btn-soft-gold" onclick="rollWeeklyPrizeDemo()">🎲 Probar Probabilidad Semanal (0.5%–1%)</button>
         </div>
       </div>
     </section>
@@ -1769,7 +1686,7 @@
           </div>
           <div class="adv-summary">
             <div class="adv-row"><span>Pago al usuario por visita:</span><strong id="advUserRewardPreview" style="color:var(--accent);">40 Coins</strong></div>
-            <div class="adv-row"><span>Total campaña:</span><strong id="advTotalUsdPreview" style="color:var(--vz-blue);">$0.6000 USDT</strong></div>
+            <div class="adv-row"><span>Total campaña:</span><strong id="advTotalUsdPreview" style="color:var(--vz-yellow);">$0.6000 USDT</strong></div>
           </div>
           <button type="submit" class="btn btn-primary">🚀 Publicar Campaña</button>
         </form>
@@ -1788,7 +1705,7 @@
     <section id="sec-retiros" class="hidden" style="width:100%;">
       <div class="panel-card" style="max-width:540px;">
         <h3>💸 Solicitar Retiro</h3>
-        <p style="font-size:0.82rem; color:var(--muted);">Tasa: 50 Coins = $0.0005 USDT (Mínimo: 10,000 Coins = $0.1000 USDT).</p>
+        <p style="font-size:0.81rem; color:var(--muted);">Tasa: 50 Coins = $0.0005 USDT (Mínimo: 10,000 Coins = $0.1000 USDT).</p>
         <div class="field-group">
           <label for="withdrawMethod">Método de Pago</label>
           <select id="withdrawMethod">
@@ -1815,7 +1732,7 @@
     <section id="sec-referidos" class="hidden" style="width:100%;">
       <div class="panel-card">
         <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 Coins)</h3>
-        <p style="font-size:0.82rem; color:var(--muted);">
+        <p style="font-size:0.81rem; color:var(--muted);">
           Ganas <strong>1,000 Coins por única vez</strong> por cada referido válido que se registre con tu código.
         </p>
         <div class="ref-link-box">
@@ -1886,7 +1803,7 @@
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; gap:8px; flex-wrap:wrap;">
               <span id="viewerBadge"></span>
-              <span id="viewerTimerText" style="font-size:1.3rem; font-weight:800; color:var(--vz-blue);">15s</span>
+              <span id="viewerTimerText" style="font-size:1.25rem; font-weight:800; color:var(--vz-yellow);">15s</span>
             </div>
             <div class="progress-wrap"><div class="progress-bar" id="viewerProgress"></div></div>
           </div>
@@ -1927,27 +1844,27 @@
         <button class="close-btn" onclick="closeAdConfigModal()">✕</button>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">🧱 URLs de Offerwalls (una por línea)</label>
+        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🧱 URLs de Offerwalls (una por línea)</label>
         <textarea id="offerwallLinksInput"></textarea>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">🪟 Window Ads (una por línea)</label>
+        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🪟 Window Ads (una por línea)</label>
         <textarea id="windowLinksInput"></textarea>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">🖼️ Frame Ads (una por línea)</label>
+        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🖼️ Frame Ads (una por línea)</label>
         <textarea id="frameLinksInput"></textarea>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">🔗 Shortlinks (una por línea)</label>
+        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🔗 Shortlinks (una por línea)</label>
         <textarea id="shortLinksInput"></textarea>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">Banner Superior (728x90 — HTML o script)</label>
+        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">Banner Superior (728x90 — HTML o script)</label>
         <textarea id="adTopInput"></textarea>
       </div>
       <div>
-        <label style="font-size:0.82rem; display:block; margin-bottom:4px;">Banner Lateral (300x250 — HTML o script)</label>
+        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">Banner Lateral (300x250 — HTML o script)</label>
         <textarea id="adModalInput"></textarea>
       </div>
       <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
@@ -1992,24 +1909,24 @@
     };
 
     const DEFAULT_AD_728 = `
-      <div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:linear-gradient(90deg,#fffbeb 0%,#eff6ff 50%,#fef2f2 100%);border:2px solid #0038a8;border-radius:10px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#0f172a;">
+      <div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(15,25,46,0.94);border:1px solid rgba(250,204,21,0.3);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#f1f5f9;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <span style="background:#ffd000;color:#0f172a;font-weight:800;padding:6px 10px;border-radius:7px;font-size:13px;">ESPACIO 728×90</span>
+          <span style="background:rgba(250,204,21,0.18);color:#facc15;border:1px solid rgba(250,204,21,0.35);font-weight:700;padding:6px 10px;border-radius:8px;font-size:12px;">728×90</span>
           <div>
-            <div style="font-weight:800;font-size:15px;color:#0038a8;">Anúnciate en CryptoClicks Venezuela</div>
-            <div style="font-size:12px;color:#475569;">Reemplaza este banner demo con tu código de red publicitaria o campaña propia.</div>
+            <div style="font-weight:700;font-size:14px;">Espacio Publicitario CryptoClicks Venezuela</div>
+            <div style="font-size:12px;color:#94a3b8;">Configura tu código HTML o red publicitaria desde el botón inferior.</div>
           </div>
         </div>
-        <span style="background:#ef1c27;color:#ffffff;font-weight:800;padding:8px 14px;border-radius:8px;font-size:12px;white-space:nowrap;">VER PLANES</span>
+        <span style="background:#facc15;color:#090e1a;font-weight:700;padding:7px 14px;border-radius:8px;font-size:12px;white-space:nowrap;">ANUNCIAR</span>
       </div>
     `.trim();
 
     const DEFAULT_AD_300 = `
-      <div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;background:linear-gradient(180deg,#fffbeb 0%,#eff6ff 55%,#fef2f2 100%);border:2px solid #ffd000;border-radius:10px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#0f172a;text-align:center;">
-        <span style="background:#0038a8;color:#ffffff;font-weight:800;padding:4px 10px;border-radius:6px;font-size:11px;">BANNER 300×250</span>
-        <div style="font-weight:800;font-size:16px;line-height:1.25;">Impulsa tu Enlace, Canal o Proyecto Cripto</div>
-        <div style="font-size:12px;color:#475569;">Configura tu código HTML/script en el botón inferior de configuración.</div>
-        <span style="background:#ffd000;color:#0f172a;font-weight:800;padding:7px 14px;border-radius:8px;font-size:12px;">PROMOCIONAR</span>
+      <div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;background:rgba(15,25,46,0.94);border:1px solid rgba(250,204,21,0.3);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#f1f5f9;text-align:center;">
+        <span style="background:rgba(59,130,246,0.18);color:#93c5fd;border:1px solid rgba(59,130,246,0.35);font-weight:700;padding:4px 10px;border-radius:7px;font-size:11px;">300×250</span>
+        <div style="font-weight:700;font-size:15px;line-height:1.25;">Promociona tu Proyecto o Enlace</div>
+        <div style="font-size:12px;color:#94a3b8;">Personaliza este bloque cuando quieras en Configuración.</div>
+        <span style="background:#facc15;color:#090e1a;font-weight:700;padding:7px 14px;border-radius:8px;font-size:12px;">VER MÁS</span>
       </div>
     `.trim();
 
@@ -2129,7 +2046,7 @@
       coins: 0,
       xp: 0,
       section: "dashboard",
-      themeMode: localStorage.getItem(THEME_PREF_KEY) === "dark" ? "dark" : "light",
+      themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
       adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
       adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300
@@ -2140,23 +2057,19 @@
     let expectedCaptcha = null;
 
     function applyThemeMode(mode) {
-      state.themeMode = mode === "dark" ? "dark" : "light";
+      state.themeMode = mode === "light" ? "light" : "dark";
       localStorage.setItem(THEME_PREF_KEY, state.themeMode);
-      if (state.themeMode === "dark") {
-        document.body.setAttribute("data-theme", "dark");
-      } else {
-        document.body.removeAttribute("data-theme");
-      }
+      document.body.setAttribute("data-theme", state.themeMode);
 
       const btnLight = document.getElementById("btnThemeLight");
       const btnDark = document.getElementById("btnThemeDark");
       if (btnLight && btnDark) {
-        if (state.themeMode === "dark") {
-          btnDark.className = "btn btn-neon-gold btn-sm";
-          btnLight.className = "btn btn-secondary btn-sm";
-        } else {
-          btnLight.className = "btn btn-neon-gold btn-sm";
+        if (state.themeMode === "light") {
+          btnLight.className = "btn btn-soft-gold btn-sm";
           btnDark.className = "btn btn-secondary btn-sm";
+        } else {
+          btnDark.className = "btn btn-soft-gold btn-sm";
+          btnLight.className = "btn btn-secondary btn-sm";
         }
       }
       if (typeof drawMiniGame === "function") drawMiniGame();
@@ -2164,7 +2077,7 @@
 
     function setThemeMode(mode) {
       applyThemeMode(mode);
-      showToast(mode === "dark" ? "🌙 Tema Noche Oscura activado." : "☀️ Tema Blanco con Neón Tricolor activado.");
+      showToast(mode === "light" ? "☀️ Tema Día Claro activado." : "🌙 Tema Noche Suave activado.");
     }
 
     function formatUsdt(coins) {
@@ -2564,7 +2477,7 @@
             </div>
             <div class="ad-card-foot">
               <span style="font-size:0.73rem; color:var(--muted);">${onCd ? `Reset en ${formatRemaining24h(RESET_INTERVAL_MS - (now - t.completedAt))}` : "Disponible"}</span>
-              <button type="button" class="btn ${isOw ? "btn-neon-gold" : "btn-primary"} btn-sm" ${onCd ? "disabled" : ""} onclick="startTask('${t.id}')">
+              <button type="button" class="btn ${isOw ? "btn-soft-gold" : "btn-primary"} btn-sm" ${onCd ? "disabled" : ""} onclick="startTask('${t.id}')">
                 ${onCd ? "Completado" : isOw ? "Abrir" : "Ver"}
               </button>
             </div>
@@ -2881,11 +2794,11 @@
     const gCanvas = document.getElementById("gameCanvas");
     const gCtx = gCanvas.getContext("2d");
     const COINS_META = [
-      { sym: "BTC", color: "#ffd000" },
+      { sym: "BTC", color: "#facc15" },
       { sym: "LTC", color: "#e2e8f0" },
       { sym: "SOL", color: "#38bdf8" },
       { sym: "ADA", color: "#60a5fa" },
-      { sym: "SUI", color: "#818cf8" }
+      { sym: "SUI", color: "#a5b4fc" }
     ];
 
     let gState = {
@@ -2986,9 +2899,9 @@
 
     function drawMiniGame() {
       const styles = getComputedStyle(document.body);
-      const canvasBg = styles.getPropertyValue("--canvas-bg").trim() || "rgba(255, 255, 255, 0.88)";
-      const corniceBg = styles.getPropertyValue("--cornice-bg").trim() || "#475569";
-      const coinText = styles.getPropertyValue("--coin-text").trim() || "#0f172a";
+      const canvasBg = styles.getPropertyValue("--canvas-bg").trim() || "rgba(8, 15, 30, 0.88)";
+      const corniceBg = styles.getPropertyValue("--cornice-bg").trim() || "#334155";
+      const coinText = styles.getPropertyValue("--coin-text").trim() || "#090e1a";
 
       gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
       gCtx.fillStyle = canvasBg;
@@ -2997,68 +2910,50 @@
       gCtx.fillStyle = corniceBg;
       gCtx.fillRect(0, 68, gCanvas.width, 28);
 
-      gCtx.save();
-      gCtx.shadowColor = "#ffd000";
-      gCtx.shadowBlur = 10;
-      gCtx.fillStyle = "#ffd000";
-      gCtx.fillRect(0, 96, gCanvas.width, 4);
-
-      gCtx.shadowColor = "#0044ff";
-      gCtx.shadowBlur = 10;
-      gCtx.fillStyle = "#0044ff";
-      gCtx.fillRect(0, 100, gCanvas.width, 4);
-
-      gCtx.shadowColor = "#ff1726";
-      gCtx.shadowBlur = 10;
-      gCtx.fillStyle = "#ff1726";
-      gCtx.fillRect(0, 104, gCanvas.width, 4);
-      gCtx.restore();
+      gCtx.fillStyle = "rgba(250, 204, 21, 0.7)";
+      gCtx.fillRect(0, 96, gCanvas.width, 3);
+      gCtx.fillStyle = "rgba(59, 130, 246, 0.7)";
+      gCtx.fillRect(0, 99, gCanvas.width, 3);
+      gCtx.fillStyle = "rgba(244, 63, 94, 0.7)";
+      gCtx.fillRect(0, 102, gCanvas.width, 3);
 
       gCtx.save();
       gCtx.translate(gState.hamsterX, 50);
-      gCtx.shadowColor = "rgba(0, 68, 255, 0.35)";
-      gCtx.shadowBlur = 8;
       gCtx.fillStyle = "#f59e0b";
       gCtx.beginPath();
       gCtx.ellipse(0, 0, 22, 16, 0, 0, Math.PI * 2);
       gCtx.fill();
-      gCtx.fillStyle = "#ffd000";
-      gCtx.fillRect(-10, -22, 20, 4);
-      gCtx.fillStyle = "#0044ff";
-      gCtx.fillRect(-10, -18, 20, 4);
-      gCtx.fillStyle = "#ff1726";
-      gCtx.fillRect(-10, -14, 20, 4);
+      gCtx.fillStyle = "#facc15";
+      gCtx.fillRect(-10, -22, 20, 3);
+      gCtx.fillStyle = "#3b82f6";
+      gCtx.fillRect(-10, -19, 20, 3);
+      gCtx.fillStyle = "#f43f5e";
+      gCtx.fillRect(-10, -16, 20, 3);
       gCtx.restore();
 
       gState.items.forEach(it => {
         gCtx.save();
         if (it.isBomb) {
-          gCtx.shadowColor = "#ff1726";
-          gCtx.shadowBlur = 12;
           gCtx.fillStyle = "#1e293b";
           gCtx.beginPath();
           gCtx.arc(it.x, it.y, it.r, 0, Math.PI * 2);
           gCtx.fill();
-          gCtx.strokeStyle = "#ff1726";
-          gCtx.lineWidth = 2.5;
+          gCtx.strokeStyle = "#f43f5e";
+          gCtx.lineWidth = 2;
           gCtx.stroke();
-          gCtx.shadowBlur = 0;
           gCtx.fillStyle = "#ffffff";
           gCtx.font = "bold 12px sans-serif";
           gCtx.textAlign = "center";
           gCtx.textBaseline = "middle";
           gCtx.fillText("💣", it.x, it.y + 1);
         } else {
-          gCtx.shadowColor = "#0044ff";
-          gCtx.shadowBlur = 10;
           gCtx.fillStyle = it.meta.color;
           gCtx.beginPath();
           gCtx.arc(it.x, it.y, it.r, 0, Math.PI * 2);
           gCtx.fill();
-          gCtx.strokeStyle = "#0044ff";
-          gCtx.lineWidth = 2;
+          gCtx.strokeStyle = "rgba(59, 130, 246, 0.75)";
+          gCtx.lineWidth = 1.8;
           gCtx.stroke();
-          gCtx.shadowBlur = 0;
           gCtx.fillStyle = coinText;
           gCtx.font = "bold 11px sans-serif";
           gCtx.textAlign = "center";
