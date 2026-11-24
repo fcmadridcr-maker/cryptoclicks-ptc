@@ -10,7 +10,7 @@
       --bg-glow-1: rgba(168, 85, 247, 0.14);
       --bg-glow-2: rgba(56, 189, 248, 0.13);
       --bg-dot: rgba(168, 85, 247, 0.08);
-      --header-bg: rgba(7, 7, 13, 0.9);
+      --header-bg: rgba(7, 7, 13, 0.92);
       --card: #0c0d16;
       --card-2: #131524;
       --border: rgba(139, 92, 246, 0.22);
@@ -26,25 +26,12 @@
       --danger: #fb7185;
     }
 
-    body[data-theme="dark"] .brand img {
-      filter:
-        drop-shadow(0 6px 8px rgba(0, 0, 0, 0.85))
-        drop-shadow(0 0 10px rgba(56, 189, 248, 0.55))
-        drop-shadow(0 0 18px rgba(168, 85, 247, 0.35));
-    }
-
-    body[data-theme="light"] .brand img {
-      filter:
-        drop-shadow(0 6px 10px rgba(2, 132, 199, 0.25))
-        drop-shadow(0 0 10px rgba(56, 189, 248, 0.35));
-    }
-
     body[data-theme="light"] {
       --bg: #ffffff;
       --bg-glow-1: rgba(14, 165, 233, 0.13);
       --bg-glow-2: rgba(56, 189, 248, 0.11);
       --bg-dot: rgba(14, 165, 233, 0.09);
-      --header-bg: rgba(255, 255, 255, 0.92);
+      --header-bg: rgba(255, 255, 255, 0.94);
       --card: #ffffff;
       --card-2: #f0f8ff;
       --border: rgba(14, 165, 233, 0.2);
@@ -91,7 +78,7 @@
       background: var(--header-bg);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 8px 16px;
+      padding: 9px 16px;
       position: sticky;
       top: 0;
       z-index: 60;
@@ -109,30 +96,35 @@
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 9px;
       font-weight: 800;
-      font-size: 1.08rem;
-      letter-spacing: -0.01em;
-      text-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
-      perspective: 600px;
+      font-size: 1.18rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      user-select: none;
     }
 
-    .brand img {
-      width: auto;
-      height: 52px;
-      max-width: 64px;
-      object-fit: contain;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      transform: translateZ(0) rotateY(-6deg) rotateX(4deg);
-      transition: transform 0.22s ease, filter 0.22s ease;
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      filter:
+        drop-shadow(0 3px 4px rgba(0, 0, 0, 0.65))
+        drop-shadow(0 0 8px rgba(56, 189, 248, 0.45));
+      transition: transform 0.2s ease, filter 0.2s ease;
     }
 
-    .brand:hover img {
-      transform: translateY(-2px) scale(1.06) rotateY(0deg) rotateX(0deg);
+    .brand:hover .brand-mark {
+      transform: translateY(-1px) scale(1.06);
+      filter:
+        drop-shadow(0 4px 6px rgba(0, 0, 0, 0.75))
+        drop-shadow(0 0 12px rgba(56, 189, 248, 0.7));
+    }
+
+    .brand-title-accent {
+      color: var(--accent);
     }
 
     .header-right {
@@ -961,8 +953,22 @@
   <header>
     <div class="header-inner">
       <div class="brand">
-        <img src="logo_trading.png" alt="Logo Toro y Oso" />
-        <span>CryptoClicksFaucet</span>
+        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="ccfBoltGrad" x1="6" y1="3" x2="30" y2="33" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="55%" stop-color="#818cf8" />
+              <stop offset="100%" stop-color="#a855f7" />
+            </linearGradient>
+            <linearGradient id="ccfBoltDepth" x1="10" y1="5" x2="28" y2="34" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0284c7" />
+              <stop offset="100%" stop-color="#6d28d9" />
+            </linearGradient>
+          </defs>
+          <path d="M21.5 3L7.5 20.5H17L14.5 33L28.5 15.5H19L21.5 3Z" fill="url(#ccfBoltDepth)" transform="translate(1.5, 1.5)" opacity="0.75" />
+          <path d="M21.5 3L7.5 20.5H17L14.5 33L28.5 15.5H19L21.5 3Z" fill="url(#ccfBoltGrad)" stroke="#e0f2fe" stroke-width="1.2" stroke-linejoin="round" />
+        </svg>
+        <span>Crypto<span class="brand-title-accent">Clicks</span>Faucet</span>
       </div>
 
       <div class="header-right hidden" id="headerUserControls">
@@ -1078,7 +1084,6 @@
 
     <section class="ad-banner-top" id="adSlotTop"></section>
 
-    <!-- INICIO -->
     <section id="sec-dashboard" style="display:flex; flex-direction:column; gap:10px;">
       <div class="kpi-grid">
         <div class="card">
@@ -1144,7 +1149,6 @@
       </div>
     </section>
 
-    <!-- FAUCET ESTILO PANEL CON LATERAL + CLAIM -->
     <section id="sec-faucet" class="hidden">
       <div class="faucet-layout">
         <aside class="faucet-sidebar">
@@ -1234,22 +1238,18 @@
       </div>
     </section>
 
-    <!-- PTCS -->
     <section id="sec-ptcs" class="hidden">
       <section class="ads-grid" id="ptcsGrid"></section>
     </section>
 
-    <!-- SHORTLINKS -->
     <section id="sec-shortlinks" class="hidden">
       <section class="ads-grid" id="shortlinksGrid"></section>
     </section>
 
-    <!-- OFFERWALLS -->
     <section id="sec-offerwalls" class="hidden">
       <section class="ads-grid" id="offerwallsGrid"></section>
     </section>
 
-    <!-- LOGROS -->
     <section id="sec-logros" class="hidden">
       <div class="card">
         <div class="row-between">
@@ -1264,7 +1264,6 @@
       </div>
     </section>
 
-    <!-- LOTERÍA (PRÓXIMAMENTE) -->
     <section id="sec-loteria" class="hidden">
       <div class="card" style="max-width:740px;">
         <div class="row-between">
@@ -1287,7 +1286,6 @@
       </div>
     </section>
 
-    <!-- GAMES (PRÓXIMAMENTE) -->
     <section id="sec-games" class="hidden">
       <div class="card" style="max-width:740px;">
         <div class="row-between">
@@ -1310,7 +1308,6 @@
       </div>
     </section>
 
-    <!-- CUPÓN (PRÓXIMAMENTE) -->
     <section id="sec-cupon" class="hidden">
       <div class="card" style="max-width:740px;">
         <div class="row-between">
@@ -1333,7 +1330,6 @@
       </div>
     </section>
 
-    <!-- PREGUNTAS Y RESPUESTAS (FAQ) -->
     <section id="sec-faq" class="hidden">
       <div class="card">
         <div class="row-between">
@@ -1347,7 +1343,6 @@
       </div>
     </section>
 
-    <!-- PERFIL -->
     <section id="sec-perfil" class="hidden">
       <div class="card">
         <div id="ptab-historial" class="profile-tab-panel active">
@@ -1562,7 +1557,6 @@
     </div>
   </footer>
 
-  <!-- Visor -->
   <div class="modal-backdrop" id="viewerModal">
     <div class="modal">
       <div class="row-between">
@@ -1591,7 +1585,6 @@
     </div>
   </div>
 
-  <!-- Offerwall -->
   <div class="modal-backdrop" id="offerwallModal">
     <div class="modal" style="max-width:880px;">
       <div class="row-between">
@@ -1606,7 +1599,6 @@
     </div>
   </div>
 
-  <!-- Config -->
   <div class="modal-backdrop" id="adConfigModal">
     <div class="modal" style="max-width:580px;">
       <div class="row-between">
