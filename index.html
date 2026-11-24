@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoClicksFaucet — Dashboard, Faucet, PTCs, Shortlinks, Offerwalls & Logros</title>
+  <title>CryptoClicksFaucet — Faucet, PTCs, Shortlinks, Offerwalls, Logros y Perfil</title>
   <style>
     :root {
       --bg: #050d0a;
@@ -628,6 +628,14 @@
       border-color: var(--border-soft);
       background: var(--card);
       box-shadow: 0 0 12px rgba(57, 255, 20, 0.14);
+    }
+
+    .profile-subnav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
     }
 
     .safety-banner {
@@ -1317,7 +1325,7 @@
           <span id="userDisplay">👤 Invitado</span>
         </div>
         <div class="balance-pill" id="balanceDisplay">🪙 0 Coins (≈ $0.00000 USDT)</div>
-        <button class="btn btn-primary btn-sm" onclick="switchSection('retiros')">💸 Retirar</button>
+        <button class="btn btn-primary btn-sm" onclick="openProfileTab('retiros')">💸 Retirar</button>
         <button class="btn btn-danger btn-sm" onclick="logoutUser()">Salir</button>
       </div>
 
@@ -1332,7 +1340,7 @@
     <div class="auth-card">
       <div class="auth-head">
         <h1>CryptoClicksFaucet</h1>
-        <p>Faucet directa con su propio botón, PTCs, Shortlinks, Offerwalls y Logros. Retiros manuales con control diario.</p>
+        <p>Faucet con su sección propia, PTCs, Shortlinks, Offerwalls, Logros y Perfil unificado.</p>
       </div>
 
       <div class="auth-tabs">
@@ -1379,21 +1387,20 @@
   </section>
 
   <main class="hidden" id="dashboardSection">
+    <!-- PANEL DE NAVEGACIÓN SOLICITADO: Faucet, PTC, Shortlink, Offerwall y Logros afuera; Historial, Retiros, Anunciantes y Referidos dentro de Perfil -->
     <nav class="nav-bar" id="mainNav">
       <button type="button" class="nav-btn active" data-sec="dashboard" onclick="switchSection('dashboard')">🏠 Dashboard</button>
+      <button type="button" class="nav-btn" data-sec="faucet" onclick="switchSection('faucet')">🚰 Faucet</button>
       <button type="button" class="nav-btn" data-sec="ptcs" onclick="switchSection('ptcs')">🖱️ PTCs <span id="navCountPtcs">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="shortlinks" onclick="switchSection('shortlinks')">🔗 Shortlinks <span id="navCountShortlinks">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="offerwalls" onclick="switchSection('offerwalls')">🧱 Offerwalls <span id="navCountOfferwalls">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="logros" onclick="switchSection('logros')">🏆 Logros <span id="navClaimableAchBadge"></span></button>
-      <button type="button" class="nav-btn" data-sec="anunciantes" onclick="switchSection('anunciantes')">📢 Anunciantes</button>
-      <button type="button" class="nav-btn" data-sec="retiros" onclick="switchSection('retiros')">💸 Retiros</button>
-      <button type="button" class="nav-btn" data-sec="referidos" onclick="switchSection('referidos')">🤝 Referidos</button>
-      <button type="button" class="nav-btn" data-sec="historial" onclick="switchSection('historial')">📜 Historial</button>
+      <button type="button" class="nav-btn" data-sec="perfil" onclick="switchSection('perfil')">👤 Perfil</button>
     </nav>
 
     <div class="safety-banner">
       <span>⚡ <strong>CryptoClicksFaucet:</strong> 50 Coins = $0.0005 USDT • Faucet cada 60 min (+35 Coins) • Retiros manuales (mín. 10,000 / máx. 25,000 Coins/día).</span>
-      <button type="button" class="btn btn-soft-neon btn-sm" onclick="switchSection('logros')">🏆 Ver Logros</button>
+      <button type="button" class="btn btn-soft-neon btn-sm" onclick="switchSection('faucet')">🚰 Ir a Faucet</button>
     </div>
 
     <section class="ad-banner-top" id="adSlotTop"></section>
@@ -1433,33 +1440,28 @@
           </div>
         </div>
 
-        <!-- FAUCET EN UNA SOLA VENTANA CON SU PROPIO BOTÓN -->
         <div class="hub-card">
           <div class="hub-top">
             <div>
-              <div class="hub-title">🚰 Faucet</div>
-              <div class="hub-sub">Pulsa su botón para reclamar +35 Coins cada 60 minutos en esta misma ventana.</div>
+              <div class="hub-title">🚰 Grifo Faucet</div>
+              <div class="hub-sub">Reclama +35 Coins cada 60 minutos desde su pestaña o con su botón directo.</div>
             </div>
             <span class="hub-badge">+35 Coins • 60m</span>
           </div>
-
-          <div class="faucet-challenge-box hidden" id="faucetChallengeBox">
-            <label for="faucetCaptchaInput" id="faucetCaptchaQuestion">¿Cuánto es 2 + 2?</label>
-            <input type="number" id="faucetCaptchaInput" placeholder="Resultado" />
-            <button type="button" class="btn btn-primary btn-sm" onclick="confirmFaucetClaim()">Confirmar</button>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="cancelFaucetChallenge()">Cancelar</button>
-          </div>
-
           <div class="hub-foot">
-            <span class="hub-stat" id="faucetTimerStatus">Lista para reclamar</span>
-            <button type="button" class="btn btn-primary btn-sm" id="btnFaucetAction" onclick="triggerFaucetButton()">🚰 Reclamar Faucet (+35)</button>
+            <span class="hub-stat" id="dashFaucetStatus">Disponible ahora</span>
+            <button type="button" class="btn btn-primary btn-sm" onclick="switchSection('faucet')">🚰 Abrir Faucet</button>
           </div>
         </div>
       </section>
 
       <div class="panel-card">
-        <h3 style="font-size:0.94rem;">Accesos Rápidos por Sección</h3>
+        <h3 style="font-size:0.94rem;">Accesos Rápidos</h3>
         <div class="quick-grid">
+          <button type="button" class="quick-tile" onclick="switchSection('faucet')">
+            <strong style="color:var(--neon-green);">🚰 Faucet</strong>
+            <span style="font-size:0.76rem; color:var(--muted);">Grifo cada 60 min (+35 Coins)</span>
+          </button>
           <button type="button" class="quick-tile" onclick="switchSection('ptcs')">
             <strong style="color:var(--neon-green);">🖱️ PTCs</strong>
             <span style="font-size:0.76rem; color:var(--muted);">Window Ads y Frame Ads</span>
@@ -1468,13 +1470,9 @@
             <strong style="color:var(--neon-green);">🔗 Shortlinks</strong>
             <span style="font-size:0.76rem; color:var(--muted);">Enlaces acortados (+130 Coins)</span>
           </button>
-          <button type="button" class="quick-tile" onclick="switchSection('offerwalls')">
-            <strong style="color:var(--neon-green);">🧱 Offerwalls</strong>
-            <span style="font-size:0.76rem; color:var(--muted);">Encuestas y tareas externas</span>
-          </button>
-          <button type="button" class="quick-tile" onclick="switchSection('logros')">
-            <strong style="color:var(--neon-green);">🏆 Logros</strong>
-            <span style="font-size:0.76rem; color:var(--muted);">Metas diarias, semanales y mensuales</span>
+          <button type="button" class="quick-tile" onclick="openProfileTab('retiros')">
+            <strong style="color:var(--neon-green);">👤 Perfil y Retiros</strong>
+            <span style="font-size:0.76rem; color:var(--muted);">Historial, Retiros, Anunciantes y Referidos</span>
           </button>
         </div>
       </div>
@@ -1482,7 +1480,7 @@
       <div class="panel-card">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
           <h3 style="font-size:0.94rem;">Últimos Movimientos</h3>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('historial')">Ver todo</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('historial')">Ver historial</button>
         </div>
         <div class="table-wrap">
           <table class="data-table">
@@ -1500,7 +1498,34 @@
       </div>
     </section>
 
-    <!-- 2. SECCIÓN PTCs -->
+    <!-- 2. SECCIÓN FAUCET (SU PROPIO BOTÓN EN LA NAVEGACIÓN + VENTANA ÚNICA) -->
+    <section id="sec-faucet" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
+      <div class="panel-card" style="max-width:600px;">
+        <div class="hub-top">
+          <div>
+            <h2 style="font-size:1.02rem;">🚰 Faucet CryptoClicksFaucet</h2>
+            <p style="font-size:0.8rem; color:var(--muted); margin-top:3px;">
+              Recompensa fija de <strong>+35 Coins</strong> cada <strong>60 minutos</strong> en una sola ventana.
+            </p>
+          </div>
+          <span class="hub-badge">+35 Coins • 60m</span>
+        </div>
+
+        <div class="faucet-challenge-box hidden" id="faucetChallengeBox">
+          <label for="faucetCaptchaInput" id="faucetCaptchaQuestion">¿Cuánto es 2 + 2?</label>
+          <input type="number" id="faucetCaptchaInput" placeholder="Resultado" />
+          <button type="button" class="btn btn-primary btn-sm" onclick="confirmFaucetClaim()">Confirmar Reclamo</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="cancelFaucetChallenge()">Cancelar</button>
+        </div>
+
+        <div class="hub-foot">
+          <span class="hub-stat" id="faucetTimerStatus">Lista para reclamar</span>
+          <button type="button" class="btn btn-primary" id="btnFaucetAction" onclick="triggerFaucetButton()">🚰 Reclamar Faucet (+35)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SECCIÓN PTCs -->
     <section id="sec-ptcs" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
         <h2 style="font-size:1rem;">🖱️ Anuncios PTC (Window Ads & Frame Ads)</h2>
@@ -1509,7 +1534,7 @@
       <section class="ads-grid" id="ptcsGrid"></section>
     </section>
 
-    <!-- 3. SECCIÓN SHORTLINKS -->
+    <!-- 4. SECCIÓN SHORTLINKS -->
     <section id="sec-shortlinks" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
         <h2 style="font-size:1rem;">🔗 Shortlinks</h2>
@@ -1518,7 +1543,7 @@
       <section class="ads-grid" id="shortlinksGrid"></section>
     </section>
 
-    <!-- 4. SECCIÓN OFFERWALLS -->
+    <!-- 5. SECCIÓN OFFERWALLS -->
     <section id="sec-offerwalls" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
         <h2 style="font-size:1rem;">🧱 Offerwalls</h2>
@@ -1527,7 +1552,7 @@
       <section class="ads-grid" id="offerwallsGrid"></section>
     </section>
 
-    <!-- 5. SECCIÓN LOGROS -->
+    <!-- 6. SECCIÓN LOGROS -->
     <section id="sec-logros" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
@@ -1545,154 +1570,167 @@
       </div>
     </section>
 
-    <!-- 6. SECCIÓN ANUNCIANTES -->
-    <section id="sec-anunciantes" class="hidden" style="width:100%;">
+    <!-- 7. SECCIÓN PERFIL (INTEGRA HISTORIAL, RETIROS, ANUNCIANTES Y REFERIDOS) -->
+    <section id="sec-perfil" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
-        <h3>📢 Contratar Publicidad en CryptoClicksFaucet</h3>
-        <form onsubmit="submitAdvertiserCampaign(event)" style="display:flex; flex-direction:column; gap:10px;">
-          <div class="form-2col">
-            <div class="field-group">
-              <label for="advTitle">Título del Anuncio</label>
-              <input type="text" id="advTitle" placeholder="Ej. Gana Solana gratis cada 5 min" maxlength="45" required />
-            </div>
-            <div class="field-group">
-              <label for="advFormat">Formato</label>
-              <select id="advFormat" onchange="recalcCampaignPrice()">
-                <option value="window_ads">🪟 Window Ad ($0.0012 / clic)</option>
-                <option value="frame_ads">🖼️ Frame Ad ($0.0009 / vista)</option>
-              </select>
-            </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+          <div>
+            <h2 style="font-size:1.02rem;">👤 Mi Perfil</h2>
+            <p style="font-size:0.79rem; color:var(--muted);">Gestiona tu Historial, Retiros, Anunciantes y Referidos desde un solo lugar.</p>
+          </div>
+        </div>
+
+        <div class="profile-subnav" id="profileSubnav">
+          <button type="button" class="btn btn-soft-neon btn-sm" data-ptab="retiros" onclick="switchProfileTab('retiros')">💸 Retiros</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="historial" onclick="switchProfileTab('historial')">📜 Historial</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="referidos" onclick="switchProfileTab('referidos')">🤝 Referidos</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="anunciantes" onclick="switchProfileTab('anunciantes')">📢 Anunciantes</button>
+        </div>
+
+        <!-- Subpestaña Retiros -->
+        <div id="ptab-retiros" style="display:flex; flex-direction:column; gap:10px; max-width:540px;">
+          <h3>💸 Solicitar Retiro (Revisión Manual)</h3>
+          <p style="font-size:0.81rem; color:var(--muted);">
+            Tasa: 50 Coins = $0.0005 USDT • Mínimo: <strong>10,000 Coins</strong> ($0.10 USDT) • Máximo diario: <strong>25,000 Coins</strong> ($0.25 USDT).
+          </p>
+          <div class="field-group">
+            <label for="withdrawMethod">Método de Pago</label>
+            <select id="withdrawMethod">
+              <option value="USDT (BEP20 / Binance Pay)">USDT (BEP20 / Binance Pay)</option>
+              <option value="Solana (SOL)">Solana (SOL)</option>
+              <option value="Litecoin (LTC)">Litecoin (LTC)</option>
+              <option value="Bolívares (Pago Móvil)">Bolívares (Pago Móvil)</option>
+              <option value="FaucetPay">FaucetPay</option>
+            </select>
           </div>
           <div class="field-group">
-            <label for="advUrl">URL de Destino (https://...)</label>
-            <input type="url" id="advUrl" placeholder="https://tusitio.com" required />
+            <label for="withdrawAddress">Billetera, Correo o Datos de Pago Móvil</label>
+            <input type="text" id="withdrawAddress" placeholder="Dirección / correo / teléfono y CI" />
           </div>
           <div class="field-group">
-            <label for="advDesc">Descripción corta</label>
-            <input type="text" id="advDesc" placeholder="Breve descripción de tu oferta..." maxlength="95" required />
+            <label for="withdrawAmount">Cantidad en Coins (10,000 a 25,000 por día)</label>
+            <input type="number" id="withdrawAmount" value="10000" min="10000" max="25000" step="100" />
           </div>
-          <div class="form-2col">
-            <div class="field-group">
-              <label for="advClicks">Cantidad de Visitas</label>
-              <select id="advClicks" onchange="recalcCampaignPrice()">
-                <option value="100">100 visitas</option>
-                <option value="500" selected>500 visitas</option>
-                <option value="1000">1,000 visitas</option>
-              </select>
-            </div>
-            <div class="field-group">
-              <label for="advDuration">Duración</label>
-              <select id="advDuration" onchange="recalcCampaignPrice()">
-                <option value="15">15 segundos</option>
-                <option value="20">20 segundos (+20%)</option>
-                <option value="30">30 segundos (+40%)</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-2col">
-            <div class="field-group">
-              <label for="advPayMethod">Método de Pago</label>
-              <select id="advPayMethod">
-                <option value="FaucetPay (USDT)">FaucetPay (USDT)</option>
-                <option value="Binance Pay (USDT)">Binance Pay (USDT)</option>
-                <option value="Saldo interno (Coins)">Saldo interno (Coins)</option>
-              </select>
-            </div>
-            <div class="field-group">
-              <label for="advTxId">ID de Transacción o Correo</label>
-              <input type="text" id="advTxId" placeholder="TX-12345 o correo" required />
-            </div>
-          </div>
-          <div class="adv-summary">
-            <div class="adv-row"><span>Pago al usuario por visita:</span><strong id="advUserRewardPreview" style="color:var(--neon-green);">40 Coins</strong></div>
-            <div class="adv-row"><span>Total campaña:</span><strong id="advTotalUsdPreview" style="color:var(--neon-green);">$0.6000 USDT</strong></div>
-          </div>
-          <button type="submit" class="btn btn-primary">🚀 Publicar Campaña</button>
-        </form>
-        <div class="table-wrap" style="margin-top:8px;">
-          <table class="data-table">
-            <thead>
-              <tr><th>Campaña</th><th>Formato</th><th>Progreso</th><th>Pago</th></tr>
-            </thead>
-            <tbody id="advertiserCampaignsBody"></tbody>
-          </table>
+          <div style="font-size:0.76rem; color:var(--muted);" id="withdrawDailyQuotaInfo">Retirado últimas 24h: 0 / 25,000 Coins</div>
+          <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Confirmar Solicitud Manual</button>
         </div>
-      </div>
-    </section>
 
-    <!-- 7. SECCIÓN RETIROS -->
-    <section id="sec-retiros" class="hidden" style="width:100%;">
-      <div class="panel-card" style="max-width:540px;">
-        <h3>💸 Solicitar Retiro (Revisión Manual)</h3>
-        <p style="font-size:0.81rem; color:var(--muted);">
-          Tasa: 50 Coins = $0.0005 USDT • Mínimo: <strong>10,000 Coins</strong> ($0.10 USDT) • Máximo diario: <strong>25,000 Coins</strong> ($0.25 USDT).
-        </p>
-        <div class="field-group">
-          <label for="withdrawMethod">Método de Pago</label>
-          <select id="withdrawMethod">
-            <option value="USDT (BEP20 / Binance Pay)">USDT (BEP20 / Binance Pay)</option>
-            <option value="Solana (SOL)">Solana (SOL)</option>
-            <option value="Litecoin (LTC)">Litecoin (LTC)</option>
-            <option value="Bolívares (Pago Móvil)">Bolívares (Pago Móvil)</option>
-            <option value="FaucetPay">FaucetPay</option>
-          </select>
+        <!-- Subpestaña Historial -->
+        <div id="ptab-historial" class="hidden" style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <h3 style="margin-bottom:8px;">⚡ Últimos 10 Movimientos</h3>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Fecha</th><th>Actividad</th><th>Monto</th><th>Equivalente</th></tr></thead>
+                <tbody id="movementsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin-bottom:8px;">💸 Historial de Retiros</h3>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Fecha</th><th>Método</th><th>Destino</th><th>Monto</th><th>Estado</th></tr></thead>
+                <tbody id="withdrawalsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <div class="field-group">
-          <label for="withdrawAddress">Billetera, Correo o Datos de Pago Móvil</label>
-          <input type="text" id="withdrawAddress" placeholder="Dirección / correo / teléfono y CI" />
-        </div>
-        <div class="field-group">
-          <label for="withdrawAmount">Cantidad en Coins (10,000 a 25,000 por día)</label>
-          <input type="number" id="withdrawAmount" value="10000" min="10000" max="25000" step="100" />
-        </div>
-        <div style="font-size:0.76rem; color:var(--muted);" id="withdrawDailyQuotaInfo">Retirado últimas 24h: 0 / 25,000 Coins</div>
-        <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Confirmar Solicitud Manual</button>
-      </div>
-    </section>
 
-    <!-- 8. SECCIÓN REFERIDOS -->
-    <section id="sec-referidos" class="hidden" style="width:100%;">
-      <div class="panel-card">
-        <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 / 500 Coins)</h3>
-        <p style="font-size:0.81rem; color:var(--muted);">
-          Ganas <strong>1,000 Coins por única vez</strong> por cada referido válido y el nuevo usuario recibe <strong>500 Coins extra</strong> al registrarse con tu código (sin comisiones recurrentes para proteger el capital).
-        </p>
-        <div class="ref-link-box">
-          <input type="text" id="referralLinkInput" readonly />
-          <button type="button" class="btn btn-primary" onclick="copyReferralLink()">Copiar</button>
+        <!-- Subpestaña Referidos -->
+        <div id="ptab-referidos" class="hidden" style="display:flex; flex-direction:column; gap:10px;">
+          <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 / 500 Coins)</h3>
+          <p style="font-size:0.81rem; color:var(--muted);">
+            Ganas <strong>1,000 Coins por única vez</strong> por cada referido válido y el nuevo usuario recibe <strong>500 Coins extra</strong> al registrarse con tu código (sin comisiones recurrentes para proteger el capital).
+          </p>
+          <div class="ref-link-box">
+            <input type="text" id="referralLinkInput" readonly />
+            <button type="button" class="btn btn-primary" onclick="copyReferralLink()">Copiar</button>
+          </div>
+          <div class="ref-stats-grid">
+            <div class="ref-stat-card"><div class="ref-stat-label">Tu Código</div><div class="ref-stat-val" id="refCodeDisplay">—</div></div>
+            <div class="ref-stat-card"><div class="ref-stat-label">Referidos Válidos</div><div class="ref-stat-val" id="refCountDisplay">0</div></div>
+            <div class="ref-stat-card"><div class="ref-stat-label">Bonos Únicos Ganados</div><div class="ref-stat-val" id="refEarnedDisplay">0 Coins</div></div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Usuario</th><th>Fecha Registro</th><th>Bono Único</th></tr></thead>
+              <tbody id="referralsTableBody"></tbody>
+            </table>
+          </div>
         </div>
-        <div class="ref-stats-grid">
-          <div class="ref-stat-card"><div class="ref-stat-label">Tu Código</div><div class="ref-stat-val" id="refCodeDisplay">—</div></div>
-          <div class="ref-stat-card"><div class="ref-stat-label">Referidos Válidos</div><div class="ref-stat-val" id="refCountDisplay">0</div></div>
-          <div class="ref-stat-card"><div class="ref-stat-label">Bonos Únicos Ganados</div><div class="ref-stat-val" id="refEarnedDisplay">0 Coins</div></div>
-        </div>
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead><tr><th>Usuario</th><th>Fecha Registro</th><th>Bono Único</th></tr></thead>
-            <tbody id="referralsTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
 
-    <!-- 9. SECCIÓN HISTORIAL -->
-    <section id="sec-historial" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <div class="panel-card">
-        <h3>⚡ Últimos 10 Movimientos</h3>
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead><tr><th>Fecha</th><th>Actividad</th><th>Monto</th><th>Equivalente</th></tr></thead>
-            <tbody id="movementsTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-      <div class="panel-card">
-        <h3>💸 Historial de Retiros</h3>
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead><tr><th>Fecha</th><th>Método</th><th>Destino</th><th>Monto</th><th>Estado</th></tr></thead>
-            <tbody id="withdrawalsTableBody"></tbody>
-          </table>
+        <!-- Subpestaña Anunciantes -->
+        <div id="ptab-anunciantes" class="hidden" style="display:flex; flex-direction:column; gap:10px;">
+          <h3>📢 Contratar Publicidad en CryptoClicksFaucet</h3>
+          <form onsubmit="submitAdvertiserCampaign(event)" style="display:flex; flex-direction:column; gap:10px;">
+            <div class="form-2col">
+              <div class="field-group">
+                <label for="advTitle">Título del Anuncio</label>
+                <input type="text" id="advTitle" placeholder="Ej. Gana Solana gratis cada 5 min" maxlength="45" required />
+              </div>
+              <div class="field-group">
+                <label for="advFormat">Formato</label>
+                <select id="advFormat" onchange="recalcCampaignPrice()">
+                  <option value="window_ads">🪟 Window Ad ($0.0012 / clic)</option>
+                  <option value="frame_ads">🖼️ Frame Ad ($0.0009 / vista)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="advUrl">URL de Destino (https://...)</label>
+              <input type="url" id="advUrl" placeholder="https://tusitio.com" required />
+            </div>
+            <div class="field-group">
+              <label for="advDesc">Descripción corta</label>
+              <input type="text" id="advDesc" placeholder="Breve descripción de tu oferta..." maxlength="95" required />
+            </div>
+            <div class="form-2col">
+              <div class="field-group">
+                <label for="advClicks">Cantidad de Visitas</label>
+                <select id="advClicks" onchange="recalcCampaignPrice()">
+                  <option value="100">100 visitas</option>
+                  <option value="500" selected>500 visitas</option>
+                  <option value="1000">1,000 visitas</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="advDuration">Duración</label>
+                <select id="advDuration" onchange="recalcCampaignPrice()">
+                  <option value="15">15 segundos</option>
+                  <option value="20">20 segundos (+20%)</option>
+                  <option value="30">30 segundos (+40%)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-2col">
+              <div class="field-group">
+                <label for="advPayMethod">Método de Pago</label>
+                <select id="advPayMethod">
+                  <option value="FaucetPay (USDT)">FaucetPay (USDT)</option>
+                  <option value="Binance Pay (USDT)">Binance Pay (USDT)</option>
+                  <option value="Saldo interno (Coins)">Saldo interno (Coins)</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="advTxId">ID de Transacción o Correo</label>
+                <input type="text" id="advTxId" placeholder="TX-12345 o correo" required />
+              </div>
+            </div>
+            <div class="adv-summary">
+              <div class="adv-row"><span>Pago al usuario por visita:</span><strong id="advUserRewardPreview" style="color:var(--neon-green);">40 Coins</strong></div>
+              <div class="adv-row"><span>Total campaña:</span><strong id="advTotalUsdPreview" style="color:var(--neon-green);">$0.6000 USDT</strong></div>
+            </div>
+            <button type="submit" class="btn btn-primary">🚀 Publicar Campaña</button>
+          </form>
+          <div class="table-wrap" style="margin-top:6px;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Campaña</th><th>Formato</th><th>Progreso</th><th>Pago</th></tr>
+              </thead>
+              <tbody id="advertiserCampaignsBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -1829,16 +1867,13 @@
     };
 
     const ACHIEVEMENTS_CONFIG = [
-      // Diarios
       { id: "d_ptc_3", period: "daily", metric: "ptc", target: 3, title: "Explorador PTC Diario", desc: "Completa 3 anuncios PTC hoy.", reward: 80 },
       { id: "d_sl_2", period: "daily", metric: "shortlink", target: 2, title: "Cazador de Enlaces Diario", desc: "Completa 2 Shortlinks hoy.", reward: 120 },
       { id: "d_fc_3", period: "daily", metric: "faucet", target: 3, title: "Grifo Constante Diario", desc: "Reclama la Faucet 3 veces hoy.", reward: 90 },
       { id: "d_any_6", period: "daily", metric: "total", target: 6, title: "Rutina Activa Diaria", desc: "Completa 6 tareas entre PTC, Shortlinks o Faucet hoy.", reward: 150 },
-      // Semanales
       { id: "w_ptc_15", period: "weekly", metric: "ptc", target: 15, title: "Maratón PTC Semanal", desc: "Completa 15 anuncios PTC en 7 días.", reward: 400 },
       { id: "w_sl_10", period: "weekly", metric: "shortlink", target: 10, title: "Maestro Shortlink Semanal", desc: "Completa 10 Shortlinks en 7 días.", reward: 650 },
       { id: "w_any_30", period: "weekly", metric: "total", target: 30, title: "Constancia Semanal", desc: "Completa 30 tareas en 7 días.", reward: 800 },
-      // Mensuales
       { id: "m_ptc_60", period: "monthly", metric: "ptc", target: 60, title: "Veterano PTC Mensual", desc: "Completa 60 anuncios PTC en 30 días.", reward: 1500 },
       { id: "m_sl_40", period: "monthly", metric: "shortlink", target: 40, title: "Leyenda Shortlink Mensual", desc: "Completa 40 Shortlinks en 30 días.", reward: 2200 },
       { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán de CryptoClicksFaucet", desc: "Completa 120 tareas en 30 días.", reward: 3000 }
@@ -1976,6 +2011,7 @@
       currentUser: null,
       coins: 0,
       section: "dashboard",
+      profileTab: "retiros",
       achPeriod: "daily",
       themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
@@ -2007,8 +2043,7 @@
         return;
       }
       prepareFaucetCaptcha();
-      const box = document.getElementById("faucetChallengeBox");
-      box.classList.remove("hidden");
+      document.getElementById("faucetChallengeBox")?.classList.remove("hidden");
       document.getElementById("faucetCaptchaInput")?.focus();
     }
 
@@ -2461,23 +2496,42 @@
       document.getElementById("headerGuestControls").classList.remove("hidden");
     }
 
+    function switchProfileTab(tab) {
+      state.profileTab = tab;
+      const tabs = ["retiros", "historial", "referidos", "anunciantes"];
+      tabs.forEach(t => {
+        const panel = document.getElementById(`ptab-${t}`);
+        if (panel) panel.classList.toggle("hidden", t !== tab);
+      });
+      document.querySelectorAll("#profileSubnav button").forEach(btn => {
+        btn.className = btn.dataset.ptab === tab ? "btn btn-soft-neon btn-sm" : "btn btn-secondary btn-sm";
+      });
+      if (tab === "retiros") updateWithdrawQuotaUI();
+      if (tab === "historial") renderHistoryView();
+      if (tab === "referidos") renderReferralsView();
+      if (tab === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
+    }
+
+    function openProfileTab(tab) {
+      switchSection("perfil");
+      switchProfileTab(tab);
+    }
+
     function switchSection(sec) {
       state.section = sec;
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.sec === sec));
-      const sections = ["dashboard", "ptcs", "shortlinks", "offerwalls", "logros", "anunciantes", "retiros", "referidos", "historial"];
+      const sections = ["dashboard", "faucet", "ptcs", "shortlinks", "offerwalls", "logros", "perfil"];
       sections.forEach(s => {
         const el = document.getElementById(`sec-${s}`);
         if (el) el.classList.toggle("hidden", s !== sec);
       });
 
+      if (sec === "faucet") updateHubCardsUI();
       if (sec === "ptcs") renderCategoryGrid("ptcsGrid", t => t.cat === "window_ads" || t.cat === "frame_ads");
       if (sec === "shortlinks") renderCategoryGrid("shortlinksGrid", t => t.cat === "shortlinks");
       if (sec === "offerwalls") renderCategoryGrid("offerwallsGrid", t => t.cat === "offerwalls");
       if (sec === "logros") renderAchievementsView();
-      if (sec === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
-      if (sec === "retiros") updateWithdrawQuotaUI();
-      if (sec === "referidos") renderReferralsView();
-      if (sec === "historial") renderHistoryView();
+      if (sec === "perfil") switchProfileTab(state.profileTab);
       if (sec === "dashboard") renderDashboardMovements();
       applyAdSlots();
     }
@@ -2535,16 +2589,24 @@
       const faucetRem = FAUCET_COOLDOWN_MS - (now - lastFaucet);
       const btnFaucet = document.getElementById("btnFaucetAction");
       const statusEl = document.getElementById("faucetTimerStatus");
+      const dashStatusEl = document.getElementById("dashFaucetStatus");
 
       if (lastFaucet && faucetRem > 0) {
-        btnFaucet.disabled = true;
-        btnFaucet.textContent = `Espera ${formatCountdown(faucetRem)}`;
-        statusEl.textContent = `Disponible en ${formatCountdown(faucetRem)}`;
+        const waitText = `Disponible en ${formatCountdown(faucetRem)}`;
+        if (btnFaucet) {
+          btnFaucet.disabled = true;
+          btnFaucet.textContent = `Espera ${formatCountdown(faucetRem)}`;
+        }
+        if (statusEl) statusEl.textContent = waitText;
+        if (dashStatusEl) dashStatusEl.textContent = waitText;
         cancelFaucetChallenge();
       } else {
-        btnFaucet.disabled = false;
-        btnFaucet.textContent = `🚰 Reclamar Faucet (+${FAUCET_REWARD_COINS})`;
-        statusEl.textContent = "Disponible ahora";
+        if (btnFaucet) {
+          btnFaucet.disabled = false;
+          btnFaucet.textContent = `🚰 Reclamar Faucet (+${FAUCET_REWARD_COINS})`;
+        }
+        if (statusEl) statusEl.textContent = "Disponible ahora";
+        if (dashStatusEl) dashStatusEl.textContent = "Disponible ahora";
       }
     }
 
