@@ -437,6 +437,66 @@
       box-shadow: 0 0 12px rgba(57, 255, 20, 0.2);
     }
 
+    .profile-dd-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .profile-dd-arrow {
+      font-size: 0.72rem;
+      transition: transform 0.16s ease;
+    }
+
+    .profile-dd-wrap.open .profile-dd-arrow {
+      transform: rotate(180deg);
+    }
+
+    .profile-dd-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 185px;
+      background: #091711;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--soft-glow);
+      border-radius: 12px;
+      padding: 6px;
+      display: none;
+      flex-direction: column;
+      gap: 3px;
+      z-index: 40;
+    }
+
+    body[data-theme="light"] .profile-dd-menu {
+      background: #ffffff;
+    }
+
+    .profile-dd-wrap.open .profile-dd-menu {
+      display: flex;
+    }
+
+    .profile-dd-item {
+      width: 100%;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.14s ease, color 0.14s ease;
+    }
+
+    .profile-dd-item:hover {
+      background: rgba(57, 255, 20, 0.14);
+      color: var(--neon-green);
+    }
+
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1340,7 +1400,7 @@
     <div class="auth-card">
       <div class="auth-head">
         <h1>CryptoClicksFaucet</h1>
-        <p>Faucet con su sección propia, PTCs, Shortlinks, Offerwalls, Logros y Perfil unificado.</p>
+        <p>Faucet con su sección propia, PTCs, Shortlinks, Offerwalls, Logros y Perfil desplegable.</p>
       </div>
 
       <div class="auth-tabs">
@@ -1387,7 +1447,6 @@
   </section>
 
   <main class="hidden" id="dashboardSection">
-    <!-- PANEL DE NAVEGACIÓN SOLICITADO: Faucet, PTC, Shortlink, Offerwall y Logros afuera; Historial, Retiros, Anunciantes y Referidos dentro de Perfil -->
     <nav class="nav-bar" id="mainNav">
       <button type="button" class="nav-btn active" data-sec="dashboard" onclick="switchSection('dashboard')">🏠 Dashboard</button>
       <button type="button" class="nav-btn" data-sec="faucet" onclick="switchSection('faucet')">🚰 Faucet</button>
@@ -1395,7 +1454,18 @@
       <button type="button" class="nav-btn" data-sec="shortlinks" onclick="switchSection('shortlinks')">🔗 Shortlinks <span id="navCountShortlinks">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="offerwalls" onclick="switchSection('offerwalls')">🧱 Offerwalls <span id="navCountOfferwalls">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="logros" onclick="switchSection('logros')">🏆 Logros <span id="navClaimableAchBadge"></span></button>
-      <button type="button" class="nav-btn" data-sec="perfil" onclick="switchSection('perfil')">👤 Perfil</button>
+
+      <div class="profile-dd-wrap" id="profileDropdownWrap">
+        <button type="button" class="nav-btn" data-sec="perfil" id="btnProfileDropdown" onclick="toggleProfileDropdown(event)">
+          👤 Perfil <span class="profile-dd-arrow">▾</span>
+        </button>
+        <div class="profile-dd-menu" id="profileDropdownMenu" role="menu">
+          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('historial')">📜 Historial</button>
+          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('retiros')">💸 Retiros</button>
+          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('anunciantes')">📢 Anunciantes</button>
+          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('referidos')">🤝 Referidos</button>
+        </div>
+      </div>
     </nav>
 
     <div class="safety-banner">
@@ -1444,7 +1514,7 @@
           <div class="hub-top">
             <div>
               <div class="hub-title">🚰 Grifo Faucet</div>
-              <div class="hub-sub">Reclama +35 Coins cada 60 minutos desde su pestaña o con su botón directo.</div>
+              <div class="hub-sub">Reclama +35 Coins cada 60 minutos desde su sección.</div>
             </div>
             <span class="hub-badge">+35 Coins • 60m</span>
           </div>
@@ -1498,7 +1568,7 @@
       </div>
     </section>
 
-    <!-- 2. SECCIÓN FAUCET (SU PROPIO BOTÓN EN LA NAVEGACIÓN + VENTANA ÚNICA) -->
+    <!-- 2. SECCIÓN FAUCET -->
     <section id="sec-faucet" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card" style="max-width:600px;">
         <div class="hub-top">
@@ -1570,25 +1640,45 @@
       </div>
     </section>
 
-    <!-- 7. SECCIÓN PERFIL (INTEGRA HISTORIAL, RETIROS, ANUNCIANTES Y REFERIDOS) -->
+    <!-- 7. SECCIÓN PERFIL (HISTORIAL, RETIROS, ANUNCIANTES Y REFERIDOS) -->
     <section id="sec-perfil" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
           <div>
             <h2 style="font-size:1.02rem;">👤 Mi Perfil</h2>
-            <p style="font-size:0.79rem; color:var(--muted);">Gestiona tu Historial, Retiros, Anunciantes y Referidos desde un solo lugar.</p>
+            <p style="font-size:0.79rem; color:var(--muted);">Historial, Retiros, Anunciantes y Referidos.</p>
           </div>
         </div>
 
         <div class="profile-subnav" id="profileSubnav">
-          <button type="button" class="btn btn-soft-neon btn-sm" data-ptab="retiros" onclick="switchProfileTab('retiros')">💸 Retiros</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="historial" onclick="switchProfileTab('historial')">📜 Historial</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="referidos" onclick="switchProfileTab('referidos')">🤝 Referidos</button>
+          <button type="button" class="btn btn-soft-neon btn-sm" data-ptab="historial" onclick="switchProfileTab('historial')">📜 Historial</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="retiros" onclick="switchProfileTab('retiros')">💸 Retiros</button>
           <button type="button" class="btn btn-secondary btn-sm" data-ptab="anunciantes" onclick="switchProfileTab('anunciantes')">📢 Anunciantes</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="referidos" onclick="switchProfileTab('referidos')">🤝 Referidos</button>
         </div>
 
-        <!-- Subpestaña Retiros -->
-        <div id="ptab-retiros" style="display:flex; flex-direction:column; gap:10px; max-width:540px;">
+        <div id="ptab-historial" style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <h3 style="margin-bottom:8px;">⚡ Últimos 10 Movimientos</h3>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Fecha</th><th>Actividad</th><th>Monto</th><th>Equivalente</th></tr></thead>
+                <tbody id="movementsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin-bottom:8px;">💸 Historial de Retiros</h3>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Fecha</th><th>Método</th><th>Destino</th><th>Monto</th><th>Estado</th></tr></thead>
+                <tbody id="withdrawalsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="ptab-retiros" class="hidden" style="display:flex; flex-direction:column; gap:10px; max-width:540px;">
           <h3>💸 Solicitar Retiro (Revisión Manual)</h3>
           <p style="font-size:0.81rem; color:var(--muted);">
             Tasa: 50 Coins = $0.0005 USDT • Mínimo: <strong>10,000 Coins</strong> ($0.10 USDT) • Máximo diario: <strong>25,000 Coins</strong> ($0.25 USDT).
@@ -1615,52 +1705,6 @@
           <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Confirmar Solicitud Manual</button>
         </div>
 
-        <!-- Subpestaña Historial -->
-        <div id="ptab-historial" class="hidden" style="display:flex; flex-direction:column; gap:14px;">
-          <div>
-            <h3 style="margin-bottom:8px;">⚡ Últimos 10 Movimientos</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead><tr><th>Fecha</th><th>Actividad</th><th>Monto</th><th>Equivalente</th></tr></thead>
-                <tbody id="movementsTableBody"></tbody>
-              </table>
-            </div>
-          </div>
-          <div>
-            <h3 style="margin-bottom:8px;">💸 Historial de Retiros</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead><tr><th>Fecha</th><th>Método</th><th>Destino</th><th>Monto</th><th>Estado</th></tr></thead>
-                <tbody id="withdrawalsTableBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Subpestaña Referidos -->
-        <div id="ptab-referidos" class="hidden" style="display:flex; flex-direction:column; gap:10px;">
-          <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 / 500 Coins)</h3>
-          <p style="font-size:0.81rem; color:var(--muted);">
-            Ganas <strong>1,000 Coins por única vez</strong> por cada referido válido y el nuevo usuario recibe <strong>500 Coins extra</strong> al registrarse con tu código (sin comisiones recurrentes para proteger el capital).
-          </p>
-          <div class="ref-link-box">
-            <input type="text" id="referralLinkInput" readonly />
-            <button type="button" class="btn btn-primary" onclick="copyReferralLink()">Copiar</button>
-          </div>
-          <div class="ref-stats-grid">
-            <div class="ref-stat-card"><div class="ref-stat-label">Tu Código</div><div class="ref-stat-val" id="refCodeDisplay">—</div></div>
-            <div class="ref-stat-card"><div class="ref-stat-label">Referidos Válidos</div><div class="ref-stat-val" id="refCountDisplay">0</div></div>
-            <div class="ref-stat-card"><div class="ref-stat-label">Bonos Únicos Ganados</div><div class="ref-stat-val" id="refEarnedDisplay">0 Coins</div></div>
-          </div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>Usuario</th><th>Fecha Registro</th><th>Bono Único</th></tr></thead>
-              <tbody id="referralsTableBody"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Subpestaña Anunciantes -->
         <div id="ptab-anunciantes" class="hidden" style="display:flex; flex-direction:column; gap:10px;">
           <h3>📢 Contratar Publicidad en CryptoClicksFaucet</h3>
           <form onsubmit="submitAdvertiserCampaign(event)" style="display:flex; flex-direction:column; gap:10px;">
@@ -1729,6 +1773,28 @@
                 <tr><th>Campaña</th><th>Formato</th><th>Progreso</th><th>Pago</th></tr>
               </thead>
               <tbody id="advertiserCampaignsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="ptab-referidos" class="hidden" style="display:flex; flex-direction:column; gap:10px;">
+          <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 / 500 Coins)</h3>
+          <p style="font-size:0.81rem; color:var(--muted);">
+            Ganas <strong>1,000 Coins por única vez</strong> por cada referido válido y el nuevo usuario recibe <strong>500 Coins extra</strong> al registrarse con tu código (sin comisiones recurrentes para proteger el capital).
+          </p>
+          <div class="ref-link-box">
+            <input type="text" id="referralLinkInput" readonly />
+            <button type="button" class="btn btn-primary" onclick="copyReferralLink()">Copiar</button>
+          </div>
+          <div class="ref-stats-grid">
+            <div class="ref-stat-card"><div class="ref-stat-label">Tu Código</div><div class="ref-stat-val" id="refCodeDisplay">—</div></div>
+            <div class="ref-stat-card"><div class="ref-stat-label">Referidos Válidos</div><div class="ref-stat-val" id="refCountDisplay">0</div></div>
+            <div class="ref-stat-card"><div class="ref-stat-label">Bonos Únicos Ganados</div><div class="ref-stat-val" id="refEarnedDisplay">0 Coins</div></div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Usuario</th><th>Fecha Registro</th><th>Bono Único</th></tr></thead>
+              <tbody id="referralsTableBody"></tbody>
             </table>
           </div>
         </div>
@@ -2011,7 +2077,7 @@
       currentUser: null,
       coins: 0,
       section: "dashboard",
-      profileTab: "retiros",
+      profileTab: "historial",
       achPeriod: "daily",
       themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
@@ -2023,6 +2089,27 @@
     let timerInterval = null;
     let expectedCaptcha = null;
     let expectedFaucetCaptcha = 4;
+
+    function closeProfileDropdown() {
+      document.getElementById("profileDropdownWrap")?.classList.remove("open");
+    }
+
+    function toggleProfileDropdown(event) {
+      event?.stopPropagation();
+      document.getElementById("profileDropdownWrap")?.classList.toggle("open");
+    }
+
+    function selectProfileMenuItem(tab) {
+      closeProfileDropdown();
+      openProfileTab(tab);
+    }
+
+    document.addEventListener("click", (event) => {
+      const wrap = document.getElementById("profileDropdownWrap");
+      if (wrap && !wrap.contains(event.target)) {
+        wrap.classList.remove("open");
+      }
+    });
 
     function prepareFaucetCaptcha() {
       const a = Math.floor(Math.random() * 8) + 2;
@@ -2471,6 +2558,7 @@
       state.coins = Number(user.coins ?? 0);
       hydrateTasksForUser(user);
       cancelFaucetChallenge();
+      closeProfileDropdown();
 
       document.getElementById("soundToggle").checked = state.soundEnabled;
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
@@ -2488,6 +2576,7 @@
       closeViewerModal();
       closeOfferwallModal();
       cancelFaucetChallenge();
+      closeProfileDropdown();
       state.currentUser = null;
       localStorage.removeItem(CURRENT_USER_KEY);
       document.getElementById("dashboardSection").classList.add("hidden");
@@ -2498,7 +2587,7 @@
 
     function switchProfileTab(tab) {
       state.profileTab = tab;
-      const tabs = ["retiros", "historial", "referidos", "anunciantes"];
+      const tabs = ["historial", "retiros", "anunciantes", "referidos"];
       tabs.forEach(t => {
         const panel = document.getElementById(`ptab-${t}`);
         if (panel) panel.classList.toggle("hidden", t !== tab);
@@ -2506,10 +2595,10 @@
       document.querySelectorAll("#profileSubnav button").forEach(btn => {
         btn.className = btn.dataset.ptab === tab ? "btn btn-soft-neon btn-sm" : "btn btn-secondary btn-sm";
       });
-      if (tab === "retiros") updateWithdrawQuotaUI();
       if (tab === "historial") renderHistoryView();
-      if (tab === "referidos") renderReferralsView();
+      if (tab === "retiros") updateWithdrawQuotaUI();
       if (tab === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
+      if (tab === "referidos") renderReferralsView();
     }
 
     function openProfileTab(tab) {
@@ -2518,6 +2607,7 @@
     }
 
     function switchSection(sec) {
+      closeProfileDropdown();
       state.section = sec;
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.sec === sec));
       const sections = ["dashboard", "faucet", "ptcs", "shortlinks", "offerwalls", "logros", "perfil"];
