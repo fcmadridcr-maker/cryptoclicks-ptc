@@ -26,6 +26,10 @@
       --danger: #fb7185;
     }
 
+    body[data-theme="dark"] .brand img {
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.3));
+    }
+
     body[data-theme="light"] {
       --bg: #ffffff;
       --bg-glow-1: rgba(14, 165, 233, 0.13);
@@ -98,11 +102,19 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       font-weight: 800;
       font-size: 1.02rem;
       letter-spacing: -0.01em;
       text-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+
+    .brand img {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      object-fit: cover;
+      border: 1px solid var(--border-strong);
     }
 
     .header-right {
@@ -423,7 +435,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* Estilo tipo panel en Faucet */
     .faucet-layout {
       display: grid;
       grid-template-columns: 270px minmax(0, 1fr);
@@ -932,7 +943,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
-        <span>⚡</span>
+        <img src="logo_trading.jpg" alt="Logo Toro y Oso" />
         <span>CryptoClicksFaucet</span>
       </div>
 
