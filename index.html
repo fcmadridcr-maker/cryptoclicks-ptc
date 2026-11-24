@@ -439,27 +439,17 @@
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.22);
     }
 
-    .soon-pill {
-      font-size: 0.65rem;
-      padding: 1px 6px;
-      border-radius: 999px;
-      background: var(--card);
-      color: var(--muted);
-      border: 1px solid var(--border);
-      font-weight: 700;
-    }
-
-    .profile-dd-wrap {
+    .nav-dd-wrap {
       position: relative;
       display: inline-flex;
     }
 
-    .profile-dd-menu {
+    .nav-dd-menu {
       position: absolute;
       top: calc(100% + 6px);
       left: 0;
-      min-width: 178px;
-      background: rgba(12, 13, 22, 0.86);
+      min-width: 184px;
+      background: rgba(12, 13, 22, 0.9);
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-strong);
       border-radius: 12px;
@@ -471,15 +461,15 @@
       box-shadow: var(--shadow-md);
     }
 
-    body[data-theme="light"] .profile-dd-menu {
-      background: rgba(255, 255, 255, 0.92);
+    body[data-theme="light"] .nav-dd-menu {
+      background: rgba(255, 255, 255, 0.94);
     }
 
-    .profile-dd-wrap.open .profile-dd-menu {
+    .nav-dd-wrap.open .nav-dd-menu {
       display: flex;
     }
 
-    .profile-dd-item {
+    .nav-dd-item {
       border: none;
       background: transparent;
       color: var(--text);
@@ -489,10 +479,14 @@
       font-weight: 600;
       text-align: left;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       transition: background-color 0.14s ease, color 0.14s ease;
     }
 
-    .profile-dd-item:hover {
+    .nav-dd-item:hover {
       background: var(--card-2);
       color: var(--accent);
     }
@@ -1156,21 +1150,36 @@
       <button type="button" class="nav-btn" data-sec="shortlinks" onclick="switchSection('shortlinks')">🔗 <span class="i18n-nav-shortlinks">Shortlinks</span> <span id="navCountShortlinks">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="offerwalls" onclick="switchSection('offerwalls')">🧱 <span class="i18n-nav-offerwalls">Offerwalls</span> <span id="navCountOfferwalls">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="logros" onclick="switchSection('logros')">🏆 <span class="i18n-nav-achievements">Logros</span> <span id="navClaimableAchBadge"></span></button>
-      <button type="button" class="nav-btn" data-sec="loteria" onclick="switchSection('loteria')">🎰 <span class="i18n-nav-lottery">Lotería</span> <span class="soon-pill i18n-soon">Próximamente</span></button>
-      <button type="button" class="nav-btn" data-sec="games" onclick="switchSection('games')">🎮 <span class="i18n-nav-games">Games</span> <span class="soon-pill i18n-soon">Próximamente</span></button>
-      <button type="button" class="nav-btn" data-sec="cupon" onclick="switchSection('cupon')">🎟️ <span class="i18n-nav-coupon">Cupón</span> <span class="soon-pill i18n-soon">Próximamente</span></button>
+
+      <div class="nav-dd-wrap" id="comingSoonDropdownWrap">
+        <button type="button" class="nav-btn" data-sec="proximamente" id="btnComingSoonDropdown" onclick="toggleComingSoonDropdown(event)">
+          ⏳ <span class="i18n-soon">Próximamente</span> ▾
+        </button>
+        <div class="nav-dd-menu" id="comingSoonDropdownMenu">
+          <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('loteria')">
+            <span>🎰 <span class="i18n-nav-lottery">Lotería</span></span>
+          </button>
+          <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('games')">
+            <span>🎮 <span class="i18n-nav-games">Games</span></span>
+          </button>
+          <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('cupon')">
+            <span>🎟️ <span class="i18n-nav-coupon">Cupón</span></span>
+          </button>
+        </div>
+      </div>
+
       <button type="button" class="nav-btn" data-sec="faq" onclick="switchSection('faq')">❓ <span class="i18n-nav-faq">FAQ</span></button>
 
-      <div class="profile-dd-wrap" id="profileDropdownWrap">
+      <div class="nav-dd-wrap" id="profileDropdownWrap">
         <button type="button" class="nav-btn" data-sec="perfil" id="btnProfileDropdown" onclick="toggleProfileDropdown(event)">
           👤 <span class="i18n-nav-profile">Perfil</span> ▾
         </button>
-        <div class="profile-dd-menu" id="profileDropdownMenu">
-          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('historial')">📜 <span class="i18n-ptab-history">Historial</span></button>
-          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('retiros')">💸 <span class="i18n-ptab-withdraw">Retiros</span></button>
-          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('anunciantes')">📢 <span class="i18n-ptab-advertisers">Anunciantes</span></button>
-          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('referidos')">🤝 <span class="i18n-ptab-referrals">Referidos</span></button>
-          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('tickets')">🎟️ <span class="i18n-ptab-tickets">Tickets</span></button>
+        <div class="nav-dd-menu" id="profileDropdownMenu">
+          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('historial')">📜 <span class="i18n-ptab-history">Historial</span></button>
+          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('retiros')">💸 <span class="i18n-ptab-withdraw">Retiros</span></button>
+          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('anunciantes')">📢 <span class="i18n-ptab-advertisers">Anunciantes</span></button>
+          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('referidos')">🤝 <span class="i18n-ptab-referrals">Referidos</span></button>
+          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('tickets')">🎟️ <span class="i18n-ptab-tickets">Tickets</span></button>
         </div>
       </div>
     </nav>
@@ -1789,7 +1798,7 @@
           },
           {
             q: "¿Qué funciones llegarán próximamente?",
-            a: "Lotería, Games y Cupón están en preparación para próximas actualizaciones y se irán activando con reglas claras."
+            a: "Lotería, Games y Cupón están agrupadas en el menú Próximamente y se irán activando con reglas claras."
           }
         ]
       },
@@ -1835,7 +1844,7 @@
           },
           {
             q: "What features are coming soon?",
-            a: "Lottery, Games, and Coupon are planned for upcoming updates and will launch with clear rules."
+            a: "Lottery, Games, and Coupon are grouped under the Coming Soon menu and will launch with clear rules."
           }
         ]
       },
@@ -1881,7 +1890,7 @@
           },
           {
             q: "Какие разделы появятся в ближайшее время?",
-            a: "Лотерея, Игры и Купон готовятся для следующих обновлений."
+            a: "Лотерея, Игры и Купон собраны в разделе Скоро и будут запускаться по мере готовности."
           }
         ]
       }
@@ -1936,6 +1945,8 @@
       { icon: "🚀", label: "Cohete" },
       { icon: "🔑", label: "Llave" }
     ];
+
+    const COMING_SOON_SECTIONS = ["loteria", "games", "cupon"];
 
     let tasks = [];
     let state = {
@@ -2314,23 +2325,38 @@
 
     tasks = buildBaseTasks();
 
-    function closeProfileDropdown() {
-      document.getElementById("profileDropdownWrap")?.classList.remove("open");
+    function closeAllNavDropdowns(exceptId = null) {
+      ["profileDropdownWrap", "comingSoonDropdownWrap"].forEach(id => {
+        if (id !== exceptId) document.getElementById(id)?.classList.remove("open");
+      });
     }
 
     function toggleProfileDropdown(e) {
       e?.stopPropagation();
+      closeAllNavDropdowns("profileDropdownWrap");
       document.getElementById("profileDropdownWrap")?.classList.toggle("open");
     }
 
+    function toggleComingSoonDropdown(e) {
+      e?.stopPropagation();
+      closeAllNavDropdowns("comingSoonDropdownWrap");
+      document.getElementById("comingSoonDropdownWrap")?.classList.toggle("open");
+    }
+
     function selectProfileMenuItem(tab) {
-      closeProfileDropdown();
+      closeAllNavDropdowns();
       openProfileTab(tab);
     }
 
+    function selectComingSoonItem(sec) {
+      closeAllNavDropdowns();
+      switchSection(sec);
+    }
+
     document.addEventListener("click", (e) => {
-      const wrap = document.getElementById("profileDropdownWrap");
-      if (wrap && !wrap.contains(e.target)) wrap.classList.remove("open");
+      if (!e.target.closest(".nav-dd-wrap")) {
+        closeAllNavDropdowns();
+      }
     });
 
     function showToast(msg) {
@@ -2693,7 +2719,7 @@
       state.coins = Number(user.coins ?? 0);
       hydrateTasksForUser(user);
       cancelFaucetChallenge();
-      closeProfileDropdown();
+      closeAllNavDropdowns();
       resetFaceForms();
 
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
@@ -2716,7 +2742,7 @@
       closeViewerModal();
       closeOfferwallModal();
       cancelFaucetChallenge();
-      closeProfileDropdown();
+      closeAllNavDropdowns();
       resetFaceForms();
       state.currentUser = null;
       localStorage.removeItem(CURRENT_USER_KEY);
@@ -2727,7 +2753,7 @@
     }
 
     function switchProfileTab(tab) {
-      closeProfileDropdown();
+      closeAllNavDropdowns();
       stopCameraStream();
       wdFaceVerified = false;
       setFaceStatus("wd", t("wdFacePending"), "");
@@ -2748,16 +2774,23 @@
     }
 
     function openProfileTab(tab) {
-      closeProfileDropdown();
+      closeAllNavDropdowns();
       switchSection("perfil");
       switchProfileTab(tab);
     }
 
     function switchSection(sec) {
-      closeProfileDropdown();
+      closeAllNavDropdowns();
       if (sec !== "perfil") stopCameraStream();
       state.section = sec;
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.sec === sec));
+      const isComingSoon = COMING_SOON_SECTIONS.includes(sec);
+
+      document.querySelectorAll(".nav-btn").forEach(b => {
+        const btnSec = b.dataset.sec;
+        const active = btnSec === sec || (btnSec === "proximamente" && isComingSoon);
+        b.classList.toggle("active", active);
+      });
+
       ["dashboard", "faucet", "ptcs", "shortlinks", "offerwalls", "logros", "loteria", "games", "cupon", "faq", "perfil"].forEach(s => {
         document.getElementById(`sec-${s}`)?.classList.toggle("hidden", s !== sec);
       });
