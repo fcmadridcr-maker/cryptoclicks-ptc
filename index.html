@@ -516,14 +516,6 @@
       font-weight: 600;
     }
 
-    .subnav {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -841,16 +833,9 @@
       </div>
     </section>
 
-    <!-- PERFIL -->
+    <!-- PERFIL (Sin barra interna; se controla solo desde el menú desplegable del botón Perfil) -->
     <section id="sec-perfil" class="hidden">
       <div class="card">
-        <div class="subnav" id="profileSubnav">
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="historial" onclick="switchProfileTab('historial')">Historial</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="retiros" onclick="switchProfileTab('retiros')">Retiros</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="anunciantes" onclick="switchProfileTab('anunciantes')">Anunciantes</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="referidos" onclick="switchProfileTab('referidos')">Referidos</button>
-        </div>
-
         <div id="ptab-historial" class="profile-tab-panel active">
           <div class="item-title">Últimos Movimientos</div>
           <div class="table-wrap">
@@ -1585,10 +1570,6 @@
 
       tabs.forEach(t => {
         document.getElementById(`ptab-${t}`)?.classList.toggle("active", t === validTab);
-      });
-
-      document.querySelectorAll("#profileSubnav button").forEach(btn => {
-        btn.className = btn.dataset.ptab === validTab ? "btn btn-primary btn-sm" : "btn btn-secondary btn-sm";
       });
 
       if (validTab === "historial") renderHistoryView();
