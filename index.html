@@ -407,6 +407,55 @@
       box-shadow: var(--shadow-sm);
     }
 
+    .faucet-ad-box {
+      background: var(--card-2);
+      border: 1px dashed var(--border-strong);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 112px;
+      overflow: hidden;
+    }
+
+    .captcha-pick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+    }
+
+    .captcha-pick-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 6px;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: border-color 0.15s ease, transform 0.12s ease, background-color 0.15s ease;
+    }
+
+    .captcha-pick-btn:hover {
+      border-color: var(--border-strong);
+      background: var(--card-2);
+    }
+
+    .captcha-pick-btn.selected {
+      border-color: var(--accent);
+      background: rgba(57, 255, 20, 0.12);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
     .ad-label {
       font-size: 0.65rem;
       letter-spacing: 0.06em;
@@ -933,9 +982,9 @@
       </div>
     </section>
 
-    <!-- FAUCET -->
+    <!-- FAUCET MEJORADA -->
     <section id="sec-faucet" class="hidden">
-      <div class="card" style="max-width:520px;">
+      <div class="card" style="max-width:600px;">
         <div class="row-between">
           <div>
             <div class="item-title" id="faucetCardTitle">🚰 Faucet</div>
@@ -944,11 +993,25 @@
           <span class="tag">+35 Coins</span>
         </div>
 
-        <div class="hidden" id="faucetChallengeBox" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <label for="faucetCaptchaInput" id="faucetCaptchaQuestion" style="font-size:0.8rem; font-weight:700;"></label>
-          <input type="number" id="faucetCaptchaInput" style="width:110px;" />
-          <button type="button" class="btn btn-primary btn-sm" id="btnFaucetConfirm" onclick="confirmFaucetClaim()">Confirmar</button>
-          <button type="button" class="btn btn-secondary btn-sm" id="btnFaucetCancel" onclick="cancelFaucetChallenge()">Cancelar</button>
+        <!-- Caja / Banner de Anuncio para cubrir el claim -->
+        <div class="faucet-ad-box" id="adSlotFaucet"></div>
+
+        <!-- Reto Matemático + Captcha -->
+        <div class="hidden" id="faucetChallengeBox" style="display:flex; flex-direction:column; gap:10px; background:var(--card-2); border:1px solid var(--border); border-radius:12px; padding:12px;">
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <label for="faucetCaptchaInput" id="faucetCaptchaQuestion" style="font-size:0.84rem; font-weight:700;"></label>
+            <input type="number" id="faucetCaptchaInput" placeholder="Resultado" style="width:120px;" />
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <span id="faucetVisualCaptchaPrompt" style="font-size:0.8rem; font-weight:700; color:var(--muted);"></span>
+            <div class="captcha-pick-grid" id="faucetVisualCaptchaGrid"></div>
+          </div>
+
+          <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnFaucetCancel" onclick="cancelFaucetChallenge()">Cancelar</button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnFaucetConfirm" onclick="confirmFaucetClaim()">Confirmar</button>
+          </div>
         </div>
 
         <div class="row-between">
@@ -1343,6 +1406,7 @@
       <div class="field-group"><label>Shortlinks</label><textarea class="code-textarea" id="shortLinksInput"></textarea></div>
       <div class="field-group"><label>Banner 728x90</label><textarea class="code-textarea" id="adTopInput"></textarea></div>
       <div class="field-group"><label>Banner 300x250</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
+      <div class="field-group"><label>Anuncio Faucet (Claim)</label><textarea class="code-textarea" id="adFaucetInput"></textarea></div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
         <button class="btn btn-secondary btn-sm" id="btnResetAdConfig" onclick="resetAdConfig()">Restaurar</button>
         <button class="btn btn-primary btn-sm" id="btnSaveAdConfig" onclick="saveAdConfig()">Guardar</button>
@@ -1380,7 +1444,8 @@
       frameLinks: "ccf_links_frame",
       shortLinks: "ccf_links_short",
       adTop: "ccf_ad_top",
-      adModal: "ccf_ad_modal"
+      adModal: "ccf_ad_modal",
+      adFaucet: "ccf_ad_faucet"
     };
 
     const I18N = {
@@ -1539,6 +1604,7 @@
 
     const DEFAULT_AD_728 = `<div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#0e1f18;border:1px solid rgba(57,255,20,0.25);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#94cbb0;font-size:12px;">Espacio 728×90</span></div>`;
     const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#0e1f18;border:1px solid rgba(57,255,20,0.25);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#94cbb0;font-size:12px;">Configurable</span></div>`;
+    const DEFAULT_AD_FAUCET = `<div style="width:468px;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#0e2019;border:1px solid rgba(57,255,20,0.28);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>Sponsor / Ad Claim</strong><span style="color:#98cbb2;font-size:12px;">Espacio publicitario Faucet</span></div>`;
 
     const DEFAULT_OFFERWALL_LINKS = ["https://timewall.io/", "https://www.cpx-research.com/", "https://bitlabs.ai/", "https://monlix.com/"];
     const DEFAULT_WINDOW_LINKS = ["https://example.com/"];
@@ -1564,6 +1630,15 @@
       id: `sl${i + 1}`, title: `Shortlink #${i + 1}`, desc: "Enlace acortado (+130 Coins).", duration: 20, reward: 130
     }));
 
+    const FAUCET_CAPTCHA_POOL = [
+      { icon: "🪙", label: "Moneda" },
+      { icon: "⚡", label: "Rayo" },
+      { icon: "🛡️", label: "Escudo" },
+      { icon: "💎", label: "Gema" },
+      { icon: "🚀", label: "Cohete" },
+      { icon: "🔑", label: "Llave" }
+    ];
+
     let tasks = [];
     let state = {
       currentUser: null,
@@ -1575,13 +1650,16 @@
       themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
       adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
-      adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300
+      adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300,
+      adFaucetHtml: localStorage.getItem(STORAGE_KEYS.adFaucet) ?? DEFAULT_AD_FAUCET
     };
 
     let activeSession = null;
     let timerInterval = null;
     let expectedCaptcha = null;
     let expectedFaucetCaptcha = 4;
+    let expectedVisualCaptcha = null;
+    let selectedVisualCaptcha = null;
 
     let camStream = null;
     let activeCamTarget = null;
@@ -2465,6 +2543,28 @@
       showToast(`+${DAILY_BONUS_COINS} Coins`);
     }
 
+    function renderFaucetVisualCaptcha() {
+      const shuffled = [...FAUCET_CAPTCHA_POOL].sort(() => Math.random() - 0.5).slice(0, 4);
+      const target = shuffled[Math.floor(Math.random() * shuffled.length)];
+      expectedVisualCaptcha = target.label;
+      selectedVisualCaptcha = null;
+
+      document.getElementById("faucetVisualCaptchaPrompt").textContent = `Captcha: selecciona "${target.label}"`;
+      const grid = document.getElementById("faucetVisualCaptchaGrid");
+      grid.innerHTML = shuffled.map(opt => `
+        <button type="button" class="captcha-pick-btn" onclick="selectFaucetVisualOption('${opt.label}', this)">
+          <span style="font-size:1.15rem;">${opt.icon}</span>
+          <span style="font-size:0.72rem;">${opt.label}</span>
+        </button>
+      `).join("");
+    }
+
+    function selectFaucetVisualOption(label, btnEl) {
+      selectedVisualCaptcha = label;
+      document.querySelectorAll("#faucetVisualCaptchaGrid .captcha-pick-btn").forEach(b => b.classList.remove("selected"));
+      btnEl?.classList.add("selected");
+    }
+
     function triggerFaucetButton() {
       if (!state.currentUser) return;
       const now = Date.now();
@@ -2474,17 +2574,23 @@
       expectedFaucetCaptcha = a + b;
       document.getElementById("faucetCaptchaQuestion").textContent = `${a} + ${b} =`;
       document.getElementById("faucetCaptchaInput").value = "";
+      renderFaucetVisualCaptcha();
       document.getElementById("faucetChallengeBox").classList.remove("hidden");
+      applyAdSlots();
     }
 
     function cancelFaucetChallenge() {
+      selectedVisualCaptcha = null;
+      expectedVisualCaptcha = null;
       document.getElementById("faucetChallengeBox")?.classList.add("hidden");
     }
 
     function confirmFaucetClaim() {
       if (!state.currentUser) return;
-      if (Number(document.getElementById("faucetCaptchaInput").value) !== expectedFaucetCaptcha) {
-        showToast("Respuesta incorrecta.");
+      const mathOk = Number(document.getElementById("faucetCaptchaInput").value) === expectedFaucetCaptcha;
+      const captchaOk = Boolean(expectedVisualCaptcha) && selectedVisualCaptcha === expectedVisualCaptcha;
+      if (!mathOk || !captchaOk) {
+        showToast("Verifica el cálculo matemático y el captcha.");
         return;
       }
       state.currentUser.lastFaucetAt = Date.now();
@@ -2662,6 +2768,7 @@
     function applyAdSlots() {
       renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 728, 90, "Banner 728x90");
       renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 300, 250, "Banner 300x250");
+      renderIsolatedAd(document.getElementById("adSlotFaucet"), state.adFaucetHtml, 468, 80, "Anuncio Faucet (Claim)");
     }
 
     window.addEventListener("resize", () => {
@@ -2862,6 +2969,7 @@
       document.getElementById("shortLinksInput").value = getLinksList(STORAGE_KEYS.shortLinks, DEFAULT_SHORTLINKS).join("\n");
       document.getElementById("adTopInput").value = state.adTopHtml;
       document.getElementById("adModalInput").value = state.adModalHtml;
+      document.getElementById("adFaucetInput").value = state.adFaucetHtml;
       document.getElementById("adConfigModal").classList.add("open");
     }
 
@@ -2876,8 +2984,10 @@
       localStorage.setItem(STORAGE_KEYS.shortLinks, document.getElementById("shortLinksInput").value.trim());
       state.adTopHtml = document.getElementById("adTopInput").value;
       state.adModalHtml = document.getElementById("adModalInput").value;
+      state.adFaucetHtml = document.getElementById("adFaucetInput").value;
       localStorage.setItem(STORAGE_KEYS.adTop, state.adTopHtml);
       localStorage.setItem(STORAGE_KEYS.adModal, state.adModalHtml);
+      localStorage.setItem(STORAGE_KEYS.adFaucet, state.adFaucetHtml);
       hydrateTasksForUser(state.currentUser);
       updateAllUI();
       applyAdSlots();
@@ -2889,6 +2999,7 @@
       Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
       state.adTopHtml = DEFAULT_AD_728;
       state.adModalHtml = DEFAULT_AD_300;
+      state.adFaucetHtml = DEFAULT_AD_FAUCET;
       openAdConfigModal();
       applyAdSlots();
     }
