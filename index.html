@@ -226,6 +226,13 @@
     }
 
     textarea {
+      min-height: 76px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      resize: vertical;
+    }
+
+    .code-textarea {
       min-height: 64px;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.76rem;
@@ -288,7 +295,7 @@
       position: absolute;
       top: calc(100% + 6px);
       left: 0;
-      min-width: 170px;
+      min-width: 175px;
       background: var(--card);
       border: 1px solid var(--border-strong);
       border-radius: 10px;
@@ -701,6 +708,7 @@
           <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('retiros')">💸 Retiros</button>
           <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('anunciantes')">📢 Anunciantes</button>
           <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('referidos')">🤝 Referidos</button>
+          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('tickets')">🎟️ Tickets</button>
         </div>
       </div>
     </nav>
@@ -965,6 +973,48 @@
             </table>
           </div>
         </div>
+
+        <div id="ptab-tickets" class="profile-tab-panel" style="max-width:680px;">
+          <div>
+            <div class="item-title">🎟️ Tickets de Soporte y Sugerencias</div>
+            <div class="item-desc">Reporta algún problema o inconveniente, o envía una sugerencia al propietario del sitio.</div>
+          </div>
+          <form onsubmit="submitSupportTicket(event)" style="display:flex; flex-direction:column; gap:8px;">
+            <div class="two-col">
+              <div class="field-group">
+                <label for="ticketCategory">Tipo</label>
+                <select id="ticketCategory">
+                  <option value="Problema / Inconveniente">Problema / Inconveniente</option>
+                  <option value="Sugerencia">Sugerencia</option>
+                  <option value="Retiros / Pagos">Retiros / Pagos</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="ticketSubject">Asunto</label>
+                <input type="text" id="ticketSubject" maxlength="70" placeholder="Resumen breve" required />
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="ticketMessage">Mensaje</label>
+              <textarea id="ticketMessage" maxlength="600" placeholder="Describe el inconveniente o tu sugerencia con detalle..." required></textarea>
+            </div>
+            <div class="row-between">
+              <span></span>
+              <button type="submit" class="btn btn-primary">Enviar Ticket</button>
+            </div>
+          </form>
+
+          <div class="item-title" style="margin-top:6px;">Mis Tickets</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>ID</th><th>Fecha</th><th>Tipo</th><th>Asunto</th><th>Estado</th></tr>
+              </thead>
+              <tbody id="ticketsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -1032,12 +1082,12 @@
         <strong>Enlaces y Banners</strong>
         <button class="btn btn-secondary btn-sm" onclick="closeAdConfigModal()">✕</button>
       </div>
-      <div class="field-group"><label>Offerwalls</label><textarea id="offerwallLinksInput"></textarea></div>
-      <div class="field-group"><label>Window Ads</label><textarea id="windowLinksInput"></textarea></div>
-      <div class="field-group"><label>Frame Ads</label><textarea id="frameLinksInput"></textarea></div>
-      <div class="field-group"><label>Shortlinks</label><textarea id="shortLinksInput"></textarea></div>
-      <div class="field-group"><label>Banner 728x90</label><textarea id="adTopInput"></textarea></div>
-      <div class="field-group"><label>Banner 300x250</label><textarea id="adModalInput"></textarea></div>
+      <div class="field-group"><label>Offerwalls</label><textarea class="code-textarea" id="offerwallLinksInput"></textarea></div>
+      <div class="field-group"><label>Window Ads</label><textarea class="code-textarea" id="windowLinksInput"></textarea></div>
+      <div class="field-group"><label>Frame Ads</label><textarea class="code-textarea" id="frameLinksInput"></textarea></div>
+      <div class="field-group"><label>Shortlinks</label><textarea class="code-textarea" id="shortLinksInput"></textarea></div>
+      <div class="field-group"><label>Banner 728x90</label><textarea class="code-textarea" id="adTopInput"></textarea></div>
+      <div class="field-group"><label>Banner 300x250</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
         <button class="btn btn-secondary btn-sm" onclick="resetAdConfig()">Restaurar</button>
         <button class="btn btn-primary btn-sm" onclick="saveAdConfig()">Guardar</button>
@@ -1133,6 +1183,14 @@
     let timerInterval = null;
     let expectedCaptcha = null;
     let expectedFaucetCaptcha = 4;
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
 
     function getOrCreateDeviceId() {
       let id = localStorage.getItem(DEVICE_ID_KEY);
@@ -1434,6 +1492,7 @@
         users[idx].lastFaucetAt = state.currentUser.lastFaucetAt || null;
         users[idx].movements = state.currentUser.movements || [];
         users[idx].withdrawals = state.currentUser.withdrawals || [];
+        users[idx].tickets = state.currentUser.tickets || [];
         state.currentUser = users[idx];
         saveUsersDB(users);
       }
@@ -1490,6 +1549,7 @@
         },
         movements: [],
         withdrawals: [],
+        tickets: [],
         createdAt: new Date().toISOString()
       };
 
@@ -1564,7 +1624,7 @@
 
     function switchProfileTab(tab) {
       closeProfileDropdown();
-      const tabs = ["historial", "retiros", "anunciantes", "referidos"];
+      const tabs = ["historial", "retiros", "anunciantes", "referidos", "tickets"];
       const validTab = tabs.includes(tab) ? tab : "historial";
       state.profileTab = validTab;
 
@@ -1576,6 +1636,7 @@
       if (validTab === "retiros") updateWithdrawQuotaUI();
       if (validTab === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
       if (validTab === "referidos") renderReferralsView();
+      if (validTab === "tickets") renderTicketsView();
     }
 
     function openProfileTab(tab) {
@@ -1900,7 +1961,7 @@
     function renderAdvertiserCampaignsTable() {
       const list = getAdvertiserCampaigns();
       document.getElementById("advertiserCampaignsBody").innerHTML = list.length
-        ? list.map(c => `<tr><td>${c.title}</td><td>${c.format}</td><td>${c.deliveredClicks}/${c.totalClicks}</td><td>$${Number(c.totalUsd).toFixed(2)}</td></tr>`).join("")
+        ? list.map(c => `<tr><td>${escapeHtml(c.title)}</td><td>${escapeHtml(c.format)}</td><td>${c.deliveredClicks}/${c.totalClicks}</td><td>$${Number(c.totalUsd).toFixed(2)}</td></tr>`).join("")
         : `<tr><td colspan="4" style="color:var(--muted);">Sin campañas.</td></tr>`;
     }
 
@@ -1980,7 +2041,7 @@
       document.getElementById("refCountDisplay").textContent = String(refs.length);
       document.getElementById("refEarnedDisplay").textContent = `${Number(state.currentUser.refBonusTotal || 0).toLocaleString()} Coins`;
       document.getElementById("referralsTableBody").innerHTML = refs.length
-        ? refs.map(r => `<tr><td>${r.username}</td><td>${new Date(r.createdAt).toLocaleDateString("es-VE")}</td><td>+${REFERRAL_ONE_TIME_BONUS_COINS.toLocaleString()}</td></tr>`).join("")
+        ? refs.map(r => `<tr><td>${escapeHtml(r.username)}</td><td>${new Date(r.createdAt).toLocaleDateString("es-VE")}</td><td>+${REFERRAL_ONE_TIME_BONUS_COINS.toLocaleString()}</td></tr>`).join("")
         : `<tr><td colspan="3" style="color:var(--muted);">Sin referidos.</td></tr>`;
     }
 
@@ -1991,22 +2052,72 @@
       showToast("Enlace copiado.");
     }
 
+    function renderTicketsView() {
+      const tbody = document.getElementById("ticketsTableBody");
+      if (!tbody || !state.currentUser) return;
+      const list = Array.isArray(state.currentUser.tickets) ? state.currentUser.tickets : [];
+      tbody.innerHTML = list.length
+        ? list.map(t => `
+            <tr>
+              <td>${escapeHtml(t.id)}</td>
+              <td>${escapeHtml(t.date)}</td>
+              <td>${escapeHtml(t.category)}</td>
+              <td>
+                <div style="font-weight:700;">${escapeHtml(t.subject)}</div>
+                <div style="font-size:0.73rem; color:var(--muted); margin-top:2px;">${escapeHtml(t.message)}</div>
+              </td>
+              <td><span class="tag">${escapeHtml(t.status || "Abierto")}</span></td>
+            </tr>
+          `).join("")
+        : `<tr><td colspan="5" style="color:var(--muted);">Aún no has enviado tickets.</td></tr>`;
+    }
+
+    function submitSupportTicket(e) {
+      e.preventDefault();
+      if (!state.currentUser) return;
+      const category = document.getElementById("ticketCategory").value;
+      const subject = document.getElementById("ticketSubject").value.trim();
+      const message = document.getElementById("ticketMessage").value.trim();
+      if (!subject || !message) {
+        showToast("Completa el asunto y el mensaje.");
+        return;
+      }
+
+      if (!Array.isArray(state.currentUser.tickets)) state.currentUser.tickets = [];
+      const now = Date.now();
+      const ticketId = "TCK-" + String(now).slice(-5);
+      state.currentUser.tickets.unshift({
+        id: ticketId,
+        date: new Date(now).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+        category,
+        subject,
+        message,
+        status: "Abierto"
+      });
+      if (state.currentUser.tickets.length > 30) state.currentUser.tickets = state.currentUser.tickets.slice(0, 30);
+
+      persistCurrentUserData();
+      renderTicketsView();
+      e.target.reset();
+      showToast(`Ticket ${ticketId} enviado.`);
+    }
+
     function renderDashboardMovements() {
       const movs = (state.currentUser?.movements || []).slice(0, 5);
       document.getElementById("dashMovementsBody").innerHTML = movs.length
-        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--danger)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()}</td><td>$${formatUsdt(m.coins)}</td></tr>`).join("")
+        ? movs.map(m => `<tr><td>${m.date}</td><td>${escapeHtml(m.label)}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--danger)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()}</td><td>$${formatUsdt(m.coins)}</td></tr>`).join("")
         : `<tr><td colspan="4" style="color:var(--muted);">Sin movimientos.</td></tr>`;
     }
 
     function renderHistoryView() {
       const movs = (state.currentUser?.movements || []).slice(0, 10);
       document.getElementById("movementsTableBody").innerHTML = movs.length
-        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--danger)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()}</td><td>$${formatUsdt(m.coins)}</td></tr>`).join("")
+        ? movs.map(m => `<tr><td>${m.date}</td><td>${escapeHtml(m.label)}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--danger)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()}</td><td>$${formatUsdt(m.coins)}</td></tr>`).join("")
         : `<tr><td colspan="4" style="color:var(--muted);">Sin movimientos.</td></tr>`;
 
       const withs = state.currentUser?.withdrawals || [];
       document.getElementById("withdrawalsTableBody").innerHTML = withs.length
-        ? withs.map(w => `<tr><td>${w.date}</td><td>${w.method}</td><td>${w.address}</td><td>${w.coins.toLocaleString()} ($${w.usdt})</td><td>${w.status}</td></tr>`).join("")
+        ? withs.map(w => `<tr><td>${w.date}</td><td>${escapeHtml(w.method)}</td><td>${escapeHtml(w.address)}</td><td>${w.coins.toLocaleString()} ($${w.usdt})</td><td>${escapeHtml(w.status)}</td></tr>`).join("")
         : `<tr><td colspan="5" style="color:var(--muted);">Sin retiros.</td></tr>`;
     }
 
