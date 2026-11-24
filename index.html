@@ -107,20 +107,20 @@
     }
 
     .brand-mark {
-      width: 34px;
+      width: 40px;
       height: 34px;
       flex-shrink: 0;
       filter:
         drop-shadow(0 3px 4px rgba(0, 0, 0, 0.65))
-        drop-shadow(0 0 8px rgba(56, 189, 248, 0.45));
+        drop-shadow(0 0 8px rgba(56, 189, 248, 0.35));
       transition: transform 0.2s ease, filter 0.2s ease;
     }
 
     .brand:hover .brand-mark {
-      transform: translateY(-1px) scale(1.06);
+      transform: translateY(-1px) scale(1.05);
       filter:
         drop-shadow(0 4px 6px rgba(0, 0, 0, 0.75))
-        drop-shadow(0 0 12px rgba(56, 189, 248, 0.7));
+        drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
     }
 
     .brand-title-accent {
@@ -953,20 +953,27 @@
   <header>
     <div class="header-inner">
       <div class="brand">
-        <svg class="brand-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <svg class="brand-mark" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
-            <linearGradient id="ccfBoltGrad" x1="6" y1="3" x2="30" y2="33" gradientUnits="userSpaceOnUse">
+            <linearGradient id="bullGrad" x1="4" y1="6" x2="26" y2="30" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stop-color="#38bdf8" />
-              <stop offset="55%" stop-color="#818cf8" />
-              <stop offset="100%" stop-color="#a855f7" />
+              <stop offset="100%" stop-color="#0284c7" />
             </linearGradient>
-            <linearGradient id="ccfBoltDepth" x1="10" y1="5" x2="28" y2="34" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#0284c7" />
-              <stop offset="100%" stop-color="#6d28d9" />
+            <linearGradient id="bearGrad" x1="22" y1="8" x2="45" y2="30" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#c084fc" />
+              <stop offset="100%" stop-color="#7e22ce" />
             </linearGradient>
           </defs>
-          <path d="M21.5 3L7.5 20.5H17L14.5 33L28.5 15.5H19L21.5 3Z" fill="url(#ccfBoltDepth)" transform="translate(1.5, 1.5)" opacity="0.75" />
-          <path d="M21.5 3L7.5 20.5H17L14.5 33L28.5 15.5H19L21.5 3Z" fill="url(#ccfBoltGrad)" stroke="#e0f2fe" stroke-width="1.2" stroke-linejoin="round" />
+
+          <path d="M27 11.5C25.6 9.8 26.8 7.4 29 7.8C30.3 8 31.1 9.1 31.3 10.3C33.4 9.9 35.8 10.4 37.5 11.8C39.2 11.2 40.9 12.4 40.5 14.2C42.6 15.6 43.8 18.2 43.4 21.5L42.8 28.5H38.5L38 23.5H34.5L34 28.5H29.8L30.2 21.2C27.5 20.5 25.5 18.4 25.5 15.8C25.5 13.9 26.2 12.5 27 11.5Z"
+                fill="url(#bearGrad)" stroke="#1e1035" stroke-width="1.2" stroke-linejoin="round" />
+          <circle cx="28.3" cy="14.2" r="1.1" fill="#f5f7ff" />
+
+          <path d="M11 8.5C8.6 7.8 6.8 5.8 6.4 3.6C8.8 4.1 10.9 5.5 12.2 7.5C14.8 6.8 17.8 7.3 20.2 8.8L25.5 7.2L24.2 11.8C25.6 13.7 26.2 16.2 25.7 19.2L24.5 29H20L19.4 22.5H14.6L14 29H9.5L10.2 20.8C7.1 19.8 5.2 17.4 5.4 14.5C5.6 11.8 7.9 9.7 11 8.5Z"
+                fill="url(#bullGrad)" stroke="#03121c" stroke-width="1.3" stroke-linejoin="round" />
+          <path d="M19.5 8.2C21.8 5.8 24.4 4.7 26.8 4.8C25.4 6.8 23.4 8.2 21.1 9.1"
+                stroke="#e0f2fe" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="9.6" cy="13.5" r="1.2" fill="#f5f7ff" />
         </svg>
         <span>Crypto<span class="brand-title-accent">Clicks</span>Faucet</span>
       </div>
