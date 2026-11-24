@@ -24,6 +24,7 @@
       --accent-secondary: #a855f7;
       --accent-text: #03121c;
       --danger: #fb7185;
+      --success: #34d399;
     }
 
     body[data-theme="light"] {
@@ -45,6 +46,7 @@
       --accent-secondary: #38bdf8;
       --accent-text: #ffffff;
       --danger: #e11d48;
+      --success: #059669;
     }
 
     *, *::before, *::after {
@@ -251,6 +253,30 @@
       background: var(--card);
       transform: translateY(-1px);
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.22);
+    }
+
+    .btn-call {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      border-color: rgba(52, 211, 153, 0.55);
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-call:hover:not(:disabled) {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-put {
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+      color: #ffffff;
+      border-color: rgba(251, 113, 133, 0.55);
+      box-shadow: 0 0 14px rgba(244, 63, 94, 0.35);
+    }
+
+    .btn-put:hover:not(:disabled) {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
     }
 
     .btn-danger {
@@ -865,6 +891,65 @@
       font-weight: 600;
     }
 
+    /* Estilos Investment Game */
+    .inv-chart-wrap {
+      width: 100%;
+      background: rgba(6, 7, 14, 0.65);
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 10px;
+      position: relative;
+    }
+
+    body[data-theme="light"] .inv-chart-wrap {
+      background: rgba(240, 248, 255, 0.85);
+    }
+
+    #btcGameCanvas {
+      width: 100%;
+      height: 220px;
+      display: block;
+    }
+
+    .inv-price-banner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 10px;
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      text-align: center;
+    }
+
+    .inv-price-main {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+    }
+
+    .inv-controls-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 10px;
+      align-items: end;
+    }
+
+    @media (max-width: 640px) {
+      .inv-controls-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .inv-action-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
     .face-box {
       background: var(--card-2);
       backdrop-filter: blur(8px);
@@ -1097,14 +1182,15 @@
 
         <div class="nav-dd-wrap" id="comingSoonDropdownWrap">
           <button type="button" class="nav-btn" data-sec="proximamente" id="btnComingSoonDropdown" onclick="toggleComingSoonDropdown(event)">
-            ⏳ <span class="i18n-soon">Próximamente</span> ▾
+            🎮 <span class="i18n-nav-games">Games</span> ▾
           </button>
           <div class="nav-dd-menu" id="comingSoonDropdownMenu">
+            <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('games')">
+              <span>📈 <span>Investment Game</span></span>
+              <span class="dd-count">×1.9</span>
+            </button>
             <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('loteria')">
               <span>🎰 <span class="i18n-nav-lottery">Lotería</span></span>
-            </button>
-            <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('games')">
-              <span>🎮 <span class="i18n-nav-games">Games</span></span>
             </button>
             <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('cupon')">
               <span>🎟️ <span class="i18n-nav-coupon">Cupón</span></span>
@@ -1239,6 +1325,7 @@
 
         <div class="faucet-side-card">
           <div class="item-title" style="font-size:0.82rem;">⚡ Accesos rápidos</div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('games')">📈 Investment Game</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('faq')">❓ Guide / FAQ</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('anunciantes')">📢 Anunciantes</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('referidos')">🤝 Referidos</button>
@@ -1417,24 +1504,66 @@
           </div>
         </section>
 
+        <!-- INVESTMENT GAME (Call or Put) -->
         <section id="sec-games" class="hidden">
           <div class="card">
             <div class="row-between">
               <div>
-                <div class="item-title" id="gamesTitle">🎮 Games</div>
-                <div class="item-desc" id="gamesSubtitle">Minijuegos interactivos integrados en futuras actualizaciones de la plataforma.</div>
+                <div class="item-title" id="gamesTitle">📈 Investment Game (BTC Call or Put)</div>
+                <div class="item-desc" id="gamesSubtitle">Predice si el valor del Bitcoin subirá (Call) o bajará (Put) al cerrar el minuto y multiplica tu apuesta ×1.9.</div>
               </div>
-              <span class="tag i18n-soon">Próximamente</span>
+              <span class="tag" id="btcGameSourceBadge">BTC En Vivo</span>
             </div>
-            <div class="two-col">
-              <div class="faq-item">
-                <div class="faq-q" id="gamesPlanTitle">Próximas actualizaciones</div>
-                <div class="faq-a" id="gamesPlanDesc">Estamos planificando minijuegos ligeros en el navegador para sumar dinamismo, retos y recompensas adicionales sin salir de tu cuenta.</div>
+
+            <div class="inv-chart-wrap">
+              <canvas id="btcGameCanvas" width="760" height="220"></canvas>
+            </div>
+
+            <div class="inv-price-banner">
+              <span class="kpi-label">Current Bitcoin Value (BTC/USDT)</span>
+              <div class="inv-price-main" id="btcCurrentPriceDisplay">$--,---.--</div>
+              <div class="row-between" style="justify-content:center; gap:14px; font-size:0.78rem;">
+                <span>⏱️ Cierre de ronda en: <strong id="btcRoundCountdown" style="color:var(--accent);">--s</strong></span>
+                <span id="btcActiveBetSummary" style="color:var(--muted);">Sin apuesta activa en esta ronda</span>
               </div>
-              <div class="faq-item">
-                <div class="faq-q" id="gamesNowTitle">Mientras tanto</div>
-                <div class="faq-a" id="gamesNowDesc">Puedes seguir acumulando Coins en la Faucet, PTCs, Shortlinks, Offerwalls, Bono Diario y Logros para prepararte para el lanzamiento.</div>
+            </div>
+
+            <div class="inv-controls-row">
+              <div class="field-group">
+                <div class="row-between">
+                  <label for="btcBetAmountInput">Apuesta en Coins (50 – 5,000)</label>
+                  <div style="display:flex; gap:4px;">
+                    <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.7rem;" onclick="adjustBtcBet('min')">Min</button>
+                    <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.7rem;" onclick="adjustBtcBet('x2')">×2</button>
+                    <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.7rem;" onclick="adjustBtcBet('max')">Max</button>
+                  </div>
+                </div>
+                <input type="number" id="btcBetAmountInput" value="100" min="50" max="5000" step="10" />
               </div>
+
+              <div class="inv-action-btns">
+                <button type="button" class="btn btn-call" id="btnBtcCall" onclick="placeBtcPrediction('call')">📈 Call (Sube)</button>
+                <button type="button" class="btn btn-put" id="btnBtcPut" onclick="placeBtcPrediction('put')">📉 Put (Baja)</button>
+              </div>
+            </div>
+
+            <div class="item-title" style="font-size:0.83rem; margin-top:4px;">Últimas Rondas</div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Hora</th>
+                    <th>Predicción</th>
+                    <th>Entrada</th>
+                    <th>Cierre</th>
+                    <th>Apuesta</th>
+                    <th>Resultado</th>
+                  </tr>
+                </thead>
+                <tbody id="btcHistoryBody">
+                  <tr><td colspan="6" style="color:var(--muted);">Aún no has jugado rondas en esta sesión.</td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
@@ -1767,6 +1896,10 @@
     const FAUCET_COOLDOWN_MS = 60 * 60 * 1000;
     const FAUCET_REWARD_COINS = 35;
 
+    const BTC_MIN_BET_COINS = 50;
+    const BTC_MAX_BET_COINS = 5000;
+    const BTC_WIN_MULTIPLIER = 1.9;
+
     const USERS_STORAGE_KEY = "ccf_users_db_v2";
     const CURRENT_USER_KEY = "ccf_current_user_v2";
     const DEVICE_ID_KEY = "ccf_device_id_v1";
@@ -1816,6 +1949,10 @@
             a: "1 Coin equivale a $0.00001 USDT (50 Coins = $0.0005 USDT; 10,000 Coins = $0.10 USDT)."
           },
           {
+            q: "¿Cómo funciona el Investment Game (BTC Call or Put)?",
+            a: "Eliges si el precio del Bitcoin subirá (Call) o bajará (Put) al cerrar el minuto actual. Si aciertas ganas ×1.9 tu apuesta; si empatas recuperas tus Coins."
+          },
+          {
             q: "¿Cuáles son el mínimo y el máximo de retiro?",
             a: "El retiro mínimo es de 10,000 Coins y el máximo diario es de 25,000 Coins cada 24 horas."
           },
@@ -1826,10 +1963,6 @@
           {
             q: "¿Pueden existir 2 cuentas en el mismo dispositivo o IP?",
             a: "Se permiten como máximo 2 cuentas por dispositivo o IP. La 2.ª cuenta no recibe bonos de bienvenida ni de referido, y el invitador tampoco cobra bono de referencia por esa 2.ª cuenta."
-          },
-          {
-            q: "¿Qué funciones llegarán próximamente?",
-            a: "Lotería, Games y Cupón están agrupadas en el menú Próximamente y se irán activando con reglas claras."
           }
         ]
       },
@@ -1862,6 +1995,10 @@
             a: "1 Coin equals $0.00001 USDT (50 Coins = $0.0005 USDT; 10,000 Coins = $0.10 USDT)."
           },
           {
+            q: "How does the Investment Game (BTC Call or Put) work?",
+            a: "Predict whether Bitcoin price will go higher (Call) or lower (Put) at the end of the current minute to win ×1.9 your stake. Exact ties refund your stake."
+          },
+          {
             q: "What are the minimum and maximum withdrawal limits?",
             a: "The minimum withdrawal is 10,000 Coins and the daily maximum is 25,000 Coins per 24 hours."
           },
@@ -1872,10 +2009,6 @@
           {
             q: "Are 2 accounts allowed per device or IP?",
             a: "Up to 2 accounts per device or IP are allowed. The 2nd account receives no welcome or referral bonus, and the referrer receives no referral bonus for that 2nd account."
-          },
-          {
-            q: "What features are coming soon?",
-            a: "Lottery, Games, and Coupon are grouped under the Coming Soon menu and will launch with clear rules."
           }
         ]
       },
@@ -1908,6 +2041,10 @@
             a: "1 Coin равен $0.00001 USDT (50 Coins = $0.0005 USDT; 10,000 Coins = $0.10 USDT)."
           },
           {
+            q: "Как работает Investment Game (BTC Call or Put)?",
+            a: "Угадайте, вырастет (Call) или упадет (Put) цена Bitcoin к концу текущей минуты, чтобы умножить ставку в 1.9 раза."
+          },
+          {
             q: "Каковы минимальный и максимальный лимиты вывода?",
             a: "Минимальный вывод — 10,000 Coins, дневной лимит — 25,000 Coins за 24 часа."
           },
@@ -1917,11 +2054,7 @@
           },
           {
             q: "Разрешены ли 2 аккаунта на одном устройстве или IP?",
-            a: "Допускается максимум 2 аккаунта на устройство или IP. 2-й аккаунт не получает приветственный и реферальный бонусы, а пригласивший не получает бонус за этот 2-й аккаунт."
-          },
-          {
-            q: "Какие разделы появятся в ближайшее время?",
-            a: "Лотерея, Игры и Купон собраны в разделе Скоро и будут запускаться по мере готовности."
+            a: "Допускается максимум 2 аккаунта на устройство или IP. 2-й аккаунт не получает приветственный и реферальный бонусы."
           }
         ]
       }
@@ -2006,6 +2139,16 @@
     let activeCamTarget = null;
     let regFaceData = null;
     let wdFaceVerified = false;
+
+    /* Estado Investment Game BTC */
+    let btcGame = {
+      currentPrice: 91250.00,
+      history: [],
+      activeBet: null, // { direction: 'call'|'put', amount: number, entryPrice: number, roundMinute: number }
+      roundsHistory: [],
+      lastMinuteChecked: null,
+      liveSource: "Binance API"
+    };
 
     function escapeHtml(str) {
       return String(str ?? "")
@@ -2448,6 +2591,7 @@
       localStorage.setItem(THEME_PREF_KEY, state.themeMode);
       document.body.setAttribute("data-theme", state.themeMode);
       applyAdSlots();
+      drawBtcGameChart();
     }
 
     function formatCountdown(ms) {
@@ -2492,6 +2636,326 @@
         coins: amountCoins
       });
       if (user.movements.length > 20) user.movements = user.movements.slice(0, 20);
+    }
+
+    /* Lógica del Investment Game (BTC Call or Put) */
+    function initBtcGameHistory(basePrice) {
+      const now = Date.now();
+      const pts = [];
+      let p = basePrice;
+      for (let i = 11; i >= 0; i--) {
+        const ts = now - i * 60000;
+        const d = new Date(ts);
+        const label = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+        if (i === 0) {
+          p = basePrice;
+        } else {
+          p = Number((p + (Math.random() - 0.5) * 48).toFixed(2));
+        }
+        pts.push({ time: label, price: p });
+      }
+      btcGame.history = pts;
+    }
+
+    async function fetchLiveBtcPrice() {
+      try {
+        const res = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT", { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP");
+        const data = await res.json();
+        const price = Number(data.price);
+        if (Number.isFinite(price) && price > 1000) {
+          btcGame.currentPrice = Number(price.toFixed(2));
+          btcGame.liveSource = "BTC/USDT En Vivo";
+          return;
+        }
+      } catch {}
+      // Variación realista si la red bloquea la API externa
+      const delta = (Math.random() - 0.49) * 18.5;
+      btcGame.currentPrice = Number(Math.max(10000, btcGame.currentPrice + delta).toFixed(2));
+      btcGame.liveSource = "Simulación Mercado";
+    }
+
+    function updateBtcGameSeries() {
+      const now = new Date();
+      const label = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      if (!btcGame.history.length) {
+        initBtcGameHistory(btcGame.currentPrice);
+      } else {
+        const last = btcGame.history[btcGame.history.length - 1];
+        if (last.time === label) {
+          last.price = btcGame.currentPrice;
+        } else {
+          btcGame.history.push({ time: label, price: btcGame.currentPrice });
+          if (btcGame.history.length > 14) btcGame.history.shift();
+        }
+      }
+
+      const srcBadge = document.getElementById("btcGameSourceBadge");
+      const priceEl = document.getElementById("btcCurrentPriceDisplay");
+      if (srcBadge) srcBadge.textContent = btcGame.liveSource;
+      if (priceEl) {
+        priceEl.textContent = `$${btcGame.currentPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      }
+      drawBtcGameChart();
+    }
+
+    function drawBtcGameChart() {
+      const canvas = document.getElementById("btcGameCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const pts = btcGame.history;
+      if (pts.length < 2) return;
+
+      const isLight = state.themeMode === "light";
+      const lineColor = isLight ? "#0284c7" : "#38bdf8";
+      const fillTop = isLight ? "rgba(2, 132, 199, 0.28)" : "rgba(56, 189, 248, 0.32)";
+      const fillBottom = isLight ? "rgba(2, 132, 199, 0.02)" : "rgba(168, 85, 247, 0.03)";
+      const gridColor = isLight ? "rgba(7, 25, 41, 0.08)" : "rgba(166, 176, 214, 0.12)";
+      const textColor = isLight ? "#476782" : "#a6b0d6";
+
+      const padL = 62, padR = 16, padT = 18, padB = 26;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+
+      let prices = pts.map(p => p.price);
+      if (btcGame.activeBet) prices.push(btcGame.activeBet.entryPrice);
+      const minP = Math.min(...prices) - 15;
+      const maxP = Math.max(...prices) + 15;
+      const span = Math.max(1, maxP - minP);
+
+      const getX = idx => padL + (idx / (pts.length - 1)) * plotW;
+      const getY = val => padT + plotH - ((val - minP) / span) * plotH;
+
+      // Cuadrícula horizontal
+      ctx.strokeStyle = gridColor;
+      ctx.fillStyle = textColor;
+      ctx.font = "11px system-ui, sans-serif";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = padT + (i / 4) * plotH;
+        const val = maxP - (i / 4) * span;
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(w - padR, y);
+        ctx.stroke();
+        ctx.fillText(val.toFixed(0), 6, y + 4);
+      }
+
+      // Área bajo la curva
+      const grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
+      grad.addColorStop(0, fillTop);
+      grad.addColorStop(1, fillBottom);
+
+      ctx.beginPath();
+      pts.forEach((pt, idx) => {
+        const x = getX(idx);
+        const y = getY(pt.price);
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.lineTo(getX(pts.length - 1), padT + plotH);
+      ctx.lineTo(getX(0), padT + plotH);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Línea principal
+      ctx.beginPath();
+      pts.forEach((pt, idx) => {
+        const x = getX(idx);
+        const y = getY(pt.price);
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Puntos y etiquetas de hora
+      pts.forEach((pt, idx) => {
+        const x = getX(idx);
+        const y = getY(pt.price);
+        ctx.beginPath();
+        ctx.arc(x, y, idx === pts.length - 1 ? 4.5 : 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = idx === pts.length - 1 ? "#a855f7" : lineColor;
+        ctx.fill();
+
+        if (idx % 2 === 0 || idx === pts.length - 1) {
+          ctx.fillStyle = textColor;
+          ctx.fillText(pt.time, x - 14, h - 7);
+        }
+      });
+
+      // Línea de precio de entrada si hay apuesta activa
+      if (btcGame.activeBet) {
+        const entryY = getY(btcGame.activeBet.entryPrice);
+        ctx.save();
+        ctx.setLineDash([5, 4]);
+        ctx.strokeStyle = btcGame.activeBet.direction === "call" ? "#10b981" : "#f43f5e";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(padL, entryY);
+        ctx.lineTo(w - padR, entryY);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function adjustBtcBet(mode) {
+      const input = document.getElementById("btcBetAmountInput");
+      if (!input) return;
+      let cur = Math.floor(Number(input.value || BTC_MIN_BET_COINS));
+      if (mode === "min") cur = BTC_MIN_BET_COINS;
+      if (mode === "x2") cur = Math.min(BTC_MAX_BET_COINS, Math.min(state.coins, cur * 2));
+      if (mode === "max") cur = Math.min(BTC_MAX_BET_COINS, Math.max(BTC_MIN_BET_COINS, state.coins));
+      input.value = Math.max(BTC_MIN_BET_COINS, cur);
+    }
+
+    function placeBtcPrediction(direction) {
+      if (!state.currentUser) return;
+      if (btcGame.activeBet) {
+        showToast("Ya tienes una predicción activa en este minuto.");
+        return;
+      }
+      const secLeft = 60 - new Date().getSeconds();
+      if (secLeft <= 5) {
+        showToast("Espera al inicio del siguiente minuto (últimos 5s bloqueados).");
+        return;
+      }
+
+      const amount = Math.floor(Number(document.getElementById("btcBetAmountInput")?.value || 0));
+      if (amount < BTC_MIN_BET_COINS || amount > BTC_MAX_BET_COINS) {
+        showToast(`Apuesta permitida: ${BTC_MIN_BET_COINS} a ${BTC_MAX_BET_COINS} Coins.`);
+        return;
+      }
+      if (amount > state.coins) {
+        showToast("Saldo insuficiente de Coins.");
+        return;
+      }
+
+      state.coins -= amount;
+      const now = new Date();
+      btcGame.activeBet = {
+        direction,
+        amount,
+        entryPrice: btcGame.currentPrice,
+        roundMinute: now.getHours() * 60 + now.getMinutes(),
+        timeLabel: `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`
+      };
+
+      addMovement(state.currentUser, `BTC ${direction === "call" ? "Call" : "Put"}`, -amount);
+      updateAllUI();
+      updateBtcRoundUI();
+      drawBtcGameChart();
+      showToast(`Predicción ${direction.toUpperCase()} registrada a $${btcGame.currentPrice.toFixed(2)}`);
+    }
+
+    function settleActiveBtcBet() {
+      if (!btcGame.activeBet || !state.currentUser) return;
+      const bet = btcGame.activeBet;
+      const closePrice = btcGame.currentPrice;
+      btcGame.activeBet = null;
+
+      let statusText = "";
+      let payout = 0;
+      if (closePrice === bet.entryPrice) {
+        payout = bet.amount;
+        statusText = `Empate (+${payout} devueltos)`;
+        state.coins += payout;
+        addMovement(state.currentUser, "BTC Game Empate", payout);
+      } else {
+        const won = (bet.direction === "call" && closePrice > bet.entryPrice) ||
+                    (bet.direction === "put" && closePrice < bet.entryPrice);
+        if (won) {
+          payout = Math.round(bet.amount * BTC_WIN_MULTIPLIER);
+          statusText = `Ganaste (+${payout} Coins)`;
+          state.coins += payout;
+          addMovement(state.currentUser, `BTC ${bet.direction === "call" ? "Call" : "Put"} Ganado`, payout);
+          playFinishChime();
+          showToast(`🎉 ¡Acertaste! +${payout} Coins`);
+        } else {
+          statusText = `Perdida (-${bet.amount} Coins)`;
+          showToast(`Ronda cerrada en $${closePrice.toFixed(2)} — Sin acierto`);
+        }
+      }
+
+      btcGame.roundsHistory.unshift({
+        time: bet.timeLabel,
+        direction: bet.direction === "call" ? "📈 Call" : "📉 Put",
+        entry: `$${bet.entryPrice.toFixed(2)}`,
+        close: `$${closePrice.toFixed(2)}`,
+        amount: `${bet.amount} Coins`,
+        result: statusText,
+        won: payout > bet.amount
+      });
+      if (btcGame.roundsHistory.length > 10) btcGame.roundsHistory.pop();
+
+      renderBtcHistoryTable();
+      updateAllUI();
+      updateBtcRoundUI();
+      drawBtcGameChart();
+    }
+
+    function renderBtcHistoryTable() {
+      const tbody = document.getElementById("btcHistoryBody");
+      if (!tbody) return;
+      if (!btcGame.roundsHistory.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="color:var(--muted);">Aún no has jugado rondas en esta sesión.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = btcGame.roundsHistory.map(r => `
+        <tr>
+          <td>${escapeHtml(r.time)}</td>
+          <td>${escapeHtml(r.direction)}</td>
+          <td>${escapeHtml(r.entry)}</td>
+          <td>${escapeHtml(r.close)}</td>
+          <td>${escapeHtml(r.amount)}</td>
+          <td style="font-weight:700; color:${r.won ? "var(--success)" : "var(--muted)"};">${escapeHtml(r.result)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function updateBtcRoundUI() {
+      const now = new Date();
+      const curMinute = now.getHours() * 60 + now.getMinutes();
+      const secLeft = 60 - now.getSeconds();
+
+      if (btcGame.lastMinuteChecked !== null && curMinute !== btcGame.lastMinuteChecked) {
+        if (btcGame.activeBet && btcGame.activeBet.roundMinute !== curMinute) {
+          settleActiveBtcBet();
+        }
+        updateBtcGameSeries();
+      }
+      btcGame.lastMinuteChecked = curMinute;
+
+      const cdEl = document.getElementById("btcRoundCountdown");
+      const summaryEl = document.getElementById("btcActiveBetSummary");
+      const btnCall = document.getElementById("btnBtcCall");
+      const btnPut = document.getElementById("btnBtcPut");
+
+      if (cdEl) cdEl.textContent = `${String(secLeft).padStart(2, "0")}s`;
+
+      if (btcGame.activeBet) {
+        const dirLabel = btcGame.activeBet.direction === "call" ? "📈 CALL (Sube)" : "📉 PUT (Baja)";
+        if (summaryEl) {
+          summaryEl.innerHTML = `Activa: <strong style="color:var(--accent);">${dirLabel}</strong> • ${btcGame.activeBet.amount} Coins @ $${btcGame.activeBet.entryPrice.toFixed(2)}`;
+        }
+        if (btnCall) btnCall.disabled = true;
+        if (btnPut) btnPut.disabled = true;
+      } else {
+        if (summaryEl) {
+          summaryEl.textContent = secLeft <= 5
+            ? "Cierre inminente — espera el próximo minuto"
+            : "Sin apuesta activa en esta ronda";
+        }
+        const locked = secLeft <= 5;
+        if (btnCall) btnCall.disabled = locked;
+        if (btnPut) btnPut.disabled = locked;
+      }
     }
 
     function createFreshAchievementState(now = Date.now()) {
@@ -2849,6 +3313,11 @@
       if (sec === "shortlinks") renderCategoryGrid("shortlinksGrid", t => t.cat === "shortlinks");
       if (sec === "offerwalls") renderCategoryGrid("offerwallsGrid", t => t.cat === "offerwalls");
       if (sec === "logros") renderAchievementsView();
+      if (sec === "games") {
+        updateBtcGameSeries();
+        updateBtcRoundUI();
+        renderBtcHistoryTable();
+      }
       if (sec === "faq") renderFaqList();
       if (sec === "perfil") switchProfileTab(state.profileTab);
       if (sec === "dashboard") renderDashboardMovements();
@@ -3403,6 +3872,21 @@
 
     document.body.setAttribute("data-theme", state.themeMode);
     applyLanguageUI();
+
+    (async function initBtcLoop() {
+      await fetchLiveBtcPrice();
+      initBtcGameHistory(btcGame.currentPrice);
+      updateBtcGameSeries();
+      updateBtcRoundUI();
+      setInterval(() => {
+        updateBtcRoundUI();
+        if (state.currentUser) updateHubCardsUI();
+      }, 1000);
+      setInterval(async () => {
+        await fetchLiveBtcPrice();
+        updateBtcGameSeries();
+      }, 5000);
+    })();
 
     (function initApp() {
       const params = new URLSearchParams(window.location.search);
