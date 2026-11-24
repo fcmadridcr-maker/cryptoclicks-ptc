@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoClicks Venezuela — Dashboard, PTCs, Shortlinks, Offerwalls & Minijuego</title>
+  <title>CryptoClicks Venezuela — Dashboard, PTCs, Shortlinks & Offerwalls</title>
   <style>
     :root {
       --bg: #070d1a;
@@ -29,9 +29,6 @@
       --vz-blue: #3b82f6;
       --vz-red: #f43f5e;
       --soft-glow: 0 10px 28px rgba(2, 6, 23, 0.45);
-      --canvas-bg: rgba(8, 15, 30, 0.88);
-      --cornice-bg: #334155;
-      --coin-text: #090e1a;
       --map-opacity: 0.14;
     }
 
@@ -59,9 +56,6 @@
       --vz-blue: #2563eb;
       --vz-red: #e11d48;
       --soft-glow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      --canvas-bg: rgba(255, 255, 255, 0.92);
-      --cornice-bg: #cbd5e1;
-      --coin-text: #0f172a;
       --map-opacity: 0.12;
     }
 
@@ -985,61 +979,6 @@
       font-size: 0.9rem;
     }
 
-    .game-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-    }
-
-    .game-hud {
-      width: 100%;
-      max-width: 760px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    @media (max-width: 580px) {
-      .game-hud {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .game-stat {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 10px;
-      font-size: 0.77rem;
-      color: var(--muted);
-      min-width: 0;
-    }
-
-    .game-stat strong {
-      display: block;
-      font-size: 0.96rem;
-      color: var(--vz-yellow);
-      margin-top: 2px;
-    }
-
-    body[data-theme="light"] .game-stat strong {
-      color: var(--vz-blue);
-    }
-
-    canvas.game-canvas {
-      width: 100%;
-      max-width: 760px;
-      aspect-ratio: 4 / 3;
-      background: var(--canvas-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      touch-action: none;
-      cursor: pointer;
-      display: block;
-    }
-
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -1450,7 +1389,7 @@
     <div class="auth-card">
       <div class="auth-head">
         <h1>CryptoClicks Venezuela</h1>
-        <p>Panel suavizado con PTCs, Shortlinks, Offerwalls, Minijuego, Anunciantes y Retiros.</p>
+        <p>Panel suavizado con PTCs, Shortlinks, Offerwalls, Anunciantes y Retiros.</p>
       </div>
 
       <div class="auth-tabs">
@@ -1502,7 +1441,6 @@
       <button type="button" class="nav-btn" data-sec="ptcs" onclick="switchSection('ptcs')">🖱️ PTCs <span id="navCountPtcs">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="shortlinks" onclick="switchSection('shortlinks')">🔗 Shortlinks <span id="navCountShortlinks">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="offerwalls" onclick="switchSection('offerwalls')">🧱 Offerwalls <span id="navCountOfferwalls">(0)</span></button>
-      <button type="button" class="nav-btn" data-sec="minijuego" onclick="switchSection('minijuego')">🐹 Minijuego</button>
       <button type="button" class="nav-btn" data-sec="anunciantes" onclick="switchSection('anunciantes')">📢 Anunciantes</button>
       <button type="button" class="nav-btn" data-sec="retiros" onclick="switchSection('retiros')">💸 Retiros</button>
       <button type="button" class="nav-btn" data-sec="referidos" onclick="switchSection('referidos')">🤝 Referidos</button>
@@ -1595,9 +1533,9 @@
             <strong style="color:#34d399;">🧱 Offerwalls</strong>
             <span style="font-size:0.76rem; color:var(--muted);">Encuestas y tareas externas</span>
           </button>
-          <button type="button" class="quick-tile" onclick="switchSection('minijuego')">
-            <strong style="color:#fda4af;">🐹 Minijuego</strong>
-            <span style="font-size:0.76rem; color:var(--muted);">40 monedas • 10 niveles • Premio semanal</span>
+          <button type="button" class="quick-tile" onclick="switchSection('retiros')">
+            <strong style="color:#fda4af;">💸 Retiros</strong>
+            <span style="font-size:0.76rem; color:var(--muted);">Solicita tus pagos en USDT, SOL, LTC o Bs</span>
           </button>
         </div>
       </div>
@@ -1650,31 +1588,7 @@
       <section class="ads-grid" id="offerwallsGrid"></section>
     </section>
 
-    <!-- 5. SECCIÓN MINIJUEGO -->
-    <section id="sec-minijuego" class="hidden" style="width:100%;">
-      <div class="panel-card game-wrap">
-        <div style="text-align:center;">
-          <h2 style="font-size:1.04rem;">🐹 Hámster de la Cornisa — 40 Monedas</h2>
-          <p style="font-size:0.79rem; color:var(--muted);">Recoge 40 monedas antes de que caigan o se acaben los 60s. Si se escapa una moneda o tocas una bomba, pierdes.</p>
-        </div>
-
-        <div class="game-hud">
-          <div class="game-stat">Monedas<strong id="gCoins">0 / 40</strong></div>
-          <div class="game-stat">Etapa<strong id="gStage">Nv.1 - Sub.1</strong></div>
-          <div class="game-stat">Tiempo<strong id="gTime">60s</strong></div>
-          <div class="game-stat">Victorias<strong id="gWins">0</strong></div>
-        </div>
-
-        <canvas id="gameCanvas" class="game-canvas" width="760" height="570"></canvas>
-
-        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
-          <button type="button" class="btn btn-primary" onclick="startMiniGame()">▶ Iniciar / Reiniciar Partida</button>
-          <button type="button" class="btn btn-soft-gold" onclick="rollWeeklyPrizeDemo()">🎲 Probar Probabilidad Semanal (0.5%–1%)</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. SECCIÓN ANUNCIANTES -->
+    <!-- 5. SECCIÓN ANUNCIANTES -->
     <section id="sec-anunciantes" class="hidden" style="width:100%;">
       <div class="panel-card">
         <h3>📢 Contratar Publicidad en CryptoClicks Venezuela</h3>
@@ -1749,7 +1663,7 @@
       </div>
     </section>
 
-    <!-- 7. SECCIÓN RETIROS -->
+    <!-- 6. SECCIÓN RETIROS -->
     <section id="sec-retiros" class="hidden" style="width:100%;">
       <div class="panel-card" style="max-width:540px;">
         <h3>💸 Solicitar Retiro</h3>
@@ -1776,7 +1690,7 @@
       </div>
     </section>
 
-    <!-- 8. SECCIÓN REFERIDOS -->
+    <!-- 7. SECCIÓN REFERIDOS -->
     <section id="sec-referidos" class="hidden" style="width:100%;">
       <div class="panel-card">
         <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 Coins)</h3>
@@ -1801,7 +1715,7 @@
       </div>
     </section>
 
-    <!-- 9. SECCIÓN HISTORIAL -->
+    <!-- 8. SECCIÓN HISTORIAL -->
     <section id="sec-historial" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
         <h3>⚡ Últimos 10 Movimientos</h3>
@@ -2120,7 +2034,6 @@
           btnLight.className = "btn btn-secondary btn-sm";
         }
       }
-      if (typeof drawMiniGame === "function") drawMiniGame();
     }
 
     function setThemeMode(mode) {
@@ -2382,7 +2295,6 @@
     function logoutUser() {
       closeViewerModal();
       closeOfferwallModal();
-      gState.running = false;
       state.currentUser = null;
       localStorage.removeItem(CURRENT_USER_KEY);
       document.getElementById("dashboardSection").classList.add("hidden");
@@ -2393,9 +2305,8 @@
 
     function switchSection(sec) {
       state.section = sec;
-      if (sec !== "minijuego") gState.running = false;
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.sec === sec));
-      const sections = ["dashboard", "ptcs", "shortlinks", "offerwalls", "minijuego", "anunciantes", "retiros", "referidos", "historial"];
+      const sections = ["dashboard", "ptcs", "shortlinks", "offerwalls", "anunciantes", "retiros", "referidos", "historial"];
       sections.forEach(s => {
         const el = document.getElementById(`sec-${s}`);
         if (el) el.classList.toggle("hidden", s !== sec);
@@ -2404,7 +2315,6 @@
       if (sec === "ptcs") renderCategoryGrid("ptcsGrid", t => t.cat === "window_ads" || t.cat === "frame_ads");
       if (sec === "shortlinks") renderCategoryGrid("shortlinksGrid", t => t.cat === "shortlinks");
       if (sec === "offerwalls") renderCategoryGrid("offerwallsGrid", t => t.cat === "offerwalls");
-      if (sec === "minijuego") { updateGameHud(); drawMiniGame(); }
       if (sec === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
       if (sec === "referidos") renderReferralsView();
       if (sec === "historial") renderHistoryView();
@@ -2839,229 +2749,7 @@
       showToast("Configuración restaurada.");
     }
 
-    const gCanvas = document.getElementById("gameCanvas");
-    const gCtx = gCanvas.getContext("2d");
-    const COINS_META = [
-      { sym: "BTC", color: "#facc15" },
-      { sym: "LTC", color: "#e2e8f0" },
-      { sym: "SOL", color: "#38bdf8" },
-      { sym: "ADA", color: "#60a5fa" },
-      { sym: "SUI", color: "#a5b4fc" }
-    ];
-
-    let gState = {
-      running: false,
-      caught: 0,
-      target: 40,
-      timeLeft: 60,
-      wins: 0,
-      level: 1,
-      subLevel: 1,
-      hamsterX: 380,
-      hamsterDir: 1,
-      items: [],
-      spawnTimer: 0,
-      lastFrame: 0,
-      clockAccum: 0
-    };
-
-    function startMiniGame() {
-      gState.running = true;
-      gState.caught = 0;
-      gState.timeLeft = 60;
-      gState.hamsterX = gCanvas.width / 2;
-      gState.hamsterDir = 1;
-      gState.items = [];
-      gState.spawnTimer = 0;
-      gState.lastFrame = performance.now();
-      gState.clockAccum = 0;
-      updateGameHud();
-      requestAnimationFrame(loopMiniGame);
-    }
-
-    function updateGameHud() {
-      document.getElementById("gCoins").textContent = `${gState.caught} / ${gState.target}`;
-      document.getElementById("gStage").textContent = `Nv.${gState.level} - Sub.${gState.subLevel}`;
-      document.getElementById("gTime").textContent = `${Math.max(0, Math.ceil(gState.timeLeft))}s`;
-      document.getElementById("gWins").textContent = String(gState.wins);
-    }
-
-    function loopMiniGame(now) {
-      if (!gState.running) return;
-      const dt = Math.min(0.05, (now - gState.lastFrame) / 1000);
-      gState.lastFrame = now;
-
-      gState.clockAccum += dt;
-      if (gState.clockAccum >= 1) {
-        gState.clockAccum -= 1;
-        gState.timeLeft -= 1;
-        if (gState.timeLeft <= 0) {
-          gState.running = false;
-          updateGameHud();
-          showToast("⏱️ Se acabó el tiempo antes de las 40 monedas.");
-          return;
-        }
-      }
-
-      const speed = 130 + (gState.level - 1) * 32 + (gState.subLevel - 1) * 8;
-      gState.hamsterX += gState.hamsterDir * speed * dt;
-      if (gState.hamsterX < 55) { gState.hamsterX = 55; gState.hamsterDir = 1; }
-      if (gState.hamsterX > gCanvas.width - 55) { gState.hamsterX = gCanvas.width - 55; gState.hamsterDir = -1; }
-
-      gState.spawnTimer += dt;
-      const spawnInterval = Math.max(0.42, 1.05 - (gState.level - 1) * 0.055);
-      if (gState.spawnTimer >= spawnInterval) {
-        gState.spawnTimer = 0;
-        const bombChance = Math.min(0.42, 0.14 + (gState.level - 1) * 0.025);
-        const isBomb = Math.random() < bombChance;
-        const coinMeta = COINS_META[Math.floor(Math.random() * COINS_META.length)];
-        const xPos = 45 + Math.random() * (gCanvas.width - 90);
-        gState.items.push({
-          x: xPos,
-          y: 112,
-          r: 22,
-          vy: 75 + (gState.level - 1) * 14 + (gState.subLevel - 1) * 4,
-          isBomb,
-          meta: coinMeta
-        });
-      }
-
-      for (let i = gState.items.length - 1; i >= 0; i--) {
-        const it = gState.items[i];
-        it.y += it.vy * dt;
-        if (it.y + it.r >= gCanvas.height - 14) {
-          if (!it.isBomb) {
-            gState.running = false;
-            drawMiniGame();
-            showToast("❌ ¡Se escapó una moneda! Perdiste la partida.");
-            return;
-          }
-          gState.items.splice(i, 1);
-        }
-      }
-
-      updateGameHud();
-      drawMiniGame();
-      requestAnimationFrame(loopMiniGame);
-    }
-
-    function drawMiniGame() {
-      const styles = getComputedStyle(document.body);
-      const canvasBg = styles.getPropertyValue("--canvas-bg").trim() || "rgba(8, 15, 30, 0.88)";
-      const corniceBg = styles.getPropertyValue("--cornice-bg").trim() || "#334155";
-      const coinText = styles.getPropertyValue("--coin-text").trim() || "#090e1a";
-
-      gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-      gCtx.fillStyle = canvasBg;
-      gCtx.fillRect(0, 0, gCanvas.width, gCanvas.height);
-
-      gCtx.fillStyle = corniceBg;
-      gCtx.fillRect(0, 68, gCanvas.width, 28);
-
-      gCtx.fillStyle = "rgba(250, 204, 21, 0.7)";
-      gCtx.fillRect(0, 96, gCanvas.width, 3);
-      gCtx.fillStyle = "rgba(59, 130, 246, 0.7)";
-      gCtx.fillRect(0, 99, gCanvas.width, 3);
-      gCtx.fillStyle = "rgba(244, 63, 94, 0.7)";
-      gCtx.fillRect(0, 102, gCanvas.width, 3);
-
-      gCtx.save();
-      gCtx.translate(gState.hamsterX, 50);
-      gCtx.fillStyle = "#f59e0b";
-      gCtx.beginPath();
-      gCtx.ellipse(0, 0, 22, 16, 0, 0, Math.PI * 2);
-      gCtx.fill();
-      gCtx.fillStyle = "#facc15";
-      gCtx.fillRect(-10, -22, 20, 3);
-      gCtx.fillStyle = "#3b82f6";
-      gCtx.fillRect(-10, -19, 20, 3);
-      gCtx.fillStyle = "#f43f5e";
-      gCtx.fillRect(-10, -16, 20, 3);
-      gCtx.restore();
-
-      gState.items.forEach(it => {
-        gCtx.save();
-        if (it.isBomb) {
-          gCtx.fillStyle = "#1e293b";
-          gCtx.beginPath();
-          gCtx.arc(it.x, it.y, it.r, 0, Math.PI * 2);
-          gCtx.fill();
-          gCtx.strokeStyle = "#f43f5e";
-          gCtx.lineWidth = 2;
-          gCtx.stroke();
-          gCtx.fillStyle = "#ffffff";
-          gCtx.font = "bold 12px sans-serif";
-          gCtx.textAlign = "center";
-          gCtx.textBaseline = "middle";
-          gCtx.fillText("💣", it.x, it.y + 1);
-        } else {
-          gCtx.fillStyle = it.meta.color;
-          gCtx.beginPath();
-          gCtx.arc(it.x, it.y, it.r, 0, Math.PI * 2);
-          gCtx.fill();
-          gCtx.strokeStyle = "rgba(59, 130, 246, 0.75)";
-          gCtx.lineWidth = 1.8;
-          gCtx.stroke();
-          gCtx.fillStyle = coinText;
-          gCtx.font = "bold 11px sans-serif";
-          gCtx.textAlign = "center";
-          gCtx.textBaseline = "middle";
-          gCtx.fillText(it.meta.sym, it.x, it.y + 1);
-        }
-        gCtx.restore();
-      });
-    }
-
-    gCanvas.addEventListener("pointerdown", (e) => {
-      if (!gState.running) return;
-      const rect = gCanvas.getBoundingClientRect();
-      const px = ((e.clientX - rect.left) / rect.width) * gCanvas.width;
-      const py = ((e.clientY - rect.top) / rect.height) * gCanvas.height;
-
-      for (let i = gState.items.length - 1; i >= 0; i--) {
-        const it = gState.items[i];
-        const dist = Math.hypot(px - it.x, py - it.y);
-        if (dist <= it.r + 8) {
-          if (it.isBomb) {
-            gState.running = false;
-            drawMiniGame();
-            showToast("💥 ¡Tocaste una bomba! Perdiste la ronda.");
-            return;
-          }
-          gState.items.splice(i, 1);
-          gState.caught += 1;
-          updateGameHud();
-
-          if (gState.caught >= gState.target) {
-            gState.running = false;
-            gState.wins += 1;
-            const wonWeekly = Math.random() < 0.0075;
-            if (state.currentUser) {
-              state.xp += 25;
-              addMovement(state.currentUser, `Minijuego ganado (Nv.${gState.level}-${gState.subLevel})`, 0);
-              if (wonWeekly) {
-                state.coins += 100000;
-                addMovement(state.currentUser, "🏆 Premio Semanal ($1.00 USD)", 100000);
-              }
-              updateAllUI();
-            }
-            if (gState.subLevel < 3) gState.subLevel += 1;
-            else if (gState.level < 10) { gState.level += 1; gState.subLevel = 1; }
-            updateGameHud();
-            showToast(wonWeekly ? "🏆 ¡GANASTE EL PREMIO SEMANAL ($1.00 USD)!" : "🎉 ¡40 monedas completadas!");
-          }
-          break;
-        }
-      }
-    });
-
-    function rollWeeklyPrizeDemo() {
-      const hit = Math.random() < 0.008;
-      showToast(hit ? "🏆 ¡Cayó dentro del 0.5%–1% (Ganador Semanal)!" : "Sin premio en este intento de prueba (probabilidad 0.5%–1%).");
-    }
-
     applyThemeMode(state.themeMode);
-    drawMiniGame();
 
     (function initApp() {
       const params = new URLSearchParams(window.location.search);
