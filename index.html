@@ -6,37 +6,43 @@
   <title>CryptoClicksFaucet</title>
   <style>
     :root {
-      --bg: #07120e;
-      --bg-glow-1: rgba(57, 255, 20, 0.06);
-      --bg-glow-2: rgba(16, 185, 129, 0.06);
-      --header-bg: rgba(10, 23, 18, 0.88);
-      --card: #0e2019;
-      --card-2: #142c22;
-      --border: rgba(148, 203, 176, 0.14);
-      --border-strong: rgba(57, 255, 20, 0.34);
-      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.22);
-      --shadow-md: 0 10px 26px rgba(0, 0, 0, 0.32);
-      --text: #ecfdf5;
-      --muted: #98cbb2;
-      --accent: #39ff14;
-      --accent-text: #051409;
+      --bg: #030306;
+      --bg-glow-1: rgba(168, 85, 247, 0.14);
+      --bg-glow-2: rgba(56, 189, 248, 0.13);
+      --bg-dot: rgba(168, 85, 247, 0.08);
+      --header-bg: rgba(7, 7, 13, 0.9);
+      --card: #0c0d16;
+      --card-2: #131524;
+      --border: rgba(139, 92, 246, 0.22);
+      --border-strong: rgba(56, 189, 248, 0.55);
+      --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.45);
+      --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 22px rgba(139, 92, 246, 0.14);
+      --neon-glow: 0 0 14px rgba(56, 189, 248, 0.35), 0 0 24px rgba(168, 85, 247, 0.18);
+      --text: #f5f7ff;
+      --muted: #9aa3c7;
+      --accent: #38bdf8;
+      --accent-secondary: #a855f7;
+      --accent-text: #03121c;
       --danger: #fb7185;
     }
 
     body[data-theme="light"] {
-      --bg: #f4faf7;
-      --bg-glow-1: rgba(5, 150, 105, 0.07);
-      --bg-glow-2: rgba(16, 185, 129, 0.06);
-      --header-bg: rgba(255, 255, 255, 0.9);
+      --bg: #ffffff;
+      --bg-glow-1: rgba(14, 165, 233, 0.13);
+      --bg-glow-2: rgba(56, 189, 248, 0.11);
+      --bg-dot: rgba(14, 165, 233, 0.09);
+      --header-bg: rgba(255, 255, 255, 0.92);
       --card: #ffffff;
-      --card-2: #eef8f3;
-      --border: rgba(7, 38, 24, 0.1);
-      --border-strong: rgba(5, 150, 105, 0.32);
-      --shadow-sm: 0 2px 10px rgba(7, 38, 24, 0.04);
-      --shadow-md: 0 10px 24px rgba(7, 38, 24, 0.07);
-      --text: #072618;
-      --muted: #46735d;
-      --accent: #059669;
+      --card-2: #f0f8ff;
+      --border: rgba(14, 165, 233, 0.2);
+      --border-strong: rgba(2, 132, 199, 0.5);
+      --shadow-sm: 0 2px 12px rgba(2, 132, 199, 0.06);
+      --shadow-md: 0 12px 26px rgba(2, 132, 199, 0.1), 0 0 18px rgba(56, 189, 248, 0.14);
+      --neon-glow: 0 0 14px rgba(56, 189, 248, 0.32);
+      --text: #071929;
+      --muted: #476782;
+      --accent: #0284c7;
+      --accent-secondary: #38bdf8;
       --accent-text: #ffffff;
       --danger: #e11d48;
     }
@@ -51,10 +57,11 @@
     body {
       background-color: var(--bg);
       background-image:
-        radial-gradient(circle at 12% 0%, var(--bg-glow-1), transparent 45%),
-        radial-gradient(circle at 88% 12%, var(--bg-glow-2), transparent 42%),
-        radial-gradient(rgba(148, 203, 176, 0.05) 1px, transparent 0);
-      background-size: 100% 100%, 100% 100%, 22px 22px;
+        radial-gradient(circle at 14% 8%, var(--bg-glow-1), transparent 44%),
+        radial-gradient(circle at 86% 14%, var(--bg-glow-2), transparent 42%),
+        radial-gradient(circle at 50% 92%, var(--bg-glow-1), transparent 46%),
+        radial-gradient(var(--bg-dot) 1px, transparent 0);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -69,7 +76,7 @@
 
     header {
       background: var(--header-bg);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 10px 16px;
       position: sticky;
@@ -95,6 +102,7 @@
       font-weight: 800;
       font-size: 1.02rem;
       letter-spacing: -0.01em;
+      text-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
     }
 
     .header-right {
@@ -118,6 +126,7 @@
       color: var(--accent);
       border-color: var(--border-strong);
       font-weight: 700;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
     }
 
     .btn {
@@ -142,13 +151,18 @@
     }
 
     .btn-primary {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
       color: var(--accent-text);
-      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.2);
+      box-shadow: var(--neon-glow);
+    }
+
+    body[data-theme="light"] .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #ffffff;
     }
 
     .btn-primary:hover:not(:disabled) {
-      filter: brightness(1.06);
+      filter: brightness(1.08);
       transform: translateY(-1px);
     }
 
@@ -161,16 +175,17 @@
       border-color: var(--border-strong);
       background: var(--card);
       transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.22);
     }
 
     .btn-danger {
-      background: rgba(244, 63, 94, 0.12);
+      background: rgba(244, 63, 94, 0.14);
       color: var(--danger);
-      border-color: rgba(244, 63, 94, 0.26);
+      border-color: rgba(244, 63, 94, 0.3);
     }
 
     .btn-danger:hover:not(:disabled) {
-      background: rgba(244, 63, 94, 0.2);
+      background: rgba(244, 63, 94, 0.24);
     }
 
     .btn-sm {
@@ -261,7 +276,7 @@
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--border-strong);
-      box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.08);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
     }
 
     textarea {
@@ -314,7 +329,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .nav-btn:hover {
@@ -325,7 +340,8 @@
     .nav-btn.active {
       background: var(--card-2);
       color: var(--accent);
-      border-color: var(--border);
+      border-color: var(--border-strong);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.22);
     }
 
     .soon-pill {
@@ -407,11 +423,111 @@
       box-shadow: var(--shadow-sm);
     }
 
+    /* Estilo tipo panel en Faucet */
+    .faucet-layout {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .faucet-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .faucet-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faucet-side-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faucet-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--card-2);
+      border: 1px solid var(--border-strong);
+      color: var(--accent);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+    }
+
+    .faucet-stat-box {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .faucet-main {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faucet-top-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 560px) {
+      .faucet-top-stats {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .faucet-hero-card {
+      background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .faucet-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      width: 100%;
+      max-width: 440px;
+      text-align: left;
+    }
+
     .faucet-ad-box {
       background: var(--card-2);
       border: 1px dashed var(--border-strong);
       border-radius: 12px;
       padding: 10px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -419,6 +535,21 @@
       gap: 6px;
       min-height: 112px;
       overflow: hidden;
+    }
+
+    .faucet-side-ad {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 210px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
     .captcha-pick-grid {
@@ -441,7 +572,7 @@
       flex-direction: column;
       align-items: center;
       gap: 3px;
-      transition: border-color 0.15s ease, transform 0.12s ease, background-color 0.15s ease;
+      transition: border-color 0.15s ease, transform 0.12s ease, background-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .captcha-pick-btn:hover {
@@ -451,9 +582,10 @@
 
     .captcha-pick-btn.selected {
       border-color: var(--accent);
-      background: rgba(57, 255, 20, 0.12);
+      background: rgba(56, 189, 248, 0.14);
       color: var(--accent);
       transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
     }
 
     .ad-label {
@@ -543,12 +675,13 @@
       justify-content: space-between;
       gap: 10px;
       box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .item-card:hover {
       transform: translateY(-2px);
       border-color: var(--border-strong);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), 0 0 14px rgba(168, 85, 247, 0.14);
     }
 
     .item-title {
@@ -570,7 +703,7 @@
       border-radius: 7px;
       background: var(--card-2);
       color: var(--accent);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-strong);
     }
 
     .ach-list {
@@ -594,7 +727,7 @@
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
       transition: width 0.22s ease;
     }
 
@@ -639,7 +772,7 @@
       margin: 0 auto;
       border-radius: 10px;
       overflow: hidden;
-      background: #040a07;
+      background: #040409;
       border: 1px solid var(--border-strong);
       display: flex;
       align-items: center;
@@ -699,8 +832,8 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(3px);
+      background: rgba(0, 0, 0, 0.76);
+      backdrop-filter: blur(4px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -753,7 +886,7 @@
 
     footer {
       background: var(--header-bg);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       border-top: 1px solid var(--border);
       padding: 12px 16px;
       font-size: 0.76rem;
@@ -982,41 +1115,92 @@
       </div>
     </section>
 
-    <!-- FAUCET MEJORADA -->
+    <!-- FAUCET ESTILO PANEL CON LATERAL + CLAIM -->
     <section id="sec-faucet" class="hidden">
-      <div class="card" style="max-width:600px;">
-        <div class="row-between">
-          <div>
-            <div class="item-title" id="faucetCardTitle">🚰 Faucet</div>
-            <div class="item-desc" id="faucetCardDesc">+35 Coins cada 60 minutos.</div>
+      <div class="faucet-layout">
+        <aside class="faucet-sidebar">
+          <div class="faucet-side-card">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div class="faucet-avatar" id="faucetSideAvatar">J</div>
+              <div>
+                <div class="item-title" id="faucetSideUsername">Usuario</div>
+                <div class="row-between" style="gap:6px; margin-top:3px;">
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="openProfileTab('historial')">Historial</button>
+                  <button type="button" class="btn btn-danger btn-sm" style="padding:2px 7px; font-size:0.68rem;" onclick="logoutUser()">Salir</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="faucet-stat-box">
+              <span class="kpi-label">Account Balance</span>
+              <strong style="font-size:0.95rem; color:var(--accent);" id="faucetSideCoins">0 Coins</strong>
+              <span class="kpi-sub" id="faucetSideUsdt">$0.00000 USDT</span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-sm" onclick="openProfileTab('retiros')">↑ Retirar</button>
           </div>
-          <span class="tag">+35 Coins</span>
-        </div>
 
-        <!-- Caja / Banner de Anuncio para cubrir el claim -->
-        <div class="faucet-ad-box" id="adSlotFaucet"></div>
-
-        <!-- Reto Matemático + Captcha -->
-        <div class="hidden" id="faucetChallengeBox" style="display:flex; flex-direction:column; gap:10px; background:var(--card-2); border:1px solid var(--border); border-radius:12px; padding:12px;">
-          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-            <label for="faucetCaptchaInput" id="faucetCaptchaQuestion" style="font-size:0.84rem; font-weight:700;"></label>
-            <input type="number" id="faucetCaptchaInput" placeholder="Resultado" style="width:120px;" />
+          <div class="faucet-side-card">
+            <div class="item-title" style="font-size:0.82rem;">⚡ Accesos rápidos</div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('faq')">❓ Guide / FAQ</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('anunciantes')">📢 Anunciantes</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('referidos')">🤝 Referidos</button>
           </div>
 
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <span id="faucetVisualCaptchaPrompt" style="font-size:0.8rem; font-weight:700; color:var(--muted);"></span>
-            <div class="captcha-pick-grid" id="faucetVisualCaptchaGrid"></div>
+          <div class="faucet-side-ad" id="adSlotModal"></div>
+        </aside>
+
+        <div class="faucet-main">
+          <div class="faucet-top-stats">
+            <div class="card" style="text-align:center;">
+              <span class="kpi-label">Faucet Claim</span>
+              <strong style="font-size:1.05rem; color:var(--accent);">+35 Coins</strong>
+              <span class="kpi-sub">Cada 60 minutos</span>
+            </div>
+            <div class="card" style="text-align:center;">
+              <span class="kpi-label">Mínimo de Retiro</span>
+              <strong style="font-size:1.05rem;">10,000 Coins</strong>
+              <span class="kpi-sub">≈ $0.10000 USDT</span>
+            </div>
           </div>
 
-          <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
-            <button type="button" class="btn btn-secondary btn-sm" id="btnFaucetCancel" onclick="cancelFaucetChallenge()">Cancelar</button>
-            <button type="button" class="btn btn-primary btn-sm" id="btnFaucetConfirm" onclick="confirmFaucetClaim()">Confirmar</button>
-          </div>
-        </div>
+          <div class="faucet-hero-card">
+            <span class="tag">🚰 Faucet Reward</span>
+            <div>
+              <div class="item-title" id="faucetCardTitle" style="font-size:1.08rem;">Reclama +35 Coins cada 60 minutos</div>
+              <div class="item-desc" id="faucetCardDesc">Resuelve el cálculo matemático y el captcha para acreditar tu recompensa.</div>
+            </div>
 
-        <div class="row-between">
-          <span style="font-size:0.78rem; color:var(--muted);" id="faucetTimerStatus">Disponible ahora</span>
-          <button type="button" class="btn btn-primary btn-sm" id="btnFaucetAction" onclick="triggerFaucetButton()">Reclamar (+35)</button>
+            <ul class="faucet-bullets">
+              <li>• Conversión: 50 Coins = $0.0005 USDT (1 Coin = $0.00001 USDT).</li>
+              <li>• Invita referidos y gana +1,000 Coins únicos por cada referido válido.</li>
+              <li>• Avanza también en tus Logros diarios, semanales y mensuales.</li>
+            </ul>
+
+            <div class="faucet-ad-box" id="adSlotFaucet"></div>
+
+            <div class="hidden" id="faucetChallengeBox" style="width:100%; display:flex; flex-direction:column; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px; text-align:left;">
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <label for="faucetCaptchaInput" id="faucetCaptchaQuestion" style="font-size:0.84rem; font-weight:700;"></label>
+                <input type="number" id="faucetCaptchaInput" placeholder="Resultado" style="width:120px;" />
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <span id="faucetVisualCaptchaPrompt" style="font-size:0.8rem; font-weight:700; color:var(--muted);"></span>
+                <div class="captcha-pick-grid" id="faucetVisualCaptchaGrid"></div>
+              </div>
+
+              <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
+                <button type="button" class="btn btn-secondary btn-sm" id="btnFaucetCancel" onclick="cancelFaucetChallenge()">Cancelar</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnFaucetConfirm" onclick="confirmFaucetClaim()">Confirmar</button>
+              </div>
+            </div>
+
+            <div class="row-between" style="width:100%; margin-top:2px;">
+              <span style="font-size:0.78rem; color:var(--muted);" id="faucetTimerStatus">Disponible ahora</span>
+              <button type="button" class="btn btn-primary" id="btnFaucetAction" onclick="triggerFaucetButton()">Reclamar (+35)</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1365,7 +1549,7 @@
           </div>
           <div class="progress-track"><div class="progress-fill" id="viewerProgress"></div></div>
         </div>
-        <div class="ad-box-300" id="adSlotModal"></div>
+        <div class="ad-box-300" id="viewerAdBox"></div>
       </div>
       <div style="font-size:0.8rem; color:var(--danger);" id="viewerStatus"></div>
       <div class="hidden" id="captchaBox" style="display:flex; flex-direction:column; gap:8px;">
@@ -1405,7 +1589,7 @@
       <div class="field-group"><label>Frame Ads</label><textarea class="code-textarea" id="frameLinksInput"></textarea></div>
       <div class="field-group"><label>Shortlinks</label><textarea class="code-textarea" id="shortLinksInput"></textarea></div>
       <div class="field-group"><label>Banner 728x90</label><textarea class="code-textarea" id="adTopInput"></textarea></div>
-      <div class="field-group"><label>Banner 300x250</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
+      <div class="field-group"><label>Banner Lateral / Visor (300x250)</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
       <div class="field-group"><label>Anuncio Faucet (Claim)</label><textarea class="code-textarea" id="adFaucetInput"></textarea></div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
         <button class="btn btn-secondary btn-sm" id="btnResetAdConfig" onclick="resetAdConfig()">Restaurar</button>
@@ -1602,9 +1786,9 @@
       { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán Mensual", desc: "Completa 120 tareas en 30 días.", reward: 3000 }
     ];
 
-    const DEFAULT_AD_728 = `<div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#0e1f18;border:1px solid rgba(57,255,20,0.25);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#94cbb0;font-size:12px;">Espacio 728×90</span></div>`;
-    const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#0e1f18;border:1px solid rgba(57,255,20,0.25);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#94cbb0;font-size:12px;">Configurable</span></div>`;
-    const DEFAULT_AD_FAUCET = `<div style="width:468px;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#0e2019;border:1px solid rgba(57,255,20,0.28);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>Sponsor / Ad Claim</strong><span style="color:#98cbb2;font-size:12px;">Espacio publicitario Faucet</span></div>`;
+    const DEFAULT_AD_728 = `<div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#0c0d16;border:1px solid rgba(56,189,248,0.35);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#9aa3c7;font-size:12px;">Espacio 728×90</span></div>`;
+    const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#0c0d16;border:1px solid rgba(168,85,247,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#9aa3c7;font-size:12px;">Configurable</span></div>`;
+    const DEFAULT_AD_FAUCET = `<div style="width:468px;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#0c0d16;border:1px solid rgba(56,189,248,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Sponsor / Ad Claim</strong><span style="color:#9aa3c7;font-size:12px;">Espacio publicitario Faucet</span></div>`;
 
     const DEFAULT_OFFERWALL_LINKS = ["https://timewall.io/", "https://www.cpx-research.com/", "https://bitlabs.ai/", "https://monlix.com/"];
     const DEFAULT_WINDOW_LINKS = ["https://example.com/"];
@@ -2399,6 +2583,11 @@
       resetFaceForms();
 
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
+      const sideName = document.getElementById("faucetSideUsername");
+      const sideAvatar = document.getElementById("faucetSideAvatar");
+      if (sideName) sideName.textContent = user.username;
+      if (sideAvatar) sideAvatar.textContent = (user.username || "U").charAt(0).toUpperCase();
+
       document.getElementById("authSection").classList.add("hidden");
       document.getElementById("headerGuestControls").classList.add("hidden");
       document.getElementById("dashboardSection").classList.remove("hidden");
@@ -2477,6 +2666,11 @@
       document.getElementById("balanceDisplay").textContent = `🪙 ${state.coins.toLocaleString()} ($${formatUsdt(state.coins)})`;
       document.getElementById("kpiBalanceCoins").textContent = `${state.coins.toLocaleString()} Coins`;
       document.getElementById("kpiBalanceUsdt").textContent = `≈ $${formatUsdt(state.coins)} USDT`;
+
+      const sideCoins = document.getElementById("faucetSideCoins");
+      const sideUsdt = document.getElementById("faucetSideUsdt");
+      if (sideCoins) sideCoins.textContent = `${state.coins.toLocaleString()} Coins`;
+      if (sideUsdt) sideUsdt.textContent = `≈ $${formatUsdt(state.coins)} USDT`;
 
       const users = getUsersDB();
       const refCount = users.filter(u => u.referredBy === state.currentUser.refCode).length;
@@ -2767,7 +2961,8 @@
 
     function applyAdSlots() {
       renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 728, 90, "Banner 728x90");
-      renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 300, 250, "Banner 300x250");
+      renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 240, 190, "Banner Lateral");
+      renderIsolatedAd(document.getElementById("viewerAdBox"), state.adModalHtml, 300, 250, "Banner 300x250");
       renderIsolatedAd(document.getElementById("adSlotFaucet"), state.adFaucetHtml, 468, 80, "Anuncio Faucet (Claim)");
     }
 
