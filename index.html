@@ -11,9 +11,9 @@
         radial-gradient(circle at 18% 12%, rgba(57, 255, 20, 0.12) 0%, transparent 45%),
         radial-gradient(circle at 82% 85%, rgba(16, 185, 129, 0.10) 0%, transparent 48%),
         linear-gradient(180deg, #050d0a 0%, #07140f 100%);
-      --header-bg: rgba(7, 17, 13, 0.86);
-      --card: rgba(11, 26, 20, 0.80);
-      --card-2: rgba(16, 38, 29, 0.78);
+      --header-bg: rgba(7, 17, 13, 0.92);
+      --card: rgba(11, 26, 20, 0.88);
+      --card-2: rgba(16, 38, 29, 0.86);
       --border: rgba(57, 255, 20, 0.18);
       --border-soft: rgba(57, 255, 20, 0.42);
       --text: #ecfdf5;
@@ -38,9 +38,9 @@
         radial-gradient(circle at 18% 12%, rgba(16, 185, 129, 0.10) 0%, transparent 45%),
         radial-gradient(circle at 82% 85%, rgba(34, 197, 94, 0.10) 0%, transparent 48%),
         linear-gradient(180deg, #f4fdf7 0%, #e7f9ee 100%);
-      --header-bg: rgba(255, 255, 255, 0.88);
-      --card: rgba(255, 255, 255, 0.92);
-      --card-2: rgba(236, 253, 245, 0.90);
+      --header-bg: rgba(255, 255, 255, 0.94);
+      --card: rgba(255, 255, 255, 0.95);
+      --card-2: rgba(236, 253, 245, 0.94);
       --border: rgba(5, 150, 105, 0.20);
       --border-soft: rgba(16, 185, 129, 0.45);
       --text: #062819;
@@ -128,7 +128,7 @@
       padding: 10px 16px;
       position: sticky;
       top: 0;
-      z-index: 30;
+      z-index: 70;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       width: 100%;
@@ -393,8 +393,10 @@
       }
     }
 
+    /* Fix: z-index alto y sin backdrop-filter para evitar contexto de apilamiento que tape el menú */
     .nav-bar {
       position: relative;
+      z-index: 60;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -405,8 +407,6 @@
       border-radius: 14px;
       padding: 6px;
       width: 100%;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
     }
 
     .nav-btn {
@@ -440,6 +440,7 @@
     .profile-dd-wrap {
       position: relative;
       display: inline-flex;
+      z-index: 110;
     }
 
     .profile-dd-arrow {
@@ -454,21 +455,22 @@
     .profile-dd-menu {
       position: absolute;
       top: calc(100% + 6px);
-      right: 0;
-      min-width: 185px;
+      left: 0;
+      min-width: 195px;
       background: #091711;
       border: 1px solid var(--border-soft);
-      box-shadow: var(--soft-glow);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), var(--soft-glow);
       border-radius: 12px;
       padding: 6px;
       display: none;
       flex-direction: column;
       gap: 3px;
-      z-index: 40;
+      z-index: 120;
     }
 
     body[data-theme="light"] .profile-dd-menu {
       background: #ffffff;
+      box-shadow: 0 12px 28px rgba(6, 40, 25, 0.16), var(--soft-glow);
     }
 
     .profile-dd-wrap.open .profile-dd-menu {
@@ -699,6 +701,8 @@
     }
 
     .safety-banner {
+      position: relative;
+      z-index: 10;
       background: var(--card);
       border: 1px solid var(--border);
       color: var(--muted);
@@ -719,6 +723,8 @@
     }
 
     .ad-banner-top {
+      position: relative;
+      z-index: 5;
       background: var(--card);
       border: 1px dashed var(--border-soft);
       border-radius: 14px;
@@ -1020,7 +1026,7 @@
       align-items: center;
       justify-content: center;
       padding: 12px;
-      z-index: 50;
+      z-index: 140;
       backdrop-filter: blur(4px);
     }
 
@@ -1344,7 +1350,7 @@
       transform: translateY(12px);
       pointer-events: none;
       transition: 0.2s ease;
-      z-index: 80;
+      z-index: 150;
       box-shadow: var(--soft-glow);
     }
 
