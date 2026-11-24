@@ -6,28 +6,36 @@
   <title>CryptoClicksFaucet</title>
   <style>
     :root {
-      --bg: #07110d;
-      --header-bg: #0b1913;
-      --card: #0e1f18;
-      --card-2: #132920;
-      --border: rgba(57, 255, 20, 0.16);
-      --border-strong: rgba(57, 255, 20, 0.35);
+      --bg: #07120e;
+      --bg-glow-1: rgba(57, 255, 20, 0.06);
+      --bg-glow-2: rgba(16, 185, 129, 0.06);
+      --header-bg: rgba(10, 23, 18, 0.88);
+      --card: #0e2019;
+      --card-2: #142c22;
+      --border: rgba(148, 203, 176, 0.14);
+      --border-strong: rgba(57, 255, 20, 0.34);
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.22);
+      --shadow-md: 0 10px 26px rgba(0, 0, 0, 0.32);
       --text: #ecfdf5;
-      --muted: #94cbb0;
+      --muted: #98cbb2;
       --accent: #39ff14;
       --accent-text: #051409;
-      --danger: #f43f5e;
+      --danger: #fb7185;
     }
 
     body[data-theme="light"] {
-      --bg: #f5fbf7;
-      --header-bg: #ffffff;
+      --bg: #f4faf7;
+      --bg-glow-1: rgba(5, 150, 105, 0.07);
+      --bg-glow-2: rgba(16, 185, 129, 0.06);
+      --header-bg: rgba(255, 255, 255, 0.9);
       --card: #ffffff;
-      --card-2: #eef8f2;
-      --border: rgba(5, 150, 105, 0.16);
-      --border-strong: rgba(5, 150, 105, 0.35);
+      --card-2: #eef8f3;
+      --border: rgba(7, 38, 24, 0.1);
+      --border-strong: rgba(5, 150, 105, 0.32);
+      --shadow-sm: 0 2px 10px rgba(7, 38, 24, 0.04);
+      --shadow-md: 0 10px 24px rgba(7, 38, 24, 0.07);
       --text: #072618;
-      --muted: #3b6e54;
+      --muted: #46735d;
       --accent: #059669;
       --accent-text: #ffffff;
       --danger: #e11d48;
@@ -41,12 +49,18 @@
     }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 12% 0%, var(--bg-glow-1), transparent 45%),
+        radial-gradient(circle at 88% 12%, var(--bg-glow-2), transparent 42%),
+        radial-gradient(rgba(148, 203, 176, 0.05) 1px, transparent 0);
+      background-size: 100% 100%, 100% 100%, 22px 22px;
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: clip;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     .hidden {
@@ -55,11 +69,13 @@
 
     header {
       background: var(--header-bg);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
       padding: 10px 16px;
       position: sticky;
       top: 0;
       z-index: 60;
+      box-shadow: var(--shadow-sm);
     }
 
     .header-inner {
@@ -77,7 +93,8 @@
       align-items: center;
       gap: 8px;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 1.02rem;
+      letter-spacing: -0.01em;
     }
 
     .header-right {
@@ -90,10 +107,11 @@
     .pill {
       background: var(--card-2);
       border: 1px solid var(--border);
-      padding: 5px 10px;
-      border-radius: 8px;
+      padding: 6px 11px;
+      border-radius: 9px;
       font-size: 0.78rem;
       font-weight: 600;
+      box-shadow: var(--shadow-sm);
     }
 
     .pill-coins {
@@ -104,8 +122,8 @@
 
     .btn {
       border: 1px solid transparent;
-      border-radius: 8px;
-      padding: 7px 12px;
+      border-radius: 9px;
+      padding: 7px 13px;
       font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
@@ -116,16 +134,22 @@
       text-decoration: none;
       background: transparent;
       color: var(--text);
-      transition: background-color 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.14s ease, background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    }
+
+    .btn:active:not(:disabled) {
+      transform: scale(0.98);
     }
 
     .btn-primary {
       background: var(--accent);
       color: var(--accent-text);
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.2);
     }
 
     .btn-primary:hover:not(:disabled) {
       filter: brightness(1.06);
+      transform: translateY(-1px);
     }
 
     .btn-secondary {
@@ -135,22 +159,31 @@
 
     .btn-secondary:hover:not(:disabled) {
       border-color: var(--border-strong);
+      background: var(--card);
+      transform: translateY(-1px);
     }
 
     .btn-danger {
       background: rgba(244, 63, 94, 0.12);
       color: var(--danger);
-      border-color: rgba(244, 63, 94, 0.25);
+      border-color: rgba(244, 63, 94, 0.26);
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: rgba(244, 63, 94, 0.2);
     }
 
     .btn-sm {
       padding: 5px 10px;
       font-size: 0.75rem;
+      border-radius: 8px;
     }
 
     .btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
 
     .auth-wrapper {
@@ -164,13 +197,14 @@
     .auth-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
       width: 100%;
       max-width: 440px;
-      padding: 20px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
       gap: 14px;
+      box-shadow: var(--shadow-md);
     }
 
     .auth-tabs {
@@ -179,7 +213,8 @@
       gap: 4px;
       background: var(--card-2);
       padding: 4px;
-      border-radius: 10px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
     }
 
     .auth-tab {
@@ -187,15 +222,17 @@
       background: transparent;
       color: var(--muted);
       padding: 7px;
-      border-radius: 7px;
+      border-radius: 8px;
       font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
     }
 
     .auth-tab.active {
       background: var(--card);
       color: var(--accent);
+      box-shadow: var(--shadow-sm);
     }
 
     .auth-form, .field-group {
@@ -214,15 +251,17 @@
       background: var(--card-2);
       border: 1px solid var(--border);
       color: var(--text);
-      border-radius: 8px;
-      padding: 8px 10px;
+      border-radius: 9px;
+      padding: 8px 11px;
       font-size: 0.84rem;
       width: 100%;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--border-strong);
+      box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.08);
     }
 
     textarea {
@@ -242,11 +281,11 @@
       max-width: 1180px;
       width: 100%;
       margin: 0 auto;
-      padding: 14px 16px 24px;
+      padding: 16px 16px 26px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 13px;
     }
 
     .nav-bar {
@@ -256,24 +295,26 @@
       flex-wrap: wrap;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 5px;
+      border-radius: 14px;
+      padding: 6px;
       position: relative;
       z-index: 50;
+      box-shadow: var(--shadow-sm);
     }
 
     .nav-btn {
-      border: none;
+      border: 1px solid transparent;
       background: transparent;
       color: var(--muted);
-      padding: 6px 10px;
-      border-radius: 8px;
+      padding: 6px 11px;
+      border-radius: 9px;
       font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
     }
 
     .nav-btn:hover {
@@ -284,13 +325,14 @@
     .nav-btn.active {
       background: var(--card-2);
       color: var(--accent);
+      border-color: var(--border);
     }
 
     .soon-pill {
       font-size: 0.65rem;
-      padding: 1px 5px;
+      padding: 1px 6px;
       border-radius: 999px;
-      background: var(--card-2);
+      background: var(--card);
       color: var(--muted);
       border: 1px solid var(--border);
       font-weight: 700;
@@ -305,16 +347,16 @@
       position: absolute;
       top: calc(100% + 6px);
       left: 0;
-      min-width: 175px;
+      min-width: 178px;
       background: var(--card);
       border: 1px solid var(--border-strong);
-      border-radius: 10px;
-      padding: 4px;
+      border-radius: 12px;
+      padding: 5px;
       display: none;
       flex-direction: column;
       gap: 2px;
       z-index: 90;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      box-shadow: var(--shadow-md);
     }
 
     .profile-dd-wrap.open .profile-dd-menu {
@@ -326,11 +368,12 @@
       background: transparent;
       color: var(--text);
       padding: 7px 10px;
-      border-radius: 7px;
+      border-radius: 8px;
       font-size: 0.79rem;
       font-weight: 600;
       text-align: left;
       cursor: pointer;
+      transition: background-color 0.14s ease, color 0.14s ease;
     }
 
     .profile-dd-item:hover {
@@ -349,32 +392,19 @@
       display: flex !important;
     }
 
-    .notice-bar {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 0.77rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
     .ad-banner-top {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px;
+      border-radius: 14px;
+      padding: 9px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 4px;
-      min-height: 96px;
+      min-height: 98px;
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
     .ad-label {
@@ -388,7 +418,7 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
+      gap: 11px;
     }
 
     @media (max-width: 720px) {
@@ -398,11 +428,12 @@
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: 14px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      box-shadow: var(--shadow-sm);
     }
 
     .kpi-label {
@@ -411,8 +442,9 @@
     }
 
     .kpi-val {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 800;
+      letter-spacing: -0.01em;
     }
 
     .kpi-sub {
@@ -423,7 +455,7 @@
     .two-col {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 11px;
     }
 
     @media (max-width: 760px) {
@@ -441,7 +473,7 @@
     .ads-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
+      gap: 11px;
     }
 
     @media (max-width: 920px) {
@@ -455,16 +487,23 @@
     .item-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 14px;
+      padding: 13px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .item-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
     }
 
     .item-title {
-      font-size: 0.88rem;
+      font-size: 0.89rem;
       font-weight: 700;
     }
 
@@ -472,14 +511,14 @@
       font-size: 0.76rem;
       color: var(--muted);
       margin-top: 3px;
-      line-height: 1.35;
+      line-height: 1.38;
     }
 
     .tag {
       font-size: 0.7rem;
       font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 6px;
+      padding: 2px 8px;
+      border-radius: 7px;
       background: var(--card-2);
       color: var(--accent);
       border: 1px solid var(--border);
@@ -488,7 +527,7 @@
     .ach-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 11px;
     }
 
     @media (max-width: 740px) {
@@ -497,7 +536,7 @@
 
     .progress-track {
       width: 100%;
-      height: 6px;
+      height: 7px;
       background: var(--card-2);
       border-radius: 999px;
       overflow: hidden;
@@ -507,7 +546,7 @@
       height: 100%;
       width: 0%;
       background: var(--accent);
-      transition: width 0.2s ease;
+      transition: width 0.22s ease;
     }
 
     .table-wrap {
@@ -536,8 +575,8 @@
     .face-box {
       background: var(--card-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
+      border-radius: 12px;
+      padding: 11px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -591,8 +630,8 @@
     .faq-item {
       background: var(--card-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
+      border-radius: 11px;
+      padding: 11px 13px;
     }
 
     .faq-q {
@@ -611,7 +650,8 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(3px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -626,7 +666,7 @@
     .modal {
       background: var(--card);
       border: 1px solid var(--border-strong);
-      border-radius: 14px;
+      border-radius: 16px;
       max-width: 780px;
       width: 100%;
       padding: 16px;
@@ -635,6 +675,7 @@
       gap: 12px;
       max-height: 90vh;
       overflow-y: auto;
+      box-shadow: var(--shadow-md);
     }
 
     .viewer-grid {
@@ -650,7 +691,7 @@
     .ad-box-300 {
       background: var(--card-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       min-height: 260px;
       padding: 8px;
       display: flex;
@@ -663,6 +704,7 @@
 
     footer {
       background: var(--header-bg);
+      backdrop-filter: blur(8px);
       border-top: 1px solid var(--border);
       padding: 12px 16px;
       font-size: 0.76rem;
@@ -687,7 +729,7 @@
       border: 1px solid var(--border-strong);
       color: var(--text);
       padding: 10px 14px;
-      border-radius: 10px;
+      border-radius: 11px;
       font-size: 0.8rem;
       font-weight: 600;
       opacity: 0;
@@ -695,6 +737,7 @@
       pointer-events: none;
       transition: 0.2s ease;
       z-index: 150;
+      box-shadow: var(--shadow-md);
     }
 
     .toast.show {
@@ -821,11 +864,6 @@
         </div>
       </div>
     </nav>
-
-    <div class="notice-bar">
-      <span id="noticeBarText">50 Coins = $0.0005 USDT • Faucet cada 60m (+35) • Retiro mín. 10,000 Coins.</span>
-      <button type="button" class="btn btn-secondary btn-sm" id="btnNoticeFaucet" onclick="switchSection('faucet')">Ir a Faucet</button>
-    </div>
 
     <section class="ad-banner-top" id="adSlotTop"></section>
 
@@ -1362,8 +1400,7 @@
         wdFaceInfo: "Confirma tu identidad con tu cámara antes de enviar el retiro.",
         startCam: "Activar Cámara", captureFace: "Capturar Rostro", verifyFace: "Verificar Rostro", retakeFace: "Repetir",
         camInactive: "Cámara inactiva", regFacePending: "Sin capturar todavía.", wdFacePending: "Verificación pendiente.",
-        notice: "50 Coins = $0.0005 USDT • Faucet cada 60m (+35) • Retiro mín. 10,000 Coins.",
-        goFaucet: "Ir a Faucet", kpiBalance: "Balance", kpiRefs: "Referidos", kpiGoal: "Meta de Retiro",
+        kpiBalance: "Balance", kpiRefs: "Referidos", kpiGoal: "Meta de Retiro",
         availableNow: "Disponible ahora", claim: "Reclamar", openFaucet: "Abrir Faucet",
         lastMovs: "Últimos Movimientos", seeAll: "Ver todo",
         faqTitle: "❓ Preguntas y Respuestas (FAQ)",
@@ -1409,8 +1446,7 @@
         wdFaceInfo: "Verify your identity with your camera before submitting a withdrawal.",
         startCam: "Enable Camera", captureFace: "Capture Face", verifyFace: "Verify Face", retakeFace: "Retake",
         camInactive: "Camera off", regFacePending: "Not captured yet.", wdFacePending: "Verification pending.",
-        notice: "50 Coins = $0.0005 USDT • Faucet every 60m (+35) • Min. withdrawal 10,000 Coins.",
-        goFaucet: "Go to Faucet", kpiBalance: "Balance", kpiRefs: "Referrals", kpiGoal: "Withdrawal Goal",
+        kpiBalance: "Balance", kpiRefs: "Referrals", kpiGoal: "Withdrawal Goal",
         availableNow: "Available now", claim: "Claim", openFaucet: "Open Faucet",
         lastMovs: "Recent Activity", seeAll: "See all",
         faqTitle: "❓ Frequently Asked Questions (FAQ)",
@@ -1456,8 +1492,7 @@
         wdFaceInfo: "Подтвердите личность через камеру перед отправкой заявки на вывод.",
         startCam: "Включить камеру", captureFace: "Сделать снимок", verifyFace: "Проверить лицо", retakeFace: "Повторить",
         camInactive: "Камера выключена", regFacePending: "Ещё не выполнено.", wdFacePending: "Проверка ожидается.",
-        notice: "50 Coins = $0.0005 USDT • Кран каждые 60 мин (+35) • Мин. вывод 10,000 Coins.",
-        goFaucet: "Перейти в кран", kpiBalance: "Баланс", kpiRefs: "Рефералы", kpiGoal: "Цель вывода",
+        kpiBalance: "Баланс", kpiRefs: "Рефералы", kpiGoal: "Цель вывода",
         availableNow: "Доступно сейчас", claim: "Получить", openFaucet: "Открыть кран",
         lastMovs: "Последние операции", seeAll: "Все",
         faqTitle: "❓ Частые вопросы (FAQ)",
@@ -1548,10 +1583,9 @@
     let expectedCaptcha = null;
     let expectedFaucetCaptcha = 4;
 
-    // Estado de captura/verificación facial
     let camStream = null;
     let activeCamTarget = null;
-    let regFaceData = null; // { signature, grid }
+    let regFaceData = null;
     let wdFaceVerified = false;
 
     function escapeHtml(str) {
@@ -1645,8 +1679,6 @@
       if (!regFaceData) setText("regFaceStatus", t("regFacePending"));
       if (!wdFaceVerified) setText("wdFaceStatus", t("wdFacePending"));
 
-      setText("noticeBarText", t("notice"));
-      setText("btnNoticeFaucet", t("goFaucet"));
       setText("kpiLabelBalance", t("kpiBalance"));
       setText("kpiLabelRefs", t("kpiRefs"));
       setText("kpiLabelGoal", t("kpiGoal"));
@@ -1695,7 +1727,6 @@
       return ipTag;
     }
 
-    // --- Captura y verificación facial ---
     function stopCameraStream() {
       if (camStream) {
         camStream.getTracks().forEach(track => track.stop());
@@ -1751,7 +1782,6 @@
       ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
       const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 
-      // Muestreo en cuadrícula central 8x6 para comparar similitud básica
       const grid = [];
       let hashNum = 2166136261;
       for (let gy = 0; gy < 6; gy++) {
