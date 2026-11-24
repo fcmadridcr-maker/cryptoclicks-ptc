@@ -122,7 +122,7 @@
     }
 
     .header-inner {
-      max-width: 1180px;
+      max-width: 1240px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -136,15 +136,16 @@
       align-items: center;
       gap: 10px;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       letter-spacing: -0.02em;
       color: var(--text);
       user-select: none;
+      flex-shrink: 0;
     }
 
     .brand-logo-img {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
       flex-shrink: 0;
       filter: none;
@@ -167,20 +168,30 @@
       color: var(--accent);
     }
 
+    .header-center-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: wrap;
+      flex: 1 1 auto;
+    }
+
     .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .pill {
       background: var(--card-2);
       backdrop-filter: blur(8px);
       border: 1px solid var(--border);
-      padding: 6px 11px;
+      padding: 5px 10px;
       border-radius: 9px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       box-shadow: var(--shadow-sm);
     }
@@ -385,7 +396,7 @@
     }
 
     main {
-      max-width: 1180px;
+      max-width: 1240px;
       width: 100%;
       margin: 0 auto;
       padding: 16px 16px 26px;
@@ -395,34 +406,18 @@
       gap: 13px;
     }
 
-    .nav-bar {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-wrap: wrap;
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 6px;
-      position: relative;
-      z-index: 50;
-      box-shadow: var(--shadow-sm);
-    }
-
     .nav-btn {
       border: 1px solid transparent;
       background: transparent;
       color: var(--muted);
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 9px;
-      font-size: 0.79rem;
+      font-size: 0.77rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
@@ -448,7 +443,7 @@
       top: calc(100% + 6px);
       left: 0;
       min-width: 196px;
-      background: rgba(12, 13, 22, 0.92);
+      background: rgba(12, 13, 22, 0.94);
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-strong);
       border-radius: 12px;
@@ -461,7 +456,7 @@
     }
 
     body[data-theme="light"] .nav-dd-menu {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
     }
 
     .nav-dd-wrap.open .nav-dd-menu {
@@ -524,7 +519,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* Estructura fija: panel lateral izquierdo permanente + zona central intercambiable */
     .app-shell {
       display: grid;
       grid-template-columns: 270px minmax(0, 1fr);
@@ -1019,7 +1013,7 @@
     }
 
     .footer-inner {
-      max-width: 1180px;
+      max-width: 1240px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -1071,10 +1065,71 @@
         <span>Crypto<span class="brand-title-accent">Clicks</span>Faucet</span>
       </div>
 
+      <!-- Navegación central en la misma línea del encabezado (sin FAQ) -->
+      <nav class="header-center-nav hidden" id="mainNav" aria-label="Navegación principal">
+        <button type="button" class="nav-btn active" data-sec="dashboard" onclick="switchSection('dashboard')">🏠 <span class="i18n-nav-home">Inicio</span></button>
+
+        <div class="nav-dd-wrap" id="earnDropdownWrap">
+          <button type="button" class="nav-btn" data-sec="earn" id="btnEarnDropdown" onclick="toggleEarnDropdown(event)">
+            💰 <span class="i18n-nav-earn">Earn</span> <span id="navCountEarnTotal"></span> ▾
+          </button>
+          <div class="nav-dd-menu" id="earnDropdownMenu">
+            <button type="button" class="nav-dd-item" onclick="selectEarnItem('faucet')">
+              <span>🚰 <span class="i18n-nav-faucet">Faucet</span></span>
+              <span class="dd-count">+35</span>
+            </button>
+            <button type="button" class="nav-dd-item" onclick="selectEarnItem('ptcs')">
+              <span>🖱️ <span class="i18n-nav-ptcs">PTCs</span></span>
+              <span class="dd-count" id="navCountPtcs">(0)</span>
+            </button>
+            <button type="button" class="nav-dd-item" onclick="selectEarnItem('shortlinks')">
+              <span>🔗 <span class="i18n-nav-shortlinks">Shortlinks</span></span>
+              <span class="dd-count" id="navCountShortlinks">(0)</span>
+            </button>
+            <button type="button" class="nav-dd-item" onclick="selectEarnItem('offerwalls')">
+              <span>🧱 <span class="i18n-nav-offerwalls">Offerwalls</span></span>
+              <span class="dd-count" id="navCountOfferwalls">(0)</span>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="nav-btn" data-sec="logros" onclick="switchSection('logros')">🏆 <span class="i18n-nav-achievements">Logros</span> <span id="navClaimableAchBadge"></span></button>
+
+        <div class="nav-dd-wrap" id="comingSoonDropdownWrap">
+          <button type="button" class="nav-btn" data-sec="proximamente" id="btnComingSoonDropdown" onclick="toggleComingSoonDropdown(event)">
+            ⏳ <span class="i18n-soon">Próximamente</span> ▾
+          </button>
+          <div class="nav-dd-menu" id="comingSoonDropdownMenu">
+            <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('loteria')">
+              <span>🎰 <span class="i18n-nav-lottery">Lotería</span></span>
+            </button>
+            <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('games')">
+              <span>🎮 <span class="i18n-nav-games">Games</span></span>
+            </button>
+            <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('cupon')">
+              <span>🎟️ <span class="i18n-nav-coupon">Cupón</span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="nav-dd-wrap" id="profileDropdownWrap">
+          <button type="button" class="nav-btn" data-sec="perfil" id="btnProfileDropdown" onclick="toggleProfileDropdown(event)">
+            👤 <span class="i18n-nav-profile">Perfil</span> ▾
+          </button>
+          <div class="nav-dd-menu" id="profileDropdownMenu">
+            <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('historial')">📜 <span class="i18n-ptab-history">Historial</span></button>
+            <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('retiros')">💸 <span class="i18n-ptab-withdraw">Retiros</span></button>
+            <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('anunciantes')">📢 <span class="i18n-ptab-advertisers">Anunciantes</span></button>
+            <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('referidos')">🤝 <span class="i18n-ptab-referrals">Referidos</span></button>
+            <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('tickets')">🎟️ <span class="i18n-ptab-tickets">Tickets</span></button>
+          </div>
+        </div>
+      </nav>
+
       <div class="header-right hidden" id="headerUserControls">
         <span class="pill" id="userDisplay">👤 Invitado</span>
         <span class="pill pill-coins" id="balanceDisplay">🪙 0 Coins ($0.00000)</span>
-        <button class="btn btn-primary btn-sm" id="btnHeaderWithdraw" onclick="openProfileTab('retiros')">Retirar</button>
+        <button class="btn btn-primary btn-sm" id="btnHeaderWithdraw" onclick="openProfileTab('retiros')">Solicitar Retiro</button>
         <button class="btn btn-danger btn-sm" id="btnHeaderLogout" onclick="logoutUser()">Salir</button>
       </div>
 
@@ -1156,68 +1211,6 @@
   </section>
 
   <main class="hidden" id="dashboardSection">
-    <nav class="nav-bar" id="mainNav">
-      <button type="button" class="nav-btn active" data-sec="dashboard" onclick="switchSection('dashboard')">🏠 <span class="i18n-nav-home">Inicio</span></button>
-
-      <div class="nav-dd-wrap" id="earnDropdownWrap">
-        <button type="button" class="nav-btn" data-sec="earn" id="btnEarnDropdown" onclick="toggleEarnDropdown(event)">
-          💰 <span class="i18n-nav-earn">Earn</span> <span id="navCountEarnTotal"></span> ▾
-        </button>
-        <div class="nav-dd-menu" id="earnDropdownMenu">
-          <button type="button" class="nav-dd-item" onclick="selectEarnItem('faucet')">
-            <span>🚰 <span class="i18n-nav-faucet">Faucet</span></span>
-            <span class="dd-count">+35</span>
-          </button>
-          <button type="button" class="nav-dd-item" onclick="selectEarnItem('ptcs')">
-            <span>🖱️ <span class="i18n-nav-ptcs">PTCs</span></span>
-            <span class="dd-count" id="navCountPtcs">(0)</span>
-          </button>
-          <button type="button" class="nav-dd-item" onclick="selectEarnItem('shortlinks')">
-            <span>🔗 <span class="i18n-nav-shortlinks">Shortlinks</span></span>
-            <span class="dd-count" id="navCountShortlinks">(0)</span>
-          </button>
-          <button type="button" class="nav-dd-item" onclick="selectEarnItem('offerwalls')">
-            <span>🧱 <span class="i18n-nav-offerwalls">Offerwalls</span></span>
-            <span class="dd-count" id="navCountOfferwalls">(0)</span>
-          </button>
-        </div>
-      </div>
-
-      <button type="button" class="nav-btn" data-sec="logros" onclick="switchSection('logros')">🏆 <span class="i18n-nav-achievements">Logros</span> <span id="navClaimableAchBadge"></span></button>
-
-      <div class="nav-dd-wrap" id="comingSoonDropdownWrap">
-        <button type="button" class="nav-btn" data-sec="proximamente" id="btnComingSoonDropdown" onclick="toggleComingSoonDropdown(event)">
-          ⏳ <span class="i18n-soon">Próximamente</span> ▾
-        </button>
-        <div class="nav-dd-menu" id="comingSoonDropdownMenu">
-          <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('loteria')">
-            <span>🎰 <span class="i18n-nav-lottery">Lotería</span></span>
-          </button>
-          <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('games')">
-            <span>🎮 <span class="i18n-nav-games">Games</span></span>
-          </button>
-          <button type="button" class="nav-dd-item" onclick="selectComingSoonItem('cupon')">
-            <span>🎟️ <span class="i18n-nav-coupon">Cupón</span></span>
-          </button>
-        </div>
-      </div>
-
-      <button type="button" class="nav-btn" data-sec="faq" onclick="switchSection('faq')">❓ <span class="i18n-nav-faq">FAQ</span></button>
-
-      <div class="nav-dd-wrap" id="profileDropdownWrap">
-        <button type="button" class="nav-btn" data-sec="perfil" id="btnProfileDropdown" onclick="toggleProfileDropdown(event)">
-          👤 <span class="i18n-nav-profile">Perfil</span> ▾
-        </button>
-        <div class="nav-dd-menu" id="profileDropdownMenu">
-          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('historial')">📜 <span class="i18n-ptab-history">Historial</span></button>
-          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('retiros')">💸 <span class="i18n-ptab-withdraw">Retiros</span></button>
-          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('anunciantes')">📢 <span class="i18n-ptab-advertisers">Anunciantes</span></button>
-          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('referidos')">🤝 <span class="i18n-ptab-referrals">Referidos</span></button>
-          <button type="button" class="nav-dd-item" onclick="selectProfileMenuItem('tickets')">🎟️ <span class="i18n-ptab-tickets">Tickets</span></button>
-        </div>
-      </div>
-    </nav>
-
     <section class="ad-banner-top" id="adSlotTop"></section>
 
     <div class="app-shell">
@@ -1797,7 +1790,7 @@
       es: {
         navHome: "Inicio", navEarn: "Earn", navFaucet: "Faucet", navPtcs: "PTCs", navShortlinks: "Shortlinks",
         navOfferwalls: "Offerwalls", navAchievements: "Logros", navLottery: "Lotería",
-        navGames: "Games", navCoupon: "Cupón", navFaq: "FAQ", navProfile: "Perfil", soon: "Próximamente",
+        navGames: "Games", navCoupon: "Cupón", navProfile: "Perfil", soon: "Próximamente",
         ptabHistory: "Historial", ptabWithdraw: "Retiros", ptabAdvertisers: "Anunciantes",
         ptabReferrals: "Referidos", ptabTickets: "Tickets",
         loginTab: "Iniciar Sesión", registerTab: "Registrarse",
@@ -1843,7 +1836,7 @@
       en: {
         navHome: "Home", navEarn: "Earn", navFaucet: "Faucet", navPtcs: "PTCs", navShortlinks: "Shortlinks",
         navOfferwalls: "Offerwalls", navAchievements: "Achievements", navLottery: "Lottery",
-        navGames: "Games", navCoupon: "Coupon", navFaq: "FAQ", navProfile: "Profile", soon: "Coming Soon",
+        navGames: "Games", navCoupon: "Coupon", navProfile: "Profile", soon: "Coming Soon",
         ptabHistory: "History", ptabWithdraw: "Withdrawals", ptabAdvertisers: "Advertisers",
         ptabReferrals: "Referrals", ptabTickets: "Tickets",
         loginTab: "Sign In", registerTab: "Sign Up",
@@ -1889,7 +1882,7 @@
       ru: {
         navHome: "Главная", navEarn: "Earn", navFaucet: "Кран", navPtcs: "PTC", navShortlinks: "Короткие ссылки",
         navOfferwalls: "Офферволлы", navAchievements: "Достижения", navLottery: "Лотерея",
-        navGames: "Игры", navCoupon: "Купон", navFaq: "FAQ", navProfile: "Профиль", soon: "Скоро",
+        navGames: "Игры", navCoupon: "Купон", navProfile: "Профиль", soon: "Скоро",
         ptabHistory: "История", ptabWithdraw: "Вывод", ptabAdvertisers: "Рекламодателям",
         ptabReferrals: "Рефералы", ptabTickets: "Тикеты",
         loginTab: "Вход", registerTab: "Регистрация",
@@ -2062,7 +2055,6 @@
       setText(".i18n-nav-lottery", t("navLottery"), false);
       setText(".i18n-nav-games", t("navGames"), false);
       setText(".i18n-nav-coupon", t("navCoupon"), false);
-      setText(".i18n-nav-faq", t("navFaq"), false);
       setText(".i18n-nav-profile", t("navProfile"), false);
       setText(".i18n-soon", t("soon"), false);
 
@@ -2781,6 +2773,7 @@
 
       document.getElementById("authSection").classList.add("hidden");
       document.getElementById("headerGuestControls").classList.add("hidden");
+      document.getElementById("mainNav").classList.remove("hidden");
       document.getElementById("dashboardSection").classList.remove("hidden");
       document.getElementById("headerUserControls").classList.remove("hidden");
 
@@ -2797,6 +2790,7 @@
       resetFaceForms();
       state.currentUser = null;
       localStorage.removeItem(CURRENT_USER_KEY);
+      document.getElementById("mainNav").classList.add("hidden");
       document.getElementById("dashboardSection").classList.add("hidden");
       document.getElementById("headerUserControls").classList.add("hidden");
       document.getElementById("authSection").classList.remove("hidden");
