@@ -3,60 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoClicksFaucet — Faucet, PTCs, Shortlinks, Offerwalls, Logros y Perfil</title>
+  <title>CryptoClicksFaucet</title>
   <style>
     :root {
-      --bg: #050d0a;
-      --bg-grad:
-        radial-gradient(circle at 18% 12%, rgba(57, 255, 20, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 82% 85%, rgba(16, 185, 129, 0.10) 0%, transparent 48%),
-        linear-gradient(180deg, #050d0a 0%, #07140f 100%);
-      --header-bg: rgba(7, 17, 13, 0.92);
-      --card: rgba(11, 26, 20, 0.88);
-      --card-2: rgba(16, 38, 29, 0.86);
-      --border: rgba(57, 255, 20, 0.18);
-      --border-soft: rgba(57, 255, 20, 0.42);
+      --bg: #07110d;
+      --header-bg: #0b1913;
+      --card: #0e1f18;
+      --card-2: #132920;
+      --border: rgba(57, 255, 20, 0.16);
+      --border-strong: rgba(57, 255, 20, 0.35);
       --text: #ecfdf5;
-      --muted: #86efac;
+      --muted: #94cbb0;
       --accent: #39ff14;
-      --accent-hover: #22e500;
-      --warning: #4ade80;
+      --accent-text: #051409;
       --danger: #f43f5e;
-      --primary-btn: #39ff14;
-      --primary-btn-hover: #52ff33;
-      --primary-btn-text: #041208;
-      --neon-green: #39ff14;
-      --neon-mint: #34d399;
-      --neon-red: #f43f5e;
-      --soft-glow: 0 0 24px rgba(57, 255, 20, 0.14);
-      --map-opacity: 0.11;
     }
 
     body[data-theme="light"] {
-      --bg: #f4fdf7;
-      --bg-grad:
-        radial-gradient(circle at 18% 12%, rgba(16, 185, 129, 0.10) 0%, transparent 45%),
-        radial-gradient(circle at 82% 85%, rgba(34, 197, 94, 0.10) 0%, transparent 48%),
-        linear-gradient(180deg, #f4fdf7 0%, #e7f9ee 100%);
-      --header-bg: rgba(255, 255, 255, 0.94);
-      --card: rgba(255, 255, 255, 0.95);
-      --card-2: rgba(236, 253, 245, 0.94);
-      --border: rgba(5, 150, 105, 0.20);
-      --border-soft: rgba(16, 185, 129, 0.45);
-      --text: #062819;
-      --muted: #166534;
+      --bg: #f5fbf7;
+      --header-bg: #ffffff;
+      --card: #ffffff;
+      --card-2: #eef8f2;
+      --border: rgba(5, 150, 105, 0.16);
+      --border-strong: rgba(5, 150, 105, 0.35);
+      --text: #072618;
+      --muted: #3b6e54;
       --accent: #059669;
-      --accent-hover: #047857;
-      --warning: #15803d;
+      --accent-text: #ffffff;
       --danger: #e11d48;
-      --primary-btn: #10b981;
-      --primary-btn-hover: #059669;
-      --primary-btn-text: #ffffff;
-      --neon-green: #059669;
-      --neon-mint: #10b981;
-      --neon-red: #e11d48;
-      --soft-glow: 0 8px 24px rgba(5, 150, 105, 0.10);
-      --map-opacity: 0.09;
     }
 
     *, *::before, *::after {
@@ -66,60 +40,17 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    html {
-      max-width: 100%;
-      overflow-x: clip;
-    }
-
     body {
-      background: var(--bg-grad);
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      max-width: 100%;
       overflow-x: clip;
-      position: relative;
-      transition: background-color 0.22s ease, color 0.22s ease;
     }
 
-    .neon-bg-glow {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 24px 40px;
-      opacity: var(--map-opacity);
-    }
-
-    .neon-bg-glow svg {
-      width: min(740px, 84vw);
-      height: auto;
-      max-height: 54vh;
-      filter: drop-shadow(0 0 18px rgba(57, 255, 20, 0.35));
-    }
-
-    .neon-top-line, header, .auth-wrapper, main, footer {
-      position: relative;
-      z-index: 2;
-    }
-
-    .neon-top-line {
-      height: 3px;
-      width: 100%;
-      background: linear-gradient(90deg, rgba(16, 185, 129, 0.45), #39ff14, #a3e635, #39ff14, rgba(16, 185, 129, 0.45));
-      background-size: 200% 100%;
-      box-shadow: 0 0 12px rgba(57, 255, 20, 0.65);
-      animation: neonBarPulse 4s linear infinite;
-    }
-
-    @keyframes neonBarPulse {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
+    .hidden {
+      display: none !important;
     }
 
     header {
@@ -128,162 +59,98 @@
       padding: 10px 16px;
       position: sticky;
       top: 0;
-      z-index: 70;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      width: 100%;
+      z-index: 60;
     }
 
     .header-inner {
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       flex-wrap: wrap;
-      min-width: 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 9px;
-      font-size: 1.06rem;
+      gap: 8px;
       font-weight: 800;
-      color: var(--text);
-      min-width: 0;
-      letter-spacing: -0.01em;
+      font-size: 1rem;
     }
 
-    .brand-mark {
-      width: 30px;
-      height: 30px;
-      border-radius: 9px;
-      background: rgba(57, 255, 20, 0.14);
-      border: 1px solid rgba(57, 255, 20, 0.45);
-      box-shadow: 0 0 12px rgba(57, 255, 20, 0.28);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--neon-green);
-      font-size: 0.95rem;
-    }
-
-    .wallet-box {
+    .header-right {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       flex-wrap: wrap;
-      min-width: 0;
-      max-width: 100%;
     }
 
-    .user-pill {
-      background: var(--card);
+    .pill {
+      background: var(--card-2);
       border: 1px solid var(--border);
-      padding: 5px 11px;
-      border-radius: 10px;
-      font-size: 0.8rem;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
       font-weight: 600;
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
-    .balance-pill {
-      background: var(--card);
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.16);
-      padding: 5px 12px;
-      border-radius: 10px;
-      font-size: 0.8rem;
+    .pill-coins {
+      color: var(--accent);
+      border-color: var(--border-strong);
       font-weight: 700;
-      color: var(--neon-green);
-      max-width: 100%;
-      white-space: nowrap;
     }
 
     .btn {
       border: 1px solid transparent;
-      border-radius: 10px;
-      padding: 8px 13px;
-      font-size: 0.82rem;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
-      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       text-decoration: none;
-      max-width: 100%;
-      user-select: none;
+      background: transparent;
+      color: var(--text);
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
     .btn-primary {
-      background: var(--primary-btn);
-      color: var(--primary-btn-text);
-      border-color: rgba(57, 255, 20, 0.5);
-      box-shadow: 0 0 12px rgba(57, 255, 20, 0.25);
+      background: var(--accent);
+      color: var(--accent-text);
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: var(--primary-btn-hover);
-      box-shadow: 0 0 18px rgba(57, 255, 20, 0.42);
+      filter: brightness(1.06);
     }
 
     .btn-secondary {
-      background: var(--card);
-      color: var(--text);
+      background: var(--card-2);
       border-color: var(--border);
     }
 
     .btn-secondary:hover:not(:disabled) {
-      border-color: var(--border-soft);
-      background: var(--card-2);
-    }
-
-    .btn-soft-neon {
-      background: rgba(57, 255, 20, 0.12);
-      color: var(--neon-green);
-      border-color: rgba(57, 255, 20, 0.36);
-    }
-
-    .btn-soft-neon:hover:not(:disabled) {
-      background: rgba(57, 255, 20, 0.22);
-      box-shadow: 0 0 12px rgba(57, 255, 20, 0.24);
+      border-color: var(--border-strong);
     }
 
     .btn-danger {
       background: rgba(244, 63, 94, 0.12);
-      color: var(--neon-red);
-      border-color: rgba(244, 63, 94, 0.3);
-    }
-
-    .btn-danger:hover:not(:disabled) {
-      background: rgba(244, 63, 94, 0.22);
+      color: var(--danger);
+      border-color: rgba(244, 63, 94, 0.25);
     }
 
     .btn-sm {
-      padding: 6px 11px;
-      font-size: 0.77rem;
-      border-radius: 9px;
+      padding: 5px 10px;
+      font-size: 0.75rem;
     }
 
     .btn:disabled {
-      opacity: 0.48;
+      opacity: 0.45;
       cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .hidden {
-      display: none !important;
     }
 
     .auth-wrapper {
@@ -292,136 +159,114 @@
       align-items: center;
       justify-content: center;
       padding: 24px 14px;
-      width: 100%;
     }
 
     .auth-card {
       background: var(--card);
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--soft-glow);
-      border-radius: 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
       width: 100%;
-      max-width: 430px;
-      padding: 24px;
+      max-width: 400px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      backdrop-filter: blur(10px);
-    }
-
-    .auth-head {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .auth-head h1 {
-      font-size: 1.28rem;
-      font-weight: 800;
-      color: var(--neon-green);
-      text-shadow: 0 0 14px rgba(57, 255, 20, 0.25);
-    }
-
-    .auth-head p {
-      font-size: 0.83rem;
-      color: var(--muted);
-      line-height: 1.4;
     }
 
     .auth-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 4px;
       background: var(--card-2);
       padding: 4px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      gap: 4px;
+      border-radius: 10px;
     }
 
     .auth-tab {
-      background: transparent;
       border: none;
+      background: transparent;
       color: var(--muted);
-      padding: 8px 10px;
-      border-radius: 9px;
-      font-size: 0.84rem;
+      padding: 7px;
+      border-radius: 7px;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
     }
 
     .auth-tab.active {
       background: var(--card);
-      color: var(--neon-green);
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.16);
+      color: var(--accent);
     }
 
-    .auth-form {
+    .auth-form, .field-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      min-width: 0;
+      gap: 8px;
     }
 
     .field-group label {
-      font-size: 0.79rem;
-      font-weight: 600;
+      font-size: 0.76rem;
       color: var(--muted);
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.84rem;
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--border-strong);
+    }
+
+    textarea {
+      min-height: 64px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
     }
 
     main {
-      max-width: 1200px;
+      max-width: 1120px;
       width: 100%;
       margin: 0 auto;
-      padding: 16px;
+      padding: 14px 16px 24px;
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      min-width: 0;
-    }
-
-    @media (min-width: 768px) {
-      main {
-        padding: 18px 22px;
-      }
     }
 
     .nav-bar {
-      position: relative;
-      z-index: 60;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       flex-wrap: wrap;
       background: var(--card);
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 0 18px rgba(57, 255, 20, 0.14);
-      border-radius: 14px;
-      padding: 6px;
-      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 5px;
+      position: relative;
+      z-index: 50;
     }
 
     .nav-btn {
+      border: none;
       background: transparent;
-      border: 1px solid transparent;
       color: var(--muted);
-      padding: 7px 12px;
-      border-radius: 10px;
-      font-size: 0.8rem;
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.79rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-      max-width: 100%;
     }
 
     .nav-btn:hover {
@@ -430,46 +275,29 @@
     }
 
     .nav-btn.active {
-      background: rgba(57, 255, 20, 0.16);
-      color: var(--neon-green);
-      border-color: rgba(57, 255, 20, 0.42);
-      box-shadow: 0 0 12px rgba(57, 255, 20, 0.2);
+      background: var(--card-2);
+      color: var(--accent);
     }
 
     .profile-dd-wrap {
       position: relative;
       display: inline-flex;
-      z-index: 110;
-    }
-
-    .profile-dd-arrow {
-      font-size: 0.72rem;
-      transition: transform 0.16s ease;
-    }
-
-    .profile-dd-wrap.open .profile-dd-arrow {
-      transform: rotate(180deg);
     }
 
     .profile-dd-menu {
       position: absolute;
       top: calc(100% + 6px);
       left: 0;
-      min-width: 195px;
-      background: #091711;
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), var(--soft-glow);
-      border-radius: 12px;
-      padding: 6px;
+      min-width: 170px;
+      background: var(--card);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 4px;
       display: none;
       flex-direction: column;
-      gap: 3px;
-      z-index: 120;
-    }
-
-    body[data-theme="light"] .profile-dd-menu {
-      background: #ffffff;
-      box-shadow: 0 12px 28px rgba(6, 40, 25, 0.16), var(--soft-glow);
+      gap: 2px;
+      z-index: 90;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
     }
 
     .profile-dd-wrap.open .profile-dd-menu {
@@ -477,28 +305,22 @@
     }
 
     .profile-dd-item {
-      width: 100%;
+      border: none;
       background: transparent;
-      border: 1px solid transparent;
       color: var(--text);
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 0.8rem;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 0.79rem;
       font-weight: 600;
       text-align: left;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background-color 0.14s ease, color 0.14s ease;
     }
 
     .profile-dd-item:hover {
-      background: rgba(57, 255, 20, 0.14);
-      color: var(--neon-green);
+      background: var(--card-2);
+      color: var(--accent);
     }
 
-    /* Blindaje estricto: solo la pestaña activa de Perfil es visible */
     .profile-tab-panel {
       display: none !important;
       flex-direction: column;
@@ -510,150 +332,88 @@
       display: flex !important;
     }
 
+    .notice-bar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.77rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ad-banner-top {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 96px;
+      overflow: hidden;
+    }
+
+    .ad-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 11px;
-      width: 100%;
+      gap: 10px;
     }
 
-    @media (max-width: 820px) {
-      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 480px) {
+    @media (max-width: 720px) {
       .kpi-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
-    .kpi-card {
+    .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-top: 2px solid var(--neon-green);
-      box-shadow: 0 0 14px rgba(57, 255, 20, 0.08);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      min-width: 0;
-      backdrop-filter: blur(8px);
+      gap: 10px;
     }
 
     .kpi-label {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--muted);
-      font-weight: 600;
     }
 
     .kpi-val {
-      font-size: 1.18rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      color: var(--text);
-      overflow-wrap: anywhere;
     }
 
     .kpi-sub {
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       color: var(--muted);
-      overflow-wrap: anywhere;
     }
 
-    .panel-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-      min-width: 0;
-      backdrop-filter: blur(8px);
-    }
-
-    .hub-grid {
+    .two-col {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 11px;
-      width: 100%;
-    }
-
-    @media (max-width: 820px) {
-      .hub-grid { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .hub-card {
-      background: var(--card);
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 0 16px rgba(57, 255, 20, 0.09);
-      border-radius: 14px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       gap: 10px;
-      min-width: 0;
-      backdrop-filter: blur(8px);
     }
 
-    .hub-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-      min-width: 0;
+    @media (max-width: 760px) {
+      .two-col { grid-template-columns: minmax(0, 1fr); }
     }
 
-    .hub-title {
-      font-size: 0.94rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .hub-sub {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.35;
-      margin-top: 3px;
-    }
-
-    .hub-badge {
-      background: rgba(57, 255, 20, 0.14);
-      color: var(--neon-green);
-      border: 1px solid rgba(57, 255, 20, 0.36);
-      padding: 3px 8px;
-      border-radius: 8px;
-      font-size: 0.71rem;
-      font-weight: 700;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .faucet-challenge-box {
-      background: var(--card-2);
-      border: 1px solid var(--border-soft);
-      border-radius: 11px;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .faucet-challenge-box label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--neon-green);
-      white-space: nowrap;
-    }
-
-    .faucet-challenge-box input {
-      width: 110px;
-      padding: 6px 9px;
-      font-size: 0.82rem;
-    }
-
-    .hub-foot {
+    .row-between {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -661,49 +421,102 @@
       flex-wrap: wrap;
     }
 
-    .hub-stat {
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--muted);
-    }
-
-    .quick-grid {
+    .ads-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
-      width: 100%;
     }
 
     @media (max-width: 920px) {
-      .quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ads-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    @media (max-width: 480px) {
-      .quick-grid { grid-template-columns: minmax(0, 1fr); }
+    @media (max-width: 600px) {
+      .ads-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
-    .quick-tile {
-      background: var(--card-2);
+    .item-card {
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 13px;
-      text-align: left;
-      color: var(--text);
-      cursor: pointer;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
-      min-width: 0;
+      justify-content: space-between;
+      gap: 10px;
     }
 
-    .quick-tile:hover {
-      border-color: var(--border-soft);
-      background: var(--card);
-      box-shadow: 0 0 12px rgba(57, 255, 20, 0.14);
+    .item-title {
+      font-size: 0.88rem;
+      font-weight: 700;
     }
 
-    .profile-subnav {
+    .item-desc {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--card-2);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    .ach-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 740px) {
+      .ach-list { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--card-2);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.2s ease;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      min-width: 380px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .subnav {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
@@ -711,334 +524,15 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .safety-banner {
-      position: relative;
-      z-index: 10;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      border-radius: 12px;
-      padding: 9px 13px;
-      font-size: 0.79rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .safety-banner strong {
-      color: var(--text);
-    }
-
-    .ad-banner-top {
-      position: relative;
-      z-index: 5;
-      background: var(--card);
-      border: 1px dashed var(--border-soft);
-      border-radius: 14px;
-      padding: 8px;
-      text-align: center;
-      min-height: 104px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      width: 100%;
-      max-width: 100%;
-      overflow: hidden;
-    }
-
-    .ad-frame-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 100%;
-      overflow: hidden;
-    }
-
-    .ad-label {
-      font-size: 0.67rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .sound-toggle {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 6px 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    .switch-ui {
-      width: 34px;
-      height: 18px;
-      background: #334155;
-      border-radius: 999px;
-      position: relative;
-      transition: 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .switch-ui::after {
-      content: "";
-      width: 12px;
-      height: 12px;
-      background: #ffffff;
-      border-radius: 50%;
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      transition: 0.2s ease;
-    }
-
-    input[type="checkbox"].sr-switch {
-      display: none;
-    }
-
-    input[type="checkbox"].sr-switch:checked + .switch-ui {
-      background: var(--neon-green);
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.45);
-    }
-
-    input[type="checkbox"].sr-switch:checked + .switch-ui::after {
-      transform: translateX(16px);
-      background: #041208;
-    }
-
-    .ads-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      width: 100%;
-    }
-
-    @media (max-width: 980px) {
-      .ads-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 620px) {
-      .ads-grid { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .ad-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 13px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-      min-width: 0;
-      width: 100%;
-      backdrop-filter: blur(8px);
-    }
-
-    .ad-card-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    .ad-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .ad-icon-box {
-      width: 28px;
-      height: 28px;
-      border-radius: 9px;
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.88rem;
-      flex-shrink: 0;
-    }
-
-    .ad-card-title {
-      font-size: 0.89rem;
-      font-weight: 700;
-      color: var(--text);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .ad-card-desc {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.38;
-      margin-top: 6px;
-      overflow-wrap: anywhere;
-    }
-
-    .meta-chips {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-wrap: wrap;
-      margin-top: 9px;
-    }
-
-    .chip {
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      max-width: 100%;
-    }
-
-    .chip-reward {
-      background: rgba(57, 255, 20, 0.14);
-      color: var(--neon-green);
-      border: 1px solid rgba(57, 255, 20, 0.34);
-    }
-
-    .chip-time {
-      background: rgba(52, 211, 153, 0.14);
-      color: var(--neon-mint);
-      border: 1px solid rgba(52, 211, 153, 0.34);
-    }
-
-    .chip-kind {
-      background: var(--card-2);
-      color: var(--muted);
-      border: 1px solid var(--border);
-      text-transform: uppercase;
-    }
-
-    .chip-red {
-      background: rgba(244, 63, 94, 0.14);
-      color: #fda4af;
-      border: 1px solid rgba(244, 63, 94, 0.3);
-    }
-
-    body[data-theme="light"] .chip-red {
-      color: var(--neon-red);
-    }
-
-    .ad-card-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding-top: 9px;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .empty-state {
-      grid-column: 1 / -1;
-      background: var(--card);
-      border: 1px dashed var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .ach-tabs {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .ach-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 11px;
-      width: 100%;
-    }
-
-    @media (max-width: 780px) {
-      .ach-list { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .ach-card {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 13px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 9px;
-      min-width: 0;
-    }
-
-    .ach-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .ach-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .ach-desc {
-      font-size: 0.77rem;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .mini-progress-wrap {
-      width: 100%;
-      height: 7px;
-      background: var(--card);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .mini-progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #10b981, #39ff14);
-      box-shadow: 0 0 8px rgba(57, 255, 20, 0.45);
-      transition: width 0.25s ease;
-    }
-
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(2, 10, 6, 0.74);
+      background: rgba(0, 0, 0, 0.7);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 12px;
-      z-index: 140;
-      backdrop-filter: blur(4px);
+      z-index: 120;
     }
 
     .modal-backdrop.open {
@@ -1046,327 +540,77 @@
     }
 
     .modal {
-      background: #091711;
-      border: 1px solid var(--border-soft);
-      border-radius: 18px;
-      max-width: 820px;
+      background: var(--card);
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      max-width: 780px;
       width: 100%;
       padding: 16px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      max-height: 92vh;
+      max-height: 90vh;
       overflow-y: auto;
-      overflow-x: hidden;
-      box-shadow: var(--soft-glow);
     }
 
-    body[data-theme="light"] .modal {
-      background: #ffffff;
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .close-btn {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .close-btn:hover {
-      color: var(--text);
-    }
-
-    .player-box {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
+    .viewer-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 316px);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 310px);
       gap: 12px;
-      align-items: stretch;
-      width: 100%;
     }
 
-    @media (max-width: 720px) {
-      .player-box { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .stage-panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-      min-height: 240px;
-      min-width: 0;
-    }
-
-    .stage-media {
-      width: 100%;
-      min-height: 155px;
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-      gap: 8px;
-      text-align: center;
-    }
-
-    .stage-media iframe {
-      width: 100%;
-      min-height: 180px;
-      border: 0;
-      border-radius: 8px;
-    }
-
-    .offerwall-frame {
-      width: 100%;
-      height: 440px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--card);
+    @media (max-width: 700px) {
+      .viewer-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
     .ad-box-300 {
-      background: var(--card);
-      border: 1px dashed var(--border-soft);
-      border-radius: 12px;
-      min-height: 266px;
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      min-height: 260px;
       padding: 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
       gap: 6px;
-      width: 100%;
-      max-width: 100%;
       overflow: hidden;
-    }
-
-    .progress-wrap {
-      width: 100%;
-      height: 8px;
-      background: var(--card-2);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #10b981, #39ff14);
-      transition: width 0.25s linear;
-    }
-
-    .status-note {
-      font-size: 0.82rem;
-      color: var(--neon-red);
-      font-weight: 600;
-      min-height: 18px;
-    }
-
-    .captcha-box {
-      background: rgba(57, 255, 20, 0.08);
-      border: 1px solid rgba(57, 255, 20, 0.34);
-      border-radius: 12px;
-      padding: 12px;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .captcha-box.show {
-      display: flex;
-    }
-
-    .form-2col {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (max-width: 560px) {
-      .form-2col { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .adv-summary {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 0.83rem;
-    }
-
-    .adv-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .table-wrap {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-      min-width: 420px;
-    }
-
-    .data-table th,
-    .data-table td {
-      text-align: left;
-      padding: 9px 10px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .data-table th {
-      color: var(--muted);
-      font-weight: 700;
-      background: var(--card-2);
-    }
-
-    .ref-link-box {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .ref-link-box input {
-      flex: 1 1 220px;
-      min-width: 0;
-    }
-
-    .ref-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .ref-stats-grid { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .ref-stat-card {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      min-width: 0;
-    }
-
-    .ref-stat-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    .ref-stat-val {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--neon-green);
-      margin-top: 4px;
-    }
-
-    input, select, textarea {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 9px 11px;
-      font-size: 0.85rem;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--border-soft);
-      box-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
-    }
-
-    textarea {
-      min-height: 70px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.78rem;
     }
 
     footer {
-      border-top: 1px solid var(--border);
       background: var(--header-bg);
-      padding: 14px 16px;
-      margin-top: 22px;
-      width: 100%;
-      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      font-size: 0.76rem;
+      color: var(--muted);
     }
 
     .footer-inner {
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       flex-wrap: wrap;
-      font-size: 0.8rem;
-      color: var(--muted);
     }
 
     .toast {
       position: fixed;
       bottom: 16px;
       right: 16px;
-      left: 16px;
-      max-width: 420px;
-      margin-left: auto;
-      background: #091711;
-      border: 1px solid var(--border-soft);
+      background: var(--card);
+      border: 1px solid var(--border-strong);
       color: var(--text);
-      padding: 11px 14px;
-      border-radius: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
       font-weight: 600;
-      font-size: 0.84rem;
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(10px);
       pointer-events: none;
       transition: 0.2s ease;
       z-index: 150;
-      box-shadow: var(--soft-glow);
-    }
-
-    body[data-theme="light"] .toast {
-      background: #ffffff;
     }
 
     .toast.show {
@@ -1376,96 +620,80 @@
   </style>
 </head>
 <body data-theme="dark">
-  <div class="neon-bg-glow" aria-hidden="true">
-    <svg viewBox="0 0 600 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="300" cy="160" r="130" stroke="#39ff14" stroke-width="2" stroke-dasharray="10 8" opacity="0.45" />
-      <circle cx="300" cy="160" r="88" stroke="#10b981" stroke-width="1.5" opacity="0.35" />
-      <path d="M312 72 L248 168 H302 L288 248 L354 150 H298 Z" fill="#39ff14" opacity="0.22" stroke="#39ff14" stroke-width="2.5" stroke-linejoin="round" />
-    </svg>
-  </div>
-
-  <div class="neon-top-line"></div>
   <header>
     <div class="header-inner">
       <div class="brand">
-        <span class="brand-mark">⚡</span>
+        <span>⚡</span>
         <span>CryptoClicksFaucet</span>
       </div>
 
-      <div class="wallet-box" id="themeControls">
-        <button type="button" class="btn btn-soft-neon btn-sm" id="btnThemeDark" onclick="setThemeMode('dark')">🟢 Neón Oscuro</button>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnThemeLight" onclick="setThemeMode('light')">☀️ Verde Claro</button>
-      </div>
-
-      <div class="wallet-box hidden" id="headerUserControls">
-        <div class="user-pill">
-          <span id="userDisplay">👤 Invitado</span>
-        </div>
-        <div class="balance-pill" id="balanceDisplay">🪙 0 Coins (≈ $0.00000 USDT)</div>
-        <button class="btn btn-primary btn-sm" onclick="openProfileTab('retiros')">💸 Retirar</button>
+      <div class="header-right hidden" id="headerUserControls">
+        <span class="pill" id="userDisplay">👤 Invitado</span>
+        <span class="pill pill-coins" id="balanceDisplay">🪙 0 Coins ($0.00000)</span>
+        <button class="btn btn-primary btn-sm" onclick="openProfileTab('retiros')">Retirar</button>
         <button class="btn btn-danger btn-sm" onclick="logoutUser()">Salir</button>
       </div>
 
-      <div class="wallet-box" id="headerGuestControls">
-        <button class="btn btn-secondary" onclick="switchAuthTab('login')">Iniciar Sesión</button>
-        <button class="btn btn-primary" onclick="switchAuthTab('register')">Registrarse</button>
+      <div class="header-right" id="headerGuestControls">
+        <button class="btn btn-secondary btn-sm" onclick="switchAuthTab('login')">Iniciar Sesión</button>
+        <button class="btn btn-primary btn-sm" onclick="switchAuthTab('register')">Registrarse</button>
       </div>
     </div>
   </header>
 
   <section class="auth-wrapper" id="authSection">
     <div class="auth-card">
-      <div class="auth-head">
-        <h1>CryptoClicksFaucet</h1>
-        <p>Faucet con su sección propia, PTCs, Shortlinks, Offerwalls, Logros y Perfil desplegable.</p>
+      <div>
+        <h1 style="font-size:1.15rem; font-weight:800;">CryptoClicksFaucet</h1>
+        <p style="font-size:0.78rem; color:var(--muted); margin-top:2px;">Faucet, PTCs, Shortlinks, Offerwalls y Logros.</p>
       </div>
 
       <div class="auth-tabs">
-        <button type="button" class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">🔐 Iniciar Sesión</button>
-        <button type="button" class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')">📝 Registro</button>
+        <button type="button" class="auth-tab active" id="authTabLogin" onclick="switchAuthTab('login')">Iniciar Sesión</button>
+        <button type="button" class="auth-tab" id="authTabRegister" onclick="switchAuthTab('register')">Registrarse</button>
       </div>
 
       <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
         <div class="field-group">
-          <label for="loginIdentifier">Usuario o Correo Electrónico</label>
-          <input type="text" id="loginIdentifier" placeholder="usuario@correo.com" required />
+          <label for="loginIdentifier">Usuario o Correo</label>
+          <input type="text" id="loginIdentifier" required />
         </div>
         <div class="field-group">
           <label for="loginPassword">Contraseña</label>
-          <input type="password" id="loginPassword" placeholder="••••••••" required />
+          <input type="password" id="loginPassword" required />
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px;">Entrar al Dashboard</button>
+        <button type="submit" class="btn btn-primary" style="margin-top:4px;">Entrar</button>
       </form>
 
       <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
         <div class="field-group">
-          <label for="regUsername">Nombre de Usuario</label>
-          <input type="text" id="regUsername" placeholder="Ej. CryptoMaster" minlength="3" maxlength="24" required />
+          <label for="regUsername">Usuario</label>
+          <input type="text" id="regUsername" minlength="3" maxlength="24" required />
         </div>
         <div class="field-group">
-          <label for="regEmail">Correo Electrónico</label>
-          <input type="email" id="regEmail" placeholder="tu@correo.com" required />
+          <label for="regEmail">Correo</label>
+          <input type="email" id="regEmail" required />
         </div>
         <div class="field-group">
-          <label for="regPassword">Contraseña (mín. 6 caracteres)</label>
-          <input type="password" id="regPassword" placeholder="••••••••" minlength="6" required />
+          <label for="regPassword">Contraseña</label>
+          <input type="password" id="regPassword" minlength="6" required />
         </div>
         <div class="field-group">
           <label for="regPasswordConfirm">Confirmar Contraseña</label>
-          <input type="password" id="regPasswordConfirm" placeholder="••••••••" minlength="6" required />
+          <input type="password" id="regPasswordConfirm" minlength="6" required />
         </div>
         <div class="field-group">
-          <label for="regRefCode">Código de Referido (opcional — +500 Coins al entrar / +1,000 al invitador)</label>
-          <input type="text" id="regRefCode" placeholder="Ej. REF-XXXX" />
+          <label for="regRefCode">Código de Referido (opcional)</label>
+          <input type="text" id="regRefCode" />
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px;">Crear Cuenta (+200 Coins)</button>
+        <button type="submit" class="btn btn-primary" style="margin-top:4px;">Crear Cuenta (+200 Coins)</button>
       </form>
     </div>
   </section>
 
   <main class="hidden" id="dashboardSection">
     <nav class="nav-bar" id="mainNav">
-      <button type="button" class="nav-btn active" data-sec="dashboard" onclick="switchSection('dashboard')">🏠 Dashboard</button>
+      <button type="button" class="nav-btn active" data-sec="dashboard" onclick="switchSection('dashboard')">🏠 Inicio</button>
       <button type="button" class="nav-btn" data-sec="faucet" onclick="switchSection('faucet')">🚰 Faucet</button>
       <button type="button" class="nav-btn" data-sec="ptcs" onclick="switchSection('ptcs')">🖱️ PTCs <span id="navCountPtcs">(0)</span></button>
       <button type="button" class="nav-btn" data-sec="shortlinks" onclick="switchSection('shortlinks')">🔗 Shortlinks <span id="navCountShortlinks">(0)</span></button>
@@ -1474,110 +702,83 @@
 
       <div class="profile-dd-wrap" id="profileDropdownWrap">
         <button type="button" class="nav-btn" data-sec="perfil" id="btnProfileDropdown" onclick="toggleProfileDropdown(event)">
-          👤 Perfil <span class="profile-dd-arrow">▾</span>
+          👤 Perfil ▾
         </button>
-        <div class="profile-dd-menu" id="profileDropdownMenu" role="menu">
-          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('historial')">📜 Historial</button>
-          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('retiros')">💸 Retiros</button>
-          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('anunciantes')">📢 Anunciantes</button>
-          <button type="button" class="profile-dd-item" role="menuitem" onclick="selectProfileMenuItem('referidos')">🤝 Referidos</button>
+        <div class="profile-dd-menu" id="profileDropdownMenu">
+          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('historial')">📜 Historial</button>
+          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('retiros')">💸 Retiros</button>
+          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('anunciantes')">📢 Anunciantes</button>
+          <button type="button" class="profile-dd-item" onclick="selectProfileMenuItem('referidos')">🤝 Referidos</button>
         </div>
       </div>
     </nav>
 
-    <div class="safety-banner">
-      <span>⚡ <strong>CryptoClicksFaucet:</strong> 50 Coins = $0.0005 USDT • Faucet cada 60 min (+35 Coins) • Retiros manuales (mín. 10,000 / máx. 25,000 Coins/día).</span>
-      <button type="button" class="btn btn-soft-neon btn-sm" onclick="switchSection('faucet')">🚰 Ir a Faucet</button>
+    <div class="notice-bar">
+      <span>50 Coins = $0.0005 USDT • Faucet cada 60m (+35) • Retiro mín. 10,000 Coins.</span>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('faucet')">Ir a Faucet</button>
     </div>
 
     <section class="ad-banner-top" id="adSlotTop"></section>
 
-    <!-- 1. DASHBOARD -->
-    <section id="sec-dashboard" style="display:flex; flex-direction:column; gap:12px; width:100%;">
+    <!-- INICIO -->
+    <section id="sec-dashboard" style="display:flex; flex-direction:column; gap:10px;">
       <div class="kpi-grid">
-        <div class="kpi-card">
-          <span class="kpi-label">Balance Disponible</span>
+        <div class="card">
+          <span class="kpi-label">Balance</span>
           <span class="kpi-val" id="kpiBalanceCoins">0 Coins</span>
           <span class="kpi-sub" id="kpiBalanceUsdt">≈ $0.00000 USDT</span>
         </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Referidos (Bono Único)</span>
+        <div class="card">
+          <span class="kpi-label">Referidos</span>
           <span class="kpi-val" id="kpiRefCount">0</span>
-          <span class="kpi-sub" id="kpiRefCoins">0 Coins (1,000 c/u)</span>
+          <span class="kpi-sub" id="kpiRefCoins">0 Coins</span>
         </div>
-        <div class="kpi-card">
-          <span class="kpi-label">Mínimo de Retiro</span>
+        <div class="card">
+          <span class="kpi-label">Meta de Retiro</span>
           <span class="kpi-val">10,000</span>
-          <span class="kpi-sub" id="kpiWithdrawProgress">0% del mínimo ($0.10 USDT)</span>
+          <span class="kpi-sub" id="kpiWithdrawProgress">0% del mínimo</span>
         </div>
       </div>
 
-      <section class="hub-grid">
-        <div class="hub-card">
-          <div class="hub-top">
+      <div class="two-col">
+        <div class="card">
+          <div class="row-between">
             <div>
-              <div class="hub-title">🎁 Bono Diario</div>
-              <div class="hub-sub">Reclama tu recompensa fija cada 24 horas.</div>
+              <div class="item-title">🎁 Bono Diario</div>
+              <div class="item-desc" id="dailyBonusStatus">Disponible ahora</div>
             </div>
-            <span class="hub-badge">+100 Coins</span>
+            <span class="tag">+100 Coins</span>
           </div>
-          <div class="hub-foot">
-            <span class="hub-stat" id="dailyBonusStatus">Disponible ahora</span>
-            <button type="button" class="btn btn-primary btn-sm" id="btnDailyBonus" onclick="claimDailyBonus()">Reclamar +100 Coins</button>
+          <div class="row-between">
+            <span></span>
+            <button type="button" class="btn btn-primary btn-sm" id="btnDailyBonus" onclick="claimDailyBonus()">Reclamar</button>
           </div>
         </div>
 
-        <div class="hub-card">
-          <div class="hub-top">
+        <div class="card">
+          <div class="row-between">
             <div>
-              <div class="hub-title">🚰 Grifo Faucet</div>
-              <div class="hub-sub">Reclama +35 Coins cada 60 minutos desde su sección.</div>
+              <div class="item-title">🚰 Grifo Faucet</div>
+              <div class="item-desc" id="dashFaucetStatus">Disponible ahora</div>
             </div>
-            <span class="hub-badge">+35 Coins • 60m</span>
+            <span class="tag">+35 Coins</span>
           </div>
-          <div class="hub-foot">
-            <span class="hub-stat" id="dashFaucetStatus">Disponible ahora</span>
-            <button type="button" class="btn btn-primary btn-sm" onclick="switchSection('faucet')">🚰 Abrir Faucet</button>
+          <div class="row-between">
+            <span></span>
+            <button type="button" class="btn btn-primary btn-sm" onclick="switchSection('faucet')">Abrir Faucet</button>
           </div>
-        </div>
-      </section>
-
-      <div class="panel-card">
-        <h3 style="font-size:0.94rem;">Accesos Rápidos</h3>
-        <div class="quick-grid">
-          <button type="button" class="quick-tile" onclick="switchSection('faucet')">
-            <strong style="color:var(--neon-green);">🚰 Faucet</strong>
-            <span style="font-size:0.76rem; color:var(--muted);">Grifo cada 60 min (+35 Coins)</span>
-          </button>
-          <button type="button" class="quick-tile" onclick="switchSection('ptcs')">
-            <strong style="color:var(--neon-green);">🖱️ PTCs</strong>
-            <span style="font-size:0.76rem; color:var(--muted);">Window Ads y Frame Ads</span>
-          </button>
-          <button type="button" class="quick-tile" onclick="switchSection('shortlinks')">
-            <strong style="color:var(--neon-green);">🔗 Shortlinks</strong>
-            <span style="font-size:0.76rem; color:var(--muted);">Enlaces acortados (+130 Coins)</span>
-          </button>
-          <button type="button" class="quick-tile" onclick="openProfileTab('retiros')">
-            <strong style="color:var(--neon-green);">👤 Perfil y Retiros</strong>
-            <span style="font-size:0.76rem; color:var(--muted);">Historial, Retiros, Anunciantes y Referidos</span>
-          </button>
         </div>
       </div>
 
-      <div class="panel-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-          <h3 style="font-size:0.94rem;">Últimos Movimientos</h3>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('historial')">Ver historial</button>
+      <div class="card">
+        <div class="row-between">
+          <span class="item-title">Últimos Movimientos</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('historial')">Ver todo</button>
         </div>
         <div class="table-wrap">
-          <table class="data-table">
+          <table>
             <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Actividad</th>
-                <th>Monto</th>
-                <th>Equivalente</th>
-              </tr>
+              <tr><th>Fecha</th><th>Actividad</th><th>Monto</th><th>USDT</th></tr>
             </thead>
             <tbody id="dashMovementsBody"></tbody>
           </table>
@@ -1585,123 +786,92 @@
       </div>
     </section>
 
-    <!-- 2. SECCIÓN FAUCET -->
-    <section id="sec-faucet" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <div class="panel-card" style="max-width:600px;">
-        <div class="hub-top">
+    <!-- FAUCET -->
+    <section id="sec-faucet" class="hidden">
+      <div class="card" style="max-width:520px;">
+        <div class="row-between">
           <div>
-            <h2 style="font-size:1.02rem;">🚰 Faucet CryptoClicksFaucet</h2>
-            <p style="font-size:0.8rem; color:var(--muted); margin-top:3px;">
-              Recompensa fija de <strong>+35 Coins</strong> cada <strong>60 minutos</strong> en una sola ventana.
-            </p>
+            <div class="item-title">🚰 Faucet</div>
+            <div class="item-desc">+35 Coins cada 60 minutos.</div>
           </div>
-          <span class="hub-badge">+35 Coins • 60m</span>
+          <span class="tag">+35 Coins</span>
         </div>
 
-        <div class="faucet-challenge-box hidden" id="faucetChallengeBox">
-          <label for="faucetCaptchaInput" id="faucetCaptchaQuestion">¿Cuánto es 2 + 2?</label>
-          <input type="number" id="faucetCaptchaInput" placeholder="Resultado" />
-          <button type="button" class="btn btn-primary btn-sm" onclick="confirmFaucetClaim()">Confirmar Reclamo</button>
+        <div class="hidden" id="faucetChallengeBox" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <label for="faucetCaptchaInput" id="faucetCaptchaQuestion" style="font-size:0.8rem; font-weight:700;"></label>
+          <input type="number" id="faucetCaptchaInput" style="width:110px;" />
+          <button type="button" class="btn btn-primary btn-sm" onclick="confirmFaucetClaim()">Confirmar</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="cancelFaucetChallenge()">Cancelar</button>
         </div>
 
-        <div class="hub-foot">
-          <span class="hub-stat" id="faucetTimerStatus">Lista para reclamar</span>
-          <button type="button" class="btn btn-primary" id="btnFaucetAction" onclick="triggerFaucetButton()">🚰 Reclamar Faucet (+35)</button>
+        <div class="row-between">
+          <span style="font-size:0.78rem; color:var(--muted);" id="faucetTimerStatus">Disponible ahora</span>
+          <button type="button" class="btn btn-primary btn-sm" id="btnFaucetAction" onclick="triggerFaucetButton()">Reclamar (+35)</button>
         </div>
       </div>
     </section>
 
-    <!-- 3. SECCIÓN PTCs -->
-    <section id="sec-ptcs" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <div class="panel-card">
-        <h2 style="font-size:1rem;">🖱️ Anuncios PTC (Window Ads & Frame Ads)</h2>
-        <p style="font-size:0.79rem; color:var(--muted);">Acoplados al ancho de tu pantalla. Reinicio cada 24 horas.</p>
-      </div>
+    <!-- PTCS -->
+    <section id="sec-ptcs" class="hidden">
       <section class="ads-grid" id="ptcsGrid"></section>
     </section>
 
-    <!-- 4. SECCIÓN SHORTLINKS -->
-    <section id="sec-shortlinks" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <div class="panel-card">
-        <h2 style="font-size:1rem;">🔗 Shortlinks</h2>
-        <p style="font-size:0.79rem; color:var(--muted);">Completa enlaces acortados y gana +130 Coins por cada uno.</p>
-      </div>
+    <!-- SHORTLINKS -->
+    <section id="sec-shortlinks" class="hidden">
       <section class="ads-grid" id="shortlinksGrid"></section>
     </section>
 
-    <!-- 5. SECCIÓN OFFERWALLS -->
-    <section id="sec-offerwalls" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <div class="panel-card">
-        <h2 style="font-size:1rem;">🧱 Offerwalls</h2>
-        <p style="font-size:0.79rem; color:var(--muted);">Muros de encuestas y tareas en su propia sección.</p>
-      </div>
+    <!-- OFFERWALLS -->
+    <section id="sec-offerwalls" class="hidden">
       <section class="ads-grid" id="offerwallsGrid"></section>
     </section>
 
-    <!-- 6. SECCIÓN LOGROS -->
-    <section id="sec-logros" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <div class="panel-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-          <div>
-            <h2 style="font-size:1rem;">🏆 Logros y Metas de Actividad</h2>
-            <p style="font-size:0.79rem; color:var(--muted);">Completa PTCs, Shortlinks o Faucet para desbloquear recompensas fijas en Coins.</p>
-          </div>
-          <div class="ach-tabs">
-            <button type="button" class="btn btn-soft-neon btn-sm" id="achTabDaily" onclick="switchAchievementPeriod('daily')">📅 Diarios</button>
-            <button type="button" class="btn btn-secondary btn-sm" id="achTabWeekly" onclick="switchAchievementPeriod('weekly')">🗓️ Semanales</button>
-            <button type="button" class="btn btn-secondary btn-sm" id="achTabMonthly" onclick="switchAchievementPeriod('monthly')">📆 Mensuales</button>
+    <!-- LOGROS -->
+    <section id="sec-logros" class="hidden">
+      <div class="card">
+        <div class="row-between">
+          <span class="item-title">🏆 Logros</span>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" id="achTabDaily" onclick="switchAchievementPeriod('daily')">Diarios</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="achTabWeekly" onclick="switchAchievementPeriod('weekly')">Semanales</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="achTabMonthly" onclick="switchAchievementPeriod('monthly')">Mensuales</button>
           </div>
         </div>
         <div class="ach-list" id="achievementsGrid"></div>
       </div>
     </section>
 
-    <!-- 7. SECCIÓN PERFIL (HISTORIAL, RETIROS, ANUNCIANTES Y REFERIDOS) -->
-    <section id="sec-perfil" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <div class="panel-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-          <div>
-            <h2 style="font-size:1.02rem;">👤 Mi Perfil</h2>
-            <p style="font-size:0.79rem; color:var(--muted);">Selecciona una opción para ver su contenido.</p>
-          </div>
-        </div>
-
-        <div class="profile-subnav" id="profileSubnav">
-          <button type="button" class="btn btn-soft-neon btn-sm" data-ptab="historial" onclick="switchProfileTab('historial')">📜 Historial</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="retiros" onclick="switchProfileTab('retiros')">💸 Retiros</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="anunciantes" onclick="switchProfileTab('anunciantes')">📢 Anunciantes</button>
-          <button type="button" class="btn btn-secondary btn-sm" data-ptab="referidos" onclick="switchProfileTab('referidos')">🤝 Referidos</button>
+    <!-- PERFIL -->
+    <section id="sec-perfil" class="hidden">
+      <div class="card">
+        <div class="subnav" id="profileSubnav">
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="historial" onclick="switchProfileTab('historial')">Historial</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="retiros" onclick="switchProfileTab('retiros')">Retiros</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="anunciantes" onclick="switchProfileTab('anunciantes')">Anunciantes</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-ptab="referidos" onclick="switchProfileTab('referidos')">Referidos</button>
         </div>
 
         <div id="ptab-historial" class="profile-tab-panel active">
-          <div>
-            <h3 style="margin-bottom:8px;">⚡ Últimos 10 Movimientos</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead><tr><th>Fecha</th><th>Actividad</th><th>Monto</th><th>Equivalente</th></tr></thead>
-                <tbody id="movementsTableBody"></tbody>
-              </table>
-            </div>
+          <div class="item-title">Últimos Movimientos</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Fecha</th><th>Actividad</th><th>Monto</th><th>USDT</th></tr></thead>
+              <tbody id="movementsTableBody"></tbody>
+            </table>
           </div>
-          <div>
-            <h3 style="margin-bottom:8px;">💸 Historial de Retiros</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead><tr><th>Fecha</th><th>Método</th><th>Destino</th><th>Monto</th><th>Estado</th></tr></thead>
-                <tbody id="withdrawalsTableBody"></tbody>
-              </table>
-            </div>
+          <div class="item-title" style="margin-top:6px;">Retiros</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Fecha</th><th>Método</th><th>Destino</th><th>Monto</th><th>Estado</th></tr></thead>
+              <tbody id="withdrawalsTableBody"></tbody>
+            </table>
           </div>
         </div>
 
-        <div id="ptab-retiros" class="profile-tab-panel" style="max-width:540px;">
-          <h3>💸 Solicitar Retiro (Revisión Manual)</h3>
-          <p style="font-size:0.81rem; color:var(--muted);">
-            Tasa: 50 Coins = $0.0005 USDT • Mínimo: <strong>10,000 Coins</strong> ($0.10 USDT) • Máximo diario: <strong>25,000 Coins</strong> ($0.25 USDT).
-          </p>
+        <div id="ptab-retiros" class="profile-tab-panel" style="max-width:480px;">
+          <div class="item-title">Solicitar Retiro</div>
           <div class="field-group">
-            <label for="withdrawMethod">Método de Pago</label>
+            <label for="withdrawMethod">Método</label>
             <select id="withdrawMethod">
               <option value="USDT (BEP20 / Binance Pay)">USDT (BEP20 / Binance Pay)</option>
               <option value="Solana (SOL)">Solana (SOL)</option>
@@ -1711,62 +881,62 @@
             </select>
           </div>
           <div class="field-group">
-            <label for="withdrawAddress">Billetera, Correo o Datos de Pago Móvil</label>
-            <input type="text" id="withdrawAddress" placeholder="Dirección / correo / teléfono y CI" />
+            <label for="withdrawAddress">Destino</label>
+            <input type="text" id="withdrawAddress" placeholder="Billetera, correo o Pago Móvil" />
           </div>
           <div class="field-group">
-            <label for="withdrawAmount">Cantidad en Coins (10,000 a 25,000 por día)</label>
+            <label for="withdrawAmount">Coins (10,000 a 25,000/día)</label>
             <input type="number" id="withdrawAmount" value="10000" min="10000" max="25000" step="100" />
           </div>
-          <div style="font-size:0.76rem; color:var(--muted);" id="withdrawDailyQuotaInfo">Retirado últimas 24h: 0 / 25,000 Coins</div>
-          <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Confirmar Solicitud Manual</button>
+          <span style="font-size:0.75rem; color:var(--muted);" id="withdrawDailyQuotaInfo"></span>
+          <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Solicitar Retiro</button>
         </div>
 
         <div id="ptab-anunciantes" class="profile-tab-panel">
-          <h3>📢 Contratar Publicidad en CryptoClicksFaucet</h3>
-          <form onsubmit="submitAdvertiserCampaign(event)" style="display:flex; flex-direction:column; gap:10px;">
-            <div class="form-2col">
+          <div class="item-title">Nueva Campaña</div>
+          <form onsubmit="submitAdvertiserCampaign(event)" style="display:flex; flex-direction:column; gap:8px;">
+            <div class="two-col">
               <div class="field-group">
-                <label for="advTitle">Título del Anuncio</label>
-                <input type="text" id="advTitle" placeholder="Ej. Gana Solana gratis cada 5 min" maxlength="45" required />
+                <label for="advTitle">Título</label>
+                <input type="text" id="advTitle" maxlength="45" required />
               </div>
               <div class="field-group">
                 <label for="advFormat">Formato</label>
                 <select id="advFormat" onchange="recalcCampaignPrice()">
-                  <option value="window_ads">🪟 Window Ad ($0.0012 / clic)</option>
-                  <option value="frame_ads">🖼️ Frame Ad ($0.0009 / vista)</option>
+                  <option value="window_ads">Window Ad ($0.0012)</option>
+                  <option value="frame_ads">Frame Ad ($0.0009)</option>
                 </select>
               </div>
             </div>
             <div class="field-group">
-              <label for="advUrl">URL de Destino (https://...)</label>
-              <input type="url" id="advUrl" placeholder="https://tusitio.com" required />
+              <label for="advUrl">URL</label>
+              <input type="url" id="advUrl" placeholder="https://..." required />
             </div>
             <div class="field-group">
-              <label for="advDesc">Descripción corta</label>
-              <input type="text" id="advDesc" placeholder="Breve descripción de tu oferta..." maxlength="95" required />
+              <label for="advDesc">Descripción</label>
+              <input type="text" id="advDesc" maxlength="95" required />
             </div>
-            <div class="form-2col">
+            <div class="two-col">
               <div class="field-group">
-                <label for="advClicks">Cantidad de Visitas</label>
+                <label for="advClicks">Visitas</label>
                 <select id="advClicks" onchange="recalcCampaignPrice()">
-                  <option value="100">100 visitas</option>
-                  <option value="500" selected>500 visitas</option>
-                  <option value="1000">1,000 visitas</option>
+                  <option value="100">100</option>
+                  <option value="500" selected>500</option>
+                  <option value="1000">1,000</option>
                 </select>
               </div>
               <div class="field-group">
                 <label for="advDuration">Duración</label>
                 <select id="advDuration" onchange="recalcCampaignPrice()">
-                  <option value="15">15 segundos</option>
-                  <option value="20">20 segundos (+20%)</option>
-                  <option value="30">30 segundos (+40%)</option>
+                  <option value="15">15s</option>
+                  <option value="20">20s</option>
+                  <option value="30">30s</option>
                 </select>
               </div>
             </div>
-            <div class="form-2col">
+            <div class="two-col">
               <div class="field-group">
-                <label for="advPayMethod">Método de Pago</label>
+                <label for="advPayMethod">Pago</label>
                 <select id="advPayMethod">
                   <option value="FaucetPay (USDT)">FaucetPay (USDT)</option>
                   <option value="Binance Pay (USDT)">Binance Pay (USDT)</option>
@@ -1774,43 +944,38 @@
                 </select>
               </div>
               <div class="field-group">
-                <label for="advTxId">ID de Transacción o Correo</label>
-                <input type="text" id="advTxId" placeholder="TX-12345 o correo" required />
+                <label for="advTxId">Referencia / Correo</label>
+                <input type="text" id="advTxId" required />
               </div>
             </div>
-            <div class="adv-summary">
-              <div class="adv-row"><span>Pago al usuario por visita:</span><strong id="advUserRewardPreview" style="color:var(--neon-green);">40 Coins</strong></div>
-              <div class="adv-row"><span>Total campaña:</span><strong id="advTotalUsdPreview" style="color:var(--neon-green);">$0.6000 USDT</strong></div>
+            <div class="row-between" style="font-size:0.8rem;">
+              <span>Por visita: <strong id="advUserRewardPreview">40 Coins</strong></span>
+              <span>Total: <strong id="advTotalUsdPreview">$0.6000 USDT</strong></span>
             </div>
-            <button type="submit" class="btn btn-primary">🚀 Publicar Campaña</button>
+            <button type="submit" class="btn btn-primary">Publicar Campaña</button>
           </form>
-          <div class="table-wrap" style="margin-top:6px;">
-            <table class="data-table">
-              <thead>
-                <tr><th>Campaña</th><th>Formato</th><th>Progreso</th><th>Pago</th></tr>
-              </thead>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Campaña</th><th>Formato</th><th>Visitas</th><th>Total</th></tr></thead>
               <tbody id="advertiserCampaignsBody"></tbody>
             </table>
           </div>
         </div>
 
         <div id="ptab-referidos" class="profile-tab-panel">
-          <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 / 500 Coins)</h3>
-          <p style="font-size:0.81rem; color:var(--muted);">
-            Ganas <strong>1,000 Coins por única vez</strong> por cada referido válido y el nuevo usuario recibe <strong>500 Coins extra</strong> al registrarse con tu código (sin comisiones recurrentes para proteger el capital).
-          </p>
-          <div class="ref-link-box">
-            <input type="text" id="referralLinkInput" readonly />
+          <div class="item-title">Referidos (+1,000 al invitador / +500 al nuevo)</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="text" id="referralLinkInput" readonly style="flex:1 1 220px;" />
             <button type="button" class="btn btn-primary" onclick="copyReferralLink()">Copiar</button>
           </div>
-          <div class="ref-stats-grid">
-            <div class="ref-stat-card"><div class="ref-stat-label">Tu Código</div><div class="ref-stat-val" id="refCodeDisplay">—</div></div>
-            <div class="ref-stat-card"><div class="ref-stat-label">Referidos Válidos</div><div class="ref-stat-val" id="refCountDisplay">0</div></div>
-            <div class="ref-stat-card"><div class="ref-stat-label">Bonos Únicos Ganados</div><div class="ref-stat-val" id="refEarnedDisplay">0 Coins</div></div>
+          <div class="kpi-grid">
+            <div class="card"><span class="kpi-label">Código</span><strong id="refCodeDisplay">—</strong></div>
+            <div class="card"><span class="kpi-label">Referidos</span><strong id="refCountDisplay">0</strong></div>
+            <div class="card"><span class="kpi-label">Ganado</span><strong id="refEarnedDisplay">0 Coins</strong></div>
           </div>
           <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>Usuario</th><th>Fecha Registro</th><th>Bono Único</th></tr></thead>
+            <table>
+              <thead><tr><th>Usuario</th><th>Fecha</th><th>Bono</th></tr></thead>
               <tbody id="referralsTableBody"></tbody>
             </table>
           </div>
@@ -1821,98 +986,76 @@
 
   <footer>
     <div class="footer-inner">
-      <div>CryptoClicksFaucet © 2026 • Referidos: bono único 1,000 / 500 Coins</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-        <label class="sound-toggle" for="soundToggle">
-          <input type="checkbox" id="soundToggle" class="sr-switch" checked onchange="toggleSoundPref()" />
-          <span class="switch-ui"></span>
-          <span>🔔 Sonido</span>
-        </label>
-        <button class="btn btn-secondary btn-sm" onclick="openAdConfigModal()">⚙️ Configurar Enlaces y Banners</button>
+      <span>CryptoClicksFaucet</span>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setThemeMode('dark')">Oscuro</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="setThemeMode('light')">Claro</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnSoundToggle" onclick="toggleSoundPref()">🔔 Sonido: ON</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="openAdConfigModal()">⚙️ Enlaces</button>
       </div>
     </div>
   </footer>
 
-  <!-- Modal Visor para PTCs y Shortlinks -->
+  <!-- Visor -->
   <div class="modal-backdrop" id="viewerModal">
     <div class="modal">
-      <div class="modal-header">
-        <h3 id="viewerTitle" style="font-size:1rem; overflow-wrap:anywhere;">Cargando...</h3>
-        <button class="close-btn" onclick="closeViewerModal()">✕</button>
+      <div class="row-between">
+        <strong id="viewerTitle">Cargando...</strong>
+        <button class="btn btn-secondary btn-sm" onclick="closeViewerModal()">✕</button>
       </div>
-      <div class="player-box">
-        <div class="stage-panel">
-          <div class="stage-media" id="stageMedia"></div>
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; gap:8px; flex-wrap:wrap;">
-              <span id="viewerBadge"></span>
-              <span id="viewerTimerText" style="font-size:1.25rem; font-weight:800; color:var(--neon-green);">15s</span>
-            </div>
-            <div class="progress-wrap"><div class="progress-bar" id="viewerProgress"></div></div>
+      <div class="viewer-grid">
+        <div class="card">
+          <div id="stageMedia" style="min-height:150px; display:flex; align-items:center; justify-content:center; text-align:center;"></div>
+          <div class="row-between">
+            <span id="viewerBadge" class="tag"></span>
+            <strong id="viewerTimerText">15s</strong>
           </div>
+          <div class="progress-track"><div class="progress-fill" id="viewerProgress"></div></div>
         </div>
         <div class="ad-box-300" id="adSlotModal"></div>
       </div>
-      <div class="status-note" id="viewerStatus"></div>
-      <div class="captcha-box" id="captchaBox">
-        <label id="captchaQuestion" style="font-weight:700;"></label>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <input type="number" id="captchaAnswer" placeholder="Escribe el resultado" style="flex:1 1 160px;" />
+      <div style="font-size:0.8rem; color:var(--danger);" id="viewerStatus"></div>
+      <div class="hidden" id="captchaBox" style="display:flex; flex-direction:column; gap:8px;">
+        <label id="captchaQuestion" style="font-size:0.82rem; font-weight:700;"></label>
+        <div style="display:flex; gap:8px;">
+          <input type="number" id="captchaAnswer" placeholder="Resultado" />
           <button class="btn btn-primary" onclick="claimViewerReward()">Reclamar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal Offerwall -->
+  <!-- Offerwall -->
   <div class="modal-backdrop" id="offerwallModal">
-    <div class="modal" style="max-width:920px;">
-      <div class="modal-header">
-        <h3 id="offerwallModalTitle">🧱 Offerwall</h3>
-        <button class="close-btn" onclick="closeOfferwallModal()">✕</button>
+    <div class="modal" style="max-width:880px;">
+      <div class="row-between">
+        <strong id="offerwallModalTitle">Offerwall</strong>
+        <button class="btn btn-secondary btn-sm" onclick="closeOfferwallModal()">✕</button>
       </div>
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; font-size:0.8rem; color:var(--muted);">
+      <div class="row-between" style="font-size:0.78rem; color:var(--muted);">
         <span id="offerwallSubInfo"></span>
-        <a id="offerwallExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">↗ Abrir en pestaña nueva</a>
+        <a id="offerwallExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">Abrir afuera</a>
       </div>
-      <iframe id="offerwallIframe" class="offerwall-frame" src="about:blank" loading="lazy"></iframe>
+      <iframe id="offerwallIframe" style="width:100%; height:420px; border:1px solid var(--border); border-radius:10px;" src="about:blank"></iframe>
     </div>
   </div>
 
-  <!-- Modal Config -->
+  <!-- Config -->
   <div class="modal-backdrop" id="adConfigModal">
-    <div class="modal" style="max-width:640px;">
-      <div class="modal-header">
-        <h3>⚙️ Configurar Offerwalls, Enlaces y Banners</h3>
-        <button class="close-btn" onclick="closeAdConfigModal()">✕</button>
+    <div class="modal" style="max-width:580px;">
+      <div class="row-between">
+        <strong>Enlaces y Banners</strong>
+        <button class="btn btn-secondary btn-sm" onclick="closeAdConfigModal()">✕</button>
       </div>
-      <div>
-        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🧱 URLs de Offerwalls (una por línea)</label>
-        <textarea id="offerwallLinksInput"></textarea>
-      </div>
-      <div>
-        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🪟 Window Ads (una por línea)</label>
-        <textarea id="windowLinksInput"></textarea>
-      </div>
-      <div>
-        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🖼️ Frame Ads (una por línea)</label>
-        <textarea id="frameLinksInput"></textarea>
-      </div>
-      <div>
-        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">🔗 Shortlinks (una por línea)</label>
-        <textarea id="shortLinksInput"></textarea>
-      </div>
-      <div>
-        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">Banner Superior (728x90 — HTML o script)</label>
-        <textarea id="adTopInput"></textarea>
-      </div>
-      <div>
-        <label style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;">Banner Lateral (300x250 — HTML o script)</label>
-        <textarea id="adModalInput"></textarea>
-      </div>
-      <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
-        <button class="btn btn-secondary" onclick="resetAdConfig()">Restaurar</button>
-        <button class="btn btn-primary" onclick="saveAdConfig()">Guardar</button>
+      <div class="field-group"><label>Offerwalls</label><textarea id="offerwallLinksInput"></textarea></div>
+      <div class="field-group"><label>Window Ads</label><textarea id="windowLinksInput"></textarea></div>
+      <div class="field-group"><label>Frame Ads</label><textarea id="frameLinksInput"></textarea></div>
+      <div class="field-group"><label>Shortlinks</label><textarea id="shortLinksInput"></textarea></div>
+      <div class="field-group"><label>Banner 728x90</label><textarea id="adTopInput"></textarea></div>
+      <div class="field-group"><label>Banner 300x250</label><textarea id="adModalInput"></textarea></div>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn btn-secondary btn-sm" onclick="resetAdConfig()">Restaurar</button>
+        <button class="btn btn-primary btn-sm" onclick="saveAdConfig()">Guardar</button>
       </div>
     </div>
   </div>
@@ -1929,7 +1072,6 @@
     const REFERRAL_ONE_TIME_BONUS_COINS = 1000;
     const REFERRED_WELCOME_BONUS_COINS = 500;
     const MAX_ACCOUNTS_PER_DEVICE = 2;
-
     const FAUCET_COOLDOWN_MS = 60 * 60 * 1000;
     const FAUCET_REWARD_COINS = 35;
 
@@ -1950,39 +1092,20 @@
     };
 
     const ACHIEVEMENTS_CONFIG = [
-      { id: "d_ptc_3", period: "daily", metric: "ptc", target: 3, title: "Explorador PTC Diario", desc: "Completa 3 anuncios PTC hoy.", reward: 80 },
-      { id: "d_sl_2", period: "daily", metric: "shortlink", target: 2, title: "Cazador de Enlaces Diario", desc: "Completa 2 Shortlinks hoy.", reward: 120 },
-      { id: "d_fc_3", period: "daily", metric: "faucet", target: 3, title: "Grifo Constante Diario", desc: "Reclama la Faucet 3 veces hoy.", reward: 90 },
-      { id: "d_any_6", period: "daily", metric: "total", target: 6, title: "Rutina Activa Diaria", desc: "Completa 6 tareas entre PTC, Shortlinks o Faucet hoy.", reward: 150 },
-      { id: "w_ptc_15", period: "weekly", metric: "ptc", target: 15, title: "Maratón PTC Semanal", desc: "Completa 15 anuncios PTC en 7 días.", reward: 400 },
-      { id: "w_sl_10", period: "weekly", metric: "shortlink", target: 10, title: "Maestro Shortlink Semanal", desc: "Completa 10 Shortlinks en 7 días.", reward: 650 },
+      { id: "d_ptc_3", period: "daily", metric: "ptc", target: 3, title: "PTC Diario", desc: "Completa 3 PTC hoy.", reward: 80 },
+      { id: "d_sl_2", period: "daily", metric: "shortlink", target: 2, title: "Shortlinks Diario", desc: "Completa 2 Shortlinks hoy.", reward: 120 },
+      { id: "d_fc_3", period: "daily", metric: "faucet", target: 3, title: "Faucet Diario", desc: "Reclama 3 veces hoy.", reward: 90 },
+      { id: "d_any_6", period: "daily", metric: "total", target: 6, title: "Activo Diario", desc: "Completa 6 tareas hoy.", reward: 150 },
+      { id: "w_ptc_15", period: "weekly", metric: "ptc", target: 15, title: "PTC Semanal", desc: "Completa 15 PTC en 7 días.", reward: 400 },
+      { id: "w_sl_10", period: "weekly", metric: "shortlink", target: 10, title: "Shortlinks Semanal", desc: "Completa 10 Shortlinks en 7 días.", reward: 650 },
       { id: "w_any_30", period: "weekly", metric: "total", target: 30, title: "Constancia Semanal", desc: "Completa 30 tareas en 7 días.", reward: 800 },
-      { id: "m_ptc_60", period: "monthly", metric: "ptc", target: 60, title: "Veterano PTC Mensual", desc: "Completa 60 anuncios PTC en 30 días.", reward: 1500 },
-      { id: "m_sl_40", period: "monthly", metric: "shortlink", target: 40, title: "Leyenda Shortlink Mensual", desc: "Completa 40 Shortlinks en 30 días.", reward: 2200 },
-      { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán de CryptoClicksFaucet", desc: "Completa 120 tareas en 30 días.", reward: 3000 }
+      { id: "m_ptc_60", period: "monthly", metric: "ptc", target: 60, title: "PTC Mensual", desc: "Completa 60 PTC en 30 días.", reward: 1500 },
+      { id: "m_sl_40", period: "monthly", metric: "shortlink", target: 40, title: "Shortlinks Mensual", desc: "Completa 40 Shortlinks en 30 días.", reward: 2200 },
+      { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán Mensual", desc: "Completa 120 tareas en 30 días.", reward: 3000 }
     ];
 
-    const DEFAULT_AD_728 = `
-      <div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(11,26,20,0.96);border:1px solid rgba(57,255,20,0.38);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#ecfdf5;">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <span style="background:rgba(57,255,20,0.16);color:#39ff14;border:1px solid rgba(57,255,20,0.4);font-weight:700;padding:6px 10px;border-radius:8px;font-size:12px;">728×90</span>
-          <div>
-            <div style="font-weight:700;font-size:14px;">Espacio Publicitario CryptoClicksFaucet</div>
-            <div style="font-size:12px;color:#86efac;">Configura tu código HTML o banner desde el botón inferior.</div>
-          </div>
-        </div>
-        <span style="background:#39ff14;color:#041208;font-weight:800;padding:7px 14px;border-radius:8px;font-size:12px;white-space:nowrap;">ANUNCIAR</span>
-      </div>
-    `.trim();
-
-    const DEFAULT_AD_300 = `
-      <div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;background:rgba(11,26,20,0.96);border:1px solid rgba(57,255,20,0.38);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#ecfdf5;text-align:center;">
-        <span style="background:rgba(57,255,20,0.16);color:#39ff14;border:1px solid rgba(57,255,20,0.4);font-weight:700;padding:4px 10px;border-radius:7px;font-size:11px;">300×250</span>
-        <div style="font-weight:700;font-size:15px;line-height:1.25;">Promociona tu Proyecto o Enlace</div>
-        <div style="font-size:12px;color:#86efac;">Personaliza este bloque cuando quieras en Configuración.</div>
-        <span style="background:#39ff14;color:#041208;font-weight:800;padding:7px 14px;border-radius:8px;font-size:12px;">VER MÁS</span>
-      </div>
-    `.trim();
+    const DEFAULT_AD_728 = `<div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#0e1f18;border:1px solid rgba(57,255,20,0.25);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#94cbb0;font-size:12px;">Espacio 728×90</span></div>`;
+    const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#0e1f18;border:1px solid rgba(57,255,20,0.25);border-radius:10px;color:#ecfdf5;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#94cbb0;font-size:12px;">Configurable</span></div>`;
 
     const DEFAULT_OFFERWALL_LINKS = ["https://timewall.io/", "https://www.cpx-research.com/", "https://bitlabs.ai/", "https://monlix.com/"];
     const DEFAULT_WINDOW_LINKS = ["https://example.com/"];
@@ -1990,38 +1113,41 @@
     const DEFAULT_SHORTLINKS = ["https://example.com/"];
 
     const OFFERWALLS_CONFIG = [
-      { id: "ow1", icon: "⏱️", title: "TimeWall — Microtareas", desc: "Tareas cortas y clics con acreditación externa.", duration: 0, reward: 2500, rewardLabel: "Hasta 2,500+ Coins" },
-      { id: "ow2", icon: "📋", title: "CPX Research — Encuestas", desc: "Encuestas disponibles según perfil y país.", duration: 0, reward: 15000, rewardLabel: "500 – 15,000 Coins" },
-      { id: "ow3", icon: "🎮", title: "BitLabs — Encuestas y Apps", desc: "Encuestas rápidas y pruebas de aplicaciones.", duration: 0, reward: 10000, rewardLabel: "300 – 10,000 Coins" },
-      { id: "ow4", icon: "🧱", title: "Monlix — Muro de Ofertas", desc: "Ofertas web y registros rápidos.", duration: 0, reward: 8000, rewardLabel: "200 – 8,000 Coins" }
+      { id: "ow1", title: "TimeWall", desc: "Microtareas externas.", duration: 0, reward: 2500, rewardLabel: "Hasta 2,500" },
+      { id: "ow2", title: "CPX Research", desc: "Encuestas disponibles.", duration: 0, reward: 15000, rewardLabel: "500 – 15,000" },
+      { id: "ow3", title: "BitLabs", desc: "Encuestas y apps.", duration: 0, reward: 10000, rewardLabel: "300 – 10,000" },
+      { id: "ow4", title: "Monlix", desc: "Muro de ofertas.", duration: 0, reward: 8000, rewardLabel: "200 – 8,000" }
     ];
 
     const WINDOW_ADS_CONFIG = Array.from({ length: 6 }, (_, i) => ({
-      id: `wn${i + 1}`,
-      icon: "🪟",
-      title: `Window Ad #${i + 1}`,
-      desc: "Abre el anuncio en pestaña nueva y espera el contador.",
-      duration: 15 + (i >= 4 ? 5 : 0),
-      reward: 35 + i * 3
+      id: `wn${i + 1}`, title: `Window Ad #${i + 1}`, desc: "Pestaña nueva con contador.", duration: 15 + (i >= 4 ? 5 : 0), reward: 35 + i * 3
     }));
 
     const FRAME_ADS_CONFIG = Array.from({ length: 6 }, (_, i) => ({
-      id: `fr${i + 1}`,
-      icon: "🖼️",
-      title: `Frame Ad #${i + 1}`,
-      desc: "Visualiza el anuncio dentro del marco integrado.",
-      duration: 15 + (i >= 4 ? 5 : 0),
-      reward: 30 + i * 3
+      id: `fr${i + 1}`, title: `Frame Ad #${i + 1}`, desc: "Vista en marco integrado.", duration: 15 + (i >= 4 ? 5 : 0), reward: 30 + i * 3
     }));
 
     const SHORTLINKS_CONFIG = Array.from({ length: 6 }, (_, i) => ({
-      id: `sl${i + 1}`,
-      icon: "🔗",
-      title: `Shortlink #${i + 1}`,
-      desc: "Completa el enlace acortado para ganar +130 Coins.",
-      duration: 20,
-      reward: 130
+      id: `sl${i + 1}`, title: `Shortlink #${i + 1}`, desc: "Enlace acortado (+130 Coins).", duration: 20, reward: 130
     }));
+
+    let tasks = [];
+    let state = {
+      currentUser: null,
+      coins: 0,
+      section: "dashboard",
+      profileTab: "historial",
+      achPeriod: "daily",
+      themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
+      soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
+      adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
+      adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300
+    };
+
+    let activeSession = null;
+    let timerInterval = null;
+    let expectedCaptcha = null;
+    let expectedFaucetCaptcha = 4;
 
     function getOrCreateDeviceId() {
       let id = localStorage.getItem(DEVICE_ID_KEY);
@@ -2055,64 +1181,39 @@
       const frmLinks = getLinksList(STORAGE_KEYS.frameLinks, DEFAULT_FRAME_LINKS);
       const shrtLinks = getLinksList(STORAGE_KEYS.shortLinks, DEFAULT_SHORTLINKS);
 
-      const offerwallTasks = OFFERWALLS_CONFIG.map((cfg, idx) => ({
+      const offerwalls = OFFERWALLS_CONFIG.map((cfg, idx) => ({
         ...cfg, cat: "offerwalls", used: 0, limit: 999999, url: owLinks[idx % owLinks.length]
       }));
 
       const campaigns = getAdvertiserCampaigns().filter(c => c.deliveredClicks < c.totalClicks);
-      const sponsoredTasks = campaigns.map(c => ({
-        id: c.id,
-        icon: "📢",
-        title: `${c.title} (Patrocinado)`,
-        desc: c.desc,
-        duration: c.duration,
-        reward: c.userRewardCoins,
-        cat: c.format,
-        used: 0,
-        limit: 1,
-        url: c.url,
-        isSponsored: true
+      const sponsored = campaigns.map(c => ({
+        id: c.id, title: c.title, desc: c.desc, duration: c.duration, reward: c.userRewardCoins,
+        cat: c.format, used: 0, limit: 1, url: c.url, isSponsored: true
       }));
 
-      const windowTasks = WINDOW_ADS_CONFIG.map((cfg, idx) => ({
+      const win = WINDOW_ADS_CONFIG.map((cfg, idx) => ({
         ...cfg, cat: "window_ads", used: 0, limit: 1, url: winLinks[idx % winLinks.length]
       }));
 
-      const frameTasks = FRAME_ADS_CONFIG.map((cfg, idx) => ({
+      const frm = FRAME_ADS_CONFIG.map((cfg, idx) => ({
         ...cfg, cat: "frame_ads", used: 0, limit: 1, url: frmLinks[idx % frmLinks.length]
       }));
 
-      const shortlinkTasks = SHORTLINKS_CONFIG.map((cfg, idx) => ({
+      const sl = SHORTLINKS_CONFIG.map((cfg, idx) => ({
         ...cfg, cat: "shortlinks", used: 0, limit: 1, url: shrtLinks[idx % shrtLinks.length]
       }));
 
-      return [...offerwallTasks, ...sponsoredTasks, ...windowTasks, ...frameTasks, ...shortlinkTasks];
+      return [...offerwalls, ...sponsored, ...win, ...frm, ...sl];
     }
 
-    let tasks = buildBaseTasks();
-    let state = {
-      currentUser: null,
-      coins: 0,
-      section: "dashboard",
-      profileTab: "historial",
-      achPeriod: "daily",
-      themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
-      soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
-      adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
-      adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300
-    };
-
-    let activeSession = null;
-    let timerInterval = null;
-    let expectedCaptcha = null;
-    let expectedFaucetCaptcha = 4;
+    tasks = buildBaseTasks();
 
     function closeProfileDropdown() {
       document.getElementById("profileDropdownWrap")?.classList.remove("open");
     }
 
-    function toggleProfileDropdown(event) {
-      event?.stopPropagation();
+    function toggleProfileDropdown(e) {
+      e?.stopPropagation();
       document.getElementById("profileDropdownWrap")?.classList.toggle("open");
     }
 
@@ -2121,227 +1222,21 @@
       openProfileTab(tab);
     }
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", (e) => {
       const wrap = document.getElementById("profileDropdownWrap");
-      if (wrap && !wrap.contains(event.target)) {
-        wrap.classList.remove("open");
-      }
+      if (wrap && !wrap.contains(e.target)) wrap.classList.remove("open");
     });
-
-    function prepareFaucetCaptcha() {
-      const a = Math.floor(Math.random() * 8) + 2;
-      const b = Math.floor(Math.random() * 7) + 1;
-      expectedFaucetCaptcha = a + b;
-      const qEl = document.getElementById("faucetCaptchaQuestion");
-      const inputEl = document.getElementById("faucetCaptchaInput");
-      if (qEl) qEl.textContent = `¿Cuánto es ${a} + ${b}?`;
-      if (inputEl) inputEl.value = "";
-    }
-
-    function triggerFaucetButton() {
-      if (!state.currentUser) return;
-      const now = Date.now();
-      const lastFaucet = state.currentUser.lastFaucetAt || 0;
-      if (lastFaucet && (now - lastFaucet < FAUCET_COOLDOWN_MS)) {
-        showToast("La Faucet aún está en espera.");
-        return;
-      }
-      prepareFaucetCaptcha();
-      document.getElementById("faucetChallengeBox")?.classList.remove("hidden");
-      document.getElementById("faucetCaptchaInput")?.focus();
-    }
-
-    function cancelFaucetChallenge() {
-      document.getElementById("faucetChallengeBox")?.classList.add("hidden");
-      const inputEl = document.getElementById("faucetCaptchaInput");
-      if (inputEl) inputEl.value = "";
-    }
-
-    function confirmFaucetClaim() {
-      if (!state.currentUser) return;
-      const now = Date.now();
-      const lastFaucet = state.currentUser.lastFaucetAt || 0;
-      if (lastFaucet && (now - lastFaucet < FAUCET_COOLDOWN_MS)) {
-        cancelFaucetChallenge();
-        showToast("La Faucet aún está en espera.");
-        return;
-      }
-
-      const inputEl = document.getElementById("faucetCaptchaInput");
-      if (Number(inputEl.value) !== expectedFaucetCaptcha) {
-        showToast("❌ Respuesta incorrecta. Intenta de nuevo.");
-        return;
-      }
-
-      state.currentUser.lastFaucetAt = now;
-      state.coins += FAUCET_REWARD_COINS;
-      recordActivityForAchievements(state.currentUser, "faucet");
-      addMovement(state.currentUser, "Faucet reclamada", FAUCET_REWARD_COINS);
-      cancelFaucetChallenge();
-      playFinishChime();
-      updateAllUI();
-      showToast(`🚰 +${FAUCET_REWARD_COINS} Coins acreditados desde la Faucet.`);
-    }
-
-    function createFreshAchievementState(now = Date.now()) {
-      return {
-        windowStart: now,
-        counts: { ptc: 0, shortlink: 0, faucet: 0, total: 0 },
-        claimed: []
-      };
-    }
-
-    function ensureUserAchievementBuckets(user, now = Date.now()) {
-      if (!user.achievements || typeof user.achievements !== "object") {
-        user.achievements = {};
-      }
-      const periods = [
-        { key: "daily", ms: 24 * 60 * 60 * 1000 },
-        { key: "weekly", ms: 7 * 24 * 60 * 60 * 1000 },
-        { key: "monthly", ms: 30 * 24 * 60 * 60 * 1000 }
-      ];
-      periods.forEach(({ key, ms }) => {
-        const b = user.achievements[key];
-        if (!b || !b.windowStart || (now - b.windowStart >= ms)) {
-          user.achievements[key] = createFreshAchievementState(now);
-        } else {
-          b.counts = Object.assign({ ptc: 0, shortlink: 0, faucet: 0, total: 0 }, b.counts || {});
-          b.claimed = Array.isArray(b.claimed) ? b.claimed : [];
-        }
-      });
-    }
-
-    function recordActivityForAchievements(user, kind) {
-      if (!user) return;
-      const now = Date.now();
-      ensureUserAchievementBuckets(user, now);
-      ["daily", "weekly", "monthly"].forEach(period => {
-        const bucket = user.achievements[period];
-        if (kind === "ptc") bucket.counts.ptc += 1;
-        if (kind === "shortlink") bucket.counts.shortlink += 1;
-        if (kind === "faucet") bucket.counts.faucet += 1;
-        bucket.counts.total += 1;
-      });
-    }
-
-    function getClaimableAchievementsCount(user) {
-      if (!user) return 0;
-      ensureUserAchievementBuckets(user);
-      return ACHIEVEMENTS_CONFIG.filter(ach => {
-        const bucket = user.achievements[ach.period];
-        const current = bucket.counts[ach.metric] || 0;
-        return current >= ach.target && !bucket.claimed.includes(ach.id);
-      }).length;
-    }
-
-    function switchAchievementPeriod(period) {
-      state.achPeriod = period;
-      ["daily", "weekly", "monthly"].forEach(p => {
-        const btn = document.getElementById(`achTab${p.charAt(0).toUpperCase() + p.slice(1)}`);
-        if (btn) btn.className = p === period ? "btn btn-soft-neon btn-sm" : "btn btn-secondary btn-sm";
-      });
-      renderAchievementsView();
-    }
-
-    function renderAchievementsView() {
-      const grid = document.getElementById("achievementsGrid");
-      if (!grid || !state.currentUser) return;
-      ensureUserAchievementBuckets(state.currentUser);
-
-      const list = ACHIEVEMENTS_CONFIG.filter(a => a.period === state.achPeriod);
-      const bucket = state.currentUser.achievements[state.achPeriod];
-
-      grid.innerHTML = list.map(ach => {
-        const current = Math.min(ach.target, Number(bucket.counts[ach.metric] || 0));
-        const pct = Math.min(100, Math.round((current / ach.target) * 100));
-        const alreadyClaimed = bucket.claimed.includes(ach.id);
-        const canClaim = !alreadyClaimed && (bucket.counts[ach.metric] || 0) >= ach.target;
-
-        return `
-          <article class="ach-card">
-            <div>
-              <div class="ach-head">
-                <div>
-                  <div class="ach-title">${ach.title}</div>
-                  <div class="ach-desc">${ach.desc}</div>
-                </div>
-                <span class="chip chip-reward">+${ach.reward} Coins</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; font-size:0.74rem; color:var(--muted); margin-top:8px; margin-bottom:4px;">
-                <span>Progreso: <strong>${current} / ${ach.target}</strong></span>
-                <span>${pct}%</span>
-              </div>
-              <div class="mini-progress-wrap">
-                <div class="mini-progress-bar" style="width:${pct}%;"></div>
-              </div>
-            </div>
-            <div class="hub-foot">
-              <span class="hub-stat">${alreadyClaimed ? "Reclamado en este ciclo" : canClaim ? "¡Listo para reclamar!" : `${pct}% completado`}</span>
-              <button
-                type="button"
-                class="btn ${canClaim ? "btn-primary" : "btn-secondary"} btn-sm"
-                ${canClaim ? "" : "disabled"}
-                onclick="claimAchievement('${ach.id}')"
-              >
-                ${alreadyClaimed ? "✓ Reclamado" : "Reclamar"}
-              </button>
-            </div>
-          </article>
-        `;
-      }).join("");
-    }
-
-    function claimAchievement(achId) {
-      if (!state.currentUser) return;
-      ensureUserAchievementBuckets(state.currentUser);
-      const ach = ACHIEVEMENTS_CONFIG.find(a => a.id === achId);
-      if (!ach) return;
-
-      const bucket = state.currentUser.achievements[ach.period];
-      const current = Number(bucket.counts[ach.metric] || 0);
-      if (current < ach.target || bucket.claimed.includes(ach.id)) return;
-
-      bucket.claimed.push(ach.id);
-      state.coins += ach.reward;
-      addMovement(state.currentUser, `Logro: ${ach.title}`, ach.reward);
-      updateAllUI();
-      renderAchievementsView();
-      showToast(`🏆 +${ach.reward} Coins por completar "${ach.title}".`);
-    }
-
-    function applyThemeMode(mode) {
-      state.themeMode = mode === "light" ? "light" : "dark";
-      localStorage.setItem(THEME_PREF_KEY, state.themeMode);
-      document.body.setAttribute("data-theme", state.themeMode);
-
-      const btnLight = document.getElementById("btnThemeLight");
-      const btnDark = document.getElementById("btnThemeDark");
-      if (btnLight && btnDark) {
-        if (state.themeMode === "light") {
-          btnLight.className = "btn btn-soft-neon btn-sm";
-          btnDark.className = "btn btn-secondary btn-sm";
-        } else {
-          btnDark.className = "btn btn-soft-neon btn-sm";
-          btnLight.className = "btn btn-secondary btn-sm";
-        }
-      }
-    }
-
-    function setThemeMode(mode) {
-      applyThemeMode(mode);
-      showToast(mode === "light" ? "☀️ Tema Verde Claro activado." : "🟢 Tema Neón Oscuro activado.");
-    }
-
-    function formatUsdt(coins) {
-      return (Math.abs(coins) * COIN_TO_USDT).toFixed(5);
-    }
 
     function showToast(msg) {
       const toast = document.getElementById("toast");
       toast.textContent = msg;
       toast.classList.add("show");
       clearTimeout(toast._t);
-      toast._t = setTimeout(() => toast.classList.remove("show"), 3200);
+      toast._t = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function formatUsdt(coins) {
+      return (Math.abs(coins) * COIN_TO_USDT).toFixed(5);
     }
 
     function playFinishChime() {
@@ -2352,20 +1247,32 @@
         const ctx = new AudioCtx();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
-        osc.type = "sine";
         osc.frequency.setValueAtTime(880, ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
-        osc.stop(ctx.currentTime + 0.35);
+        osc.stop(ctx.currentTime + 0.3);
       } catch {}
     }
 
+    function updateSoundButton() {
+      const btn = document.getElementById("btnSoundToggle");
+      if (btn) btn.textContent = state.soundEnabled ? "🔔 Sonido: ON" : "🔕 Sonido: OFF";
+    }
+
     function toggleSoundPref() {
-      state.soundEnabled = document.getElementById("soundToggle").checked;
+      state.soundEnabled = !state.soundEnabled;
       localStorage.setItem(SOUND_PREF_KEY, String(state.soundEnabled));
+      updateSoundButton();
+    }
+
+    function setThemeMode(mode) {
+      state.themeMode = mode === "light" ? "light" : "dark";
+      localStorage.setItem(THEME_PREF_KEY, state.themeMode);
+      document.body.setAttribute("data-theme", state.themeMode);
+      applyAdSlots();
     }
 
     function formatCountdown(ms) {
@@ -2379,10 +1286,10 @@
     }
 
     function formatRemaining24h(ms) {
-      const totalMinutes = Math.max(0, Math.ceil(ms / 60000));
-      const hours = Math.floor(totalMinutes / 60);
-      const minutes = totalMinutes % 60;
-      return hours <= 0 ? `${minutes}m` : `${hours}h ${minutes}m`;
+      const totalMin = Math.max(0, Math.ceil(ms / 60000));
+      const h = Math.floor(totalMin / 60);
+      const m = totalMin % 60;
+      return h <= 0 ? `${m}m` : `${h}h ${m}m`;
     }
 
     function sync24hCooldowns(now = Date.now()) {
@@ -2412,19 +1319,116 @@
       if (user.movements.length > 20) user.movements = user.movements.slice(0, 20);
     }
 
+    function createFreshAchievementState(now = Date.now()) {
+      return { windowStart: now, counts: { ptc: 0, shortlink: 0, faucet: 0, total: 0 }, claimed: [] };
+    }
+
+    function ensureUserAchievementBuckets(user, now = Date.now()) {
+      if (!user.achievements || typeof user.achievements !== "object") user.achievements = {};
+      [
+        { key: "daily", ms: 24 * 60 * 60 * 1000 },
+        { key: "weekly", ms: 7 * 24 * 60 * 60 * 1000 },
+        { key: "monthly", ms: 30 * 24 * 60 * 60 * 1000 }
+      ].forEach(({ key, ms }) => {
+        const b = user.achievements[key];
+        if (!b || !b.windowStart || (now - b.windowStart >= ms)) {
+          user.achievements[key] = createFreshAchievementState(now);
+        } else {
+          b.counts = Object.assign({ ptc: 0, shortlink: 0, faucet: 0, total: 0 }, b.counts || {});
+          b.claimed = Array.isArray(b.claimed) ? b.claimed : [];
+        }
+      });
+    }
+
+    function recordActivityForAchievements(user, kind) {
+      if (!user) return;
+      const now = Date.now();
+      ensureUserAchievementBuckets(user, now);
+      ["daily", "weekly", "monthly"].forEach(period => {
+        const b = user.achievements[period];
+        if (kind === "ptc") b.counts.ptc += 1;
+        if (kind === "shortlink") b.counts.shortlink += 1;
+        if (kind === "faucet") b.counts.faucet += 1;
+        b.counts.total += 1;
+      });
+    }
+
+    function getClaimableAchievementsCount(user) {
+      if (!user) return 0;
+      ensureUserAchievementBuckets(user);
+      return ACHIEVEMENTS_CONFIG.filter(ach => {
+        const b = user.achievements[ach.period];
+        return (b.counts[ach.metric] || 0) >= ach.target && !b.claimed.includes(ach.id);
+      }).length;
+    }
+
+    function switchAchievementPeriod(period) {
+      state.achPeriod = period;
+      ["daily", "weekly", "monthly"].forEach(p => {
+        const btn = document.getElementById(`achTab${p.charAt(0).toUpperCase() + p.slice(1)}`);
+        if (btn) btn.className = p === period ? "btn btn-primary btn-sm" : "btn btn-secondary btn-sm";
+      });
+      renderAchievementsView();
+    }
+
+    function renderAchievementsView() {
+      const grid = document.getElementById("achievementsGrid");
+      if (!grid || !state.currentUser) return;
+      ensureUserAchievementBuckets(state.currentUser);
+      const list = ACHIEVEMENTS_CONFIG.filter(a => a.period === state.achPeriod);
+      const bucket = state.currentUser.achievements[state.achPeriod];
+
+      grid.innerHTML = list.map(ach => {
+        const current = Math.min(ach.target, Number(bucket.counts[ach.metric] || 0));
+        const pct = Math.min(100, Math.round((current / ach.target) * 100));
+        const claimed = bucket.claimed.includes(ach.id);
+        const canClaim = !claimed && (bucket.counts[ach.metric] || 0) >= ach.target;
+        return `
+          <div class="item-card">
+            <div>
+              <div class="row-between">
+                <span class="item-title">${ach.title}</span>
+                <span class="tag">+${ach.reward}</span>
+              </div>
+              <div class="item-desc">${ach.desc} (${current}/${ach.target})</div>
+              <div class="progress-track" style="margin-top:8px;">
+                <div class="progress-fill" style="width:${pct}%;"></div>
+              </div>
+            </div>
+            <div class="row-between">
+              <span style="font-size:0.72rem; color:var(--muted);">${claimed ? "Reclamado" : `${pct}%`}</span>
+              <button type="button" class="btn ${canClaim ? "btn-primary" : "btn-secondary"} btn-sm" ${canClaim ? "" : "disabled"} onclick="claimAchievement('${ach.id}')">
+                ${claimed ? "Listo" : "Reclamar"}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function claimAchievement(achId) {
+      if (!state.currentUser) return;
+      ensureUserAchievementBuckets(state.currentUser);
+      const ach = ACHIEVEMENTS_CONFIG.find(a => a.id === achId);
+      if (!ach) return;
+      const bucket = state.currentUser.achievements[ach.period];
+      if ((bucket.counts[ach.metric] || 0) < ach.target || bucket.claimed.includes(ach.id)) return;
+      bucket.claimed.push(ach.id);
+      state.coins += ach.reward;
+      addMovement(state.currentUser, `Logro: ${ach.title}`, ach.reward);
+      updateAllUI();
+      renderAchievementsView();
+      showToast(`+${ach.reward} Coins`);
+    }
+
     function awardOneTimeReferralBonus(sponsorRefCode, referredUsername) {
       if (!sponsorRefCode) return;
       const users = getUsersDB();
       const idx = users.findIndex(u => u.refCode === sponsorRefCode);
       if (idx === -1) return;
-
       users[idx].coins = Number(users[idx].coins || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
       users[idx].refBonusTotal = Number(users[idx].refBonusTotal || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
-      addMovement(
-        users[idx],
-        `Bono único por referido (${referredUsername})`,
-        REFERRAL_ONE_TIME_BONUS_COINS
-      );
+      addMovement(users[idx], `Referido: ${referredUsername}`, REFERRAL_ONE_TIME_BONUS_COINS);
       saveUsersDB(users);
     }
 
@@ -2435,11 +1439,8 @@
       const idx = users.findIndex(u => u.email === state.currentUser.email);
       const taskStates = {};
       tasks.forEach(t => {
-        if (t.cat !== "offerwalls") {
-          taskStates[t.id] = { used: t.used, completedAt: t.completedAt || null };
-        }
+        if (t.cat !== "offerwalls") taskStates[t.id] = { used: t.used, completedAt: t.completedAt || null };
       });
-
       if (idx !== -1) {
         users[idx].coins = state.coins;
         users[idx].taskStates = taskStates;
@@ -2463,8 +1464,7 @@
 
     function generateRefCode(username) {
       const prefix = username.replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 4).padEnd(4, "X");
-      const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-      return `REF-${prefix}${rand}`;
+      return `REF-${prefix}${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
     }
 
     function handleRegister(e) {
@@ -2475,37 +1475,24 @@
       const confirm = document.getElementById("regPasswordConfirm").value;
       const refCodeInput = document.getElementById("regRefCode").value.trim().toUpperCase();
 
-      if (password !== confirm) {
-        showToast("Las contraseñas no coinciden.");
-        return;
-      }
-
+      if (password !== confirm) { showToast("Las contraseñas no coinciden."); return; }
       const users = getUsersDB();
       const deviceId = getOrCreateDeviceId();
       if (users.filter(u => u.deviceId === deviceId).length >= MAX_ACCOUNTS_PER_DEVICE) {
-        showToast("Límite máximo de 2 cuentas por dispositivo.");
-        return;
+        showToast("Máximo 2 cuentas por dispositivo."); return;
       }
       if (users.some(u => u.email === email || u.username.toLowerCase() === username.toLowerCase())) {
-        showToast("Ese correo o usuario ya está registrado.");
-        return;
+        showToast("Usuario o correo ya registrado."); return;
       }
 
-      let validSponsorCode = null;
-      if (refCodeInput && users.some(u => u.refCode === refCodeInput)) {
-        validSponsorCode = refCodeInput;
-      }
-
+      const validSponsor = (refCodeInput && users.some(u => u.refCode === refCodeInput)) ? refCodeInput : null;
       const now = Date.now();
-      const initialCoins = WELCOME_BONUS_COINS + (validSponsorCode ? REFERRED_WELCOME_BONUS_COINS : 0);
+      const initialCoins = WELCOME_BONUS_COINS + (validSponsor ? REFERRED_WELCOME_BONUS_COINS : 0);
 
       const newUser = {
-        username,
-        email,
-        password,
-        deviceId,
+        username, email, password, deviceId,
         refCode: generateRefCode(username),
-        referredBy: validSponsorCode,
+        referredBy: validSponsor,
         refBonusTotal: 0,
         coins: initialCoins,
         lastDailyBonusAt: null,
@@ -2521,34 +1508,23 @@
         createdAt: new Date().toISOString()
       };
 
-      addMovement(newUser, "Bono de bienvenida", WELCOME_BONUS_COINS);
-      if (validSponsorCode) {
-        addMovement(newUser, `Bono único por código (${validSponsorCode})`, REFERRED_WELCOME_BONUS_COINS);
-      }
-
+      addMovement(newUser, "Bienvenida", WELCOME_BONUS_COINS);
+      if (validSponsor) addMovement(newUser, `Referido (${validSponsor})`, REFERRED_WELCOME_BONUS_COINS);
       users.push(newUser);
       saveUsersDB(users);
-
-      if (validSponsorCode) {
-        awardOneTimeReferralBonus(validSponsorCode, username);
-      }
+      if (validSponsor) awardOneTimeReferralBonus(validSponsor, username);
 
       localStorage.setItem(CURRENT_USER_KEY, newUser.email);
       e.target.reset();
       startUserSession(newUser);
-      showToast(`¡Cuenta creada! +${initialCoins.toLocaleString()} Coins acreditados.`);
     }
 
     function handleLogin(e) {
       e.preventDefault();
-      const identifier = document.getElementById("loginIdentifier").value.trim().toLowerCase();
-      const password = document.getElementById("loginPassword").value;
-      const users = getUsersDB();
-      const found = users.find(u => (u.email === identifier || u.username.toLowerCase() === identifier) && u.password === password);
-      if (!found) {
-        showToast("Credenciales incorrectas.");
-        return;
-      }
+      const id = document.getElementById("loginIdentifier").value.trim().toLowerCase();
+      const pass = document.getElementById("loginPassword").value;
+      const found = getUsersDB().find(u => (u.email === id || u.username.toLowerCase() === id) && u.password === pass);
+      if (!found) { showToast("Datos incorrectos."); return; }
       localStorage.setItem(CURRENT_USER_KEY, found.email);
       e.target.reset();
       startUserSession(found);
@@ -2577,7 +1553,6 @@
       cancelFaucetChallenge();
       closeProfileDropdown();
 
-      document.getElementById("soundToggle").checked = state.soundEnabled;
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
       document.getElementById("authSection").classList.add("hidden");
       document.getElementById("headerGuestControls").classList.add("hidden");
@@ -2609,18 +1584,11 @@
       state.profileTab = validTab;
 
       tabs.forEach(t => {
-        const panel = document.getElementById(`ptab-${t}`);
-        if (panel) {
-          if (t === validTab) {
-            panel.classList.add("active");
-          } else {
-            panel.classList.remove("active");
-          }
-        }
+        document.getElementById(`ptab-${t}`)?.classList.toggle("active", t === validTab);
       });
 
       document.querySelectorAll("#profileSubnav button").forEach(btn => {
-        btn.className = btn.dataset.ptab === validTab ? "btn btn-soft-neon btn-sm" : "btn btn-secondary btn-sm";
+        btn.className = btn.dataset.ptab === validTab ? "btn btn-primary btn-sm" : "btn btn-secondary btn-sm";
       });
 
       if (validTab === "historial") renderHistoryView();
@@ -2639,10 +1607,8 @@
       closeProfileDropdown();
       state.section = sec;
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.sec === sec));
-      const sections = ["dashboard", "faucet", "ptcs", "shortlinks", "offerwalls", "logros", "perfil"];
-      sections.forEach(s => {
-        const el = document.getElementById(`sec-${s}`);
-        if (el) el.classList.toggle("hidden", s !== sec);
+      ["dashboard", "faucet", "ptcs", "shortlinks", "offerwalls", "logros", "perfil"].forEach(s => {
+        document.getElementById(`sec-${s}`)?.classList.toggle("hidden", s !== sec);
       });
 
       if (sec === "faucet") updateHubCardsUI();
@@ -2659,28 +1625,24 @@
       if (!state.currentUser) return;
       persistCurrentUserData();
 
-      document.getElementById("balanceDisplay").textContent = `🪙 ${state.coins.toLocaleString()} Coins (≈ $${formatUsdt(state.coins)} USDT)`;
+      document.getElementById("balanceDisplay").textContent = `🪙 ${state.coins.toLocaleString()} ($${formatUsdt(state.coins)})`;
       document.getElementById("kpiBalanceCoins").textContent = `${state.coins.toLocaleString()} Coins`;
       document.getElementById("kpiBalanceUsdt").textContent = `≈ $${formatUsdt(state.coins)} USDT`;
 
       const users = getUsersDB();
       const refCount = users.filter(u => u.referredBy === state.currentUser.refCode).length;
-      const refBonusCoins = Number(state.currentUser.refBonusTotal || 0);
       document.getElementById("kpiRefCount").textContent = String(refCount);
-      document.getElementById("kpiRefCoins").textContent = `${refBonusCoins.toLocaleString()} Coins (1,000 c/u)`;
+      document.getElementById("kpiRefCoins").textContent = `${Number(state.currentUser.refBonusTotal || 0).toLocaleString()} Coins`;
 
-      const pctWithdraw = Math.min(100, Math.round((state.coins / MIN_WITHDRAW_COINS) * 100));
-      document.getElementById("kpiWithdrawProgress").textContent = `${pctWithdraw}% del mínimo ($0.10 USDT)`;
+      const pct = Math.min(100, Math.round((state.coins / MIN_WITHDRAW_COINS) * 100));
+      document.getElementById("kpiWithdrawProgress").textContent = `${pct}% del mínimo`;
 
-      const ptcCount = tasks.filter(t => t.cat === "window_ads" || t.cat === "frame_ads").length;
-      const slCount = tasks.filter(t => t.cat === "shortlinks").length;
-      const owCount = tasks.filter(t => t.cat === "offerwalls").length;
-      document.getElementById("navCountPtcs").textContent = `(${ptcCount})`;
-      document.getElementById("navCountShortlinks").textContent = `(${slCount})`;
-      document.getElementById("navCountOfferwalls").textContent = `(${owCount})`;
+      document.getElementById("navCountPtcs").textContent = `(${tasks.filter(t => t.cat === "window_ads" || t.cat === "frame_ads").length})`;
+      document.getElementById("navCountShortlinks").textContent = `(${tasks.filter(t => t.cat === "shortlinks").length})`;
+      document.getElementById("navCountOfferwalls").textContent = `(${tasks.filter(t => t.cat === "offerwalls").length})`;
 
-      const claimableAch = getClaimableAchievementsCount(state.currentUser);
-      document.getElementById("navClaimableAchBadge").textContent = claimableAch > 0 ? `(${claimableAch})` : "";
+      const claimable = getClaimableAchievementsCount(state.currentUser);
+      document.getElementById("navClaimableAchBadge").textContent = claimable > 0 ? `(${claimable})` : "";
 
       updateHubCardsUI();
       updateWithdrawQuotaUI();
@@ -2691,39 +1653,31 @@
       if (!state.currentUser) return;
       const now = Date.now();
 
-      const lastDaily = state.currentUser.lastDailyBonusAt || 0;
-      const dailyRem = RESET_INTERVAL_MS - (now - lastDaily);
+      const dailyRem = RESET_INTERVAL_MS - (now - (state.currentUser.lastDailyBonusAt || 0));
       const btnDaily = document.getElementById("btnDailyBonus");
-      if (lastDaily && dailyRem > 0) {
+      if (state.currentUser.lastDailyBonusAt && dailyRem > 0) {
         btnDaily.disabled = true;
-        btnDaily.textContent = "Reclamado (24h)";
-        document.getElementById("dailyBonusStatus").textContent = `Próximo en ${formatRemaining24h(dailyRem)}`;
+        btnDaily.textContent = "Reclamado";
+        document.getElementById("dailyBonusStatus").textContent = `En ${formatRemaining24h(dailyRem)}`;
       } else {
         btnDaily.disabled = false;
-        btnDaily.textContent = `Reclamar +${DAILY_BONUS_COINS} Coins`;
+        btnDaily.textContent = "Reclamar";
         document.getElementById("dailyBonusStatus").textContent = "Disponible ahora";
       }
 
-      const lastFaucet = state.currentUser.lastFaucetAt || 0;
-      const faucetRem = FAUCET_COOLDOWN_MS - (now - lastFaucet);
+      const faucetRem = FAUCET_COOLDOWN_MS - (now - (state.currentUser.lastFaucetAt || 0));
       const btnFaucet = document.getElementById("btnFaucetAction");
       const statusEl = document.getElementById("faucetTimerStatus");
       const dashStatusEl = document.getElementById("dashFaucetStatus");
 
-      if (lastFaucet && faucetRem > 0) {
-        const waitText = `Disponible en ${formatCountdown(faucetRem)}`;
-        if (btnFaucet) {
-          btnFaucet.disabled = true;
-          btnFaucet.textContent = `Espera ${formatCountdown(faucetRem)}`;
-        }
-        if (statusEl) statusEl.textContent = waitText;
-        if (dashStatusEl) dashStatusEl.textContent = waitText;
+      if (state.currentUser.lastFaucetAt && faucetRem > 0) {
+        const wait = `En ${formatCountdown(faucetRem)}`;
+        if (btnFaucet) { btnFaucet.disabled = true; btnFaucet.textContent = wait; }
+        if (statusEl) statusEl.textContent = wait;
+        if (dashStatusEl) dashStatusEl.textContent = wait;
         cancelFaucetChallenge();
       } else {
-        if (btnFaucet) {
-          btnFaucet.disabled = false;
-          btnFaucet.textContent = `🚰 Reclamar Faucet (+${FAUCET_REWARD_COINS})`;
-        }
+        if (btnFaucet) { btnFaucet.disabled = false; btnFaucet.textContent = `Reclamar (+${FAUCET_REWARD_COINS})`; }
         if (statusEl) statusEl.textContent = "Disponible ahora";
         if (dashStatusEl) dashStatusEl.textContent = "Disponible ahora";
       }
@@ -2735,9 +1689,41 @@
       if (state.currentUser.lastDailyBonusAt && (now - state.currentUser.lastDailyBonusAt < RESET_INTERVAL_MS)) return;
       state.currentUser.lastDailyBonusAt = now;
       state.coins += DAILY_BONUS_COINS;
-      addMovement(state.currentUser, "Bono diario (24h)", DAILY_BONUS_COINS);
+      addMovement(state.currentUser, "Bono diario", DAILY_BONUS_COINS);
       updateAllUI();
-      showToast(`🎁 +${DAILY_BONUS_COINS} Coins acreditados.`);
+      showToast(`+${DAILY_BONUS_COINS} Coins`);
+    }
+
+    function triggerFaucetButton() {
+      if (!state.currentUser) return;
+      const now = Date.now();
+      if (state.currentUser.lastFaucetAt && (now - state.currentUser.lastFaucetAt < FAUCET_COOLDOWN_MS)) return;
+      const a = Math.floor(Math.random() * 8) + 2;
+      const b = Math.floor(Math.random() * 7) + 1;
+      expectedFaucetCaptcha = a + b;
+      document.getElementById("faucetCaptchaQuestion").textContent = `${a} + ${b} =`;
+      document.getElementById("faucetCaptchaInput").value = "";
+      document.getElementById("faucetChallengeBox").classList.remove("hidden");
+    }
+
+    function cancelFaucetChallenge() {
+      document.getElementById("faucetChallengeBox")?.classList.add("hidden");
+    }
+
+    function confirmFaucetClaim() {
+      if (!state.currentUser) return;
+      if (Number(document.getElementById("faucetCaptchaInput").value) !== expectedFaucetCaptcha) {
+        showToast("Respuesta incorrecta.");
+        return;
+      }
+      state.currentUser.lastFaucetAt = Date.now();
+      state.coins += FAUCET_REWARD_COINS;
+      recordActivityForAchievements(state.currentUser, "faucet");
+      addMovement(state.currentUser, "Faucet", FAUCET_REWARD_COINS);
+      cancelFaucetChallenge();
+      playFinishChime();
+      updateAllUI();
+      showToast(`+${FAUCET_REWARD_COINS} Coins`);
     }
 
     function renderCategoryGrid(containerId, filterFn) {
@@ -2746,35 +1732,28 @@
       const grid = document.getElementById(containerId);
       const list = tasks.filter(filterFn);
       if (!list.length) {
-        grid.innerHTML = `<div class="empty-state">No hay elementos disponibles en esta sección.</div>`;
+        grid.innerHTML = `<div class="card" style="grid-column:1/-1; text-align:center; color:var(--muted);">Sin elementos disponibles.</div>`;
         return;
       }
       grid.innerHTML = list.map(t => {
         const isOw = t.cat === "offerwalls";
         const onCd = !isOw && t.used >= t.limit && t.completedAt && (now - t.completedAt < RESET_INTERVAL_MS);
         return `
-          <article class="ad-card">
+          <div class="item-card">
             <div>
-              <div class="ad-card-head">
-                <div class="ad-title-wrap">
-                  <span class="ad-icon-box">${t.icon}</span>
-                  <h4 class="ad-card-title">${t.title}</h4>
-                </div>
-                <span class="chip ${isOw ? "chip-red" : "chip-kind"}">${t.cat.replace("_", " ")}</span>
+              <div class="row-between">
+                <span class="item-title">${t.title}</span>
+                <span class="tag">${isOw ? t.rewardLabel : `+${t.reward}`}</span>
               </div>
-              <p class="ad-card-desc">${t.desc}</p>
-              <div class="meta-chips">
-                <span class="chip chip-reward">🪙 ${isOw ? t.rewardLabel : `+${t.reward} Coins`}</span>
-                ${isOw ? `<span class="chip chip-red">Muro</span>` : `<span class="chip chip-time">⏱️ ${t.duration}s</span>`}
-              </div>
+              <div class="item-desc">${t.desc}${isOw ? "" : ` • ${t.duration}s`}</div>
             </div>
-            <div class="ad-card-foot">
-              <span style="font-size:0.73rem; color:var(--muted);">${onCd ? `Reset en ${formatRemaining24h(RESET_INTERVAL_MS - (now - t.completedAt))}` : "Disponible"}</span>
-              <button type="button" class="btn ${isOw ? "btn-soft-neon" : "btn-primary"} btn-sm" ${onCd ? "disabled" : ""} onclick="startTask('${t.id}')">
-                ${onCd ? "Completado" : isOw ? "Abrir" : "Ver"}
+            <div class="row-between">
+              <span style="font-size:0.72rem; color:var(--muted);">${onCd ? formatRemaining24h(RESET_INTERVAL_MS - (now - t.completedAt)) : "Listo"}</span>
+              <button type="button" class="btn ${isOw ? "btn-secondary" : "btn-primary"} btn-sm" ${onCd ? "disabled" : ""} onclick="startTask('${t.id}')">
+                ${onCd ? "Hecho" : isOw ? "Abrir" : "Ver"}
               </button>
             </div>
-          </article>
+          </div>
         `;
       }).join("");
     }
@@ -2786,7 +1765,7 @@
       if (task.cat === "offerwalls") {
         const url = task.url.includes("{user_id}") ? task.url.replace(/\{user_id\}/g, encodeURIComponent(state.currentUser.username)) : task.url;
         document.getElementById("offerwallModalTitle").textContent = task.title;
-        document.getElementById("offerwallSubInfo").textContent = `Usuario: ${state.currentUser.username}`;
+        document.getElementById("offerwallSubInfo").textContent = state.currentUser.username;
         document.getElementById("offerwallExternalLink").href = url;
         document.getElementById("offerwallIframe").src = url;
         document.getElementById("offerwallModal").classList.add("open");
@@ -2796,11 +1775,12 @@
         window.open(task.url, "_blank", "noopener,noreferrer");
       }
       activeSession = { task, remaining: task.duration, total: task.duration };
-      document.getElementById("viewerTitle").textContent = `${task.title} (+${task.reward} Coins)`;
+      document.getElementById("viewerTitle").textContent = `${task.title} (+${task.reward})`;
+      document.getElementById("viewerBadge").textContent = task.cat.replace("_", " ");
       document.getElementById("stageMedia").innerHTML = task.cat === "frame_ads"
-        ? `<iframe src="${task.url}" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>`
-        : `<div style="font-weight:700;">Anuncio abierto en pestaña nueva</div><p style="font-size:0.8rem; color:var(--muted);">Espera a que termine el contador para verificar.</p>`;
-      document.getElementById("captchaBox").classList.remove("show");
+        ? `<iframe src="${task.url}" style="width:100%; height:170px; border:0; border-radius:8px;" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>`
+        : `<span style="font-size:0.8rem; color:var(--muted);">Espera a que termine el contador.</span>`;
+      document.getElementById("captchaBox").classList.add("hidden");
       document.getElementById("captchaAnswer").value = "";
       document.getElementById("viewerStatus").textContent = "";
       document.getElementById("viewerModal").classList.add("open");
@@ -2814,7 +1794,7 @@
       timerInterval = setInterval(() => {
         if (!activeSession) return;
         if (document.hidden) {
-          document.getElementById("viewerStatus").textContent = "⏸️ Temporizador pausado.";
+          document.getElementById("viewerStatus").textContent = "Pausado en segundo plano.";
           return;
         }
         document.getElementById("viewerStatus").textContent = "";
@@ -2827,7 +1807,7 @@
           const b = Math.floor(Math.random() * 7) + 1;
           expectedCaptcha = a + b;
           document.getElementById("captchaQuestion").textContent = `¿Cuánto es ${a} + ${b}?`;
-          document.getElementById("captchaBox").classList.add("show");
+          document.getElementById("captchaBox").classList.remove("hidden");
         }
       }, 1000);
     }
@@ -2841,7 +1821,7 @@
     function claimViewerReward() {
       if (!activeSession) return;
       if (Number(document.getElementById("captchaAnswer").value) !== expectedCaptcha) {
-        document.getElementById("viewerStatus").textContent = "❌ Respuesta incorrecta.";
+        document.getElementById("viewerStatus").textContent = "Respuesta incorrecta.";
         return;
       }
       const now = Date.now();
@@ -2854,15 +1834,14 @@
         if (i !== -1) { list[i].deliveredClicks += 1; saveAdvertiserCampaigns(list); }
       }
       state.coins += task.reward;
-      const achKind = task.cat === "shortlinks" ? "shortlink" : "ptc";
-      recordActivityForAchievements(state.currentUser, achKind);
+      recordActivityForAchievements(state.currentUser, task.cat === "shortlinks" ? "shortlink" : "ptc");
       addMovement(state.currentUser, task.title, task.reward);
       updateAllUI();
       closeViewerModal();
       if (state.section === "ptcs") renderCategoryGrid("ptcsGrid", t => t.cat === "window_ads" || t.cat === "frame_ads");
       if (state.section === "shortlinks") renderCategoryGrid("shortlinksGrid", t => t.cat === "shortlinks");
       if (state.section === "logros") renderAchievementsView();
-      showToast("¡Recompensa acreditada!");
+      showToast(`+${task.reward} Coins`);
     }
 
     function closeViewerModal() {
@@ -2880,9 +1859,9 @@
       if (!container) return;
       container.innerHTML = `<span class="ad-label">${labelText}</span>`;
       if (!htmlCode || !htmlCode.trim()) return;
-
       const wrap = document.createElement("div");
-      wrap.className = "ad-frame-wrap";
+      wrap.style.overflow = "hidden";
+      wrap.style.maxWidth = "100%";
 
       const iframe = document.createElement("iframe");
       iframe.width = String(width);
@@ -2905,19 +1884,18 @@
         wrap.style.width = `${Math.round(width * scale)}px`;
         wrap.style.height = `${Math.round(height * scale)}px`;
       };
-
       requestAnimationFrame(syncScale);
       setTimeout(syncScale, 150);
     }
 
     function applyAdSlots() {
-      renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 728, 90, "Banner Superior 728x90");
-      renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 300, 250, "Banner Lateral 300x250");
+      renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 728, 90, "Banner 728x90");
+      renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 300, 250, "Banner 300x250");
     }
 
     window.addEventListener("resize", () => {
-      clearTimeout(window._resizeT);
-      window._resizeT = setTimeout(applyAdSlots, 120);
+      clearTimeout(window._rt);
+      window._rt = setTimeout(applyAdSlots, 120);
     });
 
     function computeCampaignPricing() {
@@ -2935,14 +1913,14 @@
     function recalcCampaignPrice() {
       const p = computeCampaignPricing();
       document.getElementById("advUserRewardPreview").textContent = `${p.userRewardCoins} Coins`;
-      document.getElementById("advTotalUsdPreview").textContent = `$${p.totalUsd.toFixed(4)} USDT (${p.totalCoins.toLocaleString()} Coins)`;
+      document.getElementById("advTotalUsdPreview").textContent = `$${p.totalUsd.toFixed(4)} USDT`;
     }
 
     function renderAdvertiserCampaignsTable() {
       const list = getAdvertiserCampaigns();
       document.getElementById("advertiserCampaignsBody").innerHTML = list.length
         ? list.map(c => `<tr><td>${c.title}</td><td>${c.format}</td><td>${c.deliveredClicks}/${c.totalClicks}</td><td>$${Number(c.totalUsd).toFixed(2)}</td></tr>`).join("")
-        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Sin campañas registradas.</td></tr>`;
+        : `<tr><td colspan="4" style="color:var(--muted);">Sin campañas.</td></tr>`;
     }
 
     function submitAdvertiserCampaign(e) {
@@ -2972,19 +1950,17 @@
     }
 
     function getWithdrawnTodayCoins(user, now = Date.now()) {
-      const list = Array.isArray(user?.withdrawals) ? user.withdrawals : [];
-      return list.reduce((sum, w) => {
+      return (Array.isArray(user?.withdrawals) ? user.withdrawals : []).reduce((sum, w) => {
         const ts = Number(w.createdAtMs || 0);
         return (ts && (now - ts < RESET_INTERVAL_MS)) ? sum + Number(w.coins || 0) : sum;
       }, 0);
     }
 
     function updateWithdrawQuotaUI() {
-      const infoEl = document.getElementById("withdrawDailyQuotaInfo");
-      if (!infoEl || !state.currentUser) return;
-      const usedToday = getWithdrawnTodayCoins(state.currentUser);
-      const remainingQuota = Math.max(0, MAX_DAILY_WITHDRAW_COINS - usedToday);
-      infoEl.textContent = `Retirado últimas 24h: ${usedToday.toLocaleString()} / ${MAX_DAILY_WITHDRAW_COINS.toLocaleString()} Coins (Disponible: ${remainingQuota.toLocaleString()} Coins)`;
+      const el = document.getElementById("withdrawDailyQuotaInfo");
+      if (!el || !state.currentUser) return;
+      const used = getWithdrawnTodayCoins(state.currentUser);
+      el.textContent = `Últimas 24h: ${used.toLocaleString()} / ${MAX_DAILY_WITHDRAW_COINS.toLocaleString()} Coins`;
     }
 
     function submitWithdraw() {
@@ -2993,15 +1969,14 @@
       const method = document.getElementById("withdrawMethod").value;
 
       if (!addr || amount < MIN_WITHDRAW_COINS || amount > state.coins) {
-        showToast("Verifica el destino y el monto (mínimo 10,000 Coins).");
+        showToast("Revisa destino y monto (mín. 10,000).");
         return;
       }
 
       const now = Date.now();
-      const usedToday = getWithdrawnTodayCoins(state.currentUser, now);
-      if (usedToday + amount > MAX_DAILY_WITHDRAW_COINS) {
-        const rem = Math.max(0, MAX_DAILY_WITHDRAW_COINS - usedToday);
-        showToast(`Límite diario superado. Solo puedes retirar hasta ${rem.toLocaleString()} Coins más en 24h.`);
+      const used = getWithdrawnTodayCoins(state.currentUser, now);
+      if (used + amount > MAX_DAILY_WITHDRAW_COINS) {
+        showToast("Límite diario de 25,000 Coins alcanzado.");
         return;
       }
 
@@ -3009,29 +1984,23 @@
       if (!Array.isArray(state.currentUser.withdrawals)) state.currentUser.withdrawals = [];
       state.currentUser.withdrawals.unshift({
         date: new Date(now).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
-        createdAtMs: now,
-        method,
-        address: addr,
-        coins: amount,
-        usdt: formatUsdt(amount),
-        status: "Pendiente (Revisión manual)"
+        createdAtMs: now, method, address: addr, coins: amount, usdt: formatUsdt(amount), status: "Pendiente"
       });
-      addMovement(state.currentUser, `Retiro manual (${method})`, -amount);
+      addMovement(state.currentUser, `Retiro (${method})`, -amount);
       updateAllUI();
-      showToast("Solicitud de retiro manual registrada.");
+      showToast("Retiro registrado.");
     }
 
     function renderReferralsView() {
       const baseUrl = window.location.origin + window.location.pathname;
       document.getElementById("referralLinkInput").value = `${baseUrl}?ref=${encodeURIComponent(state.currentUser.refCode)}`;
       document.getElementById("refCodeDisplay").textContent = state.currentUser.refCode;
-      const users = getUsersDB();
-      const refs = users.filter(u => u.referredBy === state.currentUser.refCode);
+      const refs = getUsersDB().filter(u => u.referredBy === state.currentUser.refCode);
       document.getElementById("refCountDisplay").textContent = String(refs.length);
       document.getElementById("refEarnedDisplay").textContent = `${Number(state.currentUser.refBonusTotal || 0).toLocaleString()} Coins`;
       document.getElementById("referralsTableBody").innerHTML = refs.length
-        ? refs.map(r => `<tr><td>👤 ${r.username}</td><td>${new Date(r.createdAt).toLocaleDateString("es-VE")}</td><td style="color:var(--neon-green); font-weight:700;">+${REFERRAL_ONE_TIME_BONUS_COINS.toLocaleString()} Coins (único)</td></tr>`).join("")
-        : `<tr><td colspan="3" style="color:var(--muted); text-align:center;">Aún no tienes referidos.</td></tr>`;
+        ? refs.map(r => `<tr><td>${r.username}</td><td>${new Date(r.createdAt).toLocaleDateString("es-VE")}</td><td>+${REFERRAL_ONE_TIME_BONUS_COINS.toLocaleString()}</td></tr>`).join("")
+        : `<tr><td colspan="3" style="color:var(--muted);">Sin referidos.</td></tr>`;
     }
 
     function copyReferralLink() {
@@ -3044,20 +2013,20 @@
     function renderDashboardMovements() {
       const movs = (state.currentUser?.movements || []).slice(0, 5);
       document.getElementById("dashMovementsBody").innerHTML = movs.length
-        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--neon-green)" : "var(--neon-red)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()} Coins</td><td>$${formatUsdt(m.coins)} USDT</td></tr>`).join("")
-        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Sin movimientos recientes.</td></tr>`;
+        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--danger)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()}</td><td>$${formatUsdt(m.coins)}</td></tr>`).join("")
+        : `<tr><td colspan="4" style="color:var(--muted);">Sin movimientos.</td></tr>`;
     }
 
     function renderHistoryView() {
       const movs = (state.currentUser?.movements || []).slice(0, 10);
       document.getElementById("movementsTableBody").innerHTML = movs.length
-        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--neon-green)" : "var(--neon-red)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()} Coins</td><td>$${formatUsdt(m.coins)} USDT</td></tr>`).join("")
-        : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Sin movimientos.</td></tr>`;
+        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--danger)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()}</td><td>$${formatUsdt(m.coins)}</td></tr>`).join("")
+        : `<tr><td colspan="4" style="color:var(--muted);">Sin movimientos.</td></tr>`;
 
       const withs = state.currentUser?.withdrawals || [];
       document.getElementById("withdrawalsTableBody").innerHTML = withs.length
-        ? withs.map(w => `<tr><td>${w.date}</td><td>${w.method}</td><td>${w.address}</td><td>${w.coins.toLocaleString()} Coins ($${w.usdt})</td><td>${w.status}</td></tr>`).join("")
-        : `<tr><td colspan="5" style="color:var(--muted); text-align:center;">Sin retiros registrados.</td></tr>`;
+        ? withs.map(w => `<tr><td>${w.date}</td><td>${w.method}</td><td>${w.address}</td><td>${w.coins.toLocaleString()} ($${w.usdt})</td><td>${w.status}</td></tr>`).join("")
+        : `<tr><td colspan="5" style="color:var(--muted);">Sin retiros.</td></tr>`;
     }
 
     function openAdConfigModal() {
@@ -3087,7 +2056,7 @@
       updateAllUI();
       applyAdSlots();
       closeAdConfigModal();
-      showToast("Configuración guardada.");
+      showToast("Guardado.");
     }
 
     function resetAdConfig() {
@@ -3096,10 +2065,10 @@
       state.adModalHtml = DEFAULT_AD_300;
       openAdConfigModal();
       applyAdSlots();
-      showToast("Configuración restaurada.");
     }
 
-    applyThemeMode(state.themeMode);
+    document.body.setAttribute("data-theme", state.themeMode);
+    updateSoundButton();
 
     (function initApp() {
       const params = new URLSearchParams(window.location.search);
@@ -3108,8 +2077,7 @@
 
       const savedEmail = localStorage.getItem(CURRENT_USER_KEY);
       if (savedEmail) {
-        const users = getUsersDB();
-        const existing = users.find(u => u.email === savedEmail);
+        const existing = getUsersDB().find(u => u.email === savedEmail);
         if (existing) { startUserSession(existing); return; }
       }
       switchAuthTab(refParam ? "register" : "login");
