@@ -528,31 +528,35 @@
       display: flex !important;
     }
 
+    /* Banner superior central: sin cortes, centrado y con dimensiones completas */
     .ad-banner-top {
       background: var(--card);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 9px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      min-height: 98px;
-      overflow: hidden;
+      gap: 6px;
+      width: 100%;
+      min-height: 112px;
+      overflow-x: auto;
+      overflow-y: visible;
       box-shadow: var(--shadow-sm);
     }
 
+    /* Panel izquierdo fijo con ancho suficiente para alojar el banner 300x250 completo */
     .app-shell {
       display: grid;
-      grid-template-columns: 270px minmax(0, 1fr);
+      grid-template-columns: 326px minmax(0, 1fr);
       gap: 14px;
       align-items: start;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .app-shell {
         grid-template-columns: minmax(0, 1fr);
       }
@@ -562,6 +566,14 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      position: sticky;
+      top: 66px;
+    }
+
+    @media (max-width: 900px) {
+      .faucet-sidebar {
+        position: static;
+      }
     }
 
     .app-center-col {
@@ -666,9 +678,10 @@
       justify-content: center;
       gap: 6px;
       min-height: 112px;
-      overflow: hidden;
+      overflow-x: auto;
     }
 
+    /* Caja lateral para banner 300x250 completo */
     .faucet-side-ad {
       background: var(--card);
       backdrop-filter: blur(10px);
@@ -680,8 +693,9 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      min-height: 210px;
-      overflow: hidden;
+      min-height: 274px;
+      width: 100%;
+      overflow-x: auto;
       box-shadow: var(--shadow-sm);
     }
 
@@ -1104,7 +1118,7 @@
 
     .viewer-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 310px);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
       gap: 12px;
     }
 
@@ -1116,14 +1130,15 @@
       background: var(--card-2);
       border: 1px solid var(--border);
       border-radius: 12px;
-      min-height: 260px;
+      min-height: 274px;
+      width: 100%;
       padding: 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      overflow: hidden;
+      overflow-x: auto;
     }
 
     footer {
@@ -1216,8 +1231,6 @@
         </div>
 
         <button type="button" class="nav-btn" data-sec="logros" onclick="switchSection('logros')">🏆 <span class="i18n-nav-achievements">Logros</span> <span id="navClaimableAchBadge"></span></button>
-
-        <button type="button" class="nav-btn" data-sec="estadisticas" onclick="switchSection('estadisticas')">📊 <span>Estadísticas</span></button>
 
         <div class="nav-dd-wrap" id="comingSoonDropdownWrap">
           <button type="button" class="nav-btn" data-sec="proximamente" id="btnComingSoonDropdown" onclick="toggleComingSoonDropdown(event)">
@@ -1336,9 +1349,11 @@
   </section>
 
   <main class="hidden" id="dashboardSection">
+    <!-- Banner superior central (328x90 / 728x90 sin recortes) -->
     <section class="ad-banner-top" id="adSlotTop"></section>
 
     <div class="app-shell">
+      <!-- Panel izquierdo fijo -->
       <aside class="faucet-sidebar" id="persistentSidebar">
         <div class="faucet-side-card">
           <div style="display:flex; align-items:center; gap:10px;">
@@ -1363,13 +1378,15 @@
 
         <div class="faucet-side-card">
           <div class="item-title" style="font-size:0.82rem;">⚡ Accesos rápidos</div>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('estadisticas')">📊 Estadísticas del Día</button>
+          <!-- ÚNICO botón de Estadística en toda la aplicación -->
+          <button type="button" class="btn btn-secondary btn-sm" id="btnSidebarStats" onclick="switchSection('estadisticas')">📊 Estadísticas del Día</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('games')">📈 Investment Game</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('faq')">❓ Guide / FAQ</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('anunciantes')">📢 Anunciantes</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="openProfileTab('referidos')">🤝 Referidos</button>
         </div>
 
+        <!-- Banner lateral 300x250 completo sin recortes -->
         <div class="faucet-side-ad" id="adSlotModal"></div>
       </aside>
 
@@ -1417,7 +1434,7 @@
                 <span class="tag">+35 Coins</span>
               </div>
               <div class="row-between">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('estadisticas')">📊 Ver Estadísticas</button>
+                <span></span>
                 <button type="button" class="btn btn-primary btn-sm" id="btnDashOpenFaucet" onclick="switchSection('faucet')">Abrir Faucet</button>
               </div>
             </div>
@@ -1951,8 +1968,8 @@
       <div class="field-group"><label>Window Ads</label><textarea class="code-textarea" id="windowLinksInput"></textarea></div>
       <div class="field-group"><label>Frame Ads</label><textarea class="code-textarea" id="frameLinksInput"></textarea></div>
       <div class="field-group"><label>Shortlinks</label><textarea class="code-textarea" id="shortLinksInput"></textarea></div>
-      <div class="field-group"><label>Banner 728x90</label><textarea class="code-textarea" id="adTopInput"></textarea></div>
-      <div class="field-group"><label>Banner Lateral / Visor (300x250)</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
+      <div class="field-group"><label>Banner Superior Central (328x90 / 728x90 Adsterra)</label><textarea class="code-textarea" id="adTopInput"></textarea></div>
+      <div class="field-group"><label>Banner Lateral / Visor (300x250 Adsterra)</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
       <div class="field-group"><label>Anuncio Faucet (Claim)</label><textarea class="code-textarea" id="adFaucetInput"></textarea></div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
         <button class="btn btn-secondary btn-sm" id="btnResetAdConfig" onclick="resetAdConfig()">Restaurar</button>
@@ -2153,9 +2170,9 @@
       { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán Mensual", desc: "Completa 120 tareas en 30 días.", reward: 3000 }
     ];
 
-    const DEFAULT_AD_728 = `<div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(12,13,22,0.65);border:1px solid rgba(56,189,248,0.35);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#9aa3c7;font-size:12px;">Espacio 728×90</span></div>`;
-    const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(12,13,22,0.65);border:1px solid rgba(168,85,247,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#9aa3c7;font-size:12px;">Configurable</span></div>`;
-    const DEFAULT_AD_FAUCET = `<div style="width:468px;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:rgba(12,13,22,0.65);border:1px solid rgba(56,189,248,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Sponsor / Ad Claim</strong><span style="color:#9aa3c7;font-size:12px;">Espacio publicitario Faucet</span></div>`;
+    const DEFAULT_AD_TOP = `<div style="width:328px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(12,13,22,0.65);border:1px solid rgba(56,189,248,0.35);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#9aa3c7;font-size:12px;">Banner 328×90</span></div>`;
+    const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(12,13,22,0.65);border:1px solid rgba(168,85,247,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#9aa3c7;font-size:12px;">Adsterra / Configurable</span></div>`;
+    const DEFAULT_AD_FAUCET = `<div style="width:328px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(12,13,22,0.65);border:1px solid rgba(56,189,248,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Sponsor / Ad Claim</strong><span style="color:#9aa3c7;font-size:12px;">Banner 328×90</span></div>`;
 
     const DEFAULT_OFFERWALL_LINKS = ["https://timewall.io/", "https://www.cpx-research.com/", "https://bitlabs.ai/", "https://monlix.com/"];
     const DEFAULT_WINDOW_LINKS = ["https://example.com/"];
@@ -2203,7 +2220,7 @@
       lang: ["es", "en", "ru"].includes(localStorage.getItem(LANG_PREF_KEY)) ? localStorage.getItem(LANG_PREF_KEY) : "es",
       themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
       soundEnabled: (localStorage.getItem(SOUND_PREF_KEY) ?? "true") === "true",
-      adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_728,
+      adTopHtml: localStorage.getItem(STORAGE_KEYS.adTop) ?? DEFAULT_AD_TOP,
       adModalHtml: localStorage.getItem(STORAGE_KEYS.adModal) ?? DEFAULT_AD_300,
       adFaucetHtml: localStorage.getItem(STORAGE_KEYS.adFaucet) ?? DEFAULT_AD_FAUCET
     };
@@ -3580,6 +3597,11 @@
         b.classList.toggle("active", active);
       });
 
+      const btnStats = document.getElementById("btnSidebarStats");
+      if (btnStats) {
+        btnStats.className = sec === "estadisticas" ? "btn btn-primary btn-sm" : "btn btn-secondary btn-sm";
+      }
+
       ["dashboard", "estadisticas", "faucet", "ptcs", "shortlinks", "offerwalls", "logros", "loteria", "games", "cupon", "faq", "perfil"].forEach(s => {
         document.getElementById(`sec-${s}`)?.classList.toggle("hidden", s !== sec);
       });
@@ -3875,13 +3897,36 @@
       document.getElementById("offerwallModal").classList.remove("open");
     }
 
-    function renderIsolatedAd(container, htmlCode, width, height, labelText) {
+    /* Detecta automáticamente las medidas reales (328x90, 728x90 o 300x250) del código de Adsterra */
+    function detectAdDimensions(htmlCode, fallbackW, fallbackH) {
+      const wMatch = String(htmlCode || "").match(/['"]?width['"]?\s*[:=]\s*['"]?(\d{2,4})/i);
+      const hMatch = String(htmlCode || "").match(/['"]?height['"]?\s*[:=]\s*['"]?(\d{2,4})/i);
+      const w = wMatch ? Number(wMatch[1]) : fallbackW;
+      const h = hMatch ? Number(hMatch[1]) : fallbackH;
+      return {
+        width: (w >= 120 && w <= 1200) ? w : fallbackW,
+        height: (h >= 50 && h <= 800) ? h : fallbackH
+      };
+    }
+
+    /* Renderiza cada banner de Adsterra en su iframe limpio con dimensiones exactas y sin cortes */
+    function renderIsolatedAd(container, htmlCode, defaultWidth, defaultHeight, labelText) {
       if (!container) return;
       container.innerHTML = `<span class="ad-label">${labelText}</span>`;
       if (!htmlCode || !htmlCode.trim()) return;
+
+      const dims = detectAdDimensions(htmlCode, defaultWidth, defaultHeight);
+      const width = dims.width;
+      const height = dims.height;
+
       const wrap = document.createElement("div");
-      wrap.style.overflow = "hidden";
+      wrap.style.width = `${width}px`;
+      wrap.style.height = `${height}px`;
       wrap.style.maxWidth = "100%";
+      wrap.style.display = "flex";
+      wrap.style.alignItems = "center";
+      wrap.style.justifyContent = "center";
+      wrap.style.overflow = "visible";
 
       const iframe = document.createElement("iframe");
       iframe.width = String(width);
@@ -3890,35 +3935,22 @@
       iframe.frameBorder = "0";
       iframe.style.width = `${width}px`;
       iframe.style.height = `${height}px`;
+      iframe.style.minWidth = `${width}px`;
+      iframe.style.minHeight = `${height}px`;
       iframe.style.border = "0";
-      iframe.style.transformOrigin = "top center";
-      iframe.srcdoc = `<!DOCTYPE html><html><body style="margin:0;background:transparent;overflow:hidden;">${htmlCode}</body></html>`;
+      iframe.style.display = "block";
+      iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>html,body{margin:0;padding:0;width:${width}px;height:${height}px;overflow:hidden;background:transparent;display:flex;align-items:center;justify-content:center;}</style></head><body>${htmlCode}</body></html>`;
 
       wrap.appendChild(iframe);
       container.appendChild(wrap);
-
-      const syncScale = () => {
-        const avail = Math.max(120, (container.clientWidth || window.innerWidth) - 16);
-        const scale = Math.min(1, avail / width);
-        iframe.style.transform = `scale(${scale})`;
-        wrap.style.width = `${Math.round(width * scale)}px`;
-        wrap.style.height = `${Math.round(height * scale)}px`;
-      };
-      requestAnimationFrame(syncScale);
-      setTimeout(syncScale, 150);
     }
 
     function applyAdSlots() {
-      renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 728, 90, "Banner 728x90");
-      renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 240, 190, "Banner Lateral");
-      renderIsolatedAd(document.getElementById("viewerAdBox"), state.adModalHtml, 300, 250, "Banner 300x250");
-      renderIsolatedAd(document.getElementById("adSlotFaucet"), state.adFaucetHtml, 468, 80, "Anuncio Faucet (Claim)");
+      renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 328, 90, "Publicidad");
+      renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 300, 250, "Publicidad 300×250");
+      renderIsolatedAd(document.getElementById("viewerAdBox"), state.adModalHtml, 300, 250, "Publicidad 300×250");
+      renderIsolatedAd(document.getElementById("adSlotFaucet"), state.adFaucetHtml, 328, 90, "Sponsor Faucet");
     }
-
-    window.addEventListener("resize", () => {
-      clearTimeout(window._rt);
-      window._rt = setTimeout(applyAdSlots, 120);
-    });
 
     function computeCampaignPricing() {
       const format = document.getElementById("advFormat").value;
@@ -4141,7 +4173,7 @@
 
     function resetAdConfig() {
       Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
-      state.adTopHtml = DEFAULT_AD_728;
+      state.adTopHtml = DEFAULT_AD_TOP;
       state.adModalHtml = DEFAULT_AD_300;
       state.adFaucetHtml = DEFAULT_AD_FAUCET;
       openAdConfigModal();
