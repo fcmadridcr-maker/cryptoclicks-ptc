@@ -498,16 +498,16 @@
       color: var(--neon-green);
     }
 
-    /* Control estricto de pestañas dentro de Perfil */
+    /* Blindaje estricto: solo la pestaña activa de Perfil es visible */
     .profile-tab-panel {
-      display: none;
+      display: none !important;
       flex-direction: column;
       gap: 12px;
       width: 100%;
     }
 
     .profile-tab-panel.active {
-      display: flex;
+      display: flex !important;
     }
 
     .kpi-grid {
@@ -2611,7 +2611,11 @@
       tabs.forEach(t => {
         const panel = document.getElementById(`ptab-${t}`);
         if (panel) {
-          panel.classList.toggle("active", t === validTab);
+          if (t === validTab) {
+            panel.classList.add("active");
+          } else {
+            panel.classList.remove("active");
+          }
         }
       });
 
