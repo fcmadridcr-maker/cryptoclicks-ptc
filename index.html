@@ -393,7 +393,6 @@
       }
     }
 
-    /* Fix: z-index alto y sin backdrop-filter para evitar contexto de apilamiento que tape el menú */
     .nav-bar {
       position: relative;
       z-index: 60;
@@ -497,6 +496,18 @@
     .profile-dd-item:hover {
       background: rgba(57, 255, 20, 0.14);
       color: var(--neon-green);
+    }
+
+    /* Control estricto de pestañas dentro de Perfil */
+    .profile-tab-panel {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .profile-tab-panel.active {
+      display: flex;
     }
 
     .kpi-grid {
@@ -696,7 +707,7 @@
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
-      padding-bottom: 6px;
+      padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
 
@@ -1652,7 +1663,7 @@
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
           <div>
             <h2 style="font-size:1.02rem;">👤 Mi Perfil</h2>
-            <p style="font-size:0.79rem; color:var(--muted);">Historial, Retiros, Anunciantes y Referidos.</p>
+            <p style="font-size:0.79rem; color:var(--muted);">Selecciona una opción para ver su contenido.</p>
           </div>
         </div>
 
@@ -1663,7 +1674,7 @@
           <button type="button" class="btn btn-secondary btn-sm" data-ptab="referidos" onclick="switchProfileTab('referidos')">🤝 Referidos</button>
         </div>
 
-        <div id="ptab-historial" style="display:flex; flex-direction:column; gap:14px;">
+        <div id="ptab-historial" class="profile-tab-panel active">
           <div>
             <h3 style="margin-bottom:8px;">⚡ Últimos 10 Movimientos</h3>
             <div class="table-wrap">
@@ -1684,7 +1695,7 @@
           </div>
         </div>
 
-        <div id="ptab-retiros" class="hidden" style="display:flex; flex-direction:column; gap:10px; max-width:540px;">
+        <div id="ptab-retiros" class="profile-tab-panel" style="max-width:540px;">
           <h3>💸 Solicitar Retiro (Revisión Manual)</h3>
           <p style="font-size:0.81rem; color:var(--muted);">
             Tasa: 50 Coins = $0.0005 USDT • Mínimo: <strong>10,000 Coins</strong> ($0.10 USDT) • Máximo diario: <strong>25,000 Coins</strong> ($0.25 USDT).
@@ -1711,7 +1722,7 @@
           <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Confirmar Solicitud Manual</button>
         </div>
 
-        <div id="ptab-anunciantes" class="hidden" style="display:flex; flex-direction:column; gap:10px;">
+        <div id="ptab-anunciantes" class="profile-tab-panel">
           <h3>📢 Contratar Publicidad en CryptoClicksFaucet</h3>
           <form onsubmit="submitAdvertiserCampaign(event)" style="display:flex; flex-direction:column; gap:10px;">
             <div class="form-2col">
@@ -1783,7 +1794,7 @@
           </div>
         </div>
 
-        <div id="ptab-referidos" class="hidden" style="display:flex; flex-direction:column; gap:10px;">
+        <div id="ptab-referidos" class="profile-tab-panel">
           <h3>🤝 Programa de Referidos (Recompensa Única: 1,000 / 500 Coins)</h3>
           <p style="font-size:0.81rem; color:var(--muted);">
             Ganas <strong>1,000 Coins por única vez</strong> por cada referido válido y el nuevo usuario recibe <strong>500 Coins extra</strong> al registrarse con tu código (sin comisiones recurrentes para proteger el capital).
@@ -2592,22 +2603,30 @@
     }
 
     function switchProfileTab(tab) {
-      state.profileTab = tab;
+      closeProfileDropdown();
       const tabs = ["historial", "retiros", "anunciantes", "referidos"];
+      const validTab = tabs.includes(tab) ? tab : "historial";
+      state.profileTab = validTab;
+
       tabs.forEach(t => {
         const panel = document.getElementById(`ptab-${t}`);
-        if (panel) panel.classList.toggle("hidden", t !== tab);
+        if (panel) {
+          panel.classList.toggle("active", t === validTab);
+        }
       });
+
       document.querySelectorAll("#profileSubnav button").forEach(btn => {
-        btn.className = btn.dataset.ptab === tab ? "btn btn-soft-neon btn-sm" : "btn btn-secondary btn-sm";
+        btn.className = btn.dataset.ptab === validTab ? "btn btn-soft-neon btn-sm" : "btn btn-secondary btn-sm";
       });
-      if (tab === "historial") renderHistoryView();
-      if (tab === "retiros") updateWithdrawQuotaUI();
-      if (tab === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
-      if (tab === "referidos") renderReferralsView();
+
+      if (validTab === "historial") renderHistoryView();
+      if (validTab === "retiros") updateWithdrawQuotaUI();
+      if (validTab === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
+      if (validTab === "referidos") renderReferralsView();
     }
 
     function openProfileTab(tab) {
+      closeProfileDropdown();
       switchSection("perfil");
       switchProfileTab(tab);
     }
