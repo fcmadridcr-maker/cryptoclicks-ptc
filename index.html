@@ -3,60 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoClicksFaucet — Dashboard, PTCs, Shortlinks, Offerwalls & Logros</title>
+  <title>CryptoClicksFaucet — Dashboard, Faucet, PTCs, Shortlinks, Offerwalls & Logros</title>
   <style>
     :root {
-      --bg: #070d1a;
+      --bg: #050d0a;
       --bg-grad:
-        radial-gradient(circle at 18% 12%, rgba(37, 99, 235, 0.14) 0%, transparent 45%),
-        radial-gradient(circle at 82% 85%, rgba(234, 179, 8, 0.09) 0%, transparent 48%),
-        linear-gradient(180deg, #070d1a 0%, #091122 100%);
-      --header-bg: rgba(9, 16, 32, 0.82);
-      --card: rgba(15, 25, 46, 0.76);
-      --card-2: rgba(21, 35, 62, 0.72);
-      --border: rgba(148, 163, 184, 0.16);
-      --border-soft: rgba(250, 204, 21, 0.28);
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --accent: #10b981;
-      --accent-hover: #059669;
-      --warning: #eab308;
+        radial-gradient(circle at 18% 12%, rgba(57, 255, 20, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 82% 85%, rgba(16, 185, 129, 0.10) 0%, transparent 48%),
+        linear-gradient(180deg, #050d0a 0%, #07140f 100%);
+      --header-bg: rgba(7, 17, 13, 0.86);
+      --card: rgba(11, 26, 20, 0.80);
+      --card-2: rgba(16, 38, 29, 0.78);
+      --border: rgba(57, 255, 20, 0.18);
+      --border-soft: rgba(57, 255, 20, 0.42);
+      --text: #ecfdf5;
+      --muted: #86efac;
+      --accent: #39ff14;
+      --accent-hover: #22e500;
+      --warning: #4ade80;
       --danger: #f43f5e;
-      --primary-btn: #eab308;
-      --primary-btn-hover: #facc15;
-      --primary-btn-text: #090e1a;
-      --vz-yellow: #facc15;
-      --vz-blue: #3b82f6;
-      --vz-red: #f43f5e;
-      --soft-glow: 0 10px 28px rgba(2, 6, 23, 0.45);
-      --map-opacity: 0.14;
+      --primary-btn: #39ff14;
+      --primary-btn-hover: #52ff33;
+      --primary-btn-text: #041208;
+      --neon-green: #39ff14;
+      --neon-mint: #34d399;
+      --neon-red: #f43f5e;
+      --soft-glow: 0 0 24px rgba(57, 255, 20, 0.14);
+      --map-opacity: 0.11;
     }
 
     body[data-theme="light"] {
-      --bg: #f8fafc;
+      --bg: #f4fdf7;
       --bg-grad:
-        radial-gradient(circle at 18% 12%, rgba(37, 99, 235, 0.08) 0%, transparent 45%),
-        radial-gradient(circle at 82% 85%, rgba(234, 179, 8, 0.1) 0%, transparent 48%),
-        linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-      --header-bg: rgba(255, 255, 255, 0.86);
-      --card: rgba(255, 255, 255, 0.88);
-      --card-2: rgba(241, 245, 249, 0.85);
-      --border: rgba(15, 23, 42, 0.12);
-      --border-soft: rgba(37, 99, 235, 0.25);
-      --text: #0f172a;
-      --muted: #475569;
+        radial-gradient(circle at 18% 12%, rgba(16, 185, 129, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 82% 85%, rgba(34, 197, 94, 0.10) 0%, transparent 48%),
+        linear-gradient(180deg, #f4fdf7 0%, #e7f9ee 100%);
+      --header-bg: rgba(255, 255, 255, 0.88);
+      --card: rgba(255, 255, 255, 0.92);
+      --card-2: rgba(236, 253, 245, 0.90);
+      --border: rgba(5, 150, 105, 0.20);
+      --border-soft: rgba(16, 185, 129, 0.45);
+      --text: #062819;
+      --muted: #166534;
       --accent: #059669;
       --accent-hover: #047857;
-      --warning: #d97706;
+      --warning: #15803d;
       --danger: #e11d48;
-      --primary-btn: #1d4ed8;
-      --primary-btn-hover: #1e40af;
+      --primary-btn: #10b981;
+      --primary-btn-hover: #059669;
       --primary-btn-text: #ffffff;
-      --vz-yellow: #eab308;
-      --vz-blue: #2563eb;
-      --vz-red: #e11d48;
-      --soft-glow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      --map-opacity: 0.12;
+      --neon-green: #059669;
+      --neon-mint: #10b981;
+      --neon-red: #e11d48;
+      --soft-glow: 0 8px 24px rgba(5, 150, 105, 0.10);
+      --map-opacity: 0.09;
     }
 
     *, *::before, *::after {
@@ -84,7 +84,7 @@
       transition: background-color 0.22s ease, color 0.22s ease;
     }
 
-    .vz-bg-map {
+    .neon-bg-glow {
       position: fixed;
       inset: 0;
       z-index: 0;
@@ -96,22 +96,30 @@
       opacity: var(--map-opacity);
     }
 
-    .vz-bg-map svg {
+    .neon-bg-glow svg {
       width: min(740px, 84vw);
       height: auto;
       max-height: 54vh;
-      filter: blur(0.4px);
+      filter: drop-shadow(0 0 18px rgba(57, 255, 20, 0.35));
     }
 
-    .vz-bar, header, .auth-wrapper, main, footer {
+    .neon-top-line, header, .auth-wrapper, main, footer {
       position: relative;
       z-index: 2;
     }
 
-    .vz-bar {
+    .neon-top-line {
       height: 3px;
       width: 100%;
-      background: linear-gradient(90deg, rgba(250, 204, 21, 0.75) 33.3%, rgba(59, 130, 246, 0.75) 33.3%, rgba(59, 130, 246, 0.75) 66.6%, rgba(244, 63, 94, 0.75) 66.6%);
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.45), #39ff14, #a3e635, #39ff14, rgba(16, 185, 129, 0.45));
+      background-size: 200% 100%;
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.65);
+      animation: neonBarPulse 4s linear infinite;
+    }
+
+    @keyframes neonBarPulse {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
     }
 
     header {
@@ -141,7 +149,7 @@
       display: flex;
       align-items: center;
       gap: 9px;
-      font-size: 1.05rem;
+      font-size: 1.06rem;
       font-weight: 800;
       color: var(--text);
       min-width: 0;
@@ -152,12 +160,13 @@
       width: 30px;
       height: 30px;
       border-radius: 9px;
-      background: rgba(250, 204, 21, 0.14);
-      border: 1px solid rgba(250, 204, 21, 0.35);
+      background: rgba(57, 255, 20, 0.14);
+      border: 1px solid rgba(57, 255, 20, 0.45);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.28);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--vz-yellow);
+      color: var(--neon-green);
       font-size: 0.95rem;
     }
 
@@ -187,38 +196,17 @@
       white-space: nowrap;
     }
 
-    .lvl-tag {
-      background: rgba(250, 204, 21, 0.16);
-      color: var(--vz-yellow);
-      border: 1px solid rgba(250, 204, 21, 0.32);
-      padding: 2px 7px;
-      border-radius: 7px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    body[data-theme="light"] .lvl-tag {
-      color: #92400e;
-      background: rgba(245, 158, 11, 0.14);
-      border-color: rgba(217, 119, 6, 0.3);
-    }
-
     .balance-pill {
       background: var(--card);
-      border: 1px solid rgba(250, 204, 21, 0.32);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.16);
       padding: 5px 12px;
       border-radius: 10px;
       font-size: 0.8rem;
       font-weight: 700;
-      color: var(--vz-yellow);
+      color: var(--neon-green);
       max-width: 100%;
       white-space: nowrap;
-    }
-
-    body[data-theme="light"] .balance-pill {
-      color: #1d4ed8;
-      border-color: rgba(37, 99, 235, 0.3);
     }
 
     .btn {
@@ -226,9 +214,9 @@
       border-radius: 10px;
       padding: 8px 13px;
       font-size: 0.82rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -241,11 +229,13 @@
     .btn-primary {
       background: var(--primary-btn);
       color: var(--primary-btn-text);
-      border-color: transparent;
+      border-color: rgba(57, 255, 20, 0.5);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.25);
     }
 
     .btn-primary:hover:not(:disabled) {
       background: var(--primary-btn-hover);
+      box-shadow: 0 0 18px rgba(57, 255, 20, 0.42);
     }
 
     .btn-secondary {
@@ -255,29 +245,24 @@
     }
 
     .btn-secondary:hover:not(:disabled) {
-      border-color: rgba(148, 163, 184, 0.35);
+      border-color: var(--border-soft);
       background: var(--card-2);
     }
 
-    .btn-soft-gold {
-      background: rgba(250, 204, 21, 0.14);
-      color: var(--vz-yellow);
-      border-color: rgba(250, 204, 21, 0.32);
+    .btn-soft-neon {
+      background: rgba(57, 255, 20, 0.12);
+      color: var(--neon-green);
+      border-color: rgba(57, 255, 20, 0.36);
     }
 
-    .btn-soft-gold:hover:not(:disabled) {
-      background: rgba(250, 204, 21, 0.22);
-    }
-
-    body[data-theme="light"] .btn-soft-gold {
-      color: #92400e;
-      background: rgba(245, 158, 11, 0.14);
-      border-color: rgba(217, 119, 6, 0.3);
+    .btn-soft-neon:hover:not(:disabled) {
+      background: rgba(57, 255, 20, 0.22);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.24);
     }
 
     .btn-danger {
       background: rgba(244, 63, 94, 0.12);
-      color: var(--vz-red);
+      color: var(--neon-red);
       border-color: rgba(244, 63, 94, 0.3);
     }
 
@@ -292,8 +277,9 @@
     }
 
     .btn:disabled {
-      opacity: 0.5;
+      opacity: 0.48;
       cursor: not-allowed;
+      box-shadow: none;
     }
 
     .hidden {
@@ -311,7 +297,7 @@
 
     .auth-card {
       background: var(--card);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-soft);
       box-shadow: var(--soft-glow);
       border-radius: 18px;
       width: 100%;
@@ -333,7 +319,8 @@
     .auth-head h1 {
       font-size: 1.28rem;
       font-weight: 800;
-      color: var(--text);
+      color: var(--neon-green);
+      text-shadow: 0 0 14px rgba(57, 255, 20, 0.25);
     }
 
     .auth-head p {
@@ -365,11 +352,8 @@
 
     .auth-tab.active {
       background: var(--card);
-      color: var(--vz-yellow);
-    }
-
-    body[data-theme="light"] .auth-tab.active {
-      color: var(--vz-blue);
+      color: var(--neon-green);
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.16);
     }
 
     .auth-form {
@@ -416,54 +400,13 @@
       gap: 6px;
       flex-wrap: wrap;
       background: var(--card);
-      border: 1.5px solid transparent;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 0 18px rgba(57, 255, 20, 0.14);
       border-radius: 14px;
       padding: 6px;
       width: 100%;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      isolation: isolate;
-    }
-
-    .nav-bar::before {
-      content: "";
-      position: absolute;
-      inset: -1.5px;
-      border-radius: 14.5px;
-      padding: 1.5px;
-      background: linear-gradient(
-        90deg,
-        #facc15 0%,
-        #facc15 20%,
-        #3b82f6 33%,
-        #3b82f6 53%,
-        #f43f5e 66%,
-        #f43f5e 86%,
-        #3b82f6 94%,
-        #facc15 100%
-      );
-      background-size: 240% 240%;
-      animation: fineTricolorFlow 5.5s linear infinite;
-      -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: -1;
-      filter:
-        drop-shadow(0 0 3px rgba(250, 204, 21, 0.55))
-        drop-shadow(0 0 5px rgba(59, 130, 246, 0.45))
-        drop-shadow(0 0 6px rgba(244, 63, 94, 0.45));
-    }
-
-    @keyframes fineTricolorFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     .nav-btn {
@@ -488,25 +431,20 @@
     }
 
     .nav-btn.active {
-      background: rgba(250, 204, 21, 0.15);
-      color: var(--vz-yellow);
-      border-color: rgba(250, 204, 21, 0.32);
-    }
-
-    body[data-theme="light"] .nav-btn.active {
-      background: rgba(37, 99, 235, 0.11);
-      color: var(--vz-blue);
-      border-color: rgba(37, 99, 235, 0.28);
+      background: rgba(57, 255, 20, 0.16);
+      color: var(--neon-green);
+      border-color: rgba(57, 255, 20, 0.42);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.2);
     }
 
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 11px;
       width: 100%;
     }
 
-    @media (max-width: 920px) {
+    @media (max-width: 820px) {
       .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -517,6 +455,8 @@
     .kpi-card {
       background: var(--card);
       border: 1px solid var(--border);
+      border-top: 2px solid var(--neon-green);
+      box-shadow: 0 0 14px rgba(57, 255, 20, 0.08);
       border-radius: 14px;
       padding: 14px;
       display: flex;
@@ -525,11 +465,6 @@
       min-width: 0;
       backdrop-filter: blur(8px);
     }
-
-    .kpi-card:nth-child(1) { border-top: 2px solid rgba(250, 204, 21, 0.75); }
-    .kpi-card:nth-child(2) { border-top: 2px solid rgba(59, 130, 246, 0.75); }
-    .kpi-card:nth-child(3) { border-top: 2px solid rgba(16, 185, 129, 0.75); }
-    .kpi-card:nth-child(4) { border-top: 2px solid rgba(244, 63, 94, 0.65); }
 
     .kpi-label {
       font-size: 0.76rem;
@@ -563,6 +498,108 @@
       backdrop-filter: blur(8px);
     }
 
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+      width: 100%;
+    }
+
+    @media (max-width: 820px) {
+      .hub-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .hub-card {
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 0 16px rgba(57, 255, 20, 0.09);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    .hub-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .hub-title {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hub-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.35;
+      margin-top: 3px;
+    }
+
+    .hub-badge {
+      background: rgba(57, 255, 20, 0.14);
+      color: var(--neon-green);
+      border: 1px solid rgba(57, 255, 20, 0.36);
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .faucet-inline-box {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .faucet-captcha-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .faucet-captcha-row label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--neon-green);
+      white-space: nowrap;
+    }
+
+    .faucet-captcha-row input {
+      width: 105px;
+      padding: 6px 9px;
+      font-size: 0.82rem;
+    }
+
+    .hub-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hub-stat {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
     .quick-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -589,13 +626,14 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
+      transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
       min-width: 0;
     }
 
     .quick-tile:hover {
       border-color: var(--border-soft);
       background: var(--card);
+      box-shadow: 0 0 12px rgba(57, 255, 20, 0.14);
     }
 
     .safety-banner {
@@ -620,7 +658,7 @@
 
     .ad-banner-top {
       background: var(--card);
-      border: 1px dashed var(--border);
+      border: 1px dashed var(--border-soft);
       border-radius: 14px;
       padding: 8px;
       text-align: center;
@@ -652,108 +690,6 @@
       font-weight: 700;
     }
 
-    .hub-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 11px;
-      width: 100%;
-    }
-
-    @media (max-width: 820px) {
-      .hub-grid { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .hub-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-      min-width: 0;
-      backdrop-filter: blur(8px);
-    }
-
-    .hub-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    .hub-title {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .hub-sub {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.35;
-      margin-top: 3px;
-    }
-
-    .hub-badge {
-      background: rgba(250, 204, 21, 0.14);
-      color: var(--vz-yellow);
-      border: 1px solid rgba(250, 204, 21, 0.3);
-      padding: 3px 8px;
-      border-radius: 8px;
-      font-size: 0.71rem;
-      font-weight: 700;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    body[data-theme="light"] .hub-badge {
-      color: #92400e;
-      background: rgba(245, 158, 11, 0.14);
-      border-color: rgba(217, 119, 6, 0.3);
-    }
-
-    .hub-badge.blue {
-      background: rgba(59, 130, 246, 0.14);
-      color: #93c5fd;
-      border-color: rgba(59, 130, 246, 0.32);
-    }
-
-    body[data-theme="light"] .hub-badge.blue {
-      color: var(--vz-blue);
-    }
-
-    .mini-progress-wrap {
-      width: 100%;
-      height: 7px;
-      background: var(--card-2);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .mini-progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--vz-yellow), var(--vz-blue));
-      transition: width 0.25s ease;
-    }
-
-    .hub-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .hub-stat {
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--muted);
-    }
-
     .sound-toggle {
       background: var(--card);
       border: 1px solid var(--border);
@@ -773,7 +709,7 @@
     .switch-ui {
       width: 34px;
       height: 18px;
-      background: #475569;
+      background: #334155;
       border-radius: 999px;
       position: relative;
       transition: 0.2s ease;
@@ -797,11 +733,13 @@
     }
 
     input[type="checkbox"].sr-switch:checked + .switch-ui {
-      background: var(--vz-blue);
+      background: var(--neon-green);
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.45);
     }
 
     input[type="checkbox"].sr-switch:checked + .switch-ui::after {
       transform: translateX(16px);
+      background: #041208;
     }
 
     .ads-grid {
@@ -899,25 +837,15 @@
     }
 
     .chip-reward {
-      background: rgba(250, 204, 21, 0.14);
-      color: var(--vz-yellow);
-      border: 1px solid rgba(250, 204, 21, 0.28);
-    }
-
-    body[data-theme="light"] .chip-reward {
-      color: #92400e;
-      background: rgba(245, 158, 11, 0.14);
-      border-color: rgba(217, 119, 6, 0.3);
+      background: rgba(57, 255, 20, 0.14);
+      color: var(--neon-green);
+      border: 1px solid rgba(57, 255, 20, 0.34);
     }
 
     .chip-time {
-      background: rgba(59, 130, 246, 0.14);
-      color: #93c5fd;
-      border: 1px solid rgba(59, 130, 246, 0.3);
-    }
-
-    body[data-theme="light"] .chip-time {
-      color: var(--vz-blue);
+      background: rgba(52, 211, 153, 0.14);
+      color: var(--neon-mint);
+      border: 1px solid rgba(52, 211, 153, 0.34);
     }
 
     .chip-kind {
@@ -934,7 +862,7 @@
     }
 
     body[data-theme="light"] .chip-red {
-      color: var(--vz-red);
+      color: var(--neon-red);
     }
 
     .ad-card-foot {
@@ -1006,10 +934,26 @@
       margin-top: 3px;
     }
 
+    .mini-progress-wrap {
+      width: 100%;
+      height: 7px;
+      background: var(--card);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #39ff14);
+      box-shadow: 0 0 8px rgba(57, 255, 20, 0.45);
+      transition: width 0.25s ease;
+    }
+
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(2, 6, 23, 0.68);
+      background: rgba(2, 10, 6, 0.74);
       display: none;
       align-items: center;
       justify-content: center;
@@ -1023,8 +967,8 @@
     }
 
     .modal {
-      background: #0f192e;
-      border: 1px solid var(--border);
+      background: #091711;
+      border: 1px solid var(--border-soft);
       border-radius: 18px;
       max-width: 820px;
       width: 100%;
@@ -1127,7 +1071,7 @@
 
     .ad-box-300 {
       background: var(--card);
-      border: 1px dashed var(--border);
+      border: 1px dashed var(--border-soft);
       border-radius: 12px;
       min-height: 266px;
       padding: 8px;
@@ -1153,20 +1097,20 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--vz-yellow), var(--vz-blue));
+      background: linear-gradient(90deg, #10b981, #39ff14);
       transition: width 0.25s linear;
     }
 
     .status-note {
       font-size: 0.82rem;
-      color: var(--vz-red);
+      color: var(--neon-red);
       font-weight: 600;
       min-height: 18px;
     }
 
     .captcha-box {
-      background: rgba(250, 204, 21, 0.1);
-      border: 1px solid rgba(250, 204, 21, 0.3);
+      background: rgba(57, 255, 20, 0.08);
+      border: 1px solid rgba(57, 255, 20, 0.34);
       border-radius: 12px;
       padding: 12px;
       display: none;
@@ -1271,12 +1215,8 @@
     .ref-stat-val {
       font-size: 1rem;
       font-weight: 800;
-      color: var(--vz-yellow);
+      color: var(--neon-green);
       margin-top: 4px;
-    }
-
-    body[data-theme="light"] .ref-stat-val {
-      color: var(--vz-blue);
     }
 
     input, select, textarea {
@@ -1293,7 +1233,8 @@
 
     input:focus, select:focus, textarea:focus {
       outline: none;
-      border-color: rgba(250, 204, 21, 0.5);
+      border-color: var(--border-soft);
+      box-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
     }
 
     textarea {
@@ -1330,8 +1271,8 @@
       left: 16px;
       max-width: 420px;
       margin-left: auto;
-      background: #0f192e;
-      border: 1px solid rgba(250, 204, 21, 0.35);
+      background: #091711;
+      border: 1px solid var(--border-soft);
       color: var(--text);
       padding: 11px 14px;
       border-radius: 12px;
@@ -1347,7 +1288,6 @@
 
     body[data-theme="light"] .toast {
       background: #ffffff;
-      border-color: rgba(37, 99, 235, 0.35);
     }
 
     .toast.show {
@@ -1357,26 +1297,15 @@
   </style>
 </head>
 <body data-theme="dark">
-  <div class="vz-bg-map" aria-hidden="true">
-    <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="vzSoftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#facc15" stop-opacity="0.45" />
-          <stop offset="52%" stop-color="#3b82f6" stop-opacity="0.4" />
-          <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.35" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M118 112 L162 84 L218 76 L278 68 L345 78 L412 66 L478 82 L542 96 L598 118 L636 146 L615 178 L665 215 L692 252 L642 292 L584 328 L528 368 L476 418 L438 432 L404 388 L352 368 L295 344 L236 322 L182 288 L142 245 L112 205 L96 156 Z"
-        fill="url(#vzSoftGrad)"
-        stroke="url(#vzSoftGrad)"
-        stroke-width="3"
-        stroke-linejoin="round"
-      />
+  <div class="neon-bg-glow" aria-hidden="true">
+    <svg viewBox="0 0 600 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="300" cy="160" r="130" stroke="#39ff14" stroke-width="2" stroke-dasharray="10 8" opacity="0.45" />
+      <circle cx="300" cy="160" r="88" stroke="#10b981" stroke-width="1.5" opacity="0.35" />
+      <path d="M312 72 L248 168 H302 L288 248 L354 150 H298 Z" fill="#39ff14" opacity="0.22" stroke="#39ff14" stroke-width="2.5" stroke-linejoin="round" />
     </svg>
   </div>
 
-  <div class="vz-bar"></div>
+  <div class="neon-top-line"></div>
   <header>
     <div class="header-inner">
       <div class="brand">
@@ -1385,14 +1314,13 @@
       </div>
 
       <div class="wallet-box" id="themeControls">
-        <button type="button" class="btn btn-soft-gold btn-sm" id="btnThemeDark" onclick="setThemeMode('dark')">🌙 Noche Suave</button>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnThemeLight" onclick="setThemeMode('light')">☀️ Día Claro</button>
+        <button type="button" class="btn btn-soft-neon btn-sm" id="btnThemeDark" onclick="setThemeMode('dark')">🟢 Neón Oscuro</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnThemeLight" onclick="setThemeMode('light')">☀️ Verde Claro</button>
       </div>
 
       <div class="wallet-box hidden" id="headerUserControls">
         <div class="user-pill">
           <span id="userDisplay">👤 Invitado</span>
-          <span class="lvl-tag" id="levelBadgeTop">Nv. 1</span>
         </div>
         <div class="balance-pill" id="balanceDisplay">🪙 0 Coins (≈ $0.00000 USDT)</div>
         <button class="btn btn-primary btn-sm" onclick="switchSection('retiros')">💸 Retirar</button>
@@ -1410,7 +1338,7 @@
     <div class="auth-card">
       <div class="auth-head">
         <h1>CryptoClicksFaucet</h1>
-        <p>Gana Coins con Faucet, PTCs, Shortlinks, Offerwalls y Logros. Retiros manuales con control antifraude.</p>
+        <p>Faucet directa en ventana única, PTCs, Shortlinks, Offerwalls y Logros. Retiros manuales con control diario.</p>
       </div>
 
       <div class="auth-tabs">
@@ -1470,8 +1398,8 @@
     </nav>
 
     <div class="safety-banner">
-      <span>🛡️ <strong>CryptoClicksFaucet:</strong> 50 Coins = $0.0005 USDT • Retiros manuales (mín. 10,000 / máx. 25,000 Coins/día) • Referidos: bono único 1,000 / 500 Coins.</span>
-      <button type="button" class="btn btn-soft-gold btn-sm" onclick="switchSection('logros')">🏆 Ver Logros</button>
+      <span>⚡ <strong>CryptoClicksFaucet:</strong> 50 Coins = $0.0005 USDT • Faucet fija cada 60 min (+35 Coins) • Retiros manuales (mín. 10,000 / máx. 25,000 Coins/día).</span>
+      <button type="button" class="btn btn-soft-neon btn-sm" onclick="switchSection('logros')">🏆 Ver Logros</button>
     </div>
 
     <section class="ad-banner-top" id="adSlotTop"></section>
@@ -1485,11 +1413,6 @@
           <span class="kpi-sub" id="kpiBalanceUsdt">≈ $0.00000 USDT</span>
         </div>
         <div class="kpi-card">
-          <span class="kpi-label">Nivel y Progreso XP</span>
-          <span class="kpi-val" id="kpiLevel">Nivel 1</span>
-          <span class="kpi-sub" id="kpiXp">0 / 1,000 XP</span>
-        </div>
-        <div class="kpi-card">
           <span class="kpi-label">Referidos (Bono Único)</span>
           <span class="kpi-val" id="kpiRefCount">0</span>
           <span class="kpi-sub" id="kpiRefCoins">0 Coins (1,000 c/u)</span>
@@ -1497,7 +1420,7 @@
         <div class="kpi-card">
           <span class="kpi-label">Mínimo de Retiro</span>
           <span class="kpi-val">10,000</span>
-          <span class="kpi-sub" id="kpiWithdrawProgress">0% completado ($0.10 USDT)</span>
+          <span class="kpi-sub" id="kpiWithdrawProgress">0% del mínimo ($0.10 USDT)</span>
         </div>
       </div>
 
@@ -1506,7 +1429,7 @@
           <div class="hub-top">
             <div>
               <div class="hub-title">🎁 Bono Diario</div>
-              <div class="hub-sub">Reclama tu recompensa cada 24 horas y suma +20 XP.</div>
+              <div class="hub-sub">Reclama tu recompensa fija cada 24 horas.</div>
             </div>
             <span class="hub-badge">+100 Coins</span>
           </div>
@@ -1516,26 +1439,26 @@
           </div>
         </div>
 
+        <!-- FAUCET EN UNA SOLA VENTANA (SIN NIVELES NI MODAL) -->
         <div class="hub-card">
           <div class="hub-top">
             <div>
-              <div class="hub-title">🚰 Faucet por Niveles</div>
-              <div class="hub-sub">Inicia en 60 min y baja 2 min por nivel (mín. 10 min).</div>
+              <div class="hub-title">🚰 Faucet (Ventana Única)</div>
+              <div class="hub-sub">Reclama directamente aquí cada 60 minutos sin abrir ventanas extra.</div>
             </div>
-            <span class="hub-badge blue" id="levelXpBadge">Nv. 1 • 0/1,000 XP</span>
+            <span class="hub-badge">+35 Coins • 60m</span>
           </div>
-          <div>
-            <div style="display:flex; justify-content:space-between; font-size:0.74rem; color:var(--muted); margin-bottom:5px; gap:8px; flex-wrap:wrap;">
-              <span id="faucetCooldownInfo">Espera actual: 60 min</span>
-              <span id="faucetRewardInfo">Pago: +35 Coins</span>
+
+          <div class="faucet-inline-box" id="faucetInlineBox">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; font-size:0.77rem;">
+              <span id="faucetTimerStatus" style="font-weight:700; color:var(--neon-green);">Lista para reclamar</span>
+              <span style="color:var(--muted);">Recompensa fija: +35 Coins</span>
             </div>
-            <div class="mini-progress-wrap">
-              <div class="mini-progress-bar" id="xpProgressBar"></div>
+            <div class="faucet-captcha-row">
+              <label for="faucetCaptchaInput" id="faucetCaptchaQuestion">¿Cuánto es 2 + 2?</label>
+              <input type="number" id="faucetCaptchaInput" placeholder="Resultado" />
+              <button type="button" class="btn btn-primary btn-sm" id="btnClaimFaucetInline" onclick="claimFaucetInline()">🚰 Reclamar +35</button>
             </div>
-          </div>
-          <div class="hub-foot">
-            <span class="hub-stat" id="faucetTimerStatus">Lista para reclamar</span>
-            <button type="button" class="btn btn-primary btn-sm" id="btnOpenFaucet" onclick="openFaucetModal()">🚰 Reclamar +35</button>
           </div>
         </div>
       </section>
@@ -1544,19 +1467,19 @@
         <h3 style="font-size:0.94rem;">Accesos Rápidos por Sección</h3>
         <div class="quick-grid">
           <button type="button" class="quick-tile" onclick="switchSection('ptcs')">
-            <strong style="color:var(--vz-yellow);">🖱️ PTCs</strong>
+            <strong style="color:var(--neon-green);">🖱️ PTCs</strong>
             <span style="font-size:0.76rem; color:var(--muted);">Window Ads y Frame Ads</span>
           </button>
           <button type="button" class="quick-tile" onclick="switchSection('shortlinks')">
-            <strong style="color:#93c5fd;">🔗 Shortlinks</strong>
+            <strong style="color:var(--neon-green);">🔗 Shortlinks</strong>
             <span style="font-size:0.76rem; color:var(--muted);">Enlaces acortados (+130 Coins)</span>
           </button>
           <button type="button" class="quick-tile" onclick="switchSection('offerwalls')">
-            <strong style="color:#34d399;">🧱 Offerwalls</strong>
+            <strong style="color:var(--neon-green);">🧱 Offerwalls</strong>
             <span style="font-size:0.76rem; color:var(--muted);">Encuestas y tareas externas</span>
           </button>
           <button type="button" class="quick-tile" onclick="switchSection('logros')">
-            <strong style="color:#fda4af;">🏆 Logros</strong>
+            <strong style="color:var(--neon-green);">🏆 Logros</strong>
             <span style="font-size:0.76rem; color:var(--muted);">Metas diarias, semanales y mensuales</span>
           </button>
         </div>
@@ -1610,16 +1533,16 @@
       <section class="ads-grid" id="offerwallsGrid"></section>
     </section>
 
-    <!-- 5. SECCIÓN LOGROS (DIARIOS, SEMANALES Y MENSUALES) -->
+    <!-- 5. SECCIÓN LOGROS -->
     <section id="sec-logros" class="hidden" style="display:flex; flex-direction:column; gap:12px; width:100%;">
       <div class="panel-card">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
           <div>
             <h2 style="font-size:1rem;">🏆 Logros y Metas de Actividad</h2>
-            <p style="font-size:0.79rem; color:var(--muted);">Completa PTCs, Shortlinks o Faucets para desbloquear recompensas fijas en Coins y XP.</p>
+            <p style="font-size:0.79rem; color:var(--muted);">Completa PTCs, Shortlinks o Faucet para desbloquear recompensas fijas en Coins.</p>
           </div>
           <div class="ach-tabs">
-            <button type="button" class="btn btn-soft-gold btn-sm" id="achTabDaily" onclick="switchAchievementPeriod('daily')">📅 Diarios</button>
+            <button type="button" class="btn btn-soft-neon btn-sm" id="achTabDaily" onclick="switchAchievementPeriod('daily')">📅 Diarios</button>
             <button type="button" class="btn btn-secondary btn-sm" id="achTabWeekly" onclick="switchAchievementPeriod('weekly')">🗓️ Semanales</button>
             <button type="button" class="btn btn-secondary btn-sm" id="achTabMonthly" onclick="switchAchievementPeriod('monthly')">📆 Mensuales</button>
           </div>
@@ -1687,8 +1610,8 @@
             </div>
           </div>
           <div class="adv-summary">
-            <div class="adv-row"><span>Pago al usuario por visita:</span><strong id="advUserRewardPreview" style="color:var(--accent);">40 Coins</strong></div>
-            <div class="adv-row"><span>Total campaña:</span><strong id="advTotalUsdPreview" style="color:var(--vz-yellow);">$0.6000 USDT</strong></div>
+            <div class="adv-row"><span>Pago al usuario por visita:</span><strong id="advUserRewardPreview" style="color:var(--neon-green);">40 Coins</strong></div>
+            <div class="adv-row"><span>Total campaña:</span><strong id="advTotalUsdPreview" style="color:var(--neon-green);">$0.6000 USDT</strong></div>
           </div>
           <button type="submit" class="btn btn-primary">🚀 Publicar Campaña</button>
         </form>
@@ -1728,7 +1651,7 @@
           <label for="withdrawAmount">Cantidad en Coins (10,000 a 25,000 por día)</label>
           <input type="number" id="withdrawAmount" value="10000" min="10000" max="25000" step="100" />
         </div>
-        <div style="font-size:0.76rem; color:var(--muted);" id="withdrawDailyQuotaInfo">Retirado hoy: 0 / 25,000 Coins</div>
+        <div style="font-size:0.76rem; color:var(--muted);" id="withdrawDailyQuotaInfo">Retirado últimas 24h: 0 / 25,000 Coins</div>
         <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Confirmar Solicitud Manual</button>
       </div>
     </section>
@@ -1795,7 +1718,7 @@
     </div>
   </footer>
 
-  <!-- Modal Visor -->
+  <!-- Modal Visor para PTCs y Shortlinks -->
   <div class="modal-backdrop" id="viewerModal">
     <div class="modal">
       <div class="modal-header">
@@ -1808,7 +1731,7 @@
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; gap:8px; flex-wrap:wrap;">
               <span id="viewerBadge"></span>
-              <span id="viewerTimerText" style="font-size:1.25rem; font-weight:800; color:var(--vz-yellow);">15s</span>
+              <span id="viewerTimerText" style="font-size:1.25rem; font-weight:800; color:var(--neon-green);">15s</span>
             </div>
             <div class="progress-wrap"><div class="progress-bar" id="viewerProgress"></div></div>
           </div>
@@ -1892,18 +1815,14 @@
     const REFERRED_WELCOME_BONUS_COINS = 500;
     const MAX_ACCOUNTS_PER_DEVICE = 2;
 
-    const FAUCET_BASE_MINUTES = 60;
-    const FAUCET_REDUCTION_PER_LEVEL = 2;
-    const FAUCET_MIN_MINUTES = 10;
+    const FAUCET_COOLDOWN_MS = 60 * 60 * 1000;
     const FAUCET_REWARD_COINS = 35;
-    const FAUCET_AD_VIEW_SECONDS = 10;
-    const XP_PER_LEVEL = 1000;
 
-    const USERS_STORAGE_KEY = "ccf_users_db_v1";
-    const CURRENT_USER_KEY = "ccf_current_user_v1";
+    const USERS_STORAGE_KEY = "ccf_users_db_v2";
+    const CURRENT_USER_KEY = "ccf_current_user_v2";
     const DEVICE_ID_KEY = "ccf_device_id_v1";
     const SOUND_PREF_KEY = "ccf_sound_v1";
-    const THEME_PREF_KEY = "ccf_theme_mode_v1";
+    const THEME_PREF_KEY = "ccf_neon_theme_mode_v1";
     const CAMPAIGNS_STORAGE_KEY = "ccf_campaigns_v1";
 
     const STORAGE_KEYS = {
@@ -1917,39 +1836,39 @@
 
     const ACHIEVEMENTS_CONFIG = [
       // Diarios
-      { id: "d_ptc_3", period: "daily", metric: "ptc", target: 3, title: "Explorador PTC Diario", desc: "Completa 3 anuncios PTC hoy.", reward: 80, xp: 25 },
-      { id: "d_sl_2", period: "daily", metric: "shortlink", target: 2, title: "Cazador de Enlaces Diario", desc: "Completa 2 Shortlinks hoy.", reward: 120, xp: 35 },
-      { id: "d_fc_3", period: "daily", metric: "faucet", target: 3, title: "Grifo Constante Diario", desc: "Reclama el Faucet 3 veces hoy.", reward: 90, xp: 30 },
-      { id: "d_any_6", period: "daily", metric: "total", target: 6, title: "Rutina Activa Diaria", desc: "Completa 6 tareas entre PTC, Shortlinks o Faucet hoy.", reward: 150, xp: 45 },
+      { id: "d_ptc_3", period: "daily", metric: "ptc", target: 3, title: "Explorador PTC Diario", desc: "Completa 3 anuncios PTC hoy.", reward: 80 },
+      { id: "d_sl_2", period: "daily", metric: "shortlink", target: 2, title: "Cazador de Enlaces Diario", desc: "Completa 2 Shortlinks hoy.", reward: 120 },
+      { id: "d_fc_3", period: "daily", metric: "faucet", target: 3, title: "Grifo Constante Diario", desc: "Reclama la Faucet 3 veces hoy.", reward: 90 },
+      { id: "d_any_6", period: "daily", metric: "total", target: 6, title: "Rutina Activa Diaria", desc: "Completa 6 tareas entre PTC, Shortlinks o Faucet hoy.", reward: 150 },
       // Semanales
-      { id: "w_ptc_15", period: "weekly", metric: "ptc", target: 15, title: "Maratón PTC Semanal", desc: "Completa 15 anuncios PTC en 7 días.", reward: 400, xp: 120 },
-      { id: "w_sl_10", period: "weekly", metric: "shortlink", target: 10, title: "Maestro Shortlink Semanal", desc: "Completa 10 Shortlinks en 7 días.", reward: 650, xp: 160 },
-      { id: "w_any_30", period: "weekly", metric: "total", target: 30, title: "Constancia Semanal", desc: "Completa 30 tareas en 7 días.", reward: 800, xp: 200 },
+      { id: "w_ptc_15", period: "weekly", metric: "ptc", target: 15, title: "Maratón PTC Semanal", desc: "Completa 15 anuncios PTC en 7 días.", reward: 400 },
+      { id: "w_sl_10", period: "weekly", metric: "shortlink", target: 10, title: "Maestro Shortlink Semanal", desc: "Completa 10 Shortlinks en 7 días.", reward: 650 },
+      { id: "w_any_30", period: "weekly", metric: "total", target: 30, title: "Constancia Semanal", desc: "Completa 30 tareas en 7 días.", reward: 800 },
       // Mensuales
-      { id: "m_ptc_60", period: "monthly", metric: "ptc", target: 60, title: "Veterano PTC Mensual", desc: "Completa 60 anuncios PTC en 30 días.", reward: 1500, xp: 400 },
-      { id: "m_sl_40", period: "monthly", metric: "shortlink", target: 40, title: "Leyenda Shortlink Mensual", desc: "Completa 40 Shortlinks en 30 días.", reward: 2200, xp: 500 },
-      { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán de CryptoClicksFaucet", desc: "Completa 120 tareas en 30 días.", reward: 3000, xp: 750 }
+      { id: "m_ptc_60", period: "monthly", metric: "ptc", target: 60, title: "Veterano PTC Mensual", desc: "Completa 60 anuncios PTC en 30 días.", reward: 1500 },
+      { id: "m_sl_40", period: "monthly", metric: "shortlink", target: 40, title: "Leyenda Shortlink Mensual", desc: "Completa 40 Shortlinks en 30 días.", reward: 2200 },
+      { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán de CryptoClicksFaucet", desc: "Completa 120 tareas en 30 días.", reward: 3000 }
     ];
 
     const DEFAULT_AD_728 = `
-      <div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(15,25,46,0.94);border:1px solid rgba(250,204,21,0.3);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#f1f5f9;">
+      <div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(11,26,20,0.96);border:1px solid rgba(57,255,20,0.38);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#ecfdf5;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <span style="background:rgba(250,204,21,0.18);color:#facc15;border:1px solid rgba(250,204,21,0.35);font-weight:700;padding:6px 10px;border-radius:8px;font-size:12px;">728×90</span>
+          <span style="background:rgba(57,255,20,0.16);color:#39ff14;border:1px solid rgba(57,255,20,0.4);font-weight:700;padding:6px 10px;border-radius:8px;font-size:12px;">728×90</span>
           <div>
             <div style="font-weight:700;font-size:14px;">Espacio Publicitario CryptoClicksFaucet</div>
-            <div style="font-size:12px;color:#94a3b8;">Configura tu código HTML o red publicitaria desde el botón inferior.</div>
+            <div style="font-size:12px;color:#86efac;">Configura tu código HTML o banner desde el botón inferior.</div>
           </div>
         </div>
-        <span style="background:#facc15;color:#090e1a;font-weight:700;padding:7px 14px;border-radius:8px;font-size:12px;white-space:nowrap;">ANUNCIAR</span>
+        <span style="background:#39ff14;color:#041208;font-weight:800;padding:7px 14px;border-radius:8px;font-size:12px;white-space:nowrap;">ANUNCIAR</span>
       </div>
     `.trim();
 
     const DEFAULT_AD_300 = `
-      <div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;background:rgba(15,25,46,0.94);border:1px solid rgba(250,204,21,0.3);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#f1f5f9;text-align:center;">
-        <span style="background:rgba(59,130,246,0.18);color:#93c5fd;border:1px solid rgba(59,130,246,0.35);font-weight:700;padding:4px 10px;border-radius:7px;font-size:11px;">300×250</span>
+      <div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;background:rgba(11,26,20,0.96);border:1px solid rgba(57,255,20,0.38);border-radius:12px;box-sizing:border-box;font-family:system-ui,sans-serif;color:#ecfdf5;text-align:center;">
+        <span style="background:rgba(57,255,20,0.16);color:#39ff14;border:1px solid rgba(57,255,20,0.4);font-weight:700;padding:4px 10px;border-radius:7px;font-size:11px;">300×250</span>
         <div style="font-weight:700;font-size:15px;line-height:1.25;">Promociona tu Proyecto o Enlace</div>
-        <div style="font-size:12px;color:#94a3b8;">Personaliza este bloque cuando quieras en Configuración.</div>
-        <span style="background:#facc15;color:#090e1a;font-weight:700;padding:7px 14px;border-radius:8px;font-size:12px;">VER MÁS</span>
+        <div style="font-size:12px;color:#86efac;">Personaliza este bloque cuando quieras en Configuración.</div>
+        <span style="background:#39ff14;color:#041208;font-weight:800;padding:7px 14px;border-radius:8px;font-size:12px;">VER MÁS</span>
       </div>
     `.trim();
 
@@ -1959,10 +1878,10 @@
     const DEFAULT_SHORTLINKS = ["https://example.com/"];
 
     const OFFERWALLS_CONFIG = [
-      { id: "ow1", icon: "⏱️", title: "TimeWall — Microtareas", desc: "Tareas cortas y clics con acreditación externa.", duration: 0, reward: 2500, rewardLabel: "Hasta 2,500+ Coins", xp: 50 },
-      { id: "ow2", icon: "📋", title: "CPX Research — Encuestas", desc: "Encuestas disponibles según perfil y país.", duration: 0, reward: 15000, rewardLabel: "500 – 15,000 Coins", xp: 100 },
-      { id: "ow3", icon: "🎮", title: "BitLabs — Encuestas y Apps", desc: "Encuestas rápidas y pruebas de aplicaciones.", duration: 0, reward: 10000, rewardLabel: "300 – 10,000 Coins", xp: 80 },
-      { id: "ow4", icon: "🧱", title: "Monlix — Muro de Ofertas", desc: "Ofertas web y registros rápidos.", duration: 0, reward: 8000, rewardLabel: "200 – 8,000 Coins", xp: 60 }
+      { id: "ow1", icon: "⏱️", title: "TimeWall — Microtareas", desc: "Tareas cortas y clics con acreditación externa.", duration: 0, reward: 2500, rewardLabel: "Hasta 2,500+ Coins" },
+      { id: "ow2", icon: "📋", title: "CPX Research — Encuestas", desc: "Encuestas disponibles según perfil y país.", duration: 0, reward: 15000, rewardLabel: "500 – 15,000 Coins" },
+      { id: "ow3", icon: "🎮", title: "BitLabs — Encuestas y Apps", desc: "Encuestas rápidas y pruebas de aplicaciones.", duration: 0, reward: 10000, rewardLabel: "300 – 10,000 Coins" },
+      { id: "ow4", icon: "🧱", title: "Monlix — Muro de Ofertas", desc: "Ofertas web y registros rápidos.", duration: 0, reward: 8000, rewardLabel: "200 – 8,000 Coins" }
     ];
 
     const WINDOW_ADS_CONFIG = Array.from({ length: 6 }, (_, i) => ({
@@ -1971,8 +1890,7 @@
       title: `Window Ad #${i + 1}`,
       desc: "Abre el anuncio en pestaña nueva y espera el contador.",
       duration: 15 + (i >= 4 ? 5 : 0),
-      reward: 35 + i * 3,
-      xp: 10
+      reward: 35 + i * 3
     }));
 
     const FRAME_ADS_CONFIG = Array.from({ length: 6 }, (_, i) => ({
@@ -1981,8 +1899,7 @@
       title: `Frame Ad #${i + 1}`,
       desc: "Visualiza el anuncio dentro del marco integrado.",
       duration: 15 + (i >= 4 ? 5 : 0),
-      reward: 30 + i * 3,
-      xp: 10
+      reward: 30 + i * 3
     }));
 
     const SHORTLINKS_CONFIG = Array.from({ length: 6 }, (_, i) => ({
@@ -1991,8 +1908,7 @@
       title: `Shortlink #${i + 1}`,
       desc: "Completa el enlace acortado para ganar +130 Coins.",
       duration: 20,
-      reward: 130,
-      xp: 25
+      reward: 130
     }));
 
     function getOrCreateDeviceId() {
@@ -2039,13 +1955,11 @@
         desc: c.desc,
         duration: c.duration,
         reward: c.userRewardCoins,
-        xp: 12,
         cat: c.format,
         used: 0,
         limit: 1,
         url: c.url,
-        isSponsored: true,
-        clicksInfo: `${c.deliveredClicks}/${c.totalClicks} vistas`
+        isSponsored: true
       }));
 
       const windowTasks = WINDOW_ADS_CONFIG.map((cfg, idx) => ({
@@ -2067,7 +1981,6 @@
     let state = {
       currentUser: null,
       coins: 0,
-      xp: 0,
       section: "dashboard",
       achPeriod: "daily",
       themeMode: localStorage.getItem(THEME_PREF_KEY) === "light" ? "light" : "dark",
@@ -2079,6 +1992,15 @@
     let activeSession = null;
     let timerInterval = null;
     let expectedCaptcha = null;
+    let expectedFaucetCaptcha = 4;
+
+    function refreshFaucetCaptcha() {
+      const a = Math.floor(Math.random() * 8) + 2;
+      const b = Math.floor(Math.random() * 7) + 1;
+      expectedFaucetCaptcha = a + b;
+      const qEl = document.getElementById("faucetCaptchaQuestion");
+      if (qEl) qEl.textContent = `¿Cuánto es ${a} + ${b}?`;
+    }
 
     function createFreshAchievementState(now = Date.now()) {
       return {
@@ -2135,7 +2057,7 @@
       state.achPeriod = period;
       ["daily", "weekly", "monthly"].forEach(p => {
         const btn = document.getElementById(`achTab${p.charAt(0).toUpperCase() + p.slice(1)}`);
-        if (btn) btn.className = p === period ? "btn btn-soft-gold btn-sm" : "btn btn-secondary btn-sm";
+        if (btn) btn.className = p === period ? "btn btn-soft-neon btn-sm" : "btn btn-secondary btn-sm";
       });
       renderAchievementsView();
     }
@@ -2166,7 +2088,7 @@
               </div>
               <div style="display:flex; justify-content:space-between; font-size:0.74rem; color:var(--muted); margin-top:8px; margin-bottom:4px;">
                 <span>Progreso: <strong>${current} / ${ach.target}</strong></span>
-                <span>+${ach.xp} XP</span>
+                <span>${pct}%</span>
               </div>
               <div class="mini-progress-wrap">
                 <div class="mini-progress-bar" style="width:${pct}%;"></div>
@@ -2200,7 +2122,6 @@
 
       bucket.claimed.push(ach.id);
       state.coins += ach.reward;
-      state.xp += ach.xp;
       addMovement(state.currentUser, `Logro: ${ach.title}`, ach.reward);
       updateAllUI();
       renderAchievementsView();
@@ -2216,10 +2137,10 @@
       const btnDark = document.getElementById("btnThemeDark");
       if (btnLight && btnDark) {
         if (state.themeMode === "light") {
-          btnLight.className = "btn btn-soft-gold btn-sm";
+          btnLight.className = "btn btn-soft-neon btn-sm";
           btnDark.className = "btn btn-secondary btn-sm";
         } else {
-          btnDark.className = "btn btn-soft-gold btn-sm";
+          btnDark.className = "btn btn-soft-neon btn-sm";
           btnLight.className = "btn btn-secondary btn-sm";
         }
       }
@@ -2227,7 +2148,7 @@
 
     function setThemeMode(mode) {
       applyThemeMode(mode);
-      showToast(mode === "light" ? "☀️ Tema Día Claro activado." : "🌙 Tema Noche Suave activado.");
+      showToast(mode === "light" ? "☀️ Tema Verde Claro activado." : "🟢 Tema Neón Oscuro activado.");
     }
 
     function formatUsdt(coins) {
@@ -2264,14 +2185,6 @@
     function toggleSoundPref() {
       state.soundEnabled = document.getElementById("soundToggle").checked;
       localStorage.setItem(SOUND_PREF_KEY, String(state.soundEnabled));
-    }
-
-    function getLevelInfo(xp = 0) {
-      const safeXp = Math.max(0, Math.floor(xp));
-      const level = Math.floor(safeXp / XP_PER_LEVEL) + 1;
-      const currentLevelXp = safeXp % XP_PER_LEVEL;
-      const faucetMinutes = Math.max(FAUCET_MIN_MINUTES, FAUCET_BASE_MINUTES - (level - 1) * FAUCET_REDUCTION_PER_LEVEL);
-      return { level, currentLevelXp, faucetMinutes, faucetReward: FAUCET_REWARD_COINS };
     }
 
     function formatCountdown(ms) {
@@ -2348,7 +2261,6 @@
 
       if (idx !== -1) {
         users[idx].coins = state.coins;
-        users[idx].xp = state.xp;
         users[idx].taskStates = taskStates;
         users[idx].achievements = state.currentUser.achievements;
         users[idx].lastDailyBonusAt = state.currentUser.lastDailyBonusAt || null;
@@ -2415,7 +2327,6 @@
         referredBy: validSponsorCode,
         refBonusTotal: 0,
         coins: initialCoins,
-        xp: 0,
         lastDailyBonusAt: null,
         lastFaucetAt: null,
         taskStates: {},
@@ -2481,8 +2392,8 @@
       ensureUserAchievementBuckets(user);
       state.currentUser = user;
       state.coins = Number(user.coins ?? 0);
-      state.xp = Number(user.xp ?? 0);
       hydrateTasksForUser(user);
+      refreshFaucetCaptcha();
 
       document.getElementById("soundToggle").checked = state.soundEnabled;
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
@@ -2532,14 +2443,9 @@
       if (!state.currentUser) return;
       persistCurrentUserData();
 
-      const lvl = getLevelInfo(state.xp);
-      document.getElementById("levelBadgeTop").textContent = `Nv. ${lvl.level}`;
       document.getElementById("balanceDisplay").textContent = `🪙 ${state.coins.toLocaleString()} Coins (≈ $${formatUsdt(state.coins)} USDT)`;
-
       document.getElementById("kpiBalanceCoins").textContent = `${state.coins.toLocaleString()} Coins`;
       document.getElementById("kpiBalanceUsdt").textContent = `≈ $${formatUsdt(state.coins)} USDT`;
-      document.getElementById("kpiLevel").textContent = `Nivel ${lvl.level}`;
-      document.getElementById("kpiXp").textContent = `${lvl.currentLevelXp.toLocaleString()} / ${XP_PER_LEVEL.toLocaleString()} XP`;
 
       const users = getUsersDB();
       const refCount = users.filter(u => u.referredBy === state.currentUser.refCode).length;
@@ -2582,25 +2488,49 @@
         document.getElementById("dailyBonusStatus").textContent = "Disponible ahora";
       }
 
-      const lvl = getLevelInfo(state.xp);
-      document.getElementById("levelXpBadge").textContent = `Nv. ${lvl.level} • ${lvl.currentLevelXp.toLocaleString()}/${XP_PER_LEVEL.toLocaleString()} XP`;
-      document.getElementById("xpProgressBar").style.width = `${(lvl.currentLevelXp / XP_PER_LEVEL) * 100}%`;
-      document.getElementById("faucetCooldownInfo").textContent = `Espera actual: ${lvl.faucetMinutes} min`;
-      document.getElementById("faucetRewardInfo").textContent = `Pago: +${lvl.faucetReward} Coins`;
-
-      const faucetMs = lvl.faucetMinutes * 60 * 1000;
       const lastFaucet = state.currentUser.lastFaucetAt || 0;
-      const faucetRem = faucetMs - (now - lastFaucet);
-      const btnFaucet = document.getElementById("btnOpenFaucet");
+      const faucetRem = FAUCET_COOLDOWN_MS - (now - lastFaucet);
+      const btnFaucet = document.getElementById("btnClaimFaucetInline");
+      const captchaInput = document.getElementById("faucetCaptchaInput");
+      const statusEl = document.getElementById("faucetTimerStatus");
+
       if (lastFaucet && faucetRem > 0) {
         btnFaucet.disabled = true;
+        captchaInput.disabled = true;
         btnFaucet.textContent = `Espera ${formatCountdown(faucetRem)}`;
-        document.getElementById("faucetTimerStatus").textContent = `Espera: ${lvl.faucetMinutes} min`;
+        statusEl.textContent = `Disponible en ${formatCountdown(faucetRem)}`;
       } else {
         btnFaucet.disabled = false;
-        btnFaucet.textContent = `🚰 Reclamar +${lvl.faucetReward}`;
-        document.getElementById("faucetTimerStatus").textContent = "Lista para reclamar";
+        captchaInput.disabled = false;
+        btnFaucet.textContent = `🚰 Reclamar +${FAUCET_REWARD_COINS}`;
+        statusEl.textContent = "Lista para reclamar en esta ventana";
       }
+    }
+
+    function claimFaucetInline() {
+      if (!state.currentUser) return;
+      const now = Date.now();
+      const lastFaucet = state.currentUser.lastFaucetAt || 0;
+      if (lastFaucet && (now - lastFaucet < FAUCET_COOLDOWN_MS)) {
+        showToast("La Faucet aún está en espera.");
+        return;
+      }
+
+      const inputEl = document.getElementById("faucetCaptchaInput");
+      if (Number(inputEl.value) !== expectedFaucetCaptcha) {
+        showToast("❌ Respuesta del captcha incorrecta.");
+        return;
+      }
+
+      state.currentUser.lastFaucetAt = now;
+      state.coins += FAUCET_REWARD_COINS;
+      recordActivityForAchievements(state.currentUser, "faucet");
+      addMovement(state.currentUser, "Faucet reclamada", FAUCET_REWARD_COINS);
+      inputEl.value = "";
+      refreshFaucetCaptcha();
+      playFinishChime();
+      updateAllUI();
+      showToast(`🚰 +${FAUCET_REWARD_COINS} Coins acreditados.`);
     }
 
     function claimDailyBonus() {
@@ -2609,7 +2539,6 @@
       if (state.currentUser.lastDailyBonusAt && (now - state.currentUser.lastDailyBonusAt < RESET_INTERVAL_MS)) return;
       state.currentUser.lastDailyBonusAt = now;
       state.coins += DAILY_BONUS_COINS;
-      state.xp += 20;
       addMovement(state.currentUser, "Bono diario (24h)", DAILY_BONUS_COINS);
       updateAllUI();
       showToast(`🎁 +${DAILY_BONUS_COINS} Coins acreditados.`);
@@ -2640,12 +2569,12 @@
               <p class="ad-card-desc">${t.desc}</p>
               <div class="meta-chips">
                 <span class="chip chip-reward">🪙 ${isOw ? t.rewardLabel : `+${t.reward} Coins`}</span>
-                ${isOw ? `<span class="chip chip-red">Muro</span>` : `<span class="chip chip-time">⏱️ ${t.duration}s</span><span class="chip chip-kind">+${t.xp} XP</span>`}
+                ${isOw ? `<span class="chip chip-red">Muro</span>` : `<span class="chip chip-time">⏱️ ${t.duration}s</span>`}
               </div>
             </div>
             <div class="ad-card-foot">
               <span style="font-size:0.73rem; color:var(--muted);">${onCd ? `Reset en ${formatRemaining24h(RESET_INTERVAL_MS - (now - t.completedAt))}` : "Disponible"}</span>
-              <button type="button" class="btn ${isOw ? "btn-soft-gold" : "btn-primary"} btn-sm" ${onCd ? "disabled" : ""} onclick="startTask('${t.id}')">
+              <button type="button" class="btn ${isOw ? "btn-soft-neon" : "btn-primary"} btn-sm" ${onCd ? "disabled" : ""} onclick="startTask('${t.id}')">
                 ${onCd ? "Completado" : isOw ? "Abrir" : "Ver"}
               </button>
             </div>
@@ -2670,26 +2599,11 @@
       if ((task.cat === "window_ads" || task.cat === "shortlinks") && task.url) {
         window.open(task.url, "_blank", "noopener,noreferrer");
       }
-      activeSession = { mode: "task", task, remaining: task.duration, total: task.duration };
+      activeSession = { task, remaining: task.duration, total: task.duration };
       document.getElementById("viewerTitle").textContent = `${task.title} (+${task.reward} Coins)`;
       document.getElementById("stageMedia").innerHTML = task.cat === "frame_ads"
         ? `<iframe src="${task.url}" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>`
         : `<div style="font-weight:700;">Anuncio abierto en pestaña nueva</div><p style="font-size:0.8rem; color:var(--muted);">Espera a que termine el contador para verificar.</p>`;
-      document.getElementById("captchaBox").classList.remove("show");
-      document.getElementById("captchaAnswer").value = "";
-      document.getElementById("viewerStatus").textContent = "";
-      document.getElementById("viewerModal").classList.add("open");
-      applyAdSlots();
-      updateViewerUI();
-      runTimer();
-    }
-
-    function openFaucetModal() {
-      if (!state.currentUser) return;
-      const lvl = getLevelInfo(state.xp);
-      activeSession = { mode: "faucet", reward: lvl.faucetReward, xp: 15, remaining: FAUCET_AD_VIEW_SECONDS, total: FAUCET_AD_VIEW_SECONDS };
-      document.getElementById("viewerTitle").textContent = `🚰 Faucet Nivel ${lvl.level} (+${lvl.faucetReward} Coins)`;
-      document.getElementById("stageMedia").innerHTML = `<div style="font-weight:800;">Reclamo de Faucet</div><p style="font-size:0.82rem; color:var(--muted);">Espera ${FAUCET_AD_VIEW_SECONDS}s para habilitar la suma.</p>`;
       document.getElementById("captchaBox").classList.remove("show");
       document.getElementById("captchaAnswer").value = "";
       document.getElementById("viewerStatus").textContent = "";
@@ -2735,27 +2649,18 @@
         return;
       }
       const now = Date.now();
-      if (activeSession.mode === "faucet") {
-        state.currentUser.lastFaucetAt = now;
-        state.coins += activeSession.reward;
-        state.xp += activeSession.xp;
-        recordActivityForAchievements(state.currentUser, "faucet");
-        addMovement(state.currentUser, "Faucet reclamada", activeSession.reward);
-      } else {
-        const { task } = activeSession;
-        task.used = task.limit;
-        task.completedAt = now;
-        if (task.isSponsored) {
-          const list = getAdvertiserCampaigns();
-          const i = list.findIndex(c => c.id === task.id);
-          if (i !== -1) { list[i].deliveredClicks += 1; saveAdvertiserCampaigns(list); }
-        }
-        state.coins += task.reward;
-        state.xp += task.xp || 10;
-        const achKind = task.cat === "shortlinks" ? "shortlink" : "ptc";
-        recordActivityForAchievements(state.currentUser, achKind);
-        addMovement(state.currentUser, task.title, task.reward);
+      const { task } = activeSession;
+      task.used = task.limit;
+      task.completedAt = now;
+      if (task.isSponsored) {
+        const list = getAdvertiserCampaigns();
+        const i = list.findIndex(c => c.id === task.id);
+        if (i !== -1) { list[i].deliveredClicks += 1; saveAdvertiserCampaigns(list); }
       }
+      state.coins += task.reward;
+      const achKind = task.cat === "shortlinks" ? "shortlink" : "ptc";
+      recordActivityForAchievements(state.currentUser, achKind);
+      addMovement(state.currentUser, task.title, task.reward);
       updateAllUI();
       closeViewerModal();
       if (state.section === "ptcs") renderCategoryGrid("ptcsGrid", t => t.cat === "window_ads" || t.cat === "frame_ads");
@@ -2929,7 +2834,7 @@
       document.getElementById("refCountDisplay").textContent = String(refs.length);
       document.getElementById("refEarnedDisplay").textContent = `${Number(state.currentUser.refBonusTotal || 0).toLocaleString()} Coins`;
       document.getElementById("referralsTableBody").innerHTML = refs.length
-        ? refs.map(r => `<tr><td>👤 ${r.username}</td><td>${new Date(r.createdAt).toLocaleDateString("es-VE")}</td><td style="color:var(--accent); font-weight:700;">+${REFERRAL_ONE_TIME_BONUS_COINS.toLocaleString()} Coins (único)</td></tr>`).join("")
+        ? refs.map(r => `<tr><td>👤 ${r.username}</td><td>${new Date(r.createdAt).toLocaleDateString("es-VE")}</td><td style="color:var(--neon-green); font-weight:700;">+${REFERRAL_ONE_TIME_BONUS_COINS.toLocaleString()} Coins (único)</td></tr>`).join("")
         : `<tr><td colspan="3" style="color:var(--muted); text-align:center;">Aún no tienes referidos.</td></tr>`;
     }
 
@@ -2943,14 +2848,14 @@
     function renderDashboardMovements() {
       const movs = (state.currentUser?.movements || []).slice(0, 5);
       document.getElementById("dashMovementsBody").innerHTML = movs.length
-        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--vz-red)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()} Coins</td><td>$${formatUsdt(m.coins)} USDT</td></tr>`).join("")
+        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--neon-green)" : "var(--neon-red)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()} Coins</td><td>$${formatUsdt(m.coins)} USDT</td></tr>`).join("")
         : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Sin movimientos recientes.</td></tr>`;
     }
 
     function renderHistoryView() {
       const movs = (state.currentUser?.movements || []).slice(0, 10);
       document.getElementById("movementsTableBody").innerHTML = movs.length
-        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--accent)" : "var(--vz-red)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()} Coins</td><td>$${formatUsdt(m.coins)} USDT</td></tr>`).join("")
+        ? movs.map(m => `<tr><td>${m.date}</td><td>${m.label}</td><td style="color:${m.coins >= 0 ? "var(--neon-green)" : "var(--neon-red)"}; font-weight:700;">${m.coins >= 0 ? "+" : ""}${m.coins.toLocaleString()} Coins</td><td>$${formatUsdt(m.coins)} USDT</td></tr>`).join("")
         : `<tr><td colspan="4" style="color:var(--muted); text-align:center;">Sin movimientos.</td></tr>`;
 
       const withs = state.currentUser?.withdrawals || [];
