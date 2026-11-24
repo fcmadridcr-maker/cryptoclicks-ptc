@@ -71,7 +71,6 @@
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    /* Emblema central gigante de fondo sin halo alrededor del recuadro */
     .bg-center-emblem {
       position: fixed;
       inset: 0;
@@ -399,7 +398,7 @@
     .nav-bar {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       flex-wrap: wrap;
       background: var(--card);
       backdrop-filter: blur(10px);
@@ -416,9 +415,9 @@
       border: 1px solid transparent;
       background: transparent;
       color: var(--muted);
-      padding: 6px 11px;
+      padding: 6px 12px;
       border-radius: 9px;
-      font-size: 0.78rem;
+      font-size: 0.79rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
@@ -448,8 +447,8 @@
       position: absolute;
       top: calc(100% + 6px);
       left: 0;
-      min-width: 184px;
-      background: rgba(12, 13, 22, 0.9);
+      min-width: 196px;
+      background: rgba(12, 13, 22, 0.92);
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-strong);
       border-radius: 12px;
@@ -462,7 +461,7 @@
     }
 
     body[data-theme="light"] .nav-dd-menu {
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.95);
     }
 
     .nav-dd-wrap.open .nav-dd-menu {
@@ -489,6 +488,12 @@
     .nav-dd-item:hover {
       background: var(--card-2);
       color: var(--accent);
+    }
+
+    .dd-count {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 700;
     }
 
     .profile-tab-panel {
@@ -1145,10 +1150,31 @@
   <main class="hidden" id="dashboardSection">
     <nav class="nav-bar" id="mainNav">
       <button type="button" class="nav-btn active" data-sec="dashboard" onclick="switchSection('dashboard')">🏠 <span class="i18n-nav-home">Inicio</span></button>
-      <button type="button" class="nav-btn" data-sec="faucet" onclick="switchSection('faucet')">🚰 <span class="i18n-nav-faucet">Faucet</span></button>
-      <button type="button" class="nav-btn" data-sec="ptcs" onclick="switchSection('ptcs')">🖱️ <span class="i18n-nav-ptcs">PTCs</span> <span id="navCountPtcs">(0)</span></button>
-      <button type="button" class="nav-btn" data-sec="shortlinks" onclick="switchSection('shortlinks')">🔗 <span class="i18n-nav-shortlinks">Shortlinks</span> <span id="navCountShortlinks">(0)</span></button>
-      <button type="button" class="nav-btn" data-sec="offerwalls" onclick="switchSection('offerwalls')">🧱 <span class="i18n-nav-offerwalls">Offerwalls</span> <span id="navCountOfferwalls">(0)</span></button>
+
+      <div class="nav-dd-wrap" id="earnDropdownWrap">
+        <button type="button" class="nav-btn" data-sec="earn" id="btnEarnDropdown" onclick="toggleEarnDropdown(event)">
+          💰 <span class="i18n-nav-earn">Earn</span> <span id="navCountEarnTotal"></span> ▾
+        </button>
+        <div class="nav-dd-menu" id="earnDropdownMenu">
+          <button type="button" class="nav-dd-item" onclick="selectEarnItem('faucet')">
+            <span>🚰 <span class="i18n-nav-faucet">Faucet</span></span>
+            <span class="dd-count">+35</span>
+          </button>
+          <button type="button" class="nav-dd-item" onclick="selectEarnItem('ptcs')">
+            <span>🖱️ <span class="i18n-nav-ptcs">PTCs</span></span>
+            <span class="dd-count" id="navCountPtcs">(0)</span>
+          </button>
+          <button type="button" class="nav-dd-item" onclick="selectEarnItem('shortlinks')">
+            <span>🔗 <span class="i18n-nav-shortlinks">Shortlinks</span></span>
+            <span class="dd-count" id="navCountShortlinks">(0)</span>
+          </button>
+          <button type="button" class="nav-dd-item" onclick="selectEarnItem('offerwalls')">
+            <span>🧱 <span class="i18n-nav-offerwalls">Offerwalls</span></span>
+            <span class="dd-count" id="navCountOfferwalls">(0)</span>
+          </button>
+        </div>
+      </div>
+
       <button type="button" class="nav-btn" data-sec="logros" onclick="switchSection('logros')">🏆 <span class="i18n-nav-achievements">Logros</span> <span id="navClaimableAchBadge"></span></button>
 
       <div class="nav-dd-wrap" id="comingSoonDropdownWrap">
@@ -1757,7 +1783,7 @@
 
     const I18N = {
       es: {
-        navHome: "Inicio", navFaucet: "Faucet", navPtcs: "PTCs", navShortlinks: "Shortlinks",
+        navHome: "Inicio", navEarn: "Earn", navFaucet: "Faucet", navPtcs: "PTCs", navShortlinks: "Shortlinks",
         navOfferwalls: "Offerwalls", navAchievements: "Logros", navLottery: "Lotería",
         navGames: "Games", navCoupon: "Cupón", navFaq: "FAQ", navProfile: "Perfil", soon: "Próximamente",
         ptabHistory: "Historial", ptabWithdraw: "Retiros", ptabAdvertisers: "Anunciantes",
@@ -1803,7 +1829,7 @@
         ]
       },
       en: {
-        navHome: "Home", navFaucet: "Faucet", navPtcs: "PTCs", navShortlinks: "Shortlinks",
+        navHome: "Home", navEarn: "Earn", navFaucet: "Faucet", navPtcs: "PTCs", navShortlinks: "Shortlinks",
         navOfferwalls: "Offerwalls", navAchievements: "Achievements", navLottery: "Lottery",
         navGames: "Games", navCoupon: "Coupon", navFaq: "FAQ", navProfile: "Profile", soon: "Coming Soon",
         ptabHistory: "History", ptabWithdraw: "Withdrawals", ptabAdvertisers: "Advertisers",
@@ -1849,7 +1875,7 @@
         ]
       },
       ru: {
-        navHome: "Главная", navFaucet: "Кран", navPtcs: "PTC", navShortlinks: "Короткие ссылки",
+        navHome: "Главная", navEarn: "Earn", navFaucet: "Кран", navPtcs: "PTC", navShortlinks: "Короткие ссылки",
         navOfferwalls: "Офферволлы", navAchievements: "Достижения", navLottery: "Лотерея",
         navGames: "Игры", navCoupon: "Купон", navFaq: "FAQ", navProfile: "Профиль", soon: "Скоро",
         ptabHistory: "История", ptabWithdraw: "Вывод", ptabAdvertisers: "Рекламодателям",
@@ -1946,6 +1972,7 @@
       { icon: "🔑", label: "Llave" }
     ];
 
+    const EARN_SECTIONS = ["faucet", "ptcs", "shortlinks", "offerwalls"];
     const COMING_SOON_SECTIONS = ["loteria", "games", "cupon"];
 
     let tasks = [];
@@ -2014,6 +2041,7 @@
       };
 
       setText(".i18n-nav-home", t("navHome"), false);
+      setText(".i18n-nav-earn", t("navEarn"), false);
       setText(".i18n-nav-faucet", t("navFaucet"), false);
       setText(".i18n-nav-ptcs", t("navPtcs"), false);
       setText(".i18n-nav-shortlinks", t("navShortlinks"), false);
@@ -2326,9 +2354,15 @@
     tasks = buildBaseTasks();
 
     function closeAllNavDropdowns(exceptId = null) {
-      ["profileDropdownWrap", "comingSoonDropdownWrap"].forEach(id => {
+      ["earnDropdownWrap", "profileDropdownWrap", "comingSoonDropdownWrap"].forEach(id => {
         if (id !== exceptId) document.getElementById(id)?.classList.remove("open");
       });
+    }
+
+    function toggleEarnDropdown(e) {
+      e?.stopPropagation();
+      closeAllNavDropdowns("earnDropdownWrap");
+      document.getElementById("earnDropdownWrap")?.classList.toggle("open");
     }
 
     function toggleProfileDropdown(e) {
@@ -2341,6 +2375,11 @@
       e?.stopPropagation();
       closeAllNavDropdowns("comingSoonDropdownWrap");
       document.getElementById("comingSoonDropdownWrap")?.classList.toggle("open");
+    }
+
+    function selectEarnItem(sec) {
+      closeAllNavDropdowns();
+      switchSection(sec);
     }
 
     function selectProfileMenuItem(tab) {
@@ -2783,11 +2822,15 @@
       closeAllNavDropdowns();
       if (sec !== "perfil") stopCameraStream();
       state.section = sec;
+      const isEarn = EARN_SECTIONS.includes(sec);
       const isComingSoon = COMING_SOON_SECTIONS.includes(sec);
 
       document.querySelectorAll(".nav-btn").forEach(b => {
         const btnSec = b.dataset.sec;
-        const active = btnSec === sec || (btnSec === "proximamente" && isComingSoon);
+        const active =
+          btnSec === sec ||
+          (btnSec === "earn" && isEarn) ||
+          (btnSec === "proximamente" && isComingSoon);
         b.classList.toggle("active", active);
       });
 
@@ -2827,9 +2870,15 @@
       const pct = Math.min(100, Math.round((state.coins / MIN_WITHDRAW_COINS) * 100));
       document.getElementById("kpiWithdrawProgress").textContent = `${pct}% del mínimo`;
 
-      document.getElementById("navCountPtcs").textContent = `(${tasks.filter(t => t.cat === "window_ads" || t.cat === "frame_ads").length})`;
-      document.getElementById("navCountShortlinks").textContent = `(${tasks.filter(t => t.cat === "shortlinks").length})`;
-      document.getElementById("navCountOfferwalls").textContent = `(${tasks.filter(t => t.cat === "offerwalls").length})`;
+      const ptcCount = tasks.filter(t => t.cat === "window_ads" || t.cat === "frame_ads").length;
+      const slCount = tasks.filter(t => t.cat === "shortlinks").length;
+      const owCount = tasks.filter(t => t.cat === "offerwalls").length;
+      const totalEarnTasks = ptcCount + slCount + owCount;
+
+      document.getElementById("navCountPtcs").textContent = `(${ptcCount})`;
+      document.getElementById("navCountShortlinks").textContent = `(${slCount})`;
+      document.getElementById("navCountOfferwalls").textContent = `(${owCount})`;
+      document.getElementById("navCountEarnTotal").textContent = totalEarnTasks > 0 ? `(${totalEarnTasks})` : "";
 
       const claimable = getClaimableAchievementsCount(state.currentUser);
       document.getElementById("navClaimableAchBadge").textContent = claimable > 0 ? `(${claimable})` : "";
