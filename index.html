@@ -11,8 +11,8 @@
       --bg-glow-2: rgba(56, 189, 248, 0.13);
       --bg-dot: rgba(168, 85, 247, 0.08);
       --header-bg: rgba(7, 7, 13, 0.78);
-      --card: rgba(12, 13, 22, 0.62);
-      --card-2: rgba(19, 21, 36, 0.58);
+      --card: rgba(12, 13, 22, 0.58);
+      --card-2: rgba(19, 21, 36, 0.54);
       --border: rgba(139, 92, 246, 0.28);
       --border-strong: rgba(56, 189, 248, 0.58);
       --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.45);
@@ -71,7 +71,7 @@
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    /* Emblema central gigante de fondo */
+    /* Emblema central gigante de fondo sin halo alrededor del recuadro */
     .bg-center-emblem {
       position: fixed;
       inset: 0;
@@ -87,8 +87,8 @@
       width: min(520px, 86vw);
       height: auto;
       object-fit: contain;
-      opacity: 0.78;
-      filter: drop-shadow(0 0 28px rgba(56, 189, 248, 0.22)) drop-shadow(0 0 36px rgba(168, 85, 247, 0.2));
+      opacity: 0.85;
+      filter: none;
       user-select: none;
     }
 
@@ -148,8 +148,8 @@
       height: 44px;
       object-fit: contain;
       flex-shrink: 0;
-      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
-      transition: transform 0.2s ease, filter 0.2s ease;
+      filter: none;
+      transition: transform 0.2s ease;
     }
 
     body:not([data-theme="light"]) .brand-logo-img {
@@ -161,8 +161,7 @@
     }
 
     .brand:hover .brand-logo-img {
-      transform: scale(1.06);
-      filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.45));
+      transform: scale(1.05);
     }
 
     .brand-title-accent {
@@ -276,9 +275,9 @@
     }
 
     .auth-card {
-      background: rgba(12, 13, 22, 0.52);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(12, 13, 22, 0.48);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid var(--border-strong);
       border-radius: 16px;
       width: 100%;
@@ -298,7 +297,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4px;
-      background: rgba(19, 21, 36, 0.55);
+      background: rgba(19, 21, 36, 0.52);
       padding: 4px;
       border-radius: 11px;
       border: 1px solid var(--border);
@@ -321,7 +320,7 @@
     }
 
     .auth-tab.active {
-      background: rgba(12, 13, 22, 0.78);
+      background: rgba(12, 13, 22, 0.76);
       color: var(--accent);
       box-shadow: var(--shadow-sm);
     }
@@ -343,7 +342,7 @@
     }
 
     input, select, textarea {
-      background: rgba(15, 17, 30, 0.56);
+      background: rgba(15, 17, 30, 0.52);
       backdrop-filter: blur(6px);
       border: 1px solid var(--border);
       color: var(--text);
@@ -363,7 +362,7 @@
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--border-strong);
-      background: rgba(15, 17, 30, 0.78);
+      background: rgba(15, 17, 30, 0.74);
       box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
     }
 
@@ -460,7 +459,7 @@
       top: calc(100% + 6px);
       left: 0;
       min-width: 178px;
-      background: rgba(12, 13, 22, 0.88);
+      background: rgba(12, 13, 22, 0.86);
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-strong);
       border-radius: 12px;
