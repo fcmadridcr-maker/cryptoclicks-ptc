@@ -3,74 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoClicksFaucet</title>
+  <title>CryptoClicksFaucet — Faucet, PTCs, Shortlinks, Offerwalls y Logros</title>
   <style>
     :root {
-      --bg: #030306;
-      --bg-glow-1: rgba(168, 85, 247, 0.14);
-      --bg-glow-2: rgba(56, 189, 248, 0.13);
-      --bg-dot: rgba(168, 85, 247, 0.08);
-      --header-bg: rgba(7, 7, 13, 0.78);
-      --card: rgba(12, 13, 22, 0.58);
-      --card-2: rgba(19, 21, 36, 0.54);
-      --border: rgba(139, 92, 246, 0.28);
-      --border-strong: rgba(56, 189, 248, 0.58);
-      --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.45);
-      --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 22px rgba(139, 92, 246, 0.16);
-      --neon-glow: 0 0 14px rgba(56, 189, 248, 0.35), 0 0 24px rgba(168, 85, 247, 0.18);
+      --bg: #07080d;
+      --bg-grad: radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.14), transparent 36%),
+                 radial-gradient(circle at 82% 16%, rgba(168, 85, 247, 0.16), transparent 38%),
+                 radial-gradient(circle at 50% 88%, rgba(34, 197, 94, 0.08), transparent 42%),
+                 #07080d;
+      --card: rgba(16, 18, 30, 0.62);
+      --card-2: rgba(24, 27, 45, 0.56);
       --text: #f5f7ff;
       --muted: #a6b0d6;
       --accent: #38bdf8;
       --accent-secondary: #a855f7;
-      --accent-text: #03121c;
+      --accent-ink: #041019;
       --danger: #fb7185;
       --success: #34d399;
+      --border: rgba(166, 176, 214, 0.18);
+      --border-strong: rgba(56, 189, 248, 0.42);
+      --header-bg: rgba(10, 12, 22, 0.72);
+      --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.42), 0 0 18px rgba(56, 189, 248, 0.12);
     }
 
     body[data-theme="light"] {
-      --bg: #ffffff;
-      --bg-glow-1: rgba(14, 165, 233, 0.13);
-      --bg-glow-2: rgba(56, 189, 248, 0.11);
-      --bg-dot: rgba(14, 165, 233, 0.09);
-      --header-bg: rgba(255, 255, 255, 0.84);
+      --bg: #eef5fc;
+      --bg-grad: radial-gradient(circle at 18% 12%, rgba(14, 165, 233, 0.14), transparent 38%),
+                 radial-gradient(circle at 82% 16%, rgba(139, 92, 246, 0.12), transparent 40%),
+                 radial-gradient(circle at 50% 88%, rgba(16, 185, 129, 0.08), transparent 42%),
+                 #eef5fc;
       --card: rgba(255, 255, 255, 0.72);
-      --card-2: rgba(240, 248, 255, 0.72);
-      --border: rgba(14, 165, 233, 0.24);
-      --border-strong: rgba(2, 132, 199, 0.5);
-      --shadow-sm: 0 2px 12px rgba(2, 132, 199, 0.06);
-      --shadow-md: 0 12px 26px rgba(2, 132, 199, 0.1), 0 0 18px rgba(56, 189, 248, 0.14);
-      --neon-glow: 0 0 14px rgba(56, 189, 248, 0.32);
+      --card-2: rgba(241, 247, 255, 0.68);
       --text: #071929;
       --muted: #476782;
       --accent: #0284c7;
-      --accent-secondary: #38bdf8;
-      --accent-text: #ffffff;
+      --accent-secondary: #7c3aed;
+      --accent-ink: #ffffff;
       --danger: #e11d48;
       --success: #059669;
+      --border: rgba(7, 25, 41, 0.14);
+      --border-strong: rgba(2, 132, 199, 0.38);
+      --header-bg: rgba(255, 255, 255, 0.78);
+      --shadow-sm: 0 4px 12px rgba(7, 25, 41, 0.08);
+      --shadow-md: 0 10px 24px rgba(7, 25, 41, 0.12);
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg-grad);
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     }
 
     body {
-      background-color: var(--bg);
-      background-image:
-        radial-gradient(circle at 14% 8%, var(--bg-glow-1), transparent 44%),
-        radial-gradient(circle at 86% 14%, var(--bg-glow-2), transparent 42%),
-        radial-gradient(circle at 50% 92%, var(--bg-glow-1), transparent 46%),
-        radial-gradient(var(--bg-dot) 1px, transparent 0);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
-      color: var(--text);
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: clip;
       position: relative;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: clip;
     }
 
     .bg-center-emblem {
@@ -81,42 +74,39 @@
       justify-content: center;
       pointer-events: none;
       z-index: 0;
-      padding-top: 38px;
+      overflow: hidden;
     }
 
     .bg-center-emblem img {
-      width: min(520px, 86vw);
-      height: auto;
-      object-fit: contain;
-      opacity: 0.85;
-      filter: none;
+      width: min(62vw, 560px);
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 50%;
+      opacity: 0.11;
+      filter: saturate(1.15) contrast(1.05) drop-shadow(0 0 36px rgba(56, 189, 248, 0.22));
       user-select: none;
     }
 
-    body:not([data-theme="light"]) .bg-center-emblem img {
-      mix-blend-mode: screen;
-    }
-
     body[data-theme="light"] .bg-center-emblem img {
-      opacity: 0.16;
-      border-radius: 50%;
+      opacity: 0.09;
+      filter: saturate(1.1) drop-shadow(0 0 28px rgba(2, 132, 199, 0.18));
     }
 
-    header, .auth-wrapper, main, footer {
+    header, .auth-wrapper, main, footer, .modal-backdrop, .toast {
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .modal-backdrop { z-index: 120; }
+    .toast { z-index: 150; }
+
+    .hidden { display: none !important; }
 
     header {
       background: var(--header-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 8px 16px;
       position: sticky;
       top: 0;
       z-index: 60;
@@ -126,358 +116,91 @@
     .header-inner {
       max-width: 1240px;
       margin: 0 auto;
+      padding: 8px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .brand {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-weight: 800;
-      font-size: 1.15rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      user-select: none;
-      flex-shrink: 0;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
     }
 
     .brand-logo-img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-      flex-shrink: 0;
-      filter: none;
-      transition: transform 0.2s ease;
-    }
-
-    body:not([data-theme="light"]) .brand-logo-img {
-      mix-blend-mode: screen;
-    }
-
-    body[data-theme="light"] .brand-logo-img {
-      border-radius: 50%;
-    }
-
-    .brand:hover .brand-logo-img {
-      transform: scale(1.05);
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border-strong);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
     }
 
     .brand-title-accent {
-      color: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .header-center-nav {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 4px;
+      gap: 5px;
       flex-wrap: wrap;
-      flex: 1 1 auto;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      flex-wrap: wrap;
-      flex-shrink: 0;
-    }
-
-    .pill {
-      background: var(--card-2);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      padding: 5px 10px;
-      border-radius: 9px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .pill-coins {
-      color: var(--accent);
-      border-color: var(--border-strong);
-      font-weight: 700;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
-    }
-
-    .btn {
-      border: 1px solid transparent;
-      border-radius: 9px;
-      padding: 7px 13px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-decoration: none;
-      background: transparent;
-      color: var(--text);
-      transition: transform 0.14s ease, background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
-    }
-
-    .btn:active:not(:disabled) {
-      transform: scale(0.98);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-      color: var(--accent-text);
-      box-shadow: var(--neon-glow);
-    }
-
-    body[data-theme="light"] .btn-primary {
-      background: linear-gradient(135deg, #0284c7, #38bdf8);
-      color: #ffffff;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: var(--card-2);
-      backdrop-filter: blur(8px);
-      border-color: var(--border);
-    }
-
-    .btn-secondary:hover:not(:disabled) {
-      border-color: var(--border-strong);
-      background: var(--card);
-      transform: translateY(-1px);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.22);
-    }
-
-    .btn-call {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #ffffff;
-      border-color: rgba(52, 211, 153, 0.55);
-      box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
-    }
-
-    .btn-call:hover:not(:disabled) {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-    }
-
-    .btn-put {
-      background: linear-gradient(135deg, #f43f5e, #e11d48);
-      color: #ffffff;
-      border-color: rgba(251, 113, 133, 0.55);
-      box-shadow: 0 0 14px rgba(244, 63, 94, 0.35);
-    }
-
-    .btn-put:hover:not(:disabled) {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-    }
-
-    .btn-danger {
-      background: rgba(244, 63, 94, 0.16);
-      color: var(--danger);
-      border-color: rgba(244, 63, 94, 0.34);
-    }
-
-    .btn-danger:hover:not(:disabled) {
-      background: rgba(244, 63, 94, 0.26);
-    }
-
-    .btn-sm {
-      padding: 5px 10px;
-      font-size: 0.75rem;
-      border-radius: 8px;
-    }
-
-    .btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .auth-wrapper {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 14px;
-    }
-
-    .auth-card {
-      background: rgba(12, 13, 22, 0.48);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border-strong);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 430px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      box-shadow: var(--shadow-md);
-    }
-
-    body[data-theme="light"] .auth-card {
-      background: rgba(255, 255, 255, 0.68);
-    }
-
-    .auth-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      background: rgba(19, 21, 36, 0.52);
-      padding: 4px;
-      border-radius: 11px;
-      border: 1px solid var(--border);
-    }
-
-    body[data-theme="light"] .auth-tabs {
-      background: rgba(240, 248, 255, 0.7);
-    }
-
-    .auth-tab {
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      padding: 7px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.15s ease, color 0.15s ease;
-    }
-
-    .auth-tab.active {
-      background: rgba(12, 13, 22, 0.76);
-      color: var(--accent);
-      box-shadow: var(--shadow-sm);
-    }
-
-    body[data-theme="light"] .auth-tab.active {
-      background: rgba(255, 255, 255, 0.9);
-    }
-
-    .auth-form, .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .field-group label {
-      font-size: 0.76rem;
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    input, select, textarea {
-      background: rgba(15, 17, 30, 0.52);
-      backdrop-filter: blur(6px);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 9px;
-      padding: 8px 11px;
-      font-size: 0.84rem;
-      width: 100%;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-    }
-
-    body[data-theme="light"] input,
-    body[data-theme="light"] select,
-    body[data-theme="light"] textarea {
-      background: rgba(255, 255, 255, 0.76);
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--border-strong);
-      background: rgba(15, 17, 30, 0.74);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
-    }
-
-    body[data-theme="light"] input:focus,
-    body[data-theme="light"] select:focus,
-    body[data-theme="light"] textarea:focus {
-      background: rgba(255, 255, 255, 0.94);
-    }
-
-    textarea {
-      min-height: 76px;
-      font-family: inherit;
-      font-size: 0.82rem;
-      resize: vertical;
-    }
-
-    .code-textarea {
-      min-height: 64px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.76rem;
-    }
-
-    main {
-      max-width: 1240px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 16px 16px 26px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-    }
-
-    .nav-btn {
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--muted);
-      padding: 6px 10px;
-      border-radius: 9px;
-      font-size: 0.77rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      color: var(--text);
-      background: var(--card-2);
-    }
-
-    .nav-btn.active {
-      background: var(--card-2);
-      color: var(--accent);
-      border-color: var(--border-strong);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.22);
     }
 
     .nav-dd-wrap {
       position: relative;
+    }
+
+    .nav-btn {
+      background: var(--card-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
       display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--border-strong);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: var(--accent-ink);
+      border-color: transparent;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
     }
 
     .nav-dd-menu {
       position: absolute;
       top: calc(100% + 6px);
       left: 0;
-      min-width: 196px;
-      background: rgba(12, 13, 22, 0.94);
-      backdrop-filter: blur(12px);
+      min-width: 195px;
+      background: rgba(13, 15, 26, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-strong);
       border-radius: 12px;
-      padding: 5px;
+      padding: 6px;
       display: none;
       flex-direction: column;
-      gap: 2px;
-      z-index: 90;
+      gap: 3px;
+      z-index: 80;
       box-shadow: var(--shadow-md);
     }
 
@@ -490,20 +213,20 @@
     }
 
     .nav-dd-item {
-      border: none;
       background: transparent;
+      border: 0;
       color: var(--text);
-      padding: 7px 10px;
+      padding: 7px 9px;
       border-radius: 8px;
-      font-size: 0.79rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      text-align: left;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      transition: background-color 0.14s ease, color 0.14s ease;
+      text-align: left;
+      width: 100%;
     }
 
     .nav-dd-item:hover {
@@ -512,84 +235,219 @@
     }
 
     .dd-count {
-      font-size: 0.72rem;
-      color: var(--accent);
+      font-size: 0.7rem;
+      color: var(--muted);
       font-weight: 700;
     }
 
-    .profile-tab-panel {
-      display: none !important;
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill-coins {
+      color: var(--accent);
+      border-color: var(--border-strong);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      text-decoration: none;
+      transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: var(--accent-ink);
+      box-shadow: 0 2px 12px rgba(56, 189, 248, 0.25);
+    }
+
+    .btn-secondary {
+      background: var(--card-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-call {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+    }
+
+    .btn-put {
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+      color: #ffffff;
+    }
+
+    .btn-sm { padding: 5px 9px; font-size: 0.74rem; }
+
+    .auth-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 14px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 430px;
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
       flex-direction: column;
       gap: 12px;
-      width: 100%;
+      box-shadow: var(--shadow-md);
     }
 
-    .profile-tab-panel.active {
-      display: flex !important;
-    }
-
-    /* Banner superior central: sin cortes, centrado y con dimensiones completas */
-    .ad-banner-top {
-      background: var(--card);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: var(--card-2);
+      padding: 4px;
+      border-radius: 10px;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 12px;
+    }
+
+    .auth-tab {
+      background: transparent;
+      border: 0;
+      color: var(--muted);
+      padding: 7px;
+      border-radius: 7px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: var(--accent-ink);
+    }
+
+    .auth-form { display: flex; flex-direction: column; gap: 9px; }
+
+    .field-group { display: flex; flex-direction: column; gap: 4px; }
+    .field-group label { font-size: 0.76rem; color: var(--muted); font-weight: 600; }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--card-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 8px 10px;
+      font-size: 0.84rem;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    textarea.code-textarea { min-height: 76px; font-family: monospace; font-size: 0.75rem; }
+    textarea { min-height: 82px; resize: vertical; }
+
+    main {
+      flex: 1;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 14px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Banner superior central ancho completo (728x90 escalable sin recortes) */
+    .ad-banner-top {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      min-height: 98px;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 6px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      width: 100%;
-      min-height: 112px;
-      overflow-x: auto;
-      overflow-y: visible;
+      gap: 3px;
       box-shadow: var(--shadow-sm);
+      overflow: hidden;
     }
 
-    /* Panel izquierdo fijo con ancho suficiente para alojar el banner 300x250 completo */
+    .ad-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
     .app-shell {
       display: grid;
-      grid-template-columns: 326px minmax(0, 1fr);
+      grid-template-columns: 316px minmax(0, 1fr);
       gap: 14px;
       align-items: start;
     }
 
     @media (max-width: 900px) {
-      .app-shell {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .app-shell { grid-template-columns: minmax(0, 1fr); }
     }
 
     .faucet-sidebar {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      position: sticky;
-      top: 66px;
-    }
-
-    @media (max-width: 900px) {
-      .faucet-sidebar {
-        position: static;
-      }
-    }
-
-    .app-center-col {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-width: 0;
     }
 
     .faucet-side-card {
       background: var(--card);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 13px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -597,28 +455,52 @@
     }
 
     .faucet-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: var(--card-2);
-      border: 1px solid var(--border-strong);
-      color: var(--accent);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: var(--accent-ink);
       font-weight: 800;
+      font-size: 1.05rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+      flex-shrink: 0;
     }
 
     .faucet-stat-box {
       background: var(--card-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 9px 11px;
+      border-radius: 11px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
+    }
+
+    .faucet-side-ad {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      min-height: 274px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .app-center-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
     }
 
     .faucet-main {
@@ -630,22 +512,20 @@
     .faucet-top-stats {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      gap: 10px;
     }
 
     @media (max-width: 560px) {
-      .faucet-top-stats {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .faucet-top-stats { grid-template-columns: minmax(0, 1fr); }
     }
 
     .faucet-hero-card {
-      background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-strong);
       border-radius: 16px;
-      padding: 20px 18px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -658,45 +538,27 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
       font-size: 0.8rem;
       color: var(--muted);
-      width: 100%;
-      max-width: 440px;
       text-align: left;
+      width: 100%;
+      max-width: 520px;
     }
 
     .faucet-ad-box {
+      width: 100%;
+      min-height: 98px;
       background: var(--card-2);
-      border: 1px dashed var(--border-strong);
-      border-radius: 12px;
-      padding: 10px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-height: 112px;
-      overflow-x: auto;
-    }
-
-    /* Caja lateral para banner 300x250 completo */
-    .faucet-side-ad {
-      background: var(--card);
-      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px;
+      border-radius: 12px;
+      padding: 6px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      min-height: 274px;
-      width: 100%;
-      overflow-x: auto;
-      box-shadow: var(--shadow-sm);
+      gap: 4px;
+      overflow: hidden;
     }
 
     .captcha-pick-grid {
@@ -706,50 +568,41 @@
       width: 100%;
     }
 
+    @media (max-width: 520px) {
+      .captcha-pick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
     .captcha-pick-btn {
-      background: var(--card);
+      background: var(--card-2);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 9px 6px;
+      padding: 8px 6px;
       color: var(--text);
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 3px;
-      transition: border-color 0.15s ease, transform 0.12s ease, background-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .captcha-pick-btn:hover {
-      border-color: var(--border-strong);
-      background: var(--card-2);
     }
 
     .captcha-pick-btn.selected {
       border-color: var(--accent);
-      background: rgba(56, 189, 248, 0.18);
+      background: rgba(56, 189, 248, 0.16);
       color: var(--accent);
-      transform: translateY(-1px);
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
     }
 
-    .ad-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 700;
-    }
+    .profile-tab-panel { display: none; flex-direction: column; gap: 10px; }
+    .profile-tab-panel.active { display: flex; }
 
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 11px;
+      gap: 10px;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 680px) {
       .kpi-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
@@ -905,7 +758,6 @@
       font-weight: 600;
     }
 
-    /* Gráficas interactivas de Estadísticas y BTC Game */
     .inv-chart-wrap {
       width: 100%;
       background: rgba(6, 7, 14, 0.65);
@@ -1138,7 +990,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      overflow-x: auto;
+      overflow: hidden;
     }
 
     footer {
@@ -1349,7 +1201,7 @@
   </section>
 
   <main class="hidden" id="dashboardSection">
-    <!-- Banner superior central (328x90 / 728x90 sin recortes) -->
+    <!-- Banner superior central (728x90 escalable sin recortes) -->
     <section class="ad-banner-top" id="adSlotTop"></section>
 
     <div class="app-shell">
@@ -1378,7 +1230,6 @@
 
         <div class="faucet-side-card">
           <div class="item-title" style="font-size:0.82rem;">⚡ Accesos rápidos</div>
-          <!-- ÚNICO botón de Estadística en toda la aplicación -->
           <button type="button" class="btn btn-secondary btn-sm" id="btnSidebarStats" onclick="switchSection('estadisticas')">📊 Estadísticas del Día</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('games')">📈 Investment Game</button>
           <button type="button" class="btn btn-secondary btn-sm" onclick="switchSection('faq')">❓ Guide / FAQ</button>
@@ -1968,9 +1819,9 @@
       <div class="field-group"><label>Window Ads</label><textarea class="code-textarea" id="windowLinksInput"></textarea></div>
       <div class="field-group"><label>Frame Ads</label><textarea class="code-textarea" id="frameLinksInput"></textarea></div>
       <div class="field-group"><label>Shortlinks</label><textarea class="code-textarea" id="shortLinksInput"></textarea></div>
-      <div class="field-group"><label>Banner Superior Central (328x90 / 728x90 Adsterra)</label><textarea class="code-textarea" id="adTopInput"></textarea></div>
+      <div class="field-group"><label>Banner Superior Central (728x90 Adsterra)</label><textarea class="code-textarea" id="adTopInput"></textarea></div>
       <div class="field-group"><label>Banner Lateral / Visor (300x250 Adsterra)</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
-      <div class="field-group"><label>Anuncio Faucet (Claim)</label><textarea class="code-textarea" id="adFaucetInput"></textarea></div>
+      <div class="field-group"><label>Anuncio Faucet (728x90 Adsterra)</label><textarea class="code-textarea" id="adFaucetInput"></textarea></div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
         <button class="btn btn-secondary btn-sm" id="btnResetAdConfig" onclick="resetAdConfig()">Restaurar</button>
         <button class="btn btn-primary btn-sm" id="btnSaveAdConfig" onclick="saveAdConfig()">Guardar</button>
@@ -1990,7 +1841,7 @@
     const REFERRAL_ONE_TIME_BONUS_COINS = 1000;
     const REFERRED_WELCOME_BONUS_COINS = 500;
     const MAX_ACCOUNTS_PER_ENV = 2;
-    const FAUCET_COOLDOWN_MS = 10 * 60 * 1000; // Cada 10 minutos
+    const FAUCET_COOLDOWN_MS = 10 * 60 * 1000;
     const FAUCET_REWARD_COINS = 35;
 
     const BTC_MIN_BET_COINS = 50;
@@ -2170,9 +2021,9 @@
       { id: "m_any_120", period: "monthly", metric: "total", target: 120, title: "Titán Mensual", desc: "Completa 120 tareas en 30 días.", reward: 3000 }
     ];
 
-    const DEFAULT_AD_TOP = `<div style="width:328px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(12,13,22,0.65);border:1px solid rgba(56,189,248,0.35);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#9aa3c7;font-size:12px;">Banner 328×90</span></div>`;
-    const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(12,13,22,0.65);border:1px solid rgba(168,85,247,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#9aa3c7;font-size:12px;">Adsterra / Configurable</span></div>`;
-    const DEFAULT_AD_FAUCET = `<div style="width:328px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(12,13,22,0.65);border:1px solid rgba(56,189,248,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Sponsor / Ad Claim</strong><span style="color:#9aa3c7;font-size:12px;">Banner 328×90</span></div>`;
+    const DEFAULT_AD_TOP = `<div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(12,13,22,0.72);border:1px solid rgba(56,189,248,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>CryptoClicksFaucet</strong><span style="color:#9aa3c7;font-size:12px;">Banner 728×90 · Adsterra</span></div>`;
+    const DEFAULT_AD_300 = `<div style="width:300px;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(12,13,22,0.72);border:1px solid rgba(168,85,247,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Banner 300×250</strong><span style="color:#9aa3c7;font-size:12px;">Adsterra / Configurable</span></div>`;
+    const DEFAULT_AD_FAUCET = `<div style="width:728px;height:90px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(12,13,22,0.72);border:1px solid rgba(56,189,248,0.38);border-radius:10px;color:#f5f7ff;font-family:system-ui,sans-serif;"><strong>Sponsor / Ad Claim</strong><span style="color:#9aa3c7;font-size:12px;">Banner 728×90 · Adsterra</span></div>`;
 
     const DEFAULT_OFFERWALL_LINKS = ["https://timewall.io/", "https://www.cpx-research.com/", "https://bitlabs.ai/", "https://monlix.com/"];
     const DEFAULT_WINDOW_LINKS = ["https://example.com/"];
@@ -2237,11 +2088,9 @@
     let regFaceData = null;
     let wdFaceVerified = false;
 
-    /* Estado Estadísticas Interactivas */
     let dailyChartBuckets = [];
     let hoveredChartIdx = null;
 
-    /* Estado Investment Game BTC */
     let btcGame = {
       currentPrice: 91250.00,
       history: [],
@@ -2742,7 +2591,6 @@
       if (user.movements.length > 50) user.movements = user.movements.slice(0, 50);
     }
 
-    /* Estadísticas del Día y Gráficas Interactivas */
     function isSameDay(tsA, tsB = Date.now()) {
       if (!tsA) return false;
       const a = new Date(tsA);
@@ -2937,7 +2785,6 @@
       });
     })();
 
-    /* Lógica del Investment Game (BTC Call or Put) */
     function initBtcGameHistory(basePrice) {
       const now = Date.now();
       const pts = [];
@@ -3897,7 +3744,6 @@
       document.getElementById("offerwallModal").classList.remove("open");
     }
 
-    /* Detecta automáticamente las medidas reales (328x90, 728x90 o 300x250) del código de Adsterra */
     function detectAdDimensions(htmlCode, fallbackW, fallbackH) {
       const wMatch = String(htmlCode || "").match(/['"]?width['"]?\s*[:=]\s*['"]?(\d{2,4})/i);
       const hMatch = String(htmlCode || "").match(/['"]?height['"]?\s*[:=]\s*['"]?(\d{2,4})/i);
@@ -3909,24 +3755,26 @@
       };
     }
 
-    /* Renderiza cada banner de Adsterra en su iframe limpio con dimensiones exactas y sin cortes */
     function renderIsolatedAd(container, htmlCode, defaultWidth, defaultHeight, labelText) {
       if (!container) return;
       container.innerHTML = `<span class="ad-label">${labelText}</span>`;
       if (!htmlCode || !htmlCode.trim()) return;
 
-      const dims = detectAdDimensions(htmlCode, defaultWidth, defaultHeight);
-      const width = dims.width;
-      const height = dims.height;
+      const { width, height } = detectAdDimensions(htmlCode, defaultWidth, defaultHeight);
 
-      const wrap = document.createElement("div");
-      wrap.style.width = `${width}px`;
-      wrap.style.height = `${height}px`;
-      wrap.style.maxWidth = "100%";
-      wrap.style.display = "flex";
-      wrap.style.alignItems = "center";
-      wrap.style.justifyContent = "center";
-      wrap.style.overflow = "visible";
+      const outer = document.createElement("div");
+      outer.style.width = "100%";
+      outer.style.maxWidth = `${width}px`;
+      outer.style.display = "flex";
+      outer.style.justifyContent = "center";
+      outer.style.alignItems = "center";
+      outer.style.overflow = "hidden";
+
+      const scaler = document.createElement("div");
+      scaler.style.width = `${width}px`;
+      scaler.style.height = `${height}px`;
+      scaler.style.transformOrigin = "top center";
+      scaler.style.flexShrink = "0";
 
       const iframe = document.createElement("iframe");
       iframe.width = String(width);
@@ -3935,21 +3783,30 @@
       iframe.frameBorder = "0";
       iframe.style.width = `${width}px`;
       iframe.style.height = `${height}px`;
-      iframe.style.minWidth = `${width}px`;
-      iframe.style.minHeight = `${height}px`;
       iframe.style.border = "0";
       iframe.style.display = "block";
       iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>html,body{margin:0;padding:0;width:${width}px;height:${height}px;overflow:hidden;background:transparent;display:flex;align-items:center;justify-content:center;}</style></head><body>${htmlCode}</body></html>`;
 
-      wrap.appendChild(iframe);
-      container.appendChild(wrap);
+      scaler.appendChild(iframe);
+      outer.appendChild(scaler);
+      container.appendChild(outer);
+
+      const fitScale = () => {
+        const avail = outer.clientWidth || width;
+        const scale = Math.min(1, avail / width);
+        scaler.style.transform = `scale(${scale})`;
+        outer.style.height = `${Math.round(height * scale)}px`;
+      };
+
+      fitScale();
+      window.addEventListener("resize", fitScale);
     }
 
     function applyAdSlots() {
-      renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 328, 90, "Publicidad");
+      renderIsolatedAd(document.getElementById("adSlotTop"), state.adTopHtml, 728, 90, "Publicidad 728×90");
       renderIsolatedAd(document.getElementById("adSlotModal"), state.adModalHtml, 300, 250, "Publicidad 300×250");
       renderIsolatedAd(document.getElementById("viewerAdBox"), state.adModalHtml, 300, 250, "Publicidad 300×250");
-      renderIsolatedAd(document.getElementById("adSlotFaucet"), state.adFaucetHtml, 328, 90, "Sponsor Faucet");
+      renderIsolatedAd(document.getElementById("adSlotFaucet"), state.adFaucetHtml, 728, 90, "Sponsor Faucet 728×90");
     }
 
     function computeCampaignPricing() {
