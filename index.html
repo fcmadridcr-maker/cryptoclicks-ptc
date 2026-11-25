@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CryptoClicksFaucet — Faucet, PTCs, Shortlinks, Offerwalls y Logros</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg: #07080d;
@@ -260,25 +261,6 @@
     .pill-coins {
       color: var(--accent);
       border-color: var(--border-strong);
-    }
-
-    .pill-utc {
-      color: var(--success);
-      border-color: rgba(52, 211, 153, 0.35);
-    }
-
-    .utc-banner-strip {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-      background: var(--card-2);
-      border: 1px solid var(--border-strong);
-      border-radius: 11px;
-      padding: 8px 12px;
-      font-size: 0.76rem;
-      color: var(--muted);
     }
 
     .btn {
@@ -1162,7 +1144,7 @@
 
       <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
         <div class="field-group">
-          <label for="loginIdentifier" id="lblLoginIdentifier">Usuario o Correo</label>
+          <label for="loginIdentifier" id="lblLoginIdentifier">Correo</label>
           <input type="text" id="loginIdentifier" required />
         </div>
         <div class="field-group">
@@ -1848,8 +1830,8 @@
       <div class="field-group"><label>Banner Lateral / Visor (300x250 Adsterra)</label><textarea class="code-textarea" id="adModalInput"></textarea></div>
       <div class="field-group"><label>Anuncio Faucet (728x90 Adsterra)</label><textarea class="code-textarea" id="adFaucetInput"></textarea></div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
-        <button class="btn btn-secondary btn-sm" id="btnResetAdConfig" onclick="resetAdConfig()">Restaurar</button>
-        <button class="btn btn-primary btn-sm" id="btnSaveAdConfig" onclick="saveAdConfig()">Guardar</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnResetAdConfig" onclick="resetAdConfig()">Restaurar</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btnSaveAdConfig" onclick="saveAdConfig()">Guardar</button>
       </div>
     </div>
   </div>
@@ -1857,7 +1839,17 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    const SUPABASE_URL = "https://viubacylezbdsicfwrmm.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "PEGA_AQUI_TU_PUBLISHABLE_KEY";
     const ADMIN_EMAIL = "admin@cryptoclicksfaucet.com";
+
+    const sbClient = (window.supabase && SUPABASE_PUBLISHABLE_KEY && !SUPABASE_PUBLISHABLE_KEY.startsWith("PEGA_AQUI"))
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+      : null;
+
+    function isSupabaseActive() {
+      return Boolean(sbClient);
+    }
 
     const COIN_TO_USDT = 0.00001;
     const MIN_WITHDRAW_COINS = 10000;
@@ -1902,7 +1894,7 @@
         ptabHistory: "Historial", ptabWithdraw: "Retiros", ptabAdvertisers: "Anunciantes",
         ptabReferrals: "Referidos", ptabTickets: "Tickets",
         loginTab: "Iniciar Sesión", registerTab: "Registrarse",
-        loginId: "Usuario o Correo", loginPass: "Contraseña", loginBtn: "Entrar",
+        loginId: "Correo", loginPass: "Contraseña", loginBtn: "Entrar",
         regUser: "Usuario", regEmail: "Correo", regPass: "Contraseña", regPassConf: "Confirmar Contraseña",
         regRef: "Código de Referido (opcional)", regBtn: "Crear Cuenta (+200 Coins)",
         regFaceTitle: "🛡️ Registro Facial Obligatorio", regFaceBadge: "Requerido",
@@ -1944,7 +1936,7 @@
         ptabHistory: "History", ptabWithdraw: "Withdrawals", ptabAdvertisers: "Advertisers",
         ptabReferrals: "Referrals", ptabTickets: "Tickets",
         loginTab: "Sign In", registerTab: "Sign Up",
-        loginId: "Username or Email", loginPass: "Password", loginBtn: "Sign In",
+        loginId: "Email", loginPass: "Password", loginBtn: "Sign In",
         regUser: "Username", regEmail: "Email", regPass: "Password", regPassConf: "Confirm Password",
         regRef: "Referral Code (optional)", regBtn: "Create Account (+200 Coins)",
         regFaceTitle: "🛡️ Mandatory Facial Registration", regFaceBadge: "Required",
@@ -1986,7 +1978,7 @@
         ptabHistory: "История", ptabWithdraw: "Вывод", ptabAdvertisers: "Рекламодателям",
         ptabReferrals: "Рефералы", ptabTickets: "Тикеты",
         loginTab: "Вход", registerTab: "Регистрация",
-        loginId: "Имя пользователя или Email", loginPass: "Пароль", loginBtn: "Войти",
+        loginId: "Email", loginPass: "Пароль", loginBtn: "Войти",
         regUser: "Имя пользователя", regEmail: "Email", regPass: "Пароль", regPassConf: "Подтвердите пароль",
         regRef: "Реферальный код (необязательно)", regBtn: "Создать аккаунт (+200 Coins)",
         regFaceTitle: "🛡️ Обязательная регистрация лица", regFaceBadge: "Обязательно",
@@ -2535,6 +2527,111 @@
 
     tasks = buildBaseTasks();
 
+    async function loadCloudSiteConfig() {
+      if (!isSupabaseActive()) return;
+      try {
+        const { data, error } = await sbClient
+          .from("site_config")
+          .select("*")
+          .eq("id", 1)
+          .single();
+        if (error || !data) return;
+        if (data.offerwall_links) localStorage.setItem(STORAGE_KEYS.offerwallLinks, data.offerwall_links);
+        if (data.window_links) localStorage.setItem(STORAGE_KEYS.windowLinks, data.window_links);
+        if (data.frame_links) localStorage.setItem(STORAGE_KEYS.frameLinks, data.frame_links);
+        if (data.short_links) localStorage.setItem(STORAGE_KEYS.shortLinks, data.short_links);
+        if (data.ad_top) { state.adTopHtml = data.ad_top; localStorage.setItem(STORAGE_KEYS.adTop, data.ad_top); }
+        if (data.ad_modal) { state.adModalHtml = data.ad_modal; localStorage.setItem(STORAGE_KEYS.adModal, data.ad_modal); }
+        if (data.ad_faucet) { state.adFaucetHtml = data.ad_faucet; localStorage.setItem(STORAGE_KEYS.adFaucet, data.ad_faucet); }
+        hydrateTasksForUser(state.currentUser);
+        applyAdSlots();
+        updateAllUI();
+      } catch {}
+    }
+
+    async function syncUserCloudData(userId) {
+      if (!isSupabaseActive() || !userId || !state.currentUser) return;
+      try {
+        const { data: prof } = await sbClient.from("profiles").select("*").eq("id", userId).single();
+        if (prof) {
+          state.coins = Number(prof.coins ?? state.coins);
+          state.currentUser.coins = state.coins;
+          state.currentUser.refCode = prof.ref_code || state.currentUser.refCode;
+          state.currentUser.refBonusTotal = Number(prof.ref_bonus_total ?? 0);
+          state.currentUser.lastDailyBonusAt = prof.last_daily_bonus_at ? Date.parse(prof.last_daily_bonus_at) : null;
+          state.currentUser.lastFaucetAt = prof.last_faucet_at ? Date.parse(prof.last_faucet_at) : null;
+          if (prof.task_states && typeof prof.task_states === "object") {
+            state.currentUser.taskStates = prof.task_states;
+            hydrateTasksForUser(state.currentUser);
+          }
+        }
+
+        const { data: movs } = await sbClient
+          .from("movements")
+          .select("label, coins, created_at")
+          .eq("user_id", userId)
+          .order("created_at", { ascending: false })
+          .limit(50);
+        if (Array.isArray(movs)) {
+          state.currentUser.movements = movs.map(m => {
+            const ts = Date.parse(m.created_at) || Date.now();
+            return {
+              date: new Date(ts).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+              ts,
+              label: m.label,
+              coins: Number(m.coins || 0)
+            };
+          });
+        }
+
+        const { data: wds } = await sbClient
+          .from("withdrawals")
+          .select("method, address, coins, usdt_amount, status, created_at")
+          .eq("user_id", userId)
+          .order("created_at", { ascending: false })
+          .limit(30);
+        if (Array.isArray(wds)) {
+          state.currentUser.withdrawals = wds.map(w => {
+            const ts = Date.parse(w.created_at) || Date.now();
+            return {
+              date: new Date(ts).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+              createdAtMs: ts,
+              method: w.method,
+              address: w.address,
+              coins: Number(w.coins || 0),
+              usdt: Number(w.usdt_amount || 0).toFixed(5),
+              status: w.status || "Pendiente (Facial OK)"
+            };
+          });
+        }
+
+        const { data: tcks } = await sbClient
+          .from("tickets")
+          .select("ticket_code, category, subject, message, status, created_at")
+          .eq("user_id", userId)
+          .order("created_at", { ascending: false })
+          .limit(30);
+        if (Array.isArray(tcks)) {
+          state.currentUser.tickets = tcks.map(tk => {
+            const ts = Date.parse(tk.created_at) || Date.now();
+            return {
+              id: tk.ticket_code,
+              date: new Date(ts).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+              category: tk.category,
+              subject: tk.subject,
+              message: tk.message,
+              status: tk.status || "Abierto"
+            };
+          });
+        }
+
+        updateAllUI();
+        renderDashboardMovements();
+        renderHistoryView();
+        renderTicketsView();
+      } catch {}
+    }
+
     function closeAllNavDropdowns(exceptId = null) {
       ["earnDropdownWrap", "profileDropdownWrap", "comingSoonDropdownWrap"].forEach(id => {
         if (id !== exceptId) document.getElementById(id)?.classList.remove("open");
@@ -2638,13 +2735,6 @@
       if (h > 0) return `${h}h ${m}m`;
       if (m > 0) return `${m}m ${String(s).padStart(2, "0")}s`;
       return `${s}s`;
-    }
-
-    function formatRemaining24h(ms) {
-      const totalMin = Math.max(0, Math.ceil(ms / 60000));
-      const h = Math.floor(totalMin / 60);
-      const m = totalMin % 60;
-      return h <= 0 ? `${m}m` : `${h}h ${m}m`;
     }
 
     function sync24hCooldowns(now = Date.now()) {
@@ -3303,7 +3393,7 @@
       saveUsersDB(users);
     }
 
-    function persistCurrentUserData() {
+    async function persistCurrentUserData() {
       if (!state.currentUser) return;
       ensureUserAchievementBuckets(state.currentUser);
       const users = getUsersDB();
@@ -3324,6 +3414,19 @@
         state.currentUser = users[idx];
         saveUsersDB(users);
       }
+
+      if (isSupabaseActive() && state.currentUser.id) {
+        try {
+          await sbClient
+            .from("profiles")
+            .update({
+              coins: state.coins,
+              task_states: taskStates,
+              updated_at: new Date().toISOString()
+            })
+            .eq("id", state.currentUser.id);
+        } catch {}
+      }
     }
 
     function switchAuthTab(tab) {
@@ -3340,7 +3443,7 @@
       return `REF-${prefix}${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
     }
 
-    function handleRegister(e) {
+    async function handleRegister(e) {
       e.preventDefault();
       const username = document.getElementById("regUsername").value.trim();
       const email = document.getElementById("regEmail").value.trim().toLowerCase();
@@ -3384,6 +3487,7 @@
       const initialCoins = isSecondAccountInEnv ? 0 : (WELCOME_BONUS_COINS + (validSponsor ? REFERRED_WELCOME_BONUS_COINS : 0));
 
       const newUser = {
+        id: null,
         username, email, password, deviceId, clientIp,
         isSecondAccountInEnv,
         faceData: regFaceData,
@@ -3412,6 +3516,48 @@
         addMovement(newUser, "2.ª cuenta (sin bonos iniciales)", 0);
       }
 
+      if (isSupabaseActive()) {
+        try {
+          const { data: authData, error: authErr } = await sbClient.auth.signUp({ email, password });
+          if (authErr) {
+            showToast(authErr.message || "Error al registrar en Supabase.");
+            return;
+          }
+          const uid = authData?.user?.id || null;
+          newUser.id = uid;
+          if (uid) {
+            const { error: profErr } = await sbClient.from("profiles").insert({
+              id: uid,
+              username,
+              email,
+              coins: initialCoins,
+              ref_code: newUser.refCode,
+              referred_by_code: validSponsor,
+              ref_bonus_total: 0,
+              is_second_account_in_env: isSecondAccountInEnv,
+              device_id: deviceId,
+              client_ip: clientIp,
+              face_signature: regFaceData.signature,
+              face_grid: regFaceData.grid
+            });
+            if (profErr) {
+              showToast(profErr.message || "Error al guardar perfil.");
+              return;
+            }
+            if (initialCoins > 0) {
+              await sbClient.from("movements").insert({
+                user_id: uid,
+                label: validSponsor ? `Bienvenida + Referido (${validSponsor})` : "Bienvenida",
+                coins: initialCoins
+              });
+            }
+          }
+        } catch {
+          showToast("Error de red con Supabase.");
+          return;
+        }
+      }
+
       users.push(newUser);
       saveUsersDB(users);
       if (validSponsor && !isSecondAccountInEnv) awardOneTimeReferralBonus(validSponsor, username);
@@ -3420,15 +3566,50 @@
       localStorage.setItem(CURRENT_USER_KEY, newUser.email);
       e.target.reset();
       startUserSession(newUser);
+      if (newUser.id) await syncUserCloudData(newUser.id);
       if (isSecondAccountInEnv) {
         showToast("2.ª cuenta creada sin bonos de registro o referido.");
       }
     }
 
-    function handleLogin(e) {
+    async function handleLogin(e) {
       e.preventDefault();
       const id = document.getElementById("loginIdentifier").value.trim().toLowerCase();
       const pass = document.getElementById("loginPassword").value;
+
+      if (isSupabaseActive()) {
+        try {
+          const { data, error } = await sbClient.auth.signInWithPassword({ email: id, password: pass });
+          if (error) {
+            showToast(error.message || "Credenciales incorrectas.");
+            return;
+          }
+          const uid = data?.user?.id || null;
+          const localMatch = getUsersDB().find(u => u.email === id);
+          const sessionUser = localMatch || {
+            id: uid,
+            username: (id.split("@")[0] || "Usuario"),
+            email: id,
+            coins: 0,
+            refCode: generateRefCode(id.split("@")[0] || "USER"),
+            movements: [],
+            withdrawals: [],
+            tickets: [],
+            createdAt: new Date().toISOString()
+          };
+          sessionUser.id = uid;
+          stopCameraStream();
+          localStorage.setItem(CURRENT_USER_KEY, sessionUser.email);
+          e.target.reset();
+          startUserSession(sessionUser);
+          if (uid) await syncUserCloudData(uid);
+          return;
+        } catch {
+          showToast("Error de conexión con Supabase.");
+          return;
+        }
+      }
+
       const found = getUsersDB().find(u => (u.email === id || u.username.toLowerCase() === id) && u.password === pass);
       if (!found) { showToast("Datos incorrectos."); return; }
       stopCameraStream();
@@ -3486,12 +3667,15 @@
       applyAdSlots();
     }
 
-    function logoutUser() {
+    async function logoutUser() {
       closeViewerModal();
       closeOfferwallModal();
       cancelFaucetChallenge();
       closeAllNavDropdowns();
       resetFaceForms();
+      if (isSupabaseActive()) {
+        try { await sbClient.auth.signOut(); } catch {}
+      }
       state.currentUser = null;
       localStorage.removeItem(CURRENT_USER_KEY);
       document.getElementById("btnOpenAdConfig")?.classList.add("hidden");
@@ -3647,10 +3831,27 @@
       }
     }
 
-    function claimDailyBonus() {
+    async function claimDailyBonus() {
       if (!state.currentUser) return;
       const now = Date.now();
       if (state.currentUser.lastDailyBonusAt && getUtcDayKey(state.currentUser.lastDailyBonusAt) === getUtcDayKey(now)) return;
+
+      if (isSupabaseActive() && state.currentUser.id) {
+        try {
+          const { data, error } = await sbClient.rpc("claim_daily_bonus_rpc");
+          if (error || !data?.ok) {
+            showToast(data?.error || error?.message || "No se pudo reclamar el bono diario.");
+            return;
+          }
+          state.currentUser.lastDailyBonusAt = now;
+          state.coins = Number(data.new_coins ?? state.coins + DAILY_BONUS_COINS);
+          addMovement(state.currentUser, "Bono diario", DAILY_BONUS_COINS);
+          updateAllUI();
+          showToast(`+${DAILY_BONUS_COINS} Coins`);
+          return;
+        } catch {}
+      }
+
       state.currentUser.lastDailyBonusAt = now;
       state.coins += DAILY_BONUS_COINS;
       addMovement(state.currentUser, "Bono diario", DAILY_BONUS_COINS);
@@ -3700,7 +3901,7 @@
       document.getElementById("faucetChallengeBox")?.classList.add("hidden");
     }
 
-    function confirmFaucetClaim() {
+    async function confirmFaucetClaim() {
       if (!state.currentUser) return;
       const mathOk = Number(document.getElementById("faucetCaptchaInput").value) === expectedFaucetCaptcha;
       const captchaOk = Boolean(expectedVisualCaptcha) && selectedVisualCaptcha === expectedVisualCaptcha;
@@ -3708,6 +3909,26 @@
         showToast("Verifica el cálculo matemático y el captcha.");
         return;
       }
+
+      if (isSupabaseActive() && state.currentUser.id) {
+        try {
+          const { data, error } = await sbClient.rpc("claim_faucet_rpc");
+          if (error || !data?.ok) {
+            showToast(data?.error || error?.message || "Espera el enfriamiento del Faucet.");
+            return;
+          }
+          state.currentUser.lastFaucetAt = Date.now();
+          state.coins = Number(data.new_coins ?? state.coins + FAUCET_REWARD_COINS);
+          recordActivityForAchievements(state.currentUser, "faucet");
+          addMovement(state.currentUser, "Faucet", FAUCET_REWARD_COINS);
+          cancelFaucetChallenge();
+          playFinishChime();
+          updateAllUI();
+          showToast(`+${FAUCET_REWARD_COINS} Coins`);
+          return;
+        } catch {}
+      }
+
       state.currentUser.lastFaucetAt = Date.now();
       state.coins += FAUCET_REWARD_COINS;
       recordActivityForAchievements(state.currentUser, "faucet");
@@ -3811,7 +4032,7 @@
       document.getElementById("viewerProgress").style.width = `${((activeSession.total - activeSession.remaining) / activeSession.total) * 100}%`;
     }
 
-    function claimViewerReward() {
+    async function claimViewerReward() {
       if (!activeSession) return;
       if (Number(document.getElementById("captchaAnswer").value) !== expectedCaptcha) {
         document.getElementById("viewerStatus").textContent = "!";
@@ -3829,6 +4050,17 @@
       state.coins += task.reward;
       recordActivityForAchievements(state.currentUser, task.cat === "shortlinks" ? "shortlink" : "ptc");
       addMovement(state.currentUser, task.title, task.reward);
+
+      if (isSupabaseActive() && state.currentUser?.id) {
+        try {
+          await sbClient.from("movements").insert({
+            user_id: state.currentUser.id,
+            label: task.title,
+            coins: task.reward
+          });
+        } catch {}
+      }
+
       updateAllUI();
       closeViewerModal();
       if (state.section === "ptcs") renderCategoryGrid("ptcsGrid", t => t.cat === "window_ads" || t.cat === "frame_ads");
@@ -3938,7 +4170,7 @@
         : `<tr><td colspan="4" style="color:var(--muted);">—</td></tr>`;
     }
 
-    function submitAdvertiserCampaign(e) {
+    async function submitAdvertiserCampaign(e) {
       e.preventDefault();
       const title = document.getElementById("advTitle").value.trim();
       const url = document.getElementById("advUrl").value.trim();
@@ -3951,6 +4183,25 @@
         if (state.coins < p.totalCoins) { showToast("Saldo insuficiente."); return; }
         state.coins -= p.totalCoins;
         addMovement(state.currentUser, `Campaña: ${title}`, -p.totalCoins);
+      }
+
+      if (isSupabaseActive() && state.currentUser?.id) {
+        try {
+          await sbClient.from("campaigns").insert({
+            advertiser_id: state.currentUser.id,
+            title,
+            description: desc,
+            url,
+            format: p.format,
+            duration_sec: p.duration,
+            total_clicks: p.clicks,
+            delivered_clicks: 0,
+            user_reward_coins: p.userRewardCoins,
+            total_usd: p.totalUsd,
+            pay_method: payMethod,
+            tx_ref: txId
+          });
+        } catch {}
       }
 
       const list = getAdvertiserCampaigns();
@@ -3979,7 +4230,7 @@
       el.textContent = `${used.toLocaleString()} / ${MAX_DAILY_WITHDRAW_COINS.toLocaleString()} Coins (Hoy UTC)`;
     }
 
-    function submitWithdraw() {
+    async function submitWithdraw() {
       const addr = document.getElementById("withdrawAddress").value.trim();
       const amount = Math.floor(Number(document.getElementById("withdrawAmount").value));
       const method = document.getElementById("withdrawMethod").value;
@@ -4000,6 +4251,36 @@
       if (used + amount > MAX_DAILY_WITHDRAW_COINS) {
         showToast("Límite diario de 25,000 Coins alcanzado.");
         return;
+      }
+
+      if (isSupabaseActive() && state.currentUser?.id) {
+        try {
+          const { data, error } = await sbClient.rpc("request_withdrawal_rpc", {
+            p_method: method,
+            p_address: addr,
+            p_coins: amount,
+            p_face_verified: true
+          });
+          if (error || !data?.ok) {
+            showToast(data?.error || error?.message || "No se pudo procesar el retiro.");
+            return;
+          }
+          state.coins = Number(data.coins_left ?? state.coins - amount);
+          if (!Array.isArray(state.currentUser.withdrawals)) state.currentUser.withdrawals = [];
+          state.currentUser.withdrawals.unshift({
+            date: new Date(now).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+            createdAtMs: now, method, address: addr, coins: amount, usdt: formatUsdt(amount), status: "Pendiente (Facial OK)"
+          });
+          addMovement(state.currentUser, `Retiro (${method})`, -amount);
+          wdFaceVerified = false;
+          document.getElementById("wdFacePreview")?.classList.add("hidden");
+          document.getElementById("btnWdRetake")?.classList.add("hidden");
+          document.getElementById("wdFacePlaceholder")?.classList.remove("hidden");
+          setFaceStatus("wd", t("wdFacePending"), "");
+          updateAllUI();
+          showToast("Retiro registrado.");
+          return;
+        } catch {}
       }
 
       state.coins -= amount;
@@ -4057,7 +4338,7 @@
         : `<tr><td colspan="5" style="color:var(--muted);">—</td></tr>`;
     }
 
-    function submitSupportTicket(e) {
+    async function submitSupportTicket(e) {
       e.preventDefault();
       if (!state.currentUser) return;
       const category = document.getElementById("ticketCategory").value;
@@ -4068,6 +4349,19 @@
       if (!Array.isArray(state.currentUser.tickets)) state.currentUser.tickets = [];
       const now = Date.now();
       const ticketId = "TCK-" + String(now).slice(-5);
+
+      if (isSupabaseActive() && state.currentUser.id) {
+        try {
+          await sbClient.from("tickets").insert({
+            ticket_code: ticketId,
+            user_id: state.currentUser.id,
+            category,
+            subject,
+            message
+          });
+        } catch {}
+      }
+
       state.currentUser.tickets.unshift({
         id: ticketId,
         date: new Date(now).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
@@ -4075,7 +4369,7 @@
       });
       if (state.currentUser.tickets.length > 30) state.currentUser.tickets = state.currentUser.tickets.slice(0, 30);
 
-      persistCurrentUserData();
+      await persistCurrentUserData();
       renderTicketsView();
       e.target.reset();
       showToast(`${ticketId}`);
@@ -4116,18 +4410,42 @@
       document.getElementById("adConfigModal").classList.remove("open");
     }
 
-    function saveAdConfig() {
+    async function saveAdConfig() {
       if (!state.currentUser || state.currentUser.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) return;
-      localStorage.setItem(STORAGE_KEYS.offerwallLinks, document.getElementById("offerwallLinksInput").value.trim());
-      localStorage.setItem(STORAGE_KEYS.windowLinks, document.getElementById("windowLinksInput").value.trim());
-      localStorage.setItem(STORAGE_KEYS.frameLinks, document.getElementById("frameLinksInput").value.trim());
-      localStorage.setItem(STORAGE_KEYS.shortLinks, document.getElementById("shortLinksInput").value.trim());
-      state.adTopHtml = document.getElementById("adTopInput").value;
-      state.adModalHtml = document.getElementById("adModalInput").value;
-      state.adFaucetHtml = document.getElementById("adFaucetInput").value;
+      const owVal = document.getElementById("offerwallLinksInput").value.trim();
+      const winVal = document.getElementById("windowLinksInput").value.trim();
+      const frmVal = document.getElementById("frameLinksInput").value.trim();
+      const shrtVal = document.getElementById("shortLinksInput").value.trim();
+      const topVal = document.getElementById("adTopInput").value;
+      const modVal = document.getElementById("adModalInput").value;
+      const facVal = document.getElementById("adFaucetInput").value;
+
+      localStorage.setItem(STORAGE_KEYS.offerwallLinks, owVal);
+      localStorage.setItem(STORAGE_KEYS.windowLinks, winVal);
+      localStorage.setItem(STORAGE_KEYS.frameLinks, frmVal);
+      localStorage.setItem(STORAGE_KEYS.shortLinks, shrtVal);
+      state.adTopHtml = topVal;
+      state.adModalHtml = modVal;
+      state.adFaucetHtml = facVal;
       localStorage.setItem(STORAGE_KEYS.adTop, state.adTopHtml);
       localStorage.setItem(STORAGE_KEYS.adModal, state.adModalHtml);
       localStorage.setItem(STORAGE_KEYS.adFaucet, state.adFaucetHtml);
+
+      if (isSupabaseActive()) {
+        try {
+          await sbClient.from("site_config").update({
+            offerwall_links: owVal,
+            window_links: winVal,
+            frame_links: frmVal,
+            short_links: shrtVal,
+            ad_top: topVal,
+            ad_modal: modVal,
+            ad_faucet: facVal,
+            updated_at: new Date().toISOString()
+          }).eq("id", 1);
+        } catch {}
+      }
+
       hydrateTasksForUser(state.currentUser);
       updateAllUI();
       applyAdSlots();
@@ -4135,12 +4453,26 @@
       showToast("OK");
     }
 
-    function resetAdConfig() {
+    async function resetAdConfig() {
       if (!state.currentUser || state.currentUser.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) return;
       Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
       state.adTopHtml = DEFAULT_AD_TOP;
       state.adModalHtml = DEFAULT_AD_300;
       state.adFaucetHtml = DEFAULT_AD_FAUCET;
+      if (isSupabaseActive()) {
+        try {
+          await sbClient.from("site_config").update({
+            offerwall_links: "",
+            window_links: "",
+            frame_links: "",
+            short_links: "",
+            ad_top: DEFAULT_AD_TOP,
+            ad_modal: DEFAULT_AD_300,
+            ad_faucet: DEFAULT_AD_FAUCET,
+            updated_at: new Date().toISOString()
+          }).eq("id", 1);
+        } catch {}
+      }
       openAdConfigModal();
       applyAdSlots();
     }
@@ -4167,10 +4499,37 @@
       }, 5000);
     })();
 
-    (function initApp() {
+    (async function initApp() {
+      await loadCloudSiteConfig();
+
       const params = new URLSearchParams(window.location.search);
       const refParam = params.get("ref");
       if (refParam) document.getElementById("regRefCode").value = refParam.trim().toUpperCase();
+
+      if (isSupabaseActive()) {
+        try {
+          const { data } = await sbClient.auth.getSession();
+          const supUser = data?.session?.user;
+          if (supUser) {
+            const localMatch = getUsersDB().find(u => u.email === (supUser.email || "").toLowerCase());
+            const sessionUser = localMatch || {
+              id: supUser.id,
+              username: (supUser.email || "Usuario").split("@")[0],
+              email: (supUser.email || "").toLowerCase(),
+              coins: 0,
+              refCode: generateRefCode((supUser.email || "USER").split("@")[0]),
+              movements: [],
+              withdrawals: [],
+              tickets: [],
+              createdAt: new Date().toISOString()
+            };
+            sessionUser.id = supUser.id;
+            startUserSession(sessionUser);
+            await syncUserCloudData(supUser.id);
+            return;
+          }
+        } catch {}
+      }
 
       const savedEmail = localStorage.getItem(CURRENT_USER_KEY);
       if (savedEmail) {
