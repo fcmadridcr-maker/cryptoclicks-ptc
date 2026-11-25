@@ -262,6 +262,25 @@
       border-color: var(--border-strong);
     }
 
+    .pill-utc {
+      color: var(--success);
+      border-color: rgba(52, 211, 153, 0.35);
+    }
+
+    .utc-banner-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: var(--card-2);
+      border: 1px solid var(--border-strong);
+      border-radius: 11px;
+      padding: 8px 12px;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
     .btn {
       border: 0;
       border-radius: 9px;
@@ -396,7 +415,6 @@
       gap: 12px;
     }
 
-    /* Banner superior central ancho completo (728x90 escalable sin recortes) */
     .ad-banner-top {
       width: 100%;
       max-width: 980px;
@@ -511,11 +529,11 @@
 
     .faucet-top-stats {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 680px) {
       .faucet-top-stats { grid-template-columns: minmax(0, 1fr); }
     }
 
@@ -1117,6 +1135,7 @@
       </nav>
 
       <div class="header-right hidden" id="headerUserControls">
+        <span class="pill pill-utc" id="headerUtcResetBadge">🕒 00:00 UTC · --h --m</span>
         <span class="pill" id="userDisplay">👤 Invitado</span>
         <span class="pill pill-coins" id="balanceDisplay">🪙 0 Coins ($0.00000)</span>
         <button class="btn btn-primary btn-sm" id="btnHeaderWithdraw" onclick="openProfileTab('retiros')">Solicitar Retiro</button>
@@ -1124,6 +1143,7 @@
       </div>
 
       <div class="header-right" id="headerGuestControls">
+        <span class="pill pill-utc" id="guestUtcResetBadge">🕒 00:00 UTC · --h --m</span>
         <button class="btn btn-secondary btn-sm" id="btnHeaderLogin" onclick="switchAuthTab('login')">Iniciar Sesión</button>
         <button class="btn btn-primary btn-sm" id="btnHeaderRegister" onclick="switchAuthTab('register')">Registrarse</button>
       </div>
@@ -1134,7 +1154,12 @@
     <div class="auth-card">
       <div>
         <h1 style="font-size:1.15rem; font-weight:800;">CryptoClicksFaucet</h1>
-        <p style="font-size:0.78rem; color:var(--muted); margin-top:2px;" id="authSubtitle">Faucet, PTCs, Shortlinks, Offerwalls y Logros.</p>
+        <p style="font-size:0.78rem; color:var(--muted); margin-top:2px;" id="authSubtitle">Faucet, PTCs, Shortlinks, Offerwalls y Logros · Reseteo diario 00:00 UTC.</p>
+      </div>
+
+      <div class="utc-banner-strip">
+        <span>🕒 Reseteo diario: <strong>00:00 UTC</strong></span>
+        <strong style="color:var(--accent);" id="authUtcCountdown">--h --m --s</strong>
       </div>
 
       <div class="auth-tabs">
@@ -1204,6 +1229,11 @@
     <!-- Banner superior central (728x90 escalable sin recortes) -->
     <section class="ad-banner-top" id="adSlotTop"></section>
 
+    <div class="utc-banner-strip">
+      <span>🕒 Hora de reseteo diario: <strong>00:00 UTC</strong> (Bono Diario, Tareas, Logros Diarios y Cuota Diaria)</span>
+      <strong style="color:var(--accent);" id="globalUtcCountdownLabel">Próximo reseteo 00:00 UTC en --h --m --s</strong>
+    </div>
+
     <div class="app-shell">
       <!-- Panel izquierdo fijo -->
       <aside class="faucet-sidebar" id="persistentSidebar">
@@ -1223,6 +1253,12 @@
             <span class="kpi-label">Account Balance</span>
             <strong style="font-size:0.95rem; color:var(--accent);" id="faucetSideCoins">0 Coins</strong>
             <span class="kpi-sub" id="faucetSideUsdt">$0.00000 USDT</span>
+          </div>
+
+          <div class="faucet-stat-box">
+            <span class="kpi-label">🕒 Reseteo Diario (00:00 UTC)</span>
+            <strong style="font-size:0.86rem; color:var(--success);" id="sideUtcCountdown">--h --m --s</strong>
+            <span class="kpi-sub" id="sideUtcClock">UTC actual: --:--:--</span>
           </div>
 
           <button type="button" class="btn btn-primary btn-sm" onclick="openProfileTab('retiros')">↑ Retirar</button>
@@ -1271,7 +1307,7 @@
                 <span class="tag">+100 Coins</span>
               </div>
               <div class="row-between">
-                <span></span>
+                <span class="kpi-sub" id="dashDailyUtcSub">Reset 00:00 UTC</span>
                 <button type="button" class="btn btn-primary btn-sm" id="btnDailyBonus" onclick="claimDailyBonus()">Reclamar</button>
               </div>
             </div>
@@ -1285,7 +1321,7 @@
                 <span class="tag">+35 Coins</span>
               </div>
               <div class="row-between">
-                <span></span>
+                <span class="kpi-sub" id="dashFaucetUtcSub">Ciclo diario 00:00 UTC</span>
                 <button type="button" class="btn btn-primary btn-sm" id="btnDashOpenFaucet" onclick="switchSection('faucet')">Abrir Faucet</button>
               </div>
             </div>
@@ -1313,9 +1349,14 @@
             <div class="row-between">
               <div>
                 <div class="item-title">📊 Estadísticas Detalladas del Día</div>
-                <div class="item-desc">Visualiza la cantidad de Coins/tokens generados hoy y pásale el cursor a las barras para ver el detalle.</div>
+                <div class="item-desc">Visualiza la cantidad de Coins/tokens generados hoy (corte diario 00:00 UTC) y pásale el cursor a las barras.</div>
               </div>
               <span class="tag" id="statsDayCoinsBadge">0 Coins hoy</span>
+            </div>
+
+            <div class="utc-banner-strip">
+              <span>🕒 Ciclo diario: <strong>00:00 UTC</strong></span>
+              <strong style="color:var(--accent);" id="statsUtcCountdown">Reseteo en --h --m --s</strong>
             </div>
 
             <div class="kpi-grid">
@@ -1327,7 +1368,7 @@
               <div class="card" style="padding:12px;">
                 <span class="kpi-label">Reclamos Faucet Hoy</span>
                 <span class="kpi-val" id="statTodayFaucetCount">0</span>
-                <span class="kpi-sub">Ciclo actual: cada 10 min (+35)</span>
+                <span class="kpi-sub">Reinicio diario 00:00 UTC</span>
               </div>
               <div class="card" style="padding:12px;">
                 <span class="kpi-label">Movimientos Hoy</span>
@@ -1359,6 +1400,11 @@
                 <span class="kpi-sub">Cada 10 minutos</span>
               </div>
               <div class="card" style="text-align:center;">
+                <span class="kpi-label">Reseteo Diario</span>
+                <strong style="font-size:1.05rem; color:var(--success);">00:00 UTC</strong>
+                <span class="kpi-sub" id="faucetUtcCountdownSub">En --h --m --s</span>
+              </div>
+              <div class="card" style="text-align:center;">
                 <span class="kpi-label">Mínimo de Retiro</span>
                 <strong style="font-size:1.05rem;">10,000 Coins</strong>
                 <span class="kpi-sub">≈ $0.10000 USDT</span>
@@ -1366,7 +1412,7 @@
             </div>
 
             <div class="faucet-hero-card">
-              <span class="tag">🚰 Faucet Reward</span>
+              <span class="tag">🚰 Faucet Reward · Reset 00:00 UTC</span>
               <div>
                 <div class="item-title" id="faucetCardTitle" style="font-size:1.08rem;">Reclama +35 Coins cada 10 minutos</div>
                 <div class="item-desc" id="faucetCardDesc">Resuelve el cálculo matemático y el captcha para acreditar tu recompensa.</div>
@@ -1374,8 +1420,8 @@
 
               <ul class="faucet-bullets">
                 <li>• Conversión: 50 Coins = $0.0005 USDT (1 Coin = $0.00001 USDT).</li>
+                <li>• Reseteo diario general a las <strong>00:00 UTC</strong> para bonos, logros diarios y cuotas.</li>
                 <li>• Invita referidos y gana +1,000 Coins únicos por cada referido válido.</li>
-                <li>• Avanza también en tus Logros diarios, semanales y mensuales.</li>
               </ul>
 
               <div class="faucet-ad-box" id="adSlotFaucet"></div>
@@ -1406,14 +1452,26 @@
         </section>
 
         <section id="sec-ptcs" class="hidden">
+          <div class="utc-banner-strip">
+            <span>🕒 PTCs: reinicio diario a las <strong>00:00 UTC</strong></span>
+            <strong style="color:var(--accent);" id="ptcUtcCountdown">Reset 00:00 UTC en --h --m --s</strong>
+          </div>
           <section class="ads-grid" id="ptcsGrid"></section>
         </section>
 
         <section id="sec-shortlinks" class="hidden">
+          <div class="utc-banner-strip">
+            <span>🕒 Shortlinks: reinicio diario a las <strong>00:00 UTC</strong></span>
+            <strong style="color:var(--accent);" id="shortlinksUtcCountdown">Reset 00:00 UTC en --h --m --s</strong>
+          </div>
           <section class="ads-grid" id="shortlinksGrid"></section>
         </section>
 
         <section id="sec-offerwalls" class="hidden">
+          <div class="utc-banner-strip">
+            <span>🕒 Ciclo diario general: <strong>00:00 UTC</strong></span>
+            <strong style="color:var(--accent);" id="offerwallsUtcCountdown">Reset 00:00 UTC en --h --m --s</strong>
+          </div>
           <section class="ads-grid" id="offerwallsGrid"></section>
         </section>
 
@@ -1426,6 +1484,10 @@
                 <button type="button" class="btn btn-secondary btn-sm" id="achTabWeekly" onclick="switchAchievementPeriod('weekly')">Semanales</button>
                 <button type="button" class="btn btn-secondary btn-sm" id="achTabMonthly" onclick="switchAchievementPeriod('monthly')">Mensuales</button>
               </div>
+            </div>
+            <div class="utc-banner-strip">
+              <span>🕒 Logros Diarios resetean a las <strong>00:00 UTC</strong></span>
+              <strong style="color:var(--accent);" id="achUtcCountdown">Próximo 00:00 UTC en --h --m --s</strong>
             </div>
             <div class="ach-list" id="achievementsGrid"></div>
           </div>
@@ -1572,6 +1634,10 @@
 
             <div id="ptab-retiros" class="profile-tab-panel">
               <div class="item-title" id="withdrawFormTitle">Solicitar Retiro</div>
+              <div class="utc-banner-strip">
+                <span>🕒 Cuota diaria de retiro (máx. 25,000 Coins): reinicia a las <strong>00:00 UTC</strong></span>
+                <strong style="color:var(--accent);" id="withdrawUtcCountdown">Reset 00:00 UTC en --h --m --s</strong>
+              </div>
               <div class="field-group">
                 <label for="withdrawMethod" id="lblWithdrawMethod">Método</label>
                 <select id="withdrawMethod">
@@ -1587,7 +1653,7 @@
                 <input type="text" id="withdrawAddress" placeholder="Billetera, correo o Pago Móvil" />
               </div>
               <div class="field-group">
-                <label for="withdrawAmount" id="lblWithdrawAmount">Coins (10,000 a 25,000/día)</label>
+                <label for="withdrawAmount" id="lblWithdrawAmount">Coins (10,000 a 25,000/día · Reset 00:00 UTC)</label>
                 <input type="number" id="withdrawAmount" value="10000" min="10000" max="25000" step="100" />
               </div>
 
@@ -1752,7 +1818,7 @@
 
   <footer>
     <div class="footer-inner">
-      <span>CryptoClicksFaucet</span>
+      <span>CryptoClicksFaucet · Reseteo diario: <strong>00:00 UTC</strong> (<span id="footerUtcCountdown">--h --m --s</span>)</span>
       <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
         <select id="langSelect" aria-label="Idioma" onchange="setLanguage(this.value)" style="width:auto; padding:4px 8px; font-size:0.75rem;">
           <option value="es">🌐 Español</option>
@@ -1893,6 +1959,10 @@
         withdrawBtn: "Solicitar Retiro", logoutBtn: "Salir",
         faqs: [
           {
+            q: "¿A qué hora ocurre el reseteo diario de la plataforma?",
+            a: "El reseteo diario general ocurre a las 00:00 UTC (20:00 / 8:00 PM hora de Venezuela, UTC-4), reiniciando el Bono Diario, tareas diarias, logros diarios y la cuota diaria de retiros."
+          },
+          {
             q: "¿Cuál es la tasa de conversión de Coins a USDT?",
             a: "1 Coin equivale a $0.00001 USDT (50 Coins = $0.0005 USDT; 10,000 Coins = $0.10 USDT)."
           },
@@ -1906,11 +1976,7 @@
           },
           {
             q: "¿Cuáles son el mínimo y el máximo de retiro?",
-            a: "El retiro mínimo es de 10,000 Coins y el máximo diario es de 25,000 Coins cada 24 horas."
-          },
-          {
-            q: "¿Pueden existir 2 cuentas en el mismo dispositivo o IP?",
-            a: "Se permiten como máximo 2 cuentas por dispositivo o IP. La 2.ª cuenta no recibe bonos de bienvenida ni de referido, y el invitador tampoco cobra bono de referencia por esa 2.ª cuenta."
+            a: "El retiro mínimo es de 10,000 Coins y el máximo diario es de 25,000 Coins por día UTC (reinicio a las 00:00 UTC)."
           }
         ]
       },
@@ -1939,6 +2005,10 @@
         withdrawBtn: "Request Withdrawal", logoutBtn: "Log Out",
         faqs: [
           {
+            q: "When does the daily reset happen?",
+            a: "The daily reset takes place at 00:00 UTC, resetting Daily Bonus, daily tasks, daily achievements, and the daily withdrawal quota."
+          },
+          {
             q: "What is the Coins to USDT conversion rate?",
             a: "1 Coin equals $0.00001 USDT (50 Coins = $0.0005 USDT; 10,000 Coins = $0.10 USDT)."
           },
@@ -1948,15 +2018,11 @@
           },
           {
             q: "How does the Investment Game (BTC Call or Put) work?",
-            a: "Predict whether Bitcoin price will go higher (Call) or lower (Put) at the end of the current minute to win ×1.9 your stake. Exact ties refund your stake."
+            a: "Predict whether Bitcoin price will go higher (Call) or lower (Put) at the end of the current minute to win ×1.9 your stake."
           },
           {
             q: "What are the minimum and maximum withdrawal limits?",
-            a: "The minimum withdrawal is 10,000 Coins and the daily maximum is 25,000 Coins per 24 hours."
-          },
-          {
-            q: "Are 2 accounts allowed per device or IP?",
-            a: "Up to 2 accounts per device or IP are allowed. The 2nd account receives no welcome or referral bonus."
+            a: "Minimum withdrawal is 10,000 Coins and the daily limit is 25,000 Coins per UTC day (reset at 00:00 UTC)."
           }
         ]
       },
@@ -1985,6 +2051,10 @@
         withdrawBtn: "Запросить вывод", logoutBtn: "Выйти",
         faqs: [
           {
+            q: "Когда происходит ежедневный сброс?",
+            a: "Ежедневный сброс происходит в 00:00 UTC для ежедневного бонуса, заданий, достижений и лимита вывода."
+          },
+          {
             q: "Какой курс обмена Coins на USDT?",
             a: "1 Coin равен $0.00001 USDT (50 Coins = $0.0005 USDT; 10,000 Coins = $0.10 USDT)."
           },
@@ -1998,21 +2068,17 @@
           },
           {
             q: "Каковы минимальный и максимальный лимиты вывода?",
-            a: "Минимальный вывод — 10,000 Coins, дневной лимит — 25,000 Coins за 24 часа."
-          },
-          {
-            q: "Разрешены ли 2 аккаунта на одном устройстве или IP?",
-            a: "Допускается максимум 2 аккаунта на устройство или IP. 2-й аккаунт не получает приветственный и реферальный бонусы."
+            a: "Минимальный вывод — 10,000 Coins, дневной лимит — 25,000 Coins в сутки UTC (сброс в 00:00 UTC)."
           }
         ]
       }
     };
 
     const ACHIEVEMENTS_CONFIG = [
-      { id: "d_ptc_3", period: "daily", metric: "ptc", target: 3, title: "PTC Diario", desc: "Completa 3 PTC hoy.", reward: 80 },
-      { id: "d_sl_2", period: "daily", metric: "shortlink", target: 2, title: "Shortlinks Diario", desc: "Completa 2 Shortlinks hoy.", reward: 120 },
-      { id: "d_fc_3", period: "daily", metric: "faucet", target: 3, title: "Faucet Diario", desc: "Reclama 3 veces hoy.", reward: 90 },
-      { id: "d_any_6", period: "daily", metric: "total", target: 6, title: "Activo Diario", desc: "Completa 6 tareas hoy.", reward: 150 },
+      { id: "d_ptc_3", period: "daily", metric: "ptc", target: 3, title: "PTC Diario", desc: "Completa 3 PTC hoy (UTC).", reward: 80 },
+      { id: "d_sl_2", period: "daily", metric: "shortlink", target: 2, title: "Shortlinks Diario", desc: "Completa 2 Shortlinks hoy (UTC).", reward: 120 },
+      { id: "d_fc_3", period: "daily", metric: "faucet", target: 3, title: "Faucet Diario", desc: "Reclama 3 veces hoy (UTC).", reward: 90 },
+      { id: "d_any_6", period: "daily", metric: "total", target: 6, title: "Activo Diario", desc: "Completa 6 tareas hoy (UTC).", reward: 150 },
       { id: "w_ptc_15", period: "weekly", metric: "ptc", target: 15, title: "PTC Semanal", desc: "Completa 15 PTC en 7 días.", reward: 400 },
       { id: "w_sl_10", period: "weekly", metric: "shortlink", target: 10, title: "Shortlinks Semanal", desc: "Completa 10 Shortlinks en 7 días.", reward: 650 },
       { id: "w_any_30", period: "weekly", metric: "total", target: 30, title: "Constancia Semanal", desc: "Completa 30 tareas en 7 días.", reward: 800 },
@@ -2090,6 +2156,7 @@
 
     let dailyChartBuckets = [];
     let hoveredChartIdx = null;
+    let lastUtcDayKey = getUtcDayKey();
 
     let btcGame = {
       currentPrice: 91250.00,
@@ -2099,6 +2166,94 @@
       lastMinuteChecked: null,
       liveSource: "Binance API"
     };
+
+    function getUtcDayKey(ts = Date.now()) {
+      const d = new Date(ts);
+      const y = d.getUTCFullYear();
+      const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+      const day = String(d.getUTCDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function getNextUtcMidnightMs(now = Date.now()) {
+      const d = new Date(now);
+      return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1, 0, 0, 0, 0);
+    }
+
+    function formatUtcCountdownHms(now = Date.now()) {
+      const diffSec = Math.max(0, Math.floor((getNextUtcMidnightMs(now) - now) / 1000));
+      const h = Math.floor(diffSec / 3600);
+      const m = Math.floor((diffSec % 3600) / 60);
+      const s = diffSec % 60;
+      return `${String(h).padStart(2, "0")}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
+    }
+
+    function formatUtcClockNow(now = Date.now()) {
+      const d = new Date(now);
+      return `${String(d.getUTCHours()).padStart(2, "0")}:${String(d.getUTCMinutes()).padStart(2, "0")}:${String(d.getUTCSeconds()).padStart(2, "0")} UTC`;
+    }
+
+    function updateUtcResetDisplays(now = Date.now()) {
+      const hms = formatUtcCountdownHms(now);
+      const utcNow = formatUtcClockNow(now);
+
+      const setElText = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = txt;
+      };
+
+      setElText("headerUtcResetBadge", `🕒 00:00 UTC · ${hms}`);
+      setElText("guestUtcResetBadge", `🕒 00:00 UTC · ${hms}`);
+      setElText("authUtcCountdown", `En ${hms}`);
+      setElText("globalUtcCountdownLabel", `Próximo reseteo 00:00 UTC en ${hms}`);
+      setElText("sideUtcCountdown", `En ${hms}`);
+      setElText("sideUtcClock", `Hora actual: ${utcNow}`);
+      setElText("dashDailyUtcSub", `Reset 00:00 UTC · ${hms}`);
+      setElText("dashFaucetUtcSub", `Ciclo 00:00 UTC · ${hms}`);
+      setElText("statsUtcCountdown", `Reseteo 00:00 UTC en ${hms}`);
+      setElText("faucetUtcCountdownSub", `En ${hms}`);
+      setElText("ptcUtcCountdown", `Reset 00:00 UTC en ${hms}`);
+      setElText("shortlinksUtcCountdown", `Reset 00:00 UTC en ${hms}`);
+      setElText("offerwallsUtcCountdown", `Reset 00:00 UTC en ${hms}`);
+      setElText("achUtcCountdown", `Próximo 00:00 UTC en ${hms}`);
+      setElText("withdrawUtcCountdown", `Reset 00:00 UTC en ${hms}`);
+      setElText("footerUtcCountdown", hms);
+    }
+
+    function syncUtcDailyReset(now = Date.now()) {
+      const currentDayKey = getUtcDayKey(now);
+
+      tasks.forEach(task => {
+        if (task.cat !== "offerwalls" && task.completedAt) {
+          const doneDay = getUtcDayKey(task.completedAt);
+          if (doneDay !== currentDayKey || (now - task.completedAt >= RESET_INTERVAL_MS)) {
+            task.used = 0;
+            task.completedAt = null;
+          }
+        }
+      });
+
+      if (state.currentUser) {
+        const u = state.currentUser;
+        if (u.lastDailyBonusAt && getUtcDayKey(u.lastDailyBonusAt) !== currentDayKey) {
+          u.lastDailyBonusAt = null;
+        }
+        if (u.achievements?.daily && u.achievements.daily.dayKey !== currentDayKey) {
+          u.achievements.daily = createFreshAchievementState(now);
+        }
+      }
+
+      if (currentDayKey !== lastUtcDayKey) {
+        lastUtcDayKey = currentDayKey;
+        if (state.currentUser) {
+          updateAllUI();
+          if (state.section === "ptcs") renderCategoryGrid("ptcsGrid", t => t.cat === "window_ads" || t.cat === "frame_ads");
+          if (state.section === "shortlinks") renderCategoryGrid("shortlinksGrid", t => t.cat === "shortlinks");
+          if (state.section === "logros") renderAchievementsView();
+          showToast("🕒 Nuevo día 00:00 UTC: ciclos diarios reiniciados.");
+        }
+      }
+    }
 
     function escapeHtml(str) {
       return String(str ?? "")
@@ -2210,6 +2365,7 @@
 
       updateSoundButton();
       renderFaqList();
+      updateUtcResetDisplays();
     }
 
     function setLanguage(lang) {
@@ -2563,12 +2719,7 @@
     }
 
     function sync24hCooldowns(now = Date.now()) {
-      tasks.forEach(t => {
-        if (t.cat !== "offerwalls" && t.completedAt && (now - t.completedAt >= RESET_INTERVAL_MS)) {
-          t.used = 0;
-          t.completedAt = null;
-        }
-      });
+      syncUtcDailyReset(now);
     }
 
     function getUsersDB() {
@@ -2591,27 +2742,25 @@
       if (user.movements.length > 50) user.movements = user.movements.slice(0, 50);
     }
 
-    function isSameDay(tsA, tsB = Date.now()) {
+    function isSameUtcDay(tsA, tsB = Date.now()) {
       if (!tsA) return false;
-      const a = new Date(tsA);
-      const b = new Date(tsB);
-      return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+      return getUtcDayKey(tsA) === getUtcDayKey(tsB);
     }
 
     function computeDailyStats() {
       const movs = Array.isArray(state.currentUser?.movements) ? state.currentUser.movements : [];
-      const todayMovs = movs.filter(m => Number(m.coins || 0) > 0 && isSameDay(m.ts || Date.now()));
+      const todayMovs = movs.filter(m => Number(m.coins || 0) > 0 && isSameUtcDay(m.ts || Date.now()));
 
       const totalEarned = todayMovs.reduce((acc, m) => acc + Number(m.coins || 0), 0);
       const faucetClaims = todayMovs.filter(m => /faucet/i.test(m.label || "")).length;
 
       const blocks = [
-        { label: "00-04h", start: 0, end: 3, coins: 0 },
-        { label: "04-08h", start: 4, end: 7, coins: 0 },
-        { label: "08-12h", start: 8, end: 11, coins: 0 },
-        { label: "12-16h", start: 12, end: 15, coins: 0 },
-        { label: "16-20h", start: 16, end: 19, coins: 0 },
-        { label: "20-24h", start: 20, end: 23, coins: 0 }
+        { label: "00-04h UTC", start: 0, end: 3, coins: 0 },
+        { label: "04-08h UTC", start: 4, end: 7, coins: 0 },
+        { label: "08-12h UTC", start: 8, end: 11, coins: 0 },
+        { label: "12-16h UTC", start: 12, end: 15, coins: 0 },
+        { label: "16-20h UTC", start: 16, end: 19, coins: 0 },
+        { label: "20-24h UTC", start: 20, end: 23, coins: 0 }
       ];
 
       const sources = {
@@ -2623,7 +2772,7 @@
 
       todayMovs.forEach(m => {
         const c = Number(m.coins || 0);
-        const h = new Date(m.ts || Date.now()).getHours();
+        const h = new Date(m.ts || Date.now()).getUTCHours();
         const blk = blocks.find(b => h >= b.start && h <= b.end);
         if (blk) blk.coins += c;
 
@@ -2642,7 +2791,7 @@
       const stats = computeDailyStats();
       dailyChartBuckets = stats.blocks;
 
-      document.getElementById("statsDayCoinsBadge").textContent = `${stats.totalEarned.toLocaleString()} Coins hoy`;
+      document.getElementById("statsDayCoinsBadge").textContent = `${stats.totalEarned.toLocaleString()} Coins hoy (UTC)`;
       document.getElementById("statTodayEarned").textContent = `${stats.totalEarned.toLocaleString()} Coins`;
       document.getElementById("statTodayUsdt").textContent = `≈ $${formatUsdt(stats.totalEarned)} USDT`;
       document.getElementById("statTodayFaucetCount").textContent = String(stats.faucetClaims);
@@ -2669,6 +2818,7 @@
       }
 
       drawDailyTokensChart();
+      updateUtcResetDisplays();
     }
 
     function drawDailyTokensChart() {
@@ -2680,8 +2830,8 @@
       ctx.clearRect(0, 0, w, h);
 
       const blocks = dailyChartBuckets.length ? dailyChartBuckets : [
-        { label: "00-04h", coins: 0 }, { label: "04-08h", coins: 0 }, { label: "08-12h", coins: 0 },
-        { label: "12-16h", coins: 0 }, { label: "16-20h", coins: 0 }, { label: "20-24h", coins: 0 }
+        { label: "00-04h UTC", coins: 0 }, { label: "04-08h UTC", coins: 0 }, { label: "08-12h UTC", coins: 0 },
+        { label: "12-16h UTC", coins: 0 }, { label: "16-20h UTC", coins: 0 }, { label: "20-24h UTC", coins: 0 }
       ];
 
       const isLight = state.themeMode === "light";
@@ -2739,8 +2889,8 @@
         }
 
         ctx.fillStyle = textColor;
-        ctx.font = "11px system-ui, sans-serif";
-        ctx.fillText(b.label, x + barW / 2 - 16, h - 10);
+        ctx.font = "10px system-ui, sans-serif";
+        ctx.fillText(b.label, x + barW / 2 - 24, h - 10);
 
         blocks._rects.push({ idx, x, y, w: barW, h: barH, label: b.label, coins: b.coins });
       });
@@ -3099,13 +3249,27 @@
     }
 
     function createFreshAchievementState(now = Date.now()) {
-      return { windowStart: now, counts: { ptc: 0, shortlink: 0, faucet: 0, total: 0 }, claimed: [] };
+      return {
+        windowStart: now,
+        dayKey: getUtcDayKey(now),
+        counts: { ptc: 0, shortlink: 0, faucet: 0, total: 0 },
+        claimed: []
+      };
     }
 
     function ensureUserAchievementBuckets(user, now = Date.now()) {
       if (!user.achievements || typeof user.achievements !== "object") user.achievements = {};
+      const currentDayKey = getUtcDayKey(now);
+
+      const d = user.achievements.daily;
+      if (!d || d.dayKey !== currentDayKey || !d.windowStart || (now - d.windowStart >= 24 * 60 * 60 * 1000)) {
+        user.achievements.daily = createFreshAchievementState(now);
+      } else {
+        d.counts = Object.assign({ ptc: 0, shortlink: 0, faucet: 0, total: 0 }, d.counts || {});
+        d.claimed = Array.isArray(d.claimed) ? d.claimed : [];
+      }
+
       [
-        { key: "daily", ms: 24 * 60 * 60 * 1000 },
         { key: "weekly", ms: 7 * 24 * 60 * 60 * 1000 },
         { key: "monthly", ms: 30 * 24 * 60 * 60 * 1000 }
       ].forEach(({ key, ms }) => {
@@ -3183,6 +3347,7 @@
           </div>
         `;
       }).join("");
+      updateUtcResetDisplays();
     }
 
     function claimAchievement(achId) {
@@ -3347,12 +3512,13 @@
 
     function hydrateTasksForUser(user) {
       const now = Date.now();
+      const currentDayKey = getUtcDayKey(now);
       tasks = buildBaseTasks();
       if (user && user.taskStates) {
         tasks.forEach(t => {
           if (t.cat === "offerwalls") return;
           const saved = user.taskStates[t.id];
-          if (saved && saved.completedAt && (now - saved.completedAt < RESET_INTERVAL_MS)) {
+          if (saved && saved.completedAt && getUtcDayKey(saved.completedAt) === currentDayKey && (now - saved.completedAt < RESET_INTERVAL_MS)) {
             t.used = Math.min(t.limit, Number(saved.used || 0));
             t.completedAt = saved.completedAt;
           }
@@ -3361,7 +3527,11 @@
     }
 
     function startUserSession(user) {
-      ensureUserAchievementBuckets(user);
+      const now = Date.now();
+      if (user.lastDailyBonusAt && getUtcDayKey(user.lastDailyBonusAt) !== getUtcDayKey(now)) {
+        user.lastDailyBonusAt = null;
+      }
+      ensureUserAchievementBuckets(user, now);
       state.currentUser = user;
       state.coins = Number(user.coins ?? 0);
       hydrateTasksForUser(user);
@@ -3420,6 +3590,7 @@
       if (validTab === "anunciantes") { recalcCampaignPrice(); renderAdvertiserCampaignsTable(); }
       if (validTab === "referidos") renderReferralsView();
       if (validTab === "tickets") renderTicketsView();
+      updateUtcResetDisplays();
     }
 
     function openProfileTab(tab) {
@@ -3467,6 +3638,7 @@
       if (sec === "faq") renderFaqList();
       if (sec === "perfil") switchProfileTab(state.profileTab);
       if (sec === "dashboard") renderDashboardMovements();
+      updateUtcResetDisplays();
       applyAdSlots();
     }
 
@@ -3507,23 +3679,25 @@
       updateHubCardsUI();
       updateWithdrawQuotaUI();
       renderDashboardMovements();
+      updateUtcResetDisplays();
       if (state.section === "estadisticas") renderStatsView();
     }
 
     function updateHubCardsUI() {
       if (!state.currentUser) return;
       const now = Date.now();
+      const currentDayKey = getUtcDayKey(now);
 
-      const dailyRem = RESET_INTERVAL_MS - (now - (state.currentUser.lastDailyBonusAt || 0));
+      const claimedTodayUtc = Boolean(state.currentUser.lastDailyBonusAt && getUtcDayKey(state.currentUser.lastDailyBonusAt) === currentDayKey);
       const btnDaily = document.getElementById("btnDailyBonus");
-      if (state.currentUser.lastDailyBonusAt && dailyRem > 0) {
+      if (claimedTodayUtc) {
         btnDaily.disabled = true;
         btnDaily.textContent = "✓";
-        document.getElementById("dailyBonusStatus").textContent = `${formatRemaining24h(dailyRem)}`;
+        document.getElementById("dailyBonusStatus").textContent = `Reclamado · Reset 00:00 UTC (${formatUtcCountdownHms(now)})`;
       } else {
         btnDaily.disabled = false;
         btnDaily.textContent = t("claim");
-        document.getElementById("dailyBonusStatus").textContent = t("availableNow");
+        document.getElementById("dailyBonusStatus").textContent = `${t("availableNow")} · Reset 00:00 UTC`;
       }
 
       const faucetRem = FAUCET_COOLDOWN_MS - (now - (state.currentUser.lastFaucetAt || 0));
@@ -3534,20 +3708,20 @@
       if (state.currentUser.lastFaucetAt && faucetRem > 0) {
         const wait = `${formatCountdown(faucetRem)}`;
         if (btnFaucet) { btnFaucet.disabled = true; btnFaucet.textContent = wait; }
-        if (statusEl) statusEl.textContent = wait;
-        if (dashStatusEl) dashStatusEl.textContent = wait;
+        if (statusEl) statusEl.textContent = `${wait} · Ciclo 00:00 UTC`;
+        if (dashStatusEl) dashStatusEl.textContent = `${wait} · Ciclo 00:00 UTC`;
         cancelFaucetChallenge();
       } else {
         if (btnFaucet) { btnFaucet.disabled = false; btnFaucet.textContent = `${t("claim")} (+${FAUCET_REWARD_COINS})`; }
-        if (statusEl) statusEl.textContent = t("availableNow");
-        if (dashStatusEl) dashStatusEl.textContent = t("availableNow");
+        if (statusEl) statusEl.textContent = `${t("availableNow")} · Reset 00:00 UTC`;
+        if (dashStatusEl) dashStatusEl.textContent = `${t("availableNow")} · Reset 00:00 UTC`;
       }
     }
 
     function claimDailyBonus() {
       if (!state.currentUser) return;
       const now = Date.now();
-      if (state.currentUser.lastDailyBonusAt && (now - state.currentUser.lastDailyBonusAt < RESET_INTERVAL_MS)) return;
+      if (state.currentUser.lastDailyBonusAt && getUtcDayKey(state.currentUser.lastDailyBonusAt) === getUtcDayKey(now)) return;
       state.currentUser.lastDailyBonusAt = now;
       state.coins += DAILY_BONUS_COINS;
       addMovement(state.currentUser, "Bono diario", DAILY_BONUS_COINS);
@@ -3618,6 +3792,7 @@
     function renderCategoryGrid(containerId, filterFn) {
       sync24hCooldowns();
       const now = Date.now();
+      const currentDayKey = getUtcDayKey(now);
       const grid = document.getElementById(containerId);
       const list = tasks.filter(filterFn);
       if (!list.length) {
@@ -3626,7 +3801,7 @@
       }
       grid.innerHTML = list.map(t => {
         const isOw = t.cat === "offerwalls";
-        const onCd = !isOw && t.used >= t.limit && t.completedAt && (now - t.completedAt < RESET_INTERVAL_MS);
+        const onCd = !isOw && t.used >= t.limit && t.completedAt && getUtcDayKey(t.completedAt) === currentDayKey && (now - t.completedAt < RESET_INTERVAL_MS);
         return `
           <div class="item-card">
             <div>
@@ -3637,7 +3812,7 @@
               <div class="item-desc">${t.desc}${isOw ? "" : ` • ${t.duration}s`}</div>
             </div>
             <div class="row-between">
-              <span style="font-size:0.72rem; color:var(--muted);">${onCd ? formatRemaining24h(RESET_INTERVAL_MS - (now - t.completedAt)) : "✓"}</span>
+              <span style="font-size:0.72rem; color:var(--muted);">${onCd ? `Reset 00:00 UTC (${formatUtcCountdownHms(now)})` : "✓ Disponible"}</span>
               <button type="button" class="btn ${isOw ? "btn-secondary" : "btn-primary"} btn-sm" ${onCd ? "disabled" : ""} onclick="startTask('${t.id}')">
                 ${onCd ? "✓" : isOw ? "↗" : "▶"}
               </button>
@@ -3861,9 +4036,10 @@
     }
 
     function getWithdrawnTodayCoins(user, now = Date.now()) {
+      const currentDayKey = getUtcDayKey(now);
       return (Array.isArray(user?.withdrawals) ? user.withdrawals : []).reduce((sum, w) => {
         const ts = Number(w.createdAtMs || 0);
-        return (ts && (now - ts < RESET_INTERVAL_MS)) ? sum + Number(w.coins || 0) : sum;
+        return (ts && getUtcDayKey(ts) === currentDayKey) ? sum + Number(w.coins || 0) : sum;
       }, 0);
     }
 
@@ -3871,7 +4047,7 @@
       const el = document.getElementById("withdrawDailyQuotaInfo");
       if (!el || !state.currentUser) return;
       const used = getWithdrawnTodayCoins(state.currentUser);
-      el.textContent = `${used.toLocaleString()} / ${MAX_DAILY_WITHDRAW_COINS.toLocaleString()} Coins (24h)`;
+      el.textContent = `${used.toLocaleString()} / ${MAX_DAILY_WITHDRAW_COINS.toLocaleString()} Coins (Día UTC · Reset 00:00 UTC)`;
     }
 
     function submitWithdraw() {
@@ -3893,7 +4069,7 @@
       const now = Date.now();
       const used = getWithdrawnTodayCoins(state.currentUser, now);
       if (used + amount > MAX_DAILY_WITHDRAW_COINS) {
-        showToast("Límite diario de 25,000 Coins alcanzado.");
+        showToast("Límite diario de 25,000 Coins alcanzado (resetea a las 00:00 UTC).");
         return;
       }
 
@@ -4045,7 +4221,11 @@
       initBtcGameHistory(btcGame.currentPrice);
       updateBtcGameSeries();
       updateBtcRoundUI();
+      updateUtcResetDisplays();
       setInterval(() => {
+        const now = Date.now();
+        syncUtcDailyReset(now);
+        updateUtcResetDisplays(now);
         updateBtcRoundUI();
         if (state.currentUser) updateHubCardsUI();
       }, 1000);
@@ -4066,6 +4246,7 @@
         if (existing) { startUserSession(existing); return; }
       }
       switchAuthTab(refParam ? "register" : "login");
+      updateUtcResetDisplays();
       applyAdSlots();
     })();
   </script>
