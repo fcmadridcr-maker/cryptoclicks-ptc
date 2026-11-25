@@ -1787,7 +1787,7 @@
         <button type="button" class="btn btn-secondary btn-sm" id="btnThemeDark" onclick="setThemeMode('dark')">Oscuro</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnThemeLight" onclick="setThemeMode('light')">Claro</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnSoundToggle" onclick="toggleSoundPref()">🔔 Sonido: ON</button>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnOpenAdConfig" onclick="openAdConfigModal()">⚙️ Enlaces</button>
+        <button type="button" class="btn btn-secondary btn-sm hidden" id="btnOpenAdConfig" onclick="openAdConfigModal()">⚙️ Enlaces</button>
       </div>
     </div>
   </footer>
@@ -1857,6 +1857,8 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    const ADMIN_EMAIL = "admin@cryptoclicksfaucet.com";
+
     const COIN_TO_USDT = 0.00001;
     const MIN_WITHDRAW_COINS = 10000;
     const MAX_DAILY_WITHDRAW_COINS = 25000;
@@ -2140,7 +2142,6 @@
       return `${String(d.getUTCHours()).padStart(2, "0")}:${String(d.getUTCMinutes()).padStart(2, "0")}:${String(d.getUTCSeconds()).padStart(2, "0")} UTC`;
     }
 
-    // Actualiza únicamente el widget del panel izquierdo fijo
     function updateSidebarUtcReset(now = Date.now()) {
       const cdEl = document.getElementById("sideUtcCountdown");
       const clkEl = document.getElementById("sideUtcClock");
@@ -3465,6 +3466,9 @@
       closeAllNavDropdowns();
       resetFaceForms();
 
+      const isAdmin = Boolean(user?.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
+      document.getElementById("btnOpenAdConfig")?.classList.toggle("hidden", !isAdmin);
+
       document.getElementById("userDisplay").textContent = `👤 ${user.username}`;
       const sideName = document.getElementById("faucetSideUsername");
       const sideAvatar = document.getElementById("faucetSideAvatar");
@@ -3490,6 +3494,7 @@
       resetFaceForms();
       state.currentUser = null;
       localStorage.removeItem(CURRENT_USER_KEY);
+      document.getElementById("btnOpenAdConfig")?.classList.add("hidden");
       document.getElementById("mainNav").classList.add("hidden");
       document.getElementById("dashboardSection").classList.add("hidden");
       document.getElementById("headerUserControls").classList.add("hidden");
@@ -4096,6 +4101,7 @@
     }
 
     function openAdConfigModal() {
+      if (!state.currentUser || state.currentUser.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) return;
       document.getElementById("offerwallLinksInput").value = getLinksList(STORAGE_KEYS.offerwallLinks, DEFAULT_OFFERWALL_LINKS).join("\n");
       document.getElementById("windowLinksInput").value = getLinksList(STORAGE_KEYS.windowLinks, DEFAULT_WINDOW_LINKS).join("\n");
       document.getElementById("frameLinksInput").value = getLinksList(STORAGE_KEYS.frameLinks, DEFAULT_FRAME_LINKS).join("\n");
@@ -4111,6 +4117,7 @@
     }
 
     function saveAdConfig() {
+      if (!state.currentUser || state.currentUser.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) return;
       localStorage.setItem(STORAGE_KEYS.offerwallLinks, document.getElementById("offerwallLinksInput").value.trim());
       localStorage.setItem(STORAGE_KEYS.windowLinks, document.getElementById("windowLinksInput").value.trim());
       localStorage.setItem(STORAGE_KEYS.frameLinks, document.getElementById("frameLinksInput").value.trim());
@@ -4129,6 +4136,7 @@
     }
 
     function resetAdConfig() {
+      if (!state.currentUser || state.currentUser.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) return;
       Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
       state.adTopHtml = DEFAULT_AD_TOP;
       state.adModalHtml = DEFAULT_AD_300;
