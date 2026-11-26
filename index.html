@@ -2563,6 +2563,13 @@
           state.currentUser.coins = state.coins;
           state.currentUser.refCode = prof.ref_code || state.currentUser.refCode;
           state.currentUser.refBonusTotal = Number(prof.ref_bonus_total ?? 0);
+          if (state.currentUser.refCode) {
+            const { count: refCnt } = await sbClient
+              .from("profiles")
+              .select("id", { count: "exact", head: true })
+              .eq("referred_by_code", state.currentUser.refCode);
+            if (typeof refCnt === "number") state.currentUser.cloudRefCount = refCnt;
+          }
           state.currentUser.lastDailyBonusAt = prof.last_daily_bonus_at ? Date.parse(prof.last_daily_bonus_at) : null;
           state.currentUser.lastFaucetAt = prof.last_faucet_at ? Date.parse(prof.last_faucet_at) : null;
           if (prof.task_states && typeof prof.task_states === "object") {
@@ -3160,7 +3167,9 @@
         timeLabel: `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`
       };
 
-      addMovement(state.currentUser, `BTC ${direction === "call" ? "Call" : "Put"}`, -amount);
+      const betLabel = `BTC ${direction === "call" ? "Call" : "Put"}`;
+      addMovement(state.currentUser, betLabel, -amount);
+      syncMovementToCloud(betLabel, -amount);
       updateAllUI();
       updateBtcRoundUI();
       drawBtcGameChart();
@@ -3180,6 +3189,7 @@
         statusText = `Empate (+${payout} devueltos)`;
         state.coins += payout;
         addMovement(state.currentUser, "BTC Game Empate", payout);
+        syncMovementToCloud("BTC Game Empate", payout);
       } else {
         const won = (bet.direction === "call" && closePrice > bet.entryPrice) ||
                     (bet.direction === "put" && closePrice < bet.entryPrice);
@@ -3187,7 +3197,9 @@
           payout = Math.round(bet.amount * BTC_WIN_MULTIPLIER);
           statusText = `Ganaste (+${payout} Coins)`;
           state.coins += payout;
-          addMovement(state.currentUser, `BTC ${bet.direction === "call" ? "Call" : "Put"} Ganado`, payout);
+          const winLabel = `BTC ${bet.direction === "call" ? "Call" : "Put"} Ganado`;
+          addMovement(state.currentUser, winLabel, payout);
+          syncMovementToCloud(winLabel, payout);
           playFinishChime();
           showToast(`🎉 ¡Acertaste! +${payout} Coins`);
         } else {
@@ -3353,10 +3365,10 @@
           <div class="item-card">
             <div>
               <div class="row-between">
-                <span class="item-title">${ach.title}</span>
+                <span class="item-title">${escapeHtml(ach.title)}</span>
                 <span class="tag">+${ach.reward}</span>
               </div>
-              <div class="item-desc">${ach.desc} (${current}/${ach.target})</div>
+              <div class="item-desc">${escapeHtml(ach.desc)} (${current}/${ach.target})</div>
               <div class="progress-track" style="margin-top:8px;">
                 <div class="progress-fill" style="width:${pct}%;"></div>
               </div>
@@ -3381,21 +3393,69 @@
       if ((bucket.counts[ach.metric] || 0) < ach.target || bucket.claimed.includes(ach.id)) return;
       bucket.claimed.push(ach.id);
       state.coins += ach.reward;
-      addMovement(state.currentUser, `Logro: ${ach.title}`, ach.reward);
+      const achLabel = `Logro: ${ach.title}`;
+      addMovement(state.currentUser, achLabel, ach.reward);
+      syncMovementToCloud(achLabel, ach.reward);
       updateAllUI();
       renderAchievementsView();
       showToast(`+${ach.reward} Coins`);
     }
 
-    function awardOneTimeReferralBonus(sponsorRefCode, referredUsername) {
+    async function syncMovementToCloud(label, amountCoins) {
+      if (!isSupabaseActive() || !state.currentUser?.id) return;
+      try {
+        await sbClient.from("movements").insert({
+          user_id: state.currentUser.id,
+          label,
+          coins: amountCoins
+        });
+      } catch {}
+    }
+
+    async function awardOneTimeReferralBonus(sponsorRefCode, referredUsername, referredUserId = null) {
       if (!sponsorRefCode) return;
       const users = getUsersDB();
       const idx = users.findIndex(u => u.refCode === sponsorRefCode);
-      if (idx === -1) return;
-      users[idx].coins = Number(users[idx].coins || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
-      users[idx].refBonusTotal = Number(users[idx].refBonusTotal || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
-      addMovement(users[idx], `Referido: ${referredUsername}`, REFERRAL_ONE_TIME_BONUS_COINS);
-      saveUsersDB(users);
+      if (idx !== -1) {
+        users[idx].coins = Number(users[idx].coins || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
+        users[idx].refBonusTotal = Number(users[idx].refBonusTotal || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
+        addMovement(users[idx], `Referido: ${referredUsername}`, REFERRAL_ONE_TIME_BONUS_COINS);
+        saveUsersDB(users);
+      }
+
+      if (isSupabaseActive()) {
+        try {
+          const { error: rpcErr } = await sbClient.rpc("award_referral_bonus_rpc", {
+            p_sponsor_ref_code: sponsorRefCode,
+            p_referred_username: referredUsername,
+            p_referred_user_id: referredUserId
+          });
+          if (rpcErr) {
+            const { data: sponsorProf } = await sbClient
+              .from("profiles")
+              .select("id, coins, ref_bonus_total")
+              .eq("ref_code", sponsorRefCode)
+              .maybeSingle();
+            if (sponsorProf?.id) {
+              const nextCoins = Number(sponsorProf.coins || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
+              const nextRefBonus = Number(sponsorProf.ref_bonus_total || 0) + REFERRAL_ONE_TIME_BONUS_COINS;
+              await sbClient
+                .from("profiles")
+                .update({
+                  coins: nextCoins,
+                  ref_bonus_total: nextRefBonus,
+                  updated_at: new Date().toISOString()
+                })
+                .eq("id", sponsorProf.id);
+              await sbClient.from("movements").insert({
+                user_id: sponsorProf.id,
+                label: `Referido: ${referredUsername}`,
+                coins: REFERRAL_ONE_TIME_BONUS_COINS
+              });
+            }
+          }
+        } catch {}
+      }
     }
 
     async function persistCurrentUserData() {
@@ -3487,7 +3547,18 @@
         }
       }
 
-      const validSponsor = (!isSecondAccountInEnv && refCodeInput && users.some(u => u.refCode === refCodeInput)) ? refCodeInput : null;
+      let sponsorExistsInCloud = false;
+      if (!isSecondAccountInEnv && refCodeInput && isSupabaseActive()) {
+        try {
+          const { data: spRow } = await sbClient
+            .from("profiles")
+            .select("id")
+            .eq("ref_code", refCodeInput)
+            .maybeSingle();
+          sponsorExistsInCloud = Boolean(spRow?.id);
+        } catch {}
+      }
+      const validSponsor = (!isSecondAccountInEnv && refCodeInput && (users.some(u => u.refCode === refCodeInput) || sponsorExistsInCloud)) ? refCodeInput : null;
       const now = Date.now();
       const initialCoins = isSecondAccountInEnv ? 0 : (WELCOME_BONUS_COINS + (validSponsor ? REFERRED_WELCOME_BONUS_COINS : 0));
 
@@ -3565,7 +3636,7 @@
 
       users.push(newUser);
       saveUsersDB(users);
-      if (validSponsor && !isSecondAccountInEnv) awardOneTimeReferralBonus(validSponsor, username);
+      if (validSponsor && !isSecondAccountInEnv) await awardOneTimeReferralBonus(validSponsor, username, newUser.id);
 
       resetFaceForms();
       localStorage.setItem(CURRENT_USER_KEY, newUser.email);
@@ -3774,7 +3845,8 @@
       if (sideUsdt) sideUsdt.textContent = `≈ $${formatUsdt(state.coins)} USDT`;
 
       const users = getUsersDB();
-      const refCount = users.filter(u => u.referredBy === state.currentUser.refCode).length;
+      const localRefCount = users.filter(u => u.referredBy === state.currentUser.refCode).length;
+      const refCount = Math.max(localRefCount, Number(state.currentUser.cloudRefCount || 0));
       document.getElementById("kpiRefCount").textContent = String(refCount);
       document.getElementById("kpiRefCoins").textContent = `${Number(state.currentUser.refBonusTotal || 0).toLocaleString()} Coins`;
 
@@ -4140,6 +4212,10 @@
       };
 
       fitScale();
+      if (container._adResizeHandler) {
+        window.removeEventListener("resize", container._adResizeHandler);
+      }
+      container._adResizeHandler = fitScale;
       window.addEventListener("resize", fitScale);
     }
 
@@ -4187,7 +4263,9 @@
       if (payMethod === "Saldo interno (Coins)") {
         if (state.coins < p.totalCoins) { showToast("Saldo insuficiente."); return; }
         state.coins -= p.totalCoins;
-        addMovement(state.currentUser, `Campaña: ${title}`, -p.totalCoins);
+        const campLabel = `Campaña: ${title}`;
+        addMovement(state.currentUser, campLabel, -p.totalCoins);
+        syncMovementToCloud(campLabel, -p.totalCoins);
       }
 
       if (isSupabaseActive() && state.currentUser?.id) {
@@ -4304,11 +4382,35 @@
       showToast("Retiro registrado.");
     }
 
-    function renderReferralsView() {
+    async function renderReferralsView() {
       const baseUrl = window.location.origin + window.location.pathname;
       document.getElementById("referralLinkInput").value = `${baseUrl}?ref=${encodeURIComponent(state.currentUser.refCode)}`;
       document.getElementById("refCodeDisplay").textContent = state.currentUser.refCode;
-      const refs = getUsersDB().filter(u => u.referredBy === state.currentUser.refCode);
+      let refs = getUsersDB()
+        .filter(u => u.referredBy === state.currentUser.refCode)
+        .map(u => ({ username: u.username, createdAt: u.createdAt }));
+
+      if (isSupabaseActive() && state.currentUser?.refCode) {
+        try {
+          const { data: cloudRefs } = await sbClient
+            .from("profiles")
+            .select("username, created_at")
+            .eq("referred_by_code", state.currentUser.refCode)
+            .order("created_at", { ascending: false });
+          if (Array.isArray(cloudRefs) && cloudRefs.length) {
+            const seen = new Set();
+            refs = cloudRefs
+              .map(r => ({ username: r.username, createdAt: r.created_at }))
+              .filter(r => {
+                const key = (r.username || "").toLowerCase();
+                if (!key || seen.has(key)) return false;
+                seen.add(key);
+                return true;
+              });
+          }
+        } catch {}
+      }
+
       document.getElementById("refCountDisplay").textContent = String(refs.length);
       document.getElementById("refEarnedDisplay").textContent = `${Number(state.currentUser.refBonusTotal || 0).toLocaleString()} Coins`;
       document.getElementById("referralsTableBody").innerHTML = refs.length
