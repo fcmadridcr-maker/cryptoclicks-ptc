@@ -256,6 +256,9 @@
       font-size: 0.76rem;
       font-weight: 700;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .pill-coins {
@@ -1118,7 +1121,7 @@
 
       <div class="header-right hidden" id="headerUserControls">
         <span class="pill" id="userDisplay">👤 Invitado</span>
-        <span class="pill pill-coins" id="balanceDisplay">🪙 0 Coins ($0.00000)</span>
+        <span class="pill pill-coins" id="balanceDisplay">0 ($0.00000)</span>
         <button class="btn btn-primary btn-sm" id="btnHeaderWithdraw" onclick="openProfileTab('retiros')">Solicitar Retiro</button>
         <button class="btn btn-danger btn-sm" id="btnHeaderLogout" onclick="logoutUser()">Salir</button>
       </div>
@@ -1840,8 +1843,10 @@
 
   <script>
     const SUPABASE_URL = "https://viubacylezbdsicfwrmm.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YxADASPbtydW8uUlzHSYnA_B1eEdzdH";
-    const ADMIN_EMAIL = "fcmadridcr@gmail.com";
+    const SUPABASE_PUBLISHABLE_KEY = "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+    const ADMIN_EMAIL = "admin@cryptoclicksfaucet.com";
+
+    const COIN_ICON_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;"><circle cx="12" cy="12" r="10" fill="#F59E0B" stroke="#FDE047" stroke-width="2"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#451A03">$</text></svg>`;
 
     const sbClient = (window.supabase && SUPABASE_PUBLISHABLE_KEY && !SUPABASE_PUBLISHABLE_KEY.startsWith("PEGA_AQUI"))
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
@@ -2057,7 +2062,7 @@
     }));
 
     const FAUCET_CAPTCHA_POOL = [
-      { icon: "🪙", label: "Moneda" },
+      { icon: COIN_ICON_SVG, label: "Moneda" },
       { icon: "⚡", label: "Rayo" },
       { icon: "🛡️", label: "Escudo" },
       { icon: "💎", label: "Gema" },
@@ -3526,7 +3531,7 @@
           const uid = authData?.user?.id || null;
           newUser.id = uid;
           if (uid) {
-            const { error: profErr } = await sbClient.from("profiles").insert({
+            const { error: profErr } = await sbClient.from("profiles").upsert({
               id: uid,
               username,
               email,
@@ -3539,7 +3544,7 @@
               client_ip: clientIp,
               face_signature: regFaceData.signature,
               face_grid: regFaceData.grid
-            });
+            }, { onConflict: "id", ignoreDuplicates: true });
             if (profErr) {
               showToast(profErr.message || "Error al guardar perfil.");
               return;
@@ -3759,7 +3764,7 @@
       if (!state.currentUser) return;
       persistCurrentUserData();
 
-      document.getElementById("balanceDisplay").textContent = `🪙 ${state.coins.toLocaleString()} ($${formatUsdt(state.coins)})`;
+      document.getElementById("balanceDisplay").innerHTML = `${COIN_ICON_SVG} ${state.coins.toLocaleString()} ($${formatUsdt(state.coins)})`;
       document.getElementById("kpiBalanceCoins").textContent = `${state.coins.toLocaleString()} Coins`;
       document.getElementById("kpiBalanceUsdt").textContent = `≈ $${formatUsdt(state.coins)} USDT`;
 
@@ -3869,7 +3874,7 @@
       const grid = document.getElementById("faucetVisualCaptchaGrid");
       grid.innerHTML = shuffled.map(opt => `
         <button type="button" class="captcha-pick-btn" onclick="selectFaucetVisualOption('${opt.label}', this)">
-          <span style="font-size:1.15rem;">${opt.icon}</span>
+          <span style="font-size:1.15rem; display:inline-flex; align-items:center; justify-content:center; min-height:22px;">${opt.icon}</span>
           <span style="font-size:0.72rem;">${opt.label}</span>
         </button>
       `).join("");
