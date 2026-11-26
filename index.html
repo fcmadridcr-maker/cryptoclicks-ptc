@@ -2598,21 +2598,22 @@
 
         const { data: wds } = await sbClient
           .from("withdrawals")
-          .select("method, address, coins, usdt_amount, status, created_at")
+          .select("method, address, coins, amount, currency, usdt_amount, status, created_at")
           .eq("user_id", userId)
           .order("created_at", { ascending: false })
           .limit(30);
         if (Array.isArray(wds)) {
           state.currentUser.withdrawals = wds.map(w => {
             const ts = Date.parse(w.created_at) || Date.now();
+            const coinsVal = Number(w.coins ?? Math.round(Number(w.amount || 0) / COIN_TO_USDT));
             return {
               date: new Date(ts).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
               createdAtMs: ts,
-              method: w.method,
-              address: w.address,
-              coins: Number(w.coins || 0),
-              usdt: Number(w.usdt_amount || 0).toFixed(5),
-              status: w.status || "Pendiente (Facial OK)"
+              method: w.method || w.currency || "USDT",
+              address: w.address || "—",
+              coins: coinsVal,
+              usdt: Number(w.usdt_amount ?? w.amount ?? formatUsdt(coinsVal)).toFixed(5),
+              status: w.status || "pending"
             };
           });
         }
@@ -3485,7 +3486,6 @@
           await sbClient
             .from("profiles")
             .update({
-              coins: state.coins,
               task_states: taskStates,
               updated_at: new Date().toISOString()
             })
@@ -4314,12 +4314,13 @@
     }
 
     async function submitWithdraw() {
+      const submitBtn = document.getElementById("btnSubmitWithdraw");
       const addr = document.getElementById("withdrawAddress").value.trim();
       const amount = Math.floor(Number(document.getElementById("withdrawAmount").value));
       const method = document.getElementById("withdrawMethod").value;
 
-      if (!addr || amount < MIN_WITHDRAW_COINS || amount > state.coins) {
-        showToast("Revisa destino y monto (mín. 10,000).");
+      if (!addr || !Number.isFinite(amount) || amount < MIN_WITHDRAW_COINS || amount > state.coins) {
+        showToast("Revisa destino y monto (mín. 10,000 y dentro de tu saldo).");
         return;
       }
 
@@ -4336,50 +4337,81 @@
         return;
       }
 
-      if (isSupabaseActive() && state.currentUser?.id) {
-        try {
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Procesando...";
+      }
+
+      try {
+        if (isSupabaseActive() && state.currentUser?.id) {
           const { data, error } = await sbClient.rpc("request_withdrawal_rpc", {
+            p_coins: amount,
+            p_currency: method,
             p_method: method,
             p_address: addr,
-            p_coins: amount,
             p_face_verified: true
           });
+
           if (error || !data?.ok) {
-            showToast(data?.error || error?.message || "No se pudo procesar el retiro.");
+            showToast(data?.error || error?.message || "No se pudo procesar el retiro en el servidor.");
             return;
           }
-          state.coins = Number(data.coins_left ?? state.coins - amount);
+
+          state.coins = Number(data.new_coins ?? data.coins_left ?? Math.max(0, state.coins - amount));
           if (!Array.isArray(state.currentUser.withdrawals)) state.currentUser.withdrawals = [];
           state.currentUser.withdrawals.unshift({
             date: new Date(now).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
-            createdAtMs: now, method, address: addr, coins: amount, usdt: formatUsdt(amount), status: "Pendiente (Facial OK)"
+            createdAtMs: now,
+            method,
+            address: addr,
+            coins: amount,
+            usdt: formatUsdt(amount),
+            status: "pending"
           });
           addMovement(state.currentUser, `Retiro (${method})`, -amount);
+
           wdFaceVerified = false;
           document.getElementById("wdFacePreview")?.classList.add("hidden");
           document.getElementById("btnWdRetake")?.classList.add("hidden");
           document.getElementById("wdFacePlaceholder")?.classList.remove("hidden");
           setFaceStatus("wd", t("wdFacePending"), "");
-          updateAllUI();
-          showToast("Retiro registrado.");
-          return;
-        } catch {}
-      }
 
-      state.coins -= amount;
-      if (!Array.isArray(state.currentUser.withdrawals)) state.currentUser.withdrawals = [];
-      state.currentUser.withdrawals.unshift({
-        date: new Date(now).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
-        createdAtMs: now, method, address: addr, coins: amount, usdt: formatUsdt(amount), status: "Pendiente (Facial OK)"
-      });
-      addMovement(state.currentUser, `Retiro (${method})`, -amount);
-      wdFaceVerified = false;
-      document.getElementById("wdFacePreview")?.classList.add("hidden");
-      document.getElementById("btnWdRetake")?.classList.add("hidden");
-      document.getElementById("wdFacePlaceholder")?.classList.remove("hidden");
-      setFaceStatus("wd", t("wdFacePending"), "");
-      updateAllUI();
-      showToast("Retiro registrado.");
+          await syncUserCloudData(state.currentUser.id);
+          updateAllUI();
+          showToast("Retiro registrado en estado pendiente.");
+          return;
+        }
+
+        state.coins -= amount;
+        if (!Array.isArray(state.currentUser.withdrawals)) state.currentUser.withdrawals = [];
+        state.currentUser.withdrawals.unshift({
+          date: new Date(now).toLocaleString("es-VE", { dateStyle: "short", timeStyle: "short" }),
+          createdAtMs: now,
+          method,
+          address: addr,
+          coins: amount,
+          usdt: formatUsdt(amount),
+          status: "pending"
+        });
+        addMovement(state.currentUser, `Retiro (${method})`, -amount);
+
+        wdFaceVerified = false;
+        document.getElementById("wdFacePreview")?.classList.add("hidden");
+        document.getElementById("btnWdRetake")?.classList.add("hidden");
+        document.getElementById("wdFacePlaceholder")?.classList.remove("hidden");
+        setFaceStatus("wd", t("wdFacePending"), "");
+
+        updateAllUI();
+        renderHistoryView();
+        showToast("Retiro registrado.");
+      } catch (err) {
+        showToast(err?.message || "Error inesperado al procesar el retiro.");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = t("withdrawBtn");
+        }
+      }
     }
 
     async function renderReferralsView() {
